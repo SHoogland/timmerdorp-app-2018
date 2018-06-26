@@ -17,9 +17,11 @@ export class HomePage {
   }
 
   scanCode() {
+    console.log('scan the shizzle');
 		this.barcodeScanner.scan().then((barcodeData) => {
 			this.barcode = barcodeData.text;
 		}, (error) => {
+      console.log(error);
 			this.error = error.message;
 		});
 	}
