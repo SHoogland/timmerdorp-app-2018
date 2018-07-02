@@ -8,11 +8,3 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
-<ion-content padding>
-	<!-- <button ion-button full (click)="scanCode()" class="bg-yellow">Scan Ticket</button> -->
-
-	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class">
-		{{p.title}}
-	</button>
-</ion-content>
