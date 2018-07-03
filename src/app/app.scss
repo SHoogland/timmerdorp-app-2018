@@ -26,7 +26,7 @@ body{
 	letter-spacing: 0.5px;
 }
 
-h1, button{
+h1, button, .result-child{
 	font-family: Mikado-Bold;
 }
 
@@ -34,8 +34,28 @@ h1{
 	font-size: 32px;
 }
 
-// Form styles
 
+.bg-yellow{
+	background: $yellow;
+}
+.bg-blue{
+	background: $blue;
+}
+.bg-green{
+	background: $green;
+}
+.bg-grey{
+	background: $lightGrey;
+	&:hover{
+		color: $white;
+	}
+}
+
+.color-mediumBlack{
+	color: $mediumBlack;
+}
+
+// Form styles
 input[type="text"] {
 	width: 100%;
 	height: 78px;
@@ -46,13 +66,26 @@ input[type="text"] {
 	border-radius: 0;
 }
 
+
+// Span elements
 .form-error{
 	position: relative;
 	top: 12px;
 	color: $red;
 }
 
+.child-row{
+	display: block;
+	padding-bottom: 10px;
+}
+
+.search-on{
+	margin-top: 10px;
+}
+
 ion-navbar{
+	// position: relative;
+	margin-top: -9px;
 	height: 80px;
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -73,6 +106,13 @@ ion-navbar{
 		border-radius: 0;
 		background: $liliac;
 	}
+}
+.nav-items{
+	text-align: center;
+	padding: 35px;
+	margin-bottom: 10px;
+	width: 100%;
+	background: $lightGrey;
 }
 
 .user-info{
@@ -100,9 +140,15 @@ ion-navbar{
 	}
 }
 
+.container{
+	position: relative;
+	height: 100%;
+}
+
 .button-md, .button-ios{
 	padding: 32px;
 	margin-bottom: 20px;
+	height: 80px;
 	box-shadow: none;
 	font-size: 16px;
 	line-height: 20px;
@@ -114,12 +160,15 @@ ion-navbar{
 	}
 }
 
-.bg-yellow{
-	background: $yellow;
-}
-.bg-blue{
-	background: $blue;
-}
-.bg-green{
-	background: $green;
+.container-bottom{
+	position: sticky;
+	bottom: 0;
+	border: solid 1px green;
+	width: calc(100% - 32px);
+	.gradient{
+		border: 1px solid red;
+		height: 80px;
+		background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
+	}
+	.button-md:first-of-type, .button-ios:first-of-type{ margin-top: 0px; }
 }

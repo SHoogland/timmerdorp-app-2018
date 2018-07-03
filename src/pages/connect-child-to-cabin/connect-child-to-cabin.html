@@ -1,9 +1,3 @@
-<!--
-  Generated template for the ScanTicketPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar>
 	<button ion-button menuToggle>
@@ -18,15 +12,25 @@
 
 <ion-content padding>
 	<div class="user-info">
-		<h1>Naam</h1>
-		Stephan Hoogland
-	</div>
-	<div class="bracelet-number">
-		<h1>Armband nummer:</h1>
+		<h1>Hut nummer</h1>
 		<input type="text" placeholder="0123456789">
 		<span class="form-error">
-			Vul je nummer in van armband voordat je verder kan.
+			Vul het hut nummer in, voordat je verder kan.
 		</span>
 	</div>
-		<button ion-button full (click)="scanCode()" class="bg-yellow correction"> Opslaan </button>
+	<div class="bracelet-number">
+		<h1>Kinderen:</h1>
+		<span class="child-row">
+			Stephan Hoogland
+		</span>
+		<span class="child-row">
+			Sil van Diepen
+		</span>
+		<span class="child-row">
+			Tim borst
+		</span>
+		 <button ion-button full (click)="openCabinStep2()" class="bg-blue correction">
+			 Kind toevoegen
+		 </button>
+	</div>
 </ion-content>

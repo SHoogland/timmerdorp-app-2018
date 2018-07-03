@@ -1,30 +1,29 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { SearchPage } from '../search/search';
 
-import { ResultChildrenPage } from '../result-children/result-children';
 /**
- * Generated class for the SearchPage page.
+ * Generated class for the ResultChildrenPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
 
-
 @Component({
-  selector: 'page-search',
-  templateUrl: 'search.html',
+  selector: 'page-result-children',
+  templateUrl: 'result-children.html',
 })
-export class SearchPage {
+export class ResultChildrenPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchPage');
+    console.log('ionViewDidLoad ResultChildrenPage');
   }
 
-  openResults(){
-	  this.navCtrl.setRoot(ResultChildrenPage);
+  openBacktoSearch(){
+	 this.navCtrl.setRoot(SearchPage);
   }
 
 }

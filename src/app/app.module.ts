@@ -10,13 +10,19 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SearchPage } from '../pages/search/search';
 import { ScanTicketPage } from '../pages/scan-ticket/scan-ticket';
+import { ConnectChildToCabinPage } from '../pages/connect-child-to-cabin/connect-child-to-cabin';
+import { ConnectChildToCabinStep_2Page } from '../pages/connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
+import { ResultChildrenPage } from '../pages/result-children/result-children';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
 	ScanTicketPage,
-	SearchPage
+	SearchPage,
+	ConnectChildToCabinStep_2Page,
+	ResultChildrenPage,
+	ConnectChildToCabinPage
   ],
   imports: [
     BrowserModule,
@@ -27,7 +33,10 @@ import { ScanTicketPage } from '../pages/scan-ticket/scan-ticket';
     MyApp,
     HomePage,
 	ScanTicketPage,
-	SearchPage
+	SearchPage,
+	ConnectChildToCabinStep_2Page,
+	ResultChildrenPage,
+	ConnectChildToCabinPage
   ],
   providers: [
     StatusBar,

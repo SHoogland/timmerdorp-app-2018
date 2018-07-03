@@ -6,6 +6,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ScanTicketPage }from '../pages/scan-ticket/scan-ticket';
 import { SearchPage }from '../pages/search/search';
+import { ConnectChildToCabinPage } from '../pages/connect-child-to-cabin/connect-child-to-cabin';
+import { ConnectChildToCabinStep_2Page } from '../pages/connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
+import { ResultChildrenPage } from '../pages/result-children/result-children';
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +26,9 @@ export class MyApp {
     this.pages = [
 	{ title: 'Home', component: HomePage },
 	{ title: 'Scan Ticket', component: ScanTicketPage },
-	{ title: 'Search', component: SearchPage }
+	{ title: 'Koppel kind aan hut', component: ConnectChildToCabinPage },
+	{ title: 'VERWIJDER MIJ STRAKS', component: ConnectChildToCabinStep_2Page },
+	{ title: 'Zoek kind', component: SearchPage }
     ];
 
   }

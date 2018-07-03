@@ -1,5 +1,5 @@
 <!--
-  Generated template for the ScanTicketPage page.
+  Generated template for the ConnectChildToCabinStep_2Page page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -18,15 +18,19 @@
 
 <ion-content padding>
 	<div class="user-info">
-		<h1>Naam</h1>
-		Stephan Hoogland
-	</div>
-	<div class="bracelet-number">
-		<h1>Armband nummer:</h1>
+		<h1>Armbandnummer</h1>
 		<input type="text" placeholder="0123456789">
 		<span class="form-error">
-			Vul je nummer in van armband voordat je verder kan.
+			Vul het hut nummer in, voordat je verder kan.
 		</span>
 	</div>
-		<button ion-button full (click)="scanCode()" class="bg-yellow correction"> Opslaan </button>
+	<div class="bracelet-number">
+		<h1>Naam:</h1>
+		<span class="child-row">
+			Roxanne van den Aakster
+		</span>
+		<button ion-button full (click)="scanCode()" class="bg-blue correction">
+			Opslaan
+		 </button>
+	</div>
 </ion-content>

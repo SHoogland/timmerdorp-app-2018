@@ -4,6 +4,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { SearchPage } from '../search/search';
+import { ConnectChildToCabinPage } from '../connect-child-to-cabin/connect-child-to-cabin';
+import { ConnectChildToCabinStep_2Page } from '../connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
+import { ResultChildrenPage } from '../result-children/result-children';
 
 @Component({
 	selector: 'page-home',
@@ -30,13 +33,18 @@ export class HomePage {
 				class: 'bg-yellow'
 			},
 			{
-				title: 'Zoek kind',
-				component: SearchPage,
+				title: 'Koppel kind aan hut',
+				component: ConnectChildToCabinPage,
 				class: 'bg-blue'
 			},
 			{
-				title: 'Koppel kind aan hut',
-				component: null,
+				title: 'Zoek kind',
+				component: SearchPage,
+				class: 'bg-green'
+			},
+			{
+				title: 'VERWIJDER MIJ STRAKS',
+				component: ResultChildrenPage,
 				class: 'bg-green'
 			}
 		];

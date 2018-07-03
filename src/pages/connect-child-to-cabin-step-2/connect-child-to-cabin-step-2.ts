@@ -1,30 +1,24 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { ResultChildrenPage } from '../result-children/result-children';
 /**
- * Generated class for the SearchPage page.
+ * Generated class for the ConnectChildToCabinStep_2Page page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
 
-
 @Component({
-  selector: 'page-search',
-  templateUrl: 'search.html',
+  selector: 'page-connect-child-to-cabin-step-2',
+  templateUrl: 'connect-child-to-cabin-step-2.html',
 })
-export class SearchPage {
+export class ConnectChildToCabinStep_2Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchPage');
-  }
-
-  openResults(){
-	  this.navCtrl.setRoot(ResultChildrenPage);
+    console.log('ionViewDidLoad ConnectChildToCabinStep_2Page');
   }
 
 }
