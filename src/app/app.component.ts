@@ -27,7 +27,6 @@ export class MyApp {
 	{ title: 'Home', component: HomePage },
 	{ title: 'Scan Ticket', component: ScanTicketPage },
 	{ title: 'Koppel kind aan hut', component: ConnectChildToCabinPage },
-	{ title: 'VERWIJDER MIJ STRAKS', component: ConnectChildToCabinStep_2Page },
 	{ title: 'Zoek kind', component: SearchPage }
     ];
 
@@ -37,7 +36,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
+      this.statusBar.hide();
       this.splashScreen.hide();
     });
   }

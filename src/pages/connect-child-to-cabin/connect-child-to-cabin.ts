@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { ConnectChildToCabinStep_2Page } from '../connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
 /**
@@ -15,14 +15,32 @@ import { ConnectChildToCabinStep_2Page } from '../connect-child-to-cabin-step-2/
 })
 export class ConnectChildToCabinPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConnectChildToCabinPage');
   }
   openCabinStep2(){
 	  this.navCtrl.setRoot(ConnectChildToCabinStep_2Page);
+	  this.presentToast();
+
+  }
+
+  showToastWithCloseButton() {
+      const toast = this.toastCtrl.create({
+        message: '{username is toegevoegd}',
+        showCloseButton: true,
+        closeButtonText: 'X'
+      });
+      toast.present();
+    }
+
+  presentToast() {
+    const toast = this.toastCtrl.create({
+      message: 'User was added successfully',
+      duration: 89000
+    });
+    toast.present();
   }
 
 }

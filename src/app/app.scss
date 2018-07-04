@@ -83,9 +83,13 @@ input[type="text"] {
 	margin-top: 10px;
 }
 
+.toast-container{
+	// background: $darkGrey;
+	border-radius: 5px;
+	color: $darkGrey !important;
+}
+
 ion-navbar{
-	// position: relative;
-	margin-top: -9px;
 	height: 80px;
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -107,12 +111,37 @@ ion-navbar{
 		background: $liliac;
 	}
 }
+.toolbar{
+	min-height: 71px;
+	border-bottom: 2px solid $liliac;
+}
+
+.menu-inner {
+    background: #fff;
+    width: 100%;
+}
+
+.item-inner {
+    padding-right: 8px;
+    border-bottom: 0px solid #dedede !important;
+}
+
+ion-toolbar{
+	img{display: none;}
+	padding-bottom: 40px;
+}
+
 .nav-items{
 	text-align: center;
-	padding: 35px;
+	padding: 32px;
 	margin-bottom: 10px;
 	width: 100%;
 	background: $lightGrey;
+
+	&:first-of-type{
+		border-top: 0px;
+		margin-top: 50px;
+	}
 }
 
 .user-info{
