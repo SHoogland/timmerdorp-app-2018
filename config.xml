@@ -3,7 +3,7 @@
     <name>Timmerdorp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.1.110:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -90,7 +90,7 @@
     <allow-navigation href="http://192.168.33.1:8100" />
     <plugin name="phonegap-plugin-barcodescanner" spec="^8.0.0" />
     <allow-navigation href="http://192.168.1.81:8100" />
+    <engine name="ios" spec="4.5.4" />
     <allow-navigation href="http://192.168.1.110:8100" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
-    <engine name="ios" spec="4.5.4" />
 </widget>
