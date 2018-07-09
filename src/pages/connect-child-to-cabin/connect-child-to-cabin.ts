@@ -14,7 +14,7 @@ import { ConnectChildToCabinStep_2Page } from '../connect-child-to-cabin-step-2/
   templateUrl: 'connect-child-to-cabin.html',
 })
 export class ConnectChildToCabinPage {
-
+	toggleModal: false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {  }
 
   ionViewDidLoad() {
