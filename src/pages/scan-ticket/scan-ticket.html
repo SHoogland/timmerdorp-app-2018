@@ -22,5 +22,13 @@
 			Vul je nummer in van armband voordat je verder kan.
 		</span>
 	</div>
-		<button ion-button full (click)="scanCode()" class="bg-yellow correction"> Opslaan </button>
+		<!-- user result -->
+		<button ion-button full (click)="save = true;"class="bg-yellow correction"> Opslaan </button>
+		<!-- start modal box -->
+		<div *ngIf="save" id="myModal" class="modal">
+		  <div class="modal-content">
+			<span class="close" (click)="save = false;">&times;</span>
+			<h1>Shane van Hattum is toegevoegd</h1>
+		  </div>
+		</div>
 </ion-content>

@@ -13,45 +13,50 @@
 <ion-content padding>
 	<div class="bracelet-number">
 		<h1>Resultaat</h1>
+		<!-- user result -->
 		<button ion-button full (click)="toggleModal = true;" class="bg-grey color-mediumBlack"> Stephan Hoogland </button>
+		<!-- start modal box -->
+		<div *ngIf="toggleModal" id="myModal" class="modal">
+		  <div class="modal-content">
+			<span class="close" (click)="toggleModal = false;">&times;</span>
+			<h1>Stephan Hoogland </h1>
+			<span>
+				Armbandnummer: 56 <br>
+				Hutnummer: 149 <br>
+				Kleur: Geel
+			</span>
+		  </div>
+		</div>
+		<!-- user result -->
 		<button ion-button full (click)="ShanevanHattum = true;"class="bg-grey color-mediumBlack"> Shane van Hattum </button>
+		<!-- start modal box -->
+		<div *ngIf="ShanevanHattum" id="myModal" class="modal">
+		  <div class="modal-content">
+			<span class="close" (click)="ShanevanHattum = false;">&times;</span>
+			<h1>Shane van Hattum </h1>
+			<span>
+				Armbandnummer: 08 <br>
+				Hutnummer: 10 <br>
+				Kleur: Donkerblauw
+			</span>
+		  </div>
+		</div>
+		<!-- user result -->
 		<button ion-button full (click)="toggleModal3 = true;" class="bg-grey color-mediumBlack"> Peeter Wood </button>
+		<!-- start modal box -->
+		<div *ngIf="toggleModal3" id="myModal" class="modal">
+		  <div class="modal-content">
+			<span class="close" (click)="toggleModal3 = false;">&times;</span>
+			<h1>Peeter Wood </h1>
+			<span>
+				Armbandnummer: 56 <br>
+				Hutnummer: 149 <br>
+				Kleur: Groen
+			</span>
+		  </div>
+		</div>
 	</div>
-	<div *ngIf="toggleModal" id="myModal" class="modal">
-	  <!-- Modal content -->
-	  <div class="modal-content">
-		<span class="close" (click)="toggleModal = false;">&times;</span>
-		<h1>Stephan Hoogland </h1>
-		<span>
-			Armbandnummer: 56 <br>
-			Hutnummer: 149 <br>
-			Kleur: Geel
-		</span>
-	  </div>
-	</div>
-	<div *ngIf="ShanevanHattum" id="myModal" class="modal">
-	  <!-- Modal content -->
-	  <div class="modal-content">
-		<span class="close" (click)="ShanevanHattum = false;">&times;</span>
-		<h1>Shane van Hattum </h1>
-		<span>
-			Armbandnummer: 08 <br>
-			Hutnummer: 10 <br>
-			Kleur: Donkerblauw
-		</span>
-	  </div>
-	</div>
-	<div *ngIf="toggleModal3" id="myModal" class="modal">
-	  <!-- Modal content -->
-	  <div class="modal-content">
-		<span class="close" (click)="toggleModal3 = false;">&times;</span>
-		<h1>Peeter Wood </h1>
-		<span>
-			Armbandnummer: 56 <br>
-			Hutnummer: 149 <br>
-			Kleur: Groen
-		</span>
-	  </div>
-	</div>
+
+
 	<button ion-button full (click)="openBacktoSearch()" class="bg-green correction"> Terug naar zoeken </button>
 </ion-content>

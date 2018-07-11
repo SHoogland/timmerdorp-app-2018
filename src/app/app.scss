@@ -111,6 +111,9 @@ ion-navbar{
 		background: $liliac;
 	}
 }
+.toolbar-ios ion-title{
+	padding: 0;
+}
 
 .toolbar{
 	min-height: 71px;
