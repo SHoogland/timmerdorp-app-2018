@@ -41,11 +41,6 @@ export class HomePage {
 				title: 'Zoek kind',
 				component: SearchPage,
 				class: 'bg-green'
-			},
-			{
-				title: 'VERWIJDER MIJ STRAKS',
-				component: ResultChildrenPage,
-				class: 'bg-green'
 			}
 		];
 
