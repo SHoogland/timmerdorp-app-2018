@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -15,34 +16,35 @@ import { ConnectChildToCabinStep_2Page } from '../pages/connect-child-to-cabin-s
 import { ResultChildrenPage } from '../pages/result-children/result-children';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-	ScanTicketPage,
-	SearchPage,
-	ConnectChildToCabinStep_2Page,
-	ResultChildrenPage,
-	ConnectChildToCabinPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-	ScanTicketPage,
-	SearchPage,
-	ConnectChildToCabinStep_2Page,
-	ResultChildrenPage,
-	ConnectChildToCabinPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    BarcodeScanner,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
-  ]
+	declarations: [
+		MyApp,
+		HomePage,
+		ScanTicketPage,
+		SearchPage,
+		ConnectChildToCabinStep_2Page,
+		ResultChildrenPage,
+		ConnectChildToCabinPage
+	],
+	imports: [
+		BrowserModule,
+		IonicModule.forRoot(MyApp),
+		IonicStorageModule.forRoot()
+	],
+	bootstrap: [IonicApp],
+	entryComponents: [
+		MyApp,
+		HomePage,
+		ScanTicketPage,
+		SearchPage,
+		ConnectChildToCabinStep_2Page,
+		ResultChildrenPage,
+		ConnectChildToCabinPage
+	],
+	providers: [
+		StatusBar,
+		SplashScreen,
+		BarcodeScanner,
+		{ provide: ErrorHandler, useClass: IonicErrorHandler }
+	]
 })
-export class AppModule {}
+export class AppModule { }

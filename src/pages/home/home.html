@@ -1,18 +1,25 @@
 <ion-header>
-  <ion-navbar>
-	<button ion-button menuToggle>
-      <ion-icon name='menu'></ion-icon>
-    </button>
-    <ion-title>
-      <img src="http://timmerdorp.com/img/ding.svg" align="middle" class="nav-logo">
-    </ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name='menu'></ion-icon>
+		</button>
+		<ion-title>
+			<img src="http://timmerdorp.com/img/ding.svg" align="middle" class="nav-logo">
+		</ion-title>
+	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
-	<!-- <button ion-button full (click)="scanCode()" class="bg-yellow">Scan Ticket</button> -->
+	<button ion-button full (click)="scanCode()" class="bg-yellow">Scan Ticket</button>
 
 	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class">
 		{{p.title}}
 	</button>
+
+	<p>{{error}}</p>
+	<form (ngSubmit)="loginNow()">
+		<ion-input type="text" name="username" [(ngModel)]="login.username" placeholder="username"></ion-input>
+		<ion-input type="password" name="password" [(ngModel)]="login.password" placeholder="password"></ion-input>
+		<button ion-button full type="submit">Login</button>
+	</form>
 </ion-content>
