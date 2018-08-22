@@ -1,0 +1,36 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name='menu'></ion-icon>
+		</button>
+		<ion-title>
+			<img src="http://timmerdorp.com/img/ding.svg" align="middle" class="nav-logo">
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<div class="user-info">
+		<h1>Naam</h1>
+		{{ticket.firstName}} {{ticket.lastName}}
+		<br>
+		{{ticket.barcode}}
+	</div>
+	<div class="bracelet-number">
+		<h1>Armband nummer:</h1>
+		<input type="number" placeholder="0123456789">
+		<span class="form-error">
+			Vul je nummer in van armband voordat je verder kan.
+		</span>
+	</div>
+	<!-- user result -->
+	<button ion-button full (click)="save = true;" class="bg-yellow correction"> Opslaan </button>
+	<!-- start modal box -->
+	<div *ngIf="save" id="myModal" class="modal">
+		<div class="modal-content">
+			<span class="close" (click)="save = false;">&times;</span>
+			<h1>Shane van Hattum is toegevoegd</h1>
+		</div>
+	</div>
+</ion-content>

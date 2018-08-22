@@ -1,8 +1,8 @@
 {
   "name": "Timmerdorp",
-  "app_id": "nl.matise.timmerdorp",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular",
+  "pro_id": "nl.matise.timmerdorp"
 }

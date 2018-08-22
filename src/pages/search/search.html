@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+	<button ion-button menuToggle>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      <img src="http://timmerdorp.com/img/ding.svg" align="middle" class="nav-logo">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<div class="container">
+		<div class="bracelet-number">
+			<h1>Zoek kind:</h1>
+			<span class="search-on">Zoek op naam, armbandnummer of hutnummer</span>
+			<input type="text" placeholder="0123456789" class="search-on">
+			<span class="form-error">
+				Vul het veld voordat je verder kan.
+			</span>
+		</div>
+		<div class="footer btn-bottom">
+			<button ion-button full (click)="openResults()" class="bg-green correction btn-bottom">
+				Zoeken
+			</button>
+		</div>
+ 	</div>
+</ion-content>

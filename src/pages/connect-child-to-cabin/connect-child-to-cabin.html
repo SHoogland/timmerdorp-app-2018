@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+	<button ion-button menuToggle>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      <img src="http://timmerdorp.com/img/ding.svg" align="middle" class="nav-logo">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<div class="user-info">
+		<h1>Hut nummer</h1>
+		<input type="text" placeholder="0123456789">
+		<span class="form-error">
+			Vul het hut nummer in, voordat je verder kan.
+		</span>
+	</div>
+	<div class="bracelet-number">
+		<h1>Kinderen:</h1>
+		<span class="child-row">
+			Stephan Hoogland
+		</span>
+		<span class="child-row">
+			Sil van Diepen
+		</span>
+		<span class="child-row">
+			Tim borst
+		</span>
+		 <button ion-button full (click)="toggleModal = true;" class="bg-blue correction">
+			 Kind toevoegen
+		 </button>
+		 <!-- Trigger/Open The Modal -->
+
+		<!-- The Modal -->
+		<div *ngIf="toggleModal" id="myModal" class="modal">
+
+		  <!-- Modal content -->
+		  <div class="modal-content">
+		    <span class="close" (click)="toggleModal = false;">&times;</span>
+		    <h1>Stephan Hoogland is toegevoegd</h1>
+		  </div>
+
+		</div>
+	</div>
+</ion-content>

@@ -14,3 +14,255 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@font-face{
+	font-family: Mikado-Bold;
+	src: url('../assets/fonts/Mikado-Bold.woff');
+}
+
+body{
+	font-size: 16px;
+	line-height: 20px;
+	letter-spacing: 0.5px;
+}
+
+h1, button, .result-child{
+	font-family: Mikado-Bold;
+}
+
+h1{
+	font-size: 32px;
+}
+
+
+.bg-yellow{
+	background: $yellow;
+}
+.bg-blue{
+	background: $blue;
+}
+.bg-green{
+	background: $green;
+}
+.bg-grey{
+	background: $lightGrey;
+	&:hover{
+		color: $white;
+	}
+}
+
+.color-mediumBlack{
+	color: $mediumBlack;
+}
+
+// Form styles
+input[type="text"], input[type="password"] {
+	width: 100%;
+	height: 78px;
+	padding: 20px;
+	border: none;
+    background-color: $lightGrey;
+	-webkit-appearance: none;
+	border-radius: 0;
+}
+
+
+// Span elements
+.form-error{
+	position: relative;
+	top: 12px;
+	color: $red;
+}
+
+.child-row{
+	display: block;
+	padding-bottom: 10px;
+}
+
+.search-on{
+	margin-top: 10px;
+}
+
+.toast-container{
+	// background: $darkGrey;
+	border-radius: 5px;
+	color: $darkGrey !important;
+}
+
+ion-navbar{
+	height: 80px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-bottom: 2px solid $liliac;
+
+	.nav-logo{
+		position: relative;
+		width: 90px;
+		height: rem(60);
+		float: right;
+		padding-right: rem(10);
+	}
+	.bar-button{
+		height: 80px;
+		width: 80px;
+		left: -10px;
+		color: $white;
+		border-radius: 0;
+		background: $liliac;
+	}
+}
+.toolbar-ios ion-title{
+	padding: 0;
+}
+
+.toolbar{
+	min-height: 71px;
+	border-bottom: 2px solid $liliac;
+}
+
+.menu-inner {
+    background: #fff;
+    width: 100%;
+}
+
+.item-inner {
+    padding-right: 8px;
+    border-bottom: 0px solid #dedede !important;
+}
+
+ion-toolbar{
+	height: 80px;
+
+	img{display: none;}
+	padding-bottom: 40px;
+
+	.bar-button-close{
+		height: 85px;
+		width: 80px;
+		top: -4px;
+		left: -4px;
+		color: $white;
+		border-radius: 0;
+		background: $liliac;
+	}
+
+}
+
+.nav-items{
+	text-align: center;
+	padding: 32px;
+	margin-bottom: 10px;
+	width: 100%;
+	background: $lightGrey;
+
+	&:first-of-type{
+		border-top: 0px;
+		margin-top: 50px;
+	}
+}
+
+.user-info{
+	padding-top: 32px;
+	text-align: center;
+	padding-bottom: 60px;
+	border-bottom: 2px dashed $lightGrey;
+
+	h1{
+		padding-bottom: 15px;
+	}
+}
+
+.bracelet-number{
+	padding-top: 60px;
+	text-align: center;
+	padding-bottom: 60px;
+
+	h1{
+		padding-bottom: 15px;
+	}
+	.correction{
+		position: relative;
+		top: 40px;
+	}
+}
+
+.container{
+	position: relative;
+	height: 100%;
+}
+
+.button-md, .button-ios{
+	padding: 32px;
+	margin-bottom: 20px;
+	height: 80px;
+	box-shadow: none;
+	font-size: 16px;
+	line-height: 20px;
+	letter-spacing: 0.5px;
+	text-transform: none;
+
+	&:first-of-type{
+		margin-top: 40px;
+	}
+}
+
+.container-bottom{
+	position: sticky;
+	bottom: 0;
+	border: solid 1px green;
+	width: calc(100% - 32px);
+	.gradient{
+		border: 1px solid red;
+		height: 80px;
+		background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
+	}
+	.button-md:first-of-type, .button-ios:first-of-type{ margin-top: 0px; }
+}
+
+
+// Modalbox
+/* The Modal (background) */
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+	top: 0;
+	padding: 10px;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(16, 16, 16, 0.9); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+	position: relative;
+	top: 160px;
+	padding: 10px;
+    background-color: $white;
+    margin: 15% auto;
+    padding: 20px;
+	text-align: center;
+
+	h1{
+		margin-top: 45px;
+	}
+	span{
+		line-height: 40px;
+	}
+}
+
+/* The Close Button */
+.close {
+    color: $mediumBlack;
+    float: right;
+    font-size: 22px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
