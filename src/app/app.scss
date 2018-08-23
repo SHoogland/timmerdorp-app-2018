@@ -44,6 +44,9 @@ h1{
 .bg-green{
 	background: $green;
 }
+.bg-red{
+	background: $red;
+}
 .bg-grey{
 	background: $lightGrey;
 	&:hover{
@@ -56,7 +59,7 @@ h1{
 }
 
 // Form styles
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="tel"] {
 	width: 100%;
 	height: 78px;
 	padding: 20px;
@@ -162,9 +165,9 @@ ion-toolbar{
 }
 
 .user-info{
-	padding-top: 32px;
+	padding-top: 20;
 	text-align: center;
-	padding-bottom: 60px;
+	padding-bottom: 20px;
 	border-bottom: 2px dashed $lightGrey;
 
 	h1{
@@ -173,9 +176,9 @@ ion-toolbar{
 }
 
 .bracelet-number{
-	padding-top: 60px;
+	padding-top: 20px;
 	text-align: center;
-	padding-bottom: 60px;
+	padding-bottom: 20px;
 
 	h1{
 		padding-bottom: 15px;

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Platform, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import * as WPAPI from 'wpapi';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the ScanTicketPage page.
@@ -15,14 +16,20 @@ import * as WPAPI from 'wpapi';
 	templateUrl: 'scan-ticket.html',
 })
 export class ScanTicketPage {
+	error: string;
+	endpoint: string;
+	loading: boolean;
+	wristBandError: boolean;
 	login: {
-		username: '',
-		password: ''
+		username: string,
+		password: string
 	};
 	ticket: {
 		barcode: string;
 		firstName: string,
-		lastName: string
+		lastName: string,
+		birthDate: string,
+		wristBandNr: string
 	};
 
 	constructor(
@@ -39,8 +46,19 @@ export class ScanTicketPage {
 		this.ticket = {
 			barcode: '',
 			firstName: '',
-			lastName: ''
+			lastName: '',
+			birthDate: '',
+			wristBandNr: ''
 		}
+		this.loading = true;
+		this.wristBandError = false;
+		
+		if (this.platform.is('cordova')) {
+			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+		} else {
+			this.endpoint = 'https://timmerdorp.test/wp-json';
+		}
+
 		let self = this;
 
 		Promise.all([
@@ -59,15 +77,8 @@ export class ScanTicketPage {
 				this.login.password = '';
 			})
 		]).then(() => {
-			let endpoint = ''
-			if (this.platform.is('cordova')) {
-				endpoint = 'https://shop.timmerdorp.com/wp-json';
-			} else {
-				endpoint = 'http://timmerdorp.test/wp-json';
-			}
-
 			var wp = new WPAPI({
-				endpoint: endpoint,
+				endpoint: this.endpoint,
 				username: this.login.username,
 				password: this.login.password
 			});
@@ -77,14 +88,42 @@ export class ScanTicketPage {
 			return wp.handler().param('barcode', this.navParams.get('barcode'));
 		}).then((result) => {
 			console.log(result);
-			self.ticket.barcode = result.meta.WooCommerceEventsTicketID[0];
-			self.ticket.firstName = result.meta.fooevents_custom_voornaam[0];
-			self.ticket.lastName = result.meta.fooevents_custom_achternaam[0];
+			if (result.code === 200) {
+				self.ticket.barcode = result.meta.WooCommerceEventsTicketID[0];
+				self.ticket.firstName = result.meta.fooevents_custom_voornaam[0];
+				self.ticket.lastName = result.meta.fooevents_custom_achternaam[0];
+				self.ticket.birthDate = result.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'][0];
+				
+				self.loading = false;
+			} else {
+				self.error = result.message;
+				self.loading = false;
+			}
+		}).catch((error)=>{
+			self.error = error.message;
+			self.loading = false;
+
 		});
 	}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad ScanTicketPage');
+	}
+
+	saveTicket(){
+		var wp = new WPAPI({
+			endpoint: this.endpoint,
+			username: this.login.username,
+			password: this.login.password
+		});
+
+		wp.handler = wp.registerRoute('tickets', 'barcode', {});
+		// yields
+		return wp.handler().param('barcode', this.navParams.get('barcode'));
+	}
+
+	goBack() {
+		this.navCtrl.setRoot(HomePage);
 	}
 
 }
