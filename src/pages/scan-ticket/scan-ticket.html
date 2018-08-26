@@ -39,10 +39,11 @@
 	<button *ngIf="ticket.wristBandNr.length > 2" ion-button full (click)="saveTicket()" class="bg-green correction"> Opslaan </button>
 	
 	<!-- start modal box -->
-	<div *ngIf="save" id="myModal" class="modal">
+	<div *ngIf="modal.showModal" id="myModal" class="modal">
 		<div class="modal-content">
-			<span class="close" (click)="save = false;">&times;</span>
-			<h1>Shane van Hattum is toegevoegd</h1>
+			<span class="close" (click)="modal.showModal = false;">&times;</span>
+			<h1>{{modal.text}}</h1>
+			<button ion-button full (click)="goBack()" class="bg-red correction">Terug naar home</button>
 		</div>
 	</div>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, NavParams } from 'ionic-angular';
+import { Platform, NavController } from 'ionic-angular';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -30,25 +30,25 @@ export class HomePage {
 		public platform: Platform,
 		public storage: Storage
 	) {
+		this.init();
+	}
 
+	init() {
+		console.log('init');
 		this.login = {
 			username: '',
 			password: ''
 		}
 
-		storage.get('username').then((val) => {
+		this.storage.get('username').then((val) => {
 			this.login.username = val;
-			// console.log('Your username is:' + val);
 		}, (error) => {
-			console.log('no username found');
 			this.login.username = '';
 		});
 
-		storage.get('password').then((val) => {
+		this.storage.get('password').then((val) => {
 			this.login.password = val;
-			// console.log('Your password is:' + val);
 		}, (error) => {
-			console.log('no password found');
 			this.login.password = '';
 		});
 
@@ -64,12 +64,13 @@ export class HomePage {
 				class: 'bg-green'
 			}
 		];
+	}
 
+	ionViewDidLoad() {
+		this.init();
 	}
 
 	scanCode() {
-		console.log('scan the shizzle');
-
 		if (this.platform.is('cordova')) {
 			this.barcodeScanner.scan().then((barcodeData) => {
 				this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });
@@ -78,7 +79,7 @@ export class HomePage {
 				this.error = error.message;
 			});
 		} else {
-			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 791621437 });
+			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 1847948292 });
 		}
 
 	}

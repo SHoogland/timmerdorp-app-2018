@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-navbar>
-	<button ion-button menuToggle>
-      <ion-icon name='menu'></ion-icon>
-    </button>
-    <ion-title>
-      <img src="http://timmerdorp.com/img/ding.svg" align="middle" class="nav-logo">
-    </ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name='menu'></ion-icon>
+		</button>
+		<ion-title>
+			<img src="http://timmerdorp.com/img/ding.svg" align="middle" class="nav-logo">
+		</ion-title>
+	</ion-navbar>
 </ion-header>
 
 
@@ -15,7 +15,7 @@
 		<div class="bracelet-number">
 			<h1>Zoek kind:</h1>
 			<span class="search-on">Zoek op naam, armbandnummer of hutnummer</span>
-			<input type="text" placeholder="0123456789" class="search-on">
+			<ion-input type="text" [(ngModel)]="searchTerm" (ngModelChange)="search($event)"></ion-input>
 			<span class="form-error">
 				Vul het veld voordat je verder kan.
 			</span>
@@ -25,5 +25,5 @@
 				Zoeken
 			</button>
 		</div>
- 	</div>
+	</div>
 </ion-content>
