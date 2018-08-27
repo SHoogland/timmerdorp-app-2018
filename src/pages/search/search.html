@@ -11,19 +11,28 @@
 
 
 <ion-content padding>
+	<div class="user-info">
+		<span style="color:red;">
+			{{error}}
+		</span>
+		<div *ngIf="loading">
+			even wachten...
+		</div>
+	</div>
 	<div class="container">
 		<div class="bracelet-number">
 			<h1>Zoek kind:</h1>
 			<span class="search-on">Zoek op naam, armbandnummer of hutnummer</span>
 			<ion-input type="text" [(ngModel)]="searchTerm" (ngModelChange)="search($event)"></ion-input>
-			<span class="form-error">
-				Vul het veld voordat je verder kan.
-			</span>
 		</div>
-		<div class="footer btn-bottom">
-			<button ion-button full (click)="openResults()" class="bg-green correction btn-bottom">
-				Zoeken
-			</button>
-		</div>
+	</div>
+	<div *ngFor="let child of tickets">
+		<button ion-button full (click)="toggleModal = true;" class="bg-grey color-mediumBlack">
+			{{ child.meta.fooevents_custom_voornaam[0] }} {{ child.meta.fooevents_custom_achternaam[0] }} {{ child.meta.wristband || '-' }}
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0] === '0'" style="background-color:yellow;">{{ child.meta.hutnr }}</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0] === '1'" style="background-color:red;">{{ child.meta.hutnr }}</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0] === '2'" style="background-color:blue;">{{ child.meta.hutnr }}</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0] === '3'" style="background-color:green;">{{ child.meta.hutnr }}</span>
+		</button>
 	</div>
 </ion-content>

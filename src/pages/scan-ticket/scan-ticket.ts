@@ -104,7 +104,7 @@ export class ScanTicketPage {
 				if (result.meta.wristband) {
 					self.modal.showModal = true;
 					self.ticket.wristBandNr = result.meta.wristband[0];
-					self.modal.text = 'Deze ticket heeft al een armband!';
+					self.modal.text = 'Dit ticket heeft al een armband!';
 				}
 
 				self.loading = false;
