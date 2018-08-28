@@ -3,7 +3,7 @@ import { NavController, NavParams, Platform } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 
-import { ConnectChildToCabinStep_2Page } from '../connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
+// import { ConnectChildToCabinStep_2Page } from '../connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
 /**
  * Generated class for the ConnectChildToCabinPage page.
  *
