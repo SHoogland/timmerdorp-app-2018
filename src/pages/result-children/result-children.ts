@@ -10,20 +10,20 @@ import { SearchPage } from '../search/search';
  */
 
 @Component({
-  selector: 'page-result-children',
-  templateUrl: 'result-children.html',
+	selector: 'page-result-children',
+	templateUrl: 'result-children.html',
 })
 export class ResultChildrenPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ResultChildrenPage');
-  }
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad ResultChildrenPage');
+	}
 
-  openBacktoSearch(){
-	 this.navCtrl.setRoot(SearchPage);
-  }
+	openBacktoSearch() {
+		this.navCtrl.setRoot(SearchPage);
+	}
 
 }

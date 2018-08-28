@@ -4,6 +4,8 @@ import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 
 import { ResultChildrenPage } from '../result-children/result-children';
+import { HomePage } from '../home/home';
+import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 /**
  * Generated class for the SearchPage page.
  *
@@ -25,7 +27,7 @@ export class SearchPage {
 	tickets: Array<any>;
 	modal: {
 		showModal: boolean;
-		text: string;
+		child: any;
 	}
 	login: {
 		username: string,
@@ -54,7 +56,7 @@ export class SearchPage {
 		this.loading = false;
 		this.error = '';
 		this.modal = {
-			text: '',
+			child: null,
 			showModal: false
 		}
 		this.tickets = [];
@@ -118,6 +120,9 @@ export class SearchPage {
 			console.log(result);
 			if (result.code === 200) {
 				self.tickets = result.tickets;
+				if(self.tickets.length === 0){
+					self.error = 'no results';
+				}
 				self.loading = false;
 			} else {
 				self.error = result.message;
@@ -129,5 +134,17 @@ export class SearchPage {
 		});
 	}
 
+	goBack() {
+		this.navCtrl.setRoot(HomePage);
+	}
+
+	showModal(child) {
+		this.modal.child = child;
+		this.modal.showModal = true;
+	}
+
+	scanChild(barcode){
+		this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode });
+	}
 
 }

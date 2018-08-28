@@ -1,48 +1,65 @@
 <ion-header>
-  <ion-navbar>
-	<button ion-button menuToggle>
-      <ion-icon name='menu'></ion-icon>
-    </button>
-    <ion-title>
-      <img src="http://timmerdorp.com/img/ding.svg" align="middle" class="nav-logo">
-    </ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name='menu'></ion-icon>
+		</button>
+		<ion-title>
+			<img src="http://timmerdorp.com/img/ding.svg" align="middle" class="nav-logo">
+		</ion-title>
+	</ion-navbar>
 </ion-header>
-
 
 <ion-content padding>
 	<div class="user-info">
-		<h1>Hut nummer</h1>
-		<input type="text" placeholder="0123456789">
-		<span class="form-error">
-			Vul het hut nummer in, voordat je verder kan.
+		<span style="color:red;">
+			{{error}}
 		</span>
+		<div *ngIf="loading">
+			even wachten...
+		</div>
+	</div>
+	<div class="user-info">
+		<h1>Hut nummer</h1>
+		<ion-input #nrInput type="tel" placeholder="123" [(ngModel)]="hutNr" (ngModelChange)="search($event)" maxlength="3"></ion-input>
 	</div>
 	<div class="bracelet-number">
 		<h1>Kinderen:</h1>
-		<span class="child-row">
-			Stephan Hoogland
-		</span>
-		<span class="child-row">
-			Sil van Diepen
-		</span>
-		<span class="child-row">
-			Tim borst
-		</span>
-		 <button ion-button full (click)="toggleModal = true;" class="bg-blue correction">
-			 Kind toevoegen
-		 </button>
-		 <!-- Trigger/Open The Modal -->
+		<div *ngFor="let child of hutTickets">
+			<button ion-button full class="bg-grey color-mediumBlack" (click)="removeChild = child; removeModal.show = true;">
+				{{ child.meta.fooevents_custom_voornaam[0] }} {{ child.meta.fooevents_custom_achternaam[0] }} {{ child.meta.wristband ||
+				'-' }}
+			</button>
+		</div>
+		<button ion-button full (click)="addModal.show = true;" class="bg-blue correction">
+			Kind toevoegen
+		</button>
+		<!-- Trigger/Open The Modal -->
 
-		<!-- The Modal -->
-		<div *ngIf="toggleModal" id="myModal" class="modal">
+		<div *ngIf="addModal.show" id="myModal" class="modal">
+			<div class="modal-content">
+				<span class="close" (click)="addModal.show = false;">&times;</span>
+				<h1>zoek een kind en voeg hem toe</h1>
+				<span style="color:red;">
+					{{searchError}}
+				</span>
+				<ion-input type="text" [(ngModel)]="searchTerm" (ngModelChange)="searchChild($event)"></ion-input>
+				<div *ngFor="let child of tickets">
+					<button ion-button full (click)="addChildToHut(child);addModal.show = false;" class="bg-grey color-mediumBlack">
+						{{ child.meta.fooevents_custom_voornaam[0] }} {{ child.meta.fooevents_custom_achternaam[0] }} {{ child.meta.wristband ||
+						'-' }}
+					</button>
+				</div>
 
-		  <!-- Modal content -->
-		  <div class="modal-content">
-		    <span class="close" (click)="toggleModal = false;">&times;</span>
-		    <h1>Stephan Hoogland is toegevoegd</h1>
-		  </div>
+			</div>
 
+		</div>
+
+		<div *ngIf="removeModal.show" id="myModal" class="modal">
+			<div class="modal-content">
+				<span class="close" (click)="removeModal.show = false;">&times;</span>
+				<h1>Weet je zeker dat je {{ removeChild.meta.fooevents_custom_voornaam[0] }} wilt verwijderen?</h1>
+				<button ion-button full (click)="removeChildFromHut(removeChild)" class="bg-yellow correction">Ja</button>
+			</div>
 		</div>
 	</div>
 </ion-content>
