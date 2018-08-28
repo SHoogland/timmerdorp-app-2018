@@ -40,7 +40,7 @@ export class ConnectChildToCabinPage {
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		public platform: Platform,
-		public storage: Storage
+		public storage: Storage,
 	) {
 		if (this.platform.is('cordova')) {
 			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
@@ -177,7 +177,7 @@ export class ConnectChildToCabinPage {
 		wp.handler().param('hutnr', this.hutNr).param('wristband', child.meta.wristband).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
-				this.searchHut();
+				this.search();
 				self.loading = false;
 			} else {
 				self.error = result.message;
@@ -196,7 +196,7 @@ export class ConnectChildToCabinPage {
 			console.log(result);
 			if (result.code === 200) {
 				this.removeModal.show = false;
-				this.searchHut();
+				this.search();
 				self.loading = false;
 			} else {
 				self.error = result.message;

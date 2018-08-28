@@ -3,39 +3,24 @@ import { NavController, NavParams, Platform } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 
-import { HomePage } from '../home/home';
-import { ScanTicketPage } from '../scan-ticket/scan-ticket';
-/**
- * Generated class for the SearchPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-
 @Component({
-	selector: 'page-search',
-	templateUrl: 'search.html',
+	selector: 'page-presence',
+	templateUrl: 'presence.html',
 })
-export class SearchPage {
-	typingTimer: any;
-	searchTerm: string;
+export class PresencePage {
 	error: string;
 	endpoint: string;
 	loading: boolean;
-	tickets: Array<any>;
-	modal: {
-		showModal: boolean;
-		child: any;
-	}
 	login: {
 		username: string,
 		password: string
 	};
+	tickets: Array<any>;
+
+	number: string;
+	name: string;
 
 	constructor(
-		public navCtrl: NavController,
-		public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage
 	) {
@@ -54,11 +39,10 @@ export class SearchPage {
 		}
 		this.loading = false;
 		this.error = '';
-		this.modal = {
-			child: null,
-			showModal: false
-		}
 		this.tickets = [];
+
+		this.number = '';
+		this.name = '';
 	}
 
 	getWpApi(route) {
@@ -93,53 +77,45 @@ export class SearchPage {
 		});
 	}
 
-	search() {
-		try {
-			clearTimeout(this.typingTimer);
-			this.typingTimer = setTimeout(() => {
-				this.searchThis();
-			}, 500);
-		} catch (e) {
-			console.log(e);
+	getChild() {
+		let self = this;
+		if (this.number.length === 3) {
+			this.loading = true;
+			var wp = this.getWpApi('search');
+			wp.handler().param('search', this.number).then((result) => {
+				console.log(result);
+				if (result.code === 200) {
+					self.tickets = result.tickets;
+					if (self.tickets.length === 0) {
+						self.error = 'no results';
+					}
+					self.loading = false;
+				} else {
+					self.error = result.message;
+					self.loading = false;
+				}
+			}).catch((error) => {
+				self.error = error.message;
+				self.loading = false;
+			});
+
 		}
 	}
 
-	searchThis() {
+	updatePresence(child) {
 		let self = this;
-		self.tickets = [];
-		self.error = '';
 		self.loading = true;
-		console.log('searching: ' + this.searchTerm);
-		var wp = this.getWpApi('search');
-		wp.handler().param('search', this.searchTerm).then((result) => {
-			console.log(result);
+		var wp = this.getWpApi('wed-presence');
+		wp.handler().param('wristband', this.number).then((result) => {
 			if (result.code === 200) {
-				self.tickets = result.tickets;
-				if(self.tickets.length === 0){
-					self.error = 'no results';
-				}
+				this.init();
 				self.loading = false;
 			} else {
 				self.error = result.message;
 				self.loading = false;
 			}
 		}).catch((error) => {
-			self.error = error.message;
-			self.loading = false;
 		});
-	}
-
-	goBack() {
-		this.navCtrl.setRoot(HomePage);
-	}
-
-	showModal(child) {
-		this.modal.child = child;
-		this.modal.showModal = true;
-	}
-
-	scanChild(barcode){
-		this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode });
 	}
 
 }

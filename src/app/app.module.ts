@@ -12,8 +12,7 @@ import { HomePage } from '../pages/home/home';
 import { SearchPage } from '../pages/search/search';
 import { ScanTicketPage } from '../pages/scan-ticket/scan-ticket';
 import { ConnectChildToCabinPage } from '../pages/connect-child-to-cabin/connect-child-to-cabin';
-import { ConnectChildToCabinStep_2Page } from '../pages/connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
-import { ResultChildrenPage } from '../pages/result-children/result-children';
+import { PresencePage } from '../pages/presence/presence';
 
 @NgModule({
 	declarations: [
@@ -21,9 +20,8 @@ import { ResultChildrenPage } from '../pages/result-children/result-children';
 		HomePage,
 		ScanTicketPage,
 		SearchPage,
-		ConnectChildToCabinStep_2Page,
-		ResultChildrenPage,
-		ConnectChildToCabinPage
+		ConnectChildToCabinPage,
+		PresencePage
 	],
 	imports: [
 		BrowserModule,
@@ -36,9 +34,8 @@ import { ResultChildrenPage } from '../pages/result-children/result-children';
 		HomePage,
 		ScanTicketPage,
 		SearchPage,
-		ConnectChildToCabinStep_2Page,
-		ResultChildrenPage,
-		ConnectChildToCabinPage
+		ConnectChildToCabinPage,
+		PresencePage
 	],
 	providers: [
 		StatusBar,

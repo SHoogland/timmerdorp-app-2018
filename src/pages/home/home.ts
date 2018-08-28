@@ -7,6 +7,7 @@ import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { SearchPage } from '../search/search';
 import { ConnectChildToCabinPage } from '../connect-child-to-cabin/connect-child-to-cabin';
 import { Storage } from '@ionic/storage';
+import { PresencePage } from '../presence/presence';
 
 @Component({
 	selector: 'page-home',
@@ -62,6 +63,11 @@ export class HomePage {
 				title: 'Zoek kind',
 				component: SearchPage,
 				class: 'bg-green'
+			},
+			{
+				title: 'Aanwezigheid',
+				component: PresencePage,
+				class: 'bg-blue'
 			}
 		];
 	}
