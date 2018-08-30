@@ -11,6 +11,7 @@ export class PresencePage {
 	error: string;
 	endpoint: string;
 	loading: boolean;
+	day: string;
 	login: {
 		username: string,
 		password: string
@@ -33,6 +34,7 @@ export class PresencePage {
 	}
 
 	init() {
+		this.day = 'thu',
 		this.login = {
 			username: '',
 			password: ''
@@ -105,10 +107,15 @@ export class PresencePage {
 	updatePresence(child) {
 		let self = this;
 		self.loading = true;
-		var wp = this.getWpApi('wed-presence');
-		wp.handler().param('wristband', this.number).then((result) => {
+		var wp = this.getWpApi('presence');
+		wp.handler().param('wristband', this.number).param('day', this.day).then((result) => {
 			if (result.code === 200) {
-				this.init();
+				this.loading = false;
+				this.error = '';
+				this.tickets = [];
+		
+				this.number = '';
+				this.name = '';
 				self.loading = false;
 			} else {
 				self.error = result.message;

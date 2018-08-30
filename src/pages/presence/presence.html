@@ -26,8 +26,8 @@
 	</div>
 	<div *ngFor="let child of tickets">
 		<button ion-button full (click)="updatePresence(child)" class="bg-grey color-mediumBlack">
-			Meld {{ child.meta.fooevents_custom_voornaam[0] }} {{ child.meta.fooevents_custom_achternaam[0] }} {{ child.meta.wristband ||
-			'-' }} aanwezig op woensdag.
+			{{ child.meta.fooevents_custom_voornaam[0] }} {{ child.meta.fooevents_custom_achternaam[0] }} {{ child.meta.wristband ||
+			'-' }} aanwezig op <span *ngIf="day === 'wed'">woensdag</span><span *ngIf="day === 'thu'">donderdag</span>.
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'" style="background-color:yellow;"> {{ child.meta.hutnr
 				}}</span>
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'" style="background-color:red;"> {{ child.meta.hutnr }}</span>
