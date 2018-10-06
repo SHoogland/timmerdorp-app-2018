@@ -84,7 +84,7 @@ export class PresencePage {
 		if (this.number.length === 3) {
 			this.loading = true;
 			var wp = this.getWpApi('search');
-			wp.handler().param('search', this.number).then((result) => {
+			wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
 				console.log(result);
 				if (result.code === 200) {
 					self.tickets = result.tickets;
