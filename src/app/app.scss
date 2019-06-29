@@ -37,6 +37,9 @@ h1{
 
 .bg-yellow{
 	background: $yellow;
+	&:hover{
+		background: #dfa401!important;
+	}
 }
 .bg-blue{
 	background: $blue;
@@ -96,7 +99,7 @@ ion-navbar{
 	height: 80px;
 	-webkit-box-shadow: none;
 	box-shadow: none;
-	border-bottom: 2px solid $liliac;
+	border-bottom: 2px solid $blue;
 
 	.nav-logo{
 		position: relative;
@@ -111,7 +114,7 @@ ion-navbar{
 		left: -10px;
 		color: $white;
 		border-radius: 0;
-		background: $liliac;
+		background: $blue;
 	}
 }
 .toolbar-ios ion-title{
@@ -120,7 +123,7 @@ ion-navbar{
 
 .toolbar{
 	min-height: 71px;
-	border-bottom: 2px solid $liliac;
+	border-bottom: 2px solid $blue;
 }
 
 .menu-inner {
@@ -146,7 +149,7 @@ ion-toolbar{
 		left: -4px;
 		color: $white;
 		border-radius: 0;
-		background: $liliac;
+		background: $blue;
 	}
 
 }

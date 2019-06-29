@@ -62,7 +62,7 @@ export class HomePage {
 			{
 				title: 'Zoek kind',
 				component: SearchPage,
-				class: 'bg-green'
+				class: 'bg-yellow'
 			},
 			{
 				title: 'Aanwezigheid',
