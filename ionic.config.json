@@ -4,5 +4,6 @@
     "cordova": {}
   },
   "type": "ionic-angular",
-  "pro_id": "nl.matise.timmerdorp"
+  "pro_id": "nl.matise.timmerdorp",
+  "id": "nl.matise.timmerdorp"
 }
