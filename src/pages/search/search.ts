@@ -74,7 +74,7 @@ export class SearchPage {
 	}
 
 	ionViewDidLoad() {
-		let self = this;
+		// let self = this;
 
 		this.init();
 

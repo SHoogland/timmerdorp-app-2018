@@ -81,7 +81,7 @@ export class ConnectChildToCabinPage {
 	}
 
 	ionViewDidLoad() {
-		let self = this;
+		// let self = this;
 
 		this.init();
 

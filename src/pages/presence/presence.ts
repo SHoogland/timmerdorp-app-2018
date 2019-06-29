@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 
@@ -60,7 +60,7 @@ export class PresencePage {
 	}
 
 	ionViewDidLoad() {
-		let self = this;
+		// let self = this;
 
 		this.init();
 
