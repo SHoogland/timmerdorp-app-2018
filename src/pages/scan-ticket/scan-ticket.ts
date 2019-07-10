@@ -38,7 +38,8 @@ export class ScanTicketPage {
 		if (this.platform.is('cordova')) {
 			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		} else {
-			this.endpoint = 'https://timmerdorp.test/wp-json';
+			// this.endpoint = 'https://timmerdorp.test/wp-json';
+			this.endpoint = 'https://staging.timmerdorp.com/wp-json';
 		}
 		this.init();
 	}
@@ -97,8 +98,8 @@ export class ScanTicketPage {
 		}).then((result) => {
 			if (result.code === 200) {
 				self.ticket.barcode = result.meta.WooCommerceEventsTicketID[0];
-				self.ticket.firstName = result.meta.fooevents_custom_voornaam[0];
-				self.ticket.lastName = result.meta.fooevents_custom_achternaam[0];
+				self.ticket.firstName = result.meta.WooCommerceEventsAttendeeName[0];
+				self.ticket.lastName = result.meta.WooCommerceEventsAttendeeLastName[0];
 				self.ticket.birthDate = result.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'][0];
 
 				if (result.meta.wristband) {

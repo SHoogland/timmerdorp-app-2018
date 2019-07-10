@@ -28,7 +28,8 @@ export class PresencePage {
 		if (this.platform.is('cordova')) {
 			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		} else {
-			this.endpoint = 'https://timmerdorp.test/wp-json';
+			// this.endpoint = 'https://timmerdorp.test/wp-json';
+			this.endpoint = 'https://staging.timmerdorp.com/wp-json';
 		}
 		this.init();
 	}
