@@ -26,7 +26,7 @@
 		<h1>Kinderen:</h1>
 		<div *ngFor="let child of hutTickets">
 			<button ion-button full class="bg-grey color-mediumBlack" (click)="removeChild = child; removeModal.show = true;">
-				{{ child.meta.fooevents_custom_voornaam[0] }} {{ child.meta.fooevents_custom_achternaam[0] }} {{ child.meta.wristband ||
+				{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} {{ child.meta.wristband ||
 				'-' }}
 			</button>
 		</div>
@@ -45,7 +45,7 @@
 				<ion-input type="text" [(ngModel)]="searchTerm" (ngModelChange)="searchChild($event)"></ion-input>
 				<div *ngFor="let child of tickets">
 					<button ion-button full (click)="addChildToHut(child);addModal.show = false;" class="bg-grey color-mediumBlack">
-						{{ child.meta.fooevents_custom_voornaam[0] }} {{ child.meta.fooevents_custom_achternaam[0] }} {{ child.meta.wristband ||
+						{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} {{ child.meta.wristband ||
 						'-' }}
 						<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'" style="background-color:yellow;"> {{ child.meta.hutnr }}</span>
 						<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'" style="background-color:red;"> {{ child.meta.hutnr }}</span>
@@ -62,7 +62,7 @@
 		<div *ngIf="removeModal.show" id="myModal" class="modal">
 			<div class="modal-content">
 				<span class="close" (click)="removeModal.show = false;">&times;</span>
-				<h1>Weet je zeker dat je {{ removeChild.meta.fooevents_custom_voornaam[0] }} wilt verwijderen?</h1>
+				<h1>Weet je zeker dat je {{ removeChild.meta.WooCommerceEventsAttendeeName[0] }} wilt verwijderen?</h1>
 				<button ion-button full (click)="removeChildFromHut(removeChild)" class="bg-yellow correction">Ja</button>
 			</div>
 		</div>

@@ -27,7 +27,7 @@
 	</div>
 	<div *ngFor="let child of tickets">
 		<button ion-button full (click)="showModal(child)" class="bg-grey color-mediumBlack">
-			{{ child.meta.fooevents_custom_voornaam[0] }} {{ child.meta.fooevents_custom_achternaam[0] }} {{ child.meta.wristband ||
+			{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} {{ child.meta.wristband ||
 			'-' }} 
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'" style="background-color:yellow;"> {{ child.meta.hutnr }}</span>
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'" style="background-color:red;"> {{ child.meta.hutnr }}</span>
@@ -41,8 +41,8 @@
 		<div class="modal-content">
 			<span class="close" (click)="modal.showModal = false;">&times;</span>
 			<ul>
-				<li>voornaam: {{ modal.child.meta.fooevents_custom_voornaam[0] }}</li>
-				<li>achternaam: {{ modal.child.meta.fooevents_custom_achternaam[0] }}</li>
+				<li>voornaam: {{ modal.child.meta.WooCommerceEventsAttendeeName[0] }}</li>
+				<li>achternaam: {{ modal.child.meta.WooCommerceEventsAttendeeLastName[0] }}</li>
 				<li>{{ modal.child.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'][0] }}</li>
 				<li>{{ modal.child.meta.fooevents_custom_naam_huisarts[0] }}</li>
 				<li>{{ modal.child.meta['fooevents_custom_opmerkingen,_allergien'][0] }}</li>
