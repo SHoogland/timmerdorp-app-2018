@@ -1,0 +1,8 @@
+language: objective-c
+before_install:
+- export LANG=en_US.UTF-8
+- nvm install 10
+- yarn global add ionic cordova
+script:
+- yarn install
+- ionic cordova build ios
