@@ -2,9 +2,9 @@ language: objective-c
 before_install:
 - export LANG=en_US.UTF-8
 - nvm install 10
-- npm i -g ionic cordova
+- npm i -g ionic cordova cordova-res
 script:
 - npm install
-- ionic cordova platform add ios --nofetch
+- ionic cordova platform add ios --nofetch —-verbose
 - ionic cordova resources ios
-- ionic cordova build ios
+- ionic cordova build ios —-verbose
