@@ -5,6 +5,5 @@ before_install:
 - npm i -g ionic cordova cordova-res
 script:
 - npm install
-- ionic cordova platform add ios --nofetch --verbose
 - ionic cordova resources ios
-- ionic cordova build ios --verbose
+- ionic cordova build ios
