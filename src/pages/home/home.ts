@@ -8,6 +8,7 @@ import { SearchPage } from '../search/search';
 import { ConnectChildToCabinPage } from '../connect-child-to-cabin/connect-child-to-cabin';
 import { Storage } from '@ionic/storage';
 import { PresencePage } from '../presence/presence';
+import { LoginPage } from '../login/login';
 
 @Component({
 	selector: 'page-home',
@@ -36,24 +37,13 @@ export class HomePage {
 
 	init() {
 		console.log('init');
-		this.login = {
-			username: '',
-			password: ''
-		}
-
-		this.storage.get('username').then((val) => {
-			this.login.username = val;
-		}, (error) => {
-			this.login.username = '';
-		});
-
-		this.storage.get('password').then((val) => {
-			this.login.password = val;
-		}, (error) => {
-			this.login.password = '';
-		});
 
 		this.pages = [
+			{
+				title: 'Scan Ticket',
+				component: ScanTicketPage,
+				class: 'bg-blue'
+			},
 			{
 				title: 'Koppel kind aan hut',
 				component: ConnectChildToCabinPage,
@@ -62,12 +52,17 @@ export class HomePage {
 			{
 				title: 'Zoek kind',
 				component: SearchPage,
-				class: 'bg-yellow'
+				class: 'bg-blue'
 			},
 			{
 				title: 'Aanwezigheid',
 				component: PresencePage,
 				class: 'bg-blue'
+			},
+			{
+				title: 'Login',
+				component: LoginPage,
+				class: 'bg-green'
 			}
 		];
 	}
@@ -95,11 +90,5 @@ export class HomePage {
 		// we wouldn't want the back button to show in this scenario
 
 		this.navCtrl.setRoot(page.component);
-	}
-
-	loginNow() {
-		// console.log(this.login);
-		this.storage.set('username', this.login.username);
-		this.storage.set('password', this.login.password);
 	}
 }

@@ -13,6 +13,7 @@ import { SearchPage } from '../pages/search/search';
 import { ScanTicketPage } from '../pages/scan-ticket/scan-ticket';
 import { ConnectChildToCabinPage } from '../pages/connect-child-to-cabin/connect-child-to-cabin';
 import { PresencePage } from '../pages/presence/presence';
+import { LoginPage } from '../pages/login/login';
 
 @NgModule({
 	declarations: [
@@ -21,7 +22,8 @@ import { PresencePage } from '../pages/presence/presence';
 		ScanTicketPage,
 		SearchPage,
 		ConnectChildToCabinPage,
-		PresencePage
+		PresencePage,
+		LoginPage
 	],
 	imports: [
 		BrowserModule,
@@ -35,7 +37,8 @@ import { PresencePage } from '../pages/presence/presence';
 		ScanTicketPage,
 		SearchPage,
 		ConnectChildToCabinPage,
-		PresencePage
+		PresencePage,
+		LoginPage
 	],
 	providers: [
 		StatusBar,

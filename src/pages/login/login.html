@@ -1,0 +1,32 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name='menu'></ion-icon>
+		</button>
+		<ion-title>
+			<img src="assets/imgs/logo.png"
+				onClick="javascript:document.getElementsByClassName('nav-items item item-block item-md')[0].click();//go to home page"
+				align="middle" class="nav-logo">
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<div class="user-info">
+		<span style="color:red;">
+			{{error}}
+		</span>
+		<div style='height: 20px;'>
+			<div *ngIf="loading">
+				Laden...
+			</div>
+		</div>
+	</div>
+	<h1>Login</h1>
+	<form (ngSubmit)="loginNow()">
+		<ion-input type="text" name="username" [(ngModel)]="login.username" placeholder="username"></ion-input>
+		<ion-input type="password" name="password" [(ngModel)]="login.password" placeholder="password"></ion-input>
+		<button ion-button full type="submit" class='bg-green'>Opslaan</button>
+		<button ion-button full (click)='toHome()' class='bg-blue'>Terug naar homepagina</button>
+	</form>
+</ion-content>

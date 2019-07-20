@@ -111,6 +111,7 @@ export class PresencePage {
 		var wp = this.getWpApi('presence');
 		wp.handler().param('wristband', this.number).param('day', this.day).then((result) => {
 			if (result.code === 200) {
+				console.log("Child presence update successful", result)
 				this.loading = false;
 				this.error = '';
 				this.tickets = [];

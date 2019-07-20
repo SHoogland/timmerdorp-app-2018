@@ -6,4 +6,14 @@ page-search {
 			}
 		}
 	}
+
+	td{
+		text-align: left;
+		padding: 2px 4px;
+	}
+
+	td.b{
+		padding-right: 8px;
+		font-weight: bold;
+	}
 }

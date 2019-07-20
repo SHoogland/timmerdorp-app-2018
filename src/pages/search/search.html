@@ -4,7 +4,9 @@
 			<ion-icon name='menu'></ion-icon>
 		</button>
 		<ion-title>
-			<img src="assets/imgs/logo.png" onClick="javascript:document.getElementsByClassName('nav-items item item-block item-md')[0].click();//go to home page"align="middle" class="nav-logo">
+			<img src="assets/imgs/logo.png"
+				onClick="javascript:document.getElementsByClassName('nav-items item item-block item-md')[0].click();//go to home page"
+				align="middle" class="nav-logo">
 		</ion-title>
 	</ion-navbar>
 </ion-header>
@@ -14,8 +16,10 @@
 		<span style="color:red;">
 			{{error}}
 		</span>
-		<div *ngIf="loading">
-			even wachten...
+		<div style='height: 20px;'>
+			<div *ngIf="loading">
+					Laden...
+				</div> 
 		</div>
 	</div>
 	<div class="container">
@@ -27,12 +31,19 @@
 	</div>
 	<div *ngFor="let child of tickets">
 		<button ion-button full (click)="showModal(child)" class="bg-grey color-mediumBlack">
-			{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} {{ child.meta.wristband ||
-			'-' }} 
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'" style="background-color:yellow;"> {{ child.meta.hutnr }}</span>
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'" style="background-color:red;"> {{ child.meta.hutnr }}</span>
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'" style="background-color:blue;"> {{ child.meta.hutnr }}</span>
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'" style="background-color:green;"> {{ child.meta.hutnr }}</span>
+			{{child.meta.WooCommerceEventsAttendeeName[0]}} {{child.meta.WooCommerceEventsAttendeeLastName[0]}} ({{child.meta.wristband ||
+			'-'}})&nbsp;&nbsp;
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
+				style="background-color:yellow;padding: 2px 6px">(hutnummer:&nbsp; {{child.meta.hutnr}})</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'"
+				style="background-color:red;color:white;padding: 2px 6px">(hutnummer:&nbsp;
+				{{child.meta.hutnr}})</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'"
+				style="background-color:blue;color:white;padding: 2px 6px">(hutnummer:&nbsp;
+				{{child.meta.hutnr}})</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'"
+				style="background-color:green;color:white;padding: 2px 6px">(hutnummer:&nbsp;
+				{{child.meta.hutnr}})</span>
 		</button>
 	</div>
 
@@ -40,27 +51,68 @@
 	<div *ngIf="modal.showModal" id="myModal" class="modal">
 		<div class="modal-content">
 			<span class="close" (click)="modal.showModal = false;">&times;</span>
-			<ul>
-				<li>voornaam: {{ modal.child.meta.WooCommerceEventsAttendeeName[0] }}</li>
-				<li>achternaam: {{ modal.child.meta.WooCommerceEventsAttendeeLastName[0] }}</li>
-				<li>{{ modal.child.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'][0] }}</li>
-				<li>{{ (modal.child.meta.fooevents_custom_naam_huisarts||[])[0] }}</li>
-				<li>{{ (modal.child.meta['fooevents_custom_opmerkingen,_allergien']||[])[0] }}</li>
-				<li><a href="tel: {{ modal.child.meta.fooevents_custom_telefoonnr_huisarts[0] }}">tel huisarts: {{ modal.child.meta.fooevents_custom_telefoonnr_huisarts[0] }}</a></li>
-				<li><a href="tel: {{ modal.child.meta.fooevents_custom_telefoonnr_ouders[0] }}">tel 1: {{ modal.child.meta.fooevents_custom_telefoonnr_ouders[0] }}</a></li>
-				<li><a href="tel: {{ modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0] }}">tel 2: {{ modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0] }}</a></li>
-				<li>{{ modal.child.meta.WooCommerceEventsPurchaserEmail[0] }}</li>
-				<li *ngIf="modal.child.meta.wristband">bandje: {{ modal.child.meta.wristband[0] }}</li>
-				<li *ngIf="modal.child.meta.hutnr">hut: {{ modal.child.meta.hutnr[0] }}</li>
-				<li *ngIf="modal.child.meta.present_wed">aanwezig woensdag</li>
-				<li *ngIf="!modal.child.meta.present_wed">afwezig woensdag</li>
-				<li *ngIf="modal.child.meta.present_thu">aanwezig donderdag</li>
-				<li *ngIf="!modal.child.meta.present_thu">afwezig donderdag</li>
-			</ul>
-			
+			<h1 id='childDataHeader'>Gegevens</h1>
+			<table>
+				<tr>
+					<td class='b'>Voornaam</td>
+					<td>{{modal.child.meta.WooCommerceEventsAttendeeName[0]}}</td>
+				</tr>
+				<tr>
+					<td class='b'>Achternaam</td>
+					<td>{{modal.child.meta.WooCommerceEventsAttendeeLastName[0]}}</td>
+				</tr>
+				<tr>
+					<td class='b'>Geboortedatum</td>
+					<td>{{modal.child.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'][0]}}</td>
+				</tr>
+				<tr>
+					<td class='b'>Huisarts</td>
+					<td>{{(modal.child.meta.fooevents_custom_naam_huisarts||[])[0]}}</td>
+				</tr>
+				<tr>
+					<td class='b'>Opmerkingen</td>
+					<td>{{(modal.child.meta['fooevents_custom_opmerkingen,_allergien']||[])[0]}}</td>
+				</tr>
+				<tr>
+					<td class='b'>Tel. huisarts</td>
+					<td><a href="tel: {{modal.child.meta.fooevents_custom_telefoonnr_huisarts[0]}}">{{modal.child.meta.fooevents_custom_telefoonnr_huisarts[0]}}</a>
+					</td>
+				</tr>
+				<tr>
+					<td class='b'>Tel. ouder 1</td>
+					<td><a href="tel: {{modal.child.meta.fooevents_custom_telefoonnr_ouders[0]}}">{{modal.child.meta.fooevents_custom_telefoonnr_ouders[0]}}</a>
+					</td>
+				</tr>
+				<tr>
+					<td class='b'>Tel. ouder 2</td>
+					<td><a href="tel: {{modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0]}}">{{modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0]}}</a>
+					</td>
+				</tr>
+				<tr>
+					<td class='b'>E-mailadres</td>
+					<td>{{modal.child.meta.WooCommerceEventsPurchaserEmail[0]}}</td>
+				</tr>
+				<tr>
+					<td class='b'>Bandje</td>
+					<td><div *ngIf="modal.child.meta.wristband">{{modal.child.meta.wristband[0]}}</div></td>
+				</tr>
+				<tr>
+					<td class='b'>Hutnummer</td>
+					<td><div *ngIf="modal.child.meta.hutnr">{{modal.child.meta.hutnr[0]}}</div></td>
+				</tr>
+				<tr>
+					<td class='b'>Woensdag</td>
+					<td><div *ngIf="modal.child.meta.present_wed">Aanwezig</div><div *ngIf="!modal.child.meta.present_wed">Afwezig</div></td>
+				</tr>
+				<tr>
+					<td class='b'>Donderdag</td>
+					<td><div *ngIf="modal.child.meta.present_thu">Aanwezig</div><div *ngIf="!modal.child.meta.present_thu">Afwezig</div></td>
+				</tr>
+			</table>
 			<button ion-button full (click)="modal.showModal = false;" class="bg-green correction">Ok</button>
-			<button ion-button full (click)="scanChild(modal.child.meta.WooCommerceEventsTicketID[0])" class="bg-yellow correction">Scan</button>
-			<button ion-button full (click)="goBack()" class="bg-red correction">Terug naar home</button>
+			<button ion-button full (click)="scanChild(modal.child.meta.WooCommerceEventsTicketID[0])"
+				class="bg-yellow correction">Scan</button>
+			<button ion-button full (click)="goBack()" class="bg-red correction">Terug naar homepagina</button>
 		</div>
 	</div>
 </ion-content>

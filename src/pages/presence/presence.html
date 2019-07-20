@@ -14,8 +14,10 @@
 		<span style="color:red;">
 			{{error}}
 		</span>
-		<div *ngIf="loading">
-			even wachten...
+		<div style='height: 20px;'>
+			<div *ngIf="loading">
+					Laden...
+				</div> 
 		</div>
 	</div>
 	<div class="container">
@@ -26,14 +28,12 @@
 	</div>
 	<div *ngFor="let child of tickets">
 		<button ion-button full (click)="updatePresence(child)" class="bg-grey color-mediumBlack">
-			{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} {{ child.meta.wristband ||
-			'-' }} aanwezig op <span *ngIf="day === 'wed'">woensdag</span><span *ngIf="day === 'thu'">donderdag</span>.
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'" style="background-color:yellow;"> {{ child.meta.hutnr
-				}}</span>
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'" style="background-color:red;"> {{ child.meta.hutnr }}</span>
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'" style="background-color:blue;"> {{ child.meta.hutnr }}</span>
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'" style="background-color:green;"> {{ child.meta.hutnr
-				}}</span>
+			{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
+			'-' }}) is er op&nbsp;<span *ngIf="day === 'wed'">woensdag</span><span *ngIf="day === 'thu'">donderdag</span>.&nbsp;
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'" style="background-color:yellow;padding: 0px 3px">({{ child.meta.hutnr}})</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'" style="background-color:red;color:white;padding: 0px 3px">({{ child.meta.hutnr }})</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'" style="background-color:blue;color:white;padding: 0px 3px">({{ child.meta.hutnr }})</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'" style="background-color:green;color:white;padding: 0px 3px">({{ child.meta.hutnr}})</span>
 		</button>
 	</div>
 
