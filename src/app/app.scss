@@ -50,6 +50,9 @@ h1{
 .bg-red{
 	background: $red;
 }
+button.bg-red:hover {
+    background: #bd0a0a!important;
+}
 .bg-grey{
 	background: $lightGrey;
 	&:hover{
