@@ -44,8 +44,8 @@
 				<li>voornaam: {{ modal.child.meta.WooCommerceEventsAttendeeName[0] }}</li>
 				<li>achternaam: {{ modal.child.meta.WooCommerceEventsAttendeeLastName[0] }}</li>
 				<li>{{ modal.child.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'][0] }}</li>
-				<li>{{ modal.child.meta.fooevents_custom_naam_huisarts[0] }}</li>
-				<li>{{ modal.child.meta['fooevents_custom_opmerkingen,_allergien'][0] }}</li>
+				<li>{{ (modal.child.meta.fooevents_custom_naam_huisarts||[])[0] }}</li>
+				<li>{{ (modal.child.meta['fooevents_custom_opmerkingen,_allergien']||[])[0] }}</li>
 				<li><a href="tel: {{ modal.child.meta.fooevents_custom_telefoonnr_huisarts[0] }}">tel huisarts: {{ modal.child.meta.fooevents_custom_telefoonnr_huisarts[0] }}</a></li>
 				<li><a href="tel: {{ modal.child.meta.fooevents_custom_telefoonnr_ouders[0] }}">tel 1: {{ modal.child.meta.fooevents_custom_telefoonnr_ouders[0] }}</a></li>
 				<li><a href="tel: {{ modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0] }}">tel 2: {{ modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0] }}</a></li>
