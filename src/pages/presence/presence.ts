@@ -35,7 +35,10 @@ export class PresencePage {
 	}
 
 	init() {
-		this.day = 'thu',
+		this.day = new Date().getDay()==4?"thu":"wed"; 
+		//^ If today is Thursday, this.day=thu. Else, show the next upcoming day, which defaults to Wednesday
+		
+		
 		this.login = {
 			username: '',
 			password: ''
