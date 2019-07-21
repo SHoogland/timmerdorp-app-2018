@@ -42,8 +42,6 @@ export class LoginPage {
 	}
 
 	init() {
-		this.day = 'thu',
-
 		this.usernameError = false;
 		this.passwordError = false;
 		this.success = false;

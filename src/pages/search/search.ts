@@ -106,13 +106,17 @@ export class SearchPage {
 			clearTimeout(this.typingTimer);
 			this.typingTimer = setTimeout(() => {
 				this.searchThis();
-			}, 500);
+			}, 200);
 		} catch (e) {
 			console.log(e);
 		}
 	}
 
 	searchThis() {
+		if(this.searchTerm.length < 3){
+			console.log("Cancelling search. Reason: term too short");
+			return false;
+		}
 		this.loginError = false;
 		this.notLoggedIn = false;
 		let self = this;

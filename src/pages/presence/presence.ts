@@ -98,6 +98,7 @@ export class PresencePage {
 			wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
 				console.log(result);
 				if (result.code === 200) {
+					self.error = '';
 					self.tickets = result.tickets;
 					if (self.tickets.length === 0) {
 						self.error = 'no results';
