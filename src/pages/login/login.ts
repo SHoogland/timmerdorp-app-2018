@@ -20,6 +20,10 @@ export class LoginPage {
 	};
 	tickets: Array<any>;
 
+	success: boolean;
+	usernameError: boolean;
+	passwordError: boolean;
+
 	number: string;
 	name: string;
 
@@ -39,6 +43,11 @@ export class LoginPage {
 
 	init() {
 		this.day = 'thu',
+
+		this.usernameError = false;
+		this.passwordError = false;
+		this.success = false;
+
 		this.login = {
 			username: '',
 			password: ''
@@ -69,12 +78,48 @@ export class LoginPage {
 
 
 	loginNow() {
-		// console.log(this.login);
 		this.storage.set('username', this.login.username);
 		this.storage.set('password', this.login.password);
+
+		this.checkLogin();
 	}
 
-	toHome(){
+	checkLogin() {
+		console.log("Determining whether login is correct by searching for random child '000'...")
+		//Try searching for random term: "000". If it fails, login details probably are incorrect
+		var wp = this.getWpApi('search');
+		wp.handler().param('search', "000").then((result) => {
+			if (result.code === 200) {
+				this.success = true;
+				this.usernameError = false;
+				this.passwordError = false;
+				console.log("Succesvol ingelogd!");
+			} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
+				this.success = false;
+				this.usernameError = false;
+				this.passwordError = true;
+				console.log("Verkeerd wachtwoord!");
+			} else {
+				console.log(result);
+			}
+		}).catch((error) => {
+			if (error.code === 'invalid_username') {
+				this.success = false;
+				this.usernameError = true;
+				this.passwordError = false;
+				console.log("Verkeerde gebruikersnaam!");
+			} else if (error.code === 'incorrect_password') {
+				this.success = false;
+				this.usernameError = false;
+				this.passwordError = true;
+				console.log("Verkeerd wachtwoord!");
+			} else {
+				console.log(error);//user is offline (probably)
+			}
+		});
+	}
+
+	toHome() {
 		this.navCtrl.setRoot(HomePage);
 	}
 
