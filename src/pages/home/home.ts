@@ -66,20 +66,6 @@ export class HomePage {
 		this.init();
 	}
 
-	scanCode() {
-		if (this.platform.is('cordova')) {
-			this.barcodeScanner.scan().then((barcodeData) => {
-				this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });
-			}, (error) => {
-				console.log(error);
-				this.error = error.message;
-			});
-		} else {
-			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 1847948292 });
-		}
-
-	}
-
 	openPage(page) {
 		// Reset the content nav to have just this page
 		// we wouldn't want the back button to show in this scenario
