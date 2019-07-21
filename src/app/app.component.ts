@@ -8,6 +8,7 @@ import { ScanTicketPage } from '../pages/scan-ticket/scan-ticket';
 import { SearchPage } from '../pages/search/search';
 import { ConnectChildToCabinPage } from '../pages/connect-child-to-cabin/connect-child-to-cabin';
 import { PresencePage } from '../pages/presence/presence';
+import { LoginPage } from '../pages/login/login';
 // import { ConnectChildToCabinStep_2Page } from '../pages/connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
 // import { ResultChildrenPage } from '../pages/result-children/result-children';
 
@@ -33,7 +34,8 @@ export class MyApp {
 			{ title: 'Scan Ticket', component: ScanTicketPage },
 			{ title: 'Koppel kind aan hut', component: ConnectChildToCabinPage },
 			{ title: 'Zoek kind', component: SearchPage },
-			{ title: 'Aanwezigheid', component: PresencePage }
+			{ title: 'Aanwezigheid', component: PresencePage },
+			{ title: 'Inloggen', component: LoginPage }
 		];
 
 	}
