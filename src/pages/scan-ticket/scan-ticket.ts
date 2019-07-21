@@ -3,12 +3,15 @@ import { Platform, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import * as WPAPI from 'wpapi';
 import { HomePage } from '../home/home';
+import { LoginPage } from '../login/login';
 
 @Component({
 	selector: 'page-scan-ticket',
 	templateUrl: 'scan-ticket.html',
 })
 export class ScanTicketPage {
+	loginError: boolean;
+	notLoggedIn: boolean;
 	error: string;
 	endpoint: string;
 	loading: boolean;
@@ -56,6 +59,8 @@ export class ScanTicketPage {
 			birthDate: '',
 			wristBandNr: ''
 		}
+		this.loginError = false;
+		this.notLoggedIn = false;
 		this.loading = true;
 		this.modal = {
 			text: '',
@@ -110,13 +115,20 @@ export class ScanTicketPage {
 
 				self.loading = false;
 			} else {
-				self.error = result.message;
-				self.loading = false;
+				if(result.message == 'access denied'){
+					this.notLoggedIn = true;
+				}else{
+					self.error = result.message;
+					self.loading = false;
+				}
 			}
 		}).catch((error) => {
-			self.error = error.message;
+			if(error.code === 'invalid_username' || error.code === 'incorrect_password'){
+				this.loginError = true;
+			}else{
+				self.error = error.message;
+			}
 			self.loading = false;
-
 		});
 	}
 
@@ -146,4 +158,7 @@ export class ScanTicketPage {
 		this.navCtrl.setRoot(HomePage);
 	}
 
+	toLogin() {
+		this.navCtrl.setRoot(LoginPage);
+	}
 }

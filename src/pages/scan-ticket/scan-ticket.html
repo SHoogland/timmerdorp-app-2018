@@ -4,7 +4,9 @@
 			<ion-icon name='menu'></ion-icon>
 		</button>
 		<ion-title>
-			<img src="assets/imgs/logo.png" onClick="javascript:document.getElementsByClassName('nav-items item item-block item-md')[0].click();//go to home page"align="middle" class="nav-logo">
+			<img src="assets/imgs/logo.png"
+				onClick="javascript:document.getElementsByClassName('nav-items item item-block item-md')[0].click();//go to home page"
+				align="middle" class="nav-logo">
 		</ion-title>
 	</ion-navbar>
 </ion-header>
@@ -12,11 +14,19 @@
 
 <ion-content padding>
 	<div class="user-info">
-		<span style="color:red;">
+		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
 			{{error}}
 		</span>
-		<div *ngIf="loading">
-			even wachten...
+		<span *ngIf="loginError" style="color:red;font-weight:bold">
+			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+		</span>
+		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+		</span>
+		<div style='height: 20px;'>
+			<div *ngIf="loading&&!notLoggedIn">
+				Laden...
+			</div>
 		</div>
 	</div>
 	<div *ngIf="ticket.barcode.length > 0">
@@ -36,8 +46,9 @@
 	</div>
 
 	<button ion-button full (click)="goBack()" class="bg-red correction">Terug</button>
-	<button *ngIf="ticket.wristBandNr.length > 2" ion-button full (click)="saveTicket()" class="bg-green correction"> Opslaan </button>
-	
+	<button *ngIf="ticket.wristBandNr.length > 2" ion-button full (click)="saveTicket()" class="bg-green correction">
+		Opslaan </button>
+
 	<!-- start modal box -->
 	<div *ngIf="modal.showModal" id="myModal" class="modal">
 		<div class="modal-content">
