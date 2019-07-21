@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -49,6 +49,10 @@ export class MyApp {
 
 			this.splashScreen.hide();
 			if (cordova.platformId === 'android') {
+				this.platform.registerBackButtonAction(() => { 
+					console.log("TERUG KNOP ANDROID");
+					this.nav.setRoot(HomePage);
+				});
 				this.statusBar.backgroundColorByHexString("#0094f0");
 			} else if(cordova.platformId === 'ios'){
 				this.statusBar.backgroundColorByHexString("#30b0ff");
