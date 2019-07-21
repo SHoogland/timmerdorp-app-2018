@@ -46,10 +46,12 @@ export class MyApp {
 		this.platform.ready().then(() => {
 			// Okay, so the platform is ready and our plugins are available.
 			// Here you can do any higher level native things you might need.
-			// this.statusBar.hide();
+
 			this.splashScreen.hide();
-			if (cordova.platformId == 'android') {
+			if (cordova.platformId === 'android') {
 				this.statusBar.backgroundColorByHexString("#0094f0");
+			} else if(cordova.platformId === 'ios'){
+				this.statusBar.backgroundColorByHexString("#30b0ff");
 			}
 		});
 	}

@@ -18,8 +18,7 @@
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
-    <preference name="StatusBarBackgroundColor" value="#30b0ff" />
+    <preference name="SplashScreenDelay" value="1000" />
     <preference name="StatusBarOverlaysWebView" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
