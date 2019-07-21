@@ -12,6 +12,8 @@ import { LoginPage } from '../pages/login/login';
 // import { ConnectChildToCabinStep_2Page } from '../pages/connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
 // import { ResultChildrenPage } from '../pages/result-children/result-children';
 
+declare let cordova: any;
+
 @Component({
 	templateUrl: 'app.html'
 })
@@ -46,6 +48,9 @@ export class MyApp {
 			// Here you can do any higher level native things you might need.
 			// this.statusBar.hide();
 			this.splashScreen.hide();
+			if (cordova.platformId == 'android') {
+				this.statusBar.backgroundColorByHexString("#0094f0");
+			}
 		});
 	}
 
