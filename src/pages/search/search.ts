@@ -5,6 +5,8 @@ import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../home/home';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
+import { LoginPage } from '../login/login';
+import { DomSanitizer } from '@angular/platform-browser';
 /**
  * Generated class for the SearchPage page.
  *
@@ -20,6 +22,8 @@ import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 export class SearchPage {
 	typingTimer: any;
 	searchTerm: string;
+	loginError: boolean;
+	notLoggedIn: boolean;
 	error: string;
 	endpoint: string;
 	loading: boolean;
@@ -37,7 +41,8 @@ export class SearchPage {
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		public platform: Platform,
-		public storage: Storage
+		public storage: Storage,
+		public sanitizer: DomSanitizer
 	) {
 		if (this.platform.is('cordova')) {
 			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
@@ -55,6 +60,8 @@ export class SearchPage {
 		}
 		this.loading = false;
 		this.error = '';
+		this.loginError = false;
+		this.notLoggedIn = false;
 		this.modal = {
 			child: null,
 			showModal: false
@@ -106,6 +113,8 @@ export class SearchPage {
 	}
 
 	searchThis() {
+		this.loginError = false;
+		this.notLoggedIn = false;
 		let self = this;
 		self.tickets = [];
 		self.error = '';
@@ -121,11 +130,19 @@ export class SearchPage {
 				}
 				self.loading = false;
 			} else {
-				self.error = result.message;
-				self.loading = false;
+				if(result.message == 'access denied'){
+					this.notLoggedIn = true;
+				}else{
+					self.error = result.message;
+					self.loading = false;
+				}
 			}
 		}).catch((error) => {
-			self.error = error.message;
+			if(error.code === 'invalid_username' || error.code === 'incorrect_password'){
+				this.loginError = true;
+			}else{
+				self.error = error.message;
+			}
 			self.loading = false;
 		});
 	}
@@ -137,6 +154,10 @@ export class SearchPage {
 	showModal(child) {
 		this.modal.child = child;
 		this.modal.showModal = true;
+	}
+
+	toLogin() {
+		this.navCtrl.setRoot(LoginPage);
 	}
 
 	scanChild(barcode){

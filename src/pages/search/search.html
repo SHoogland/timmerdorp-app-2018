@@ -13,13 +13,19 @@
 
 <ion-content padding>
 	<div class="user-info">
-		<span style="color:red;">
+		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
 			{{error}}
 		</span>
+		<span *ngIf="loginError" style="color:red;font-weight:bold">
+			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+		</span>
+		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+		</span>
 		<div style='height: 20px;'>
-			<div *ngIf="loading">
-					Laden...
-				</div> 
+			<div *ngIf="loading&&!notLoggedIn">
+				Laden...
+			</div>
 		</div>
 	</div>
 	<div class="container">
@@ -48,7 +54,8 @@
 	</div>
 
 	<!-- start modal box -->
-	<div *ngIf="modal.showModal" id="myModal" (click)="$event.target.id==='myModal'?modal.showModal=false:''" class="modal">
+	<div *ngIf="modal.showModal" id="myModal" (click)="$event.target.id==='myModal'?modal.showModal=false:''"
+		class="modal">
 		<div class="modal-content">
 			<span class="close" (click)="modal.showModal = false;">&times;</span>
 			<h1 id='childDataHeader'>Gegevens</h1>
@@ -75,17 +82,20 @@
 				</tr>
 				<tr>
 					<td class='b'>Tel. huisarts</td>
-					<td><a href="tel: {{modal.child.meta.fooevents_custom_telefoonnr_huisarts[0]}}">{{modal.child.meta.fooevents_custom_telefoonnr_huisarts[0]}}</a>
+					<td><a
+							href="tel: {{modal.child.meta.fooevents_custom_telefoonnr_huisarts[0]}}">{{modal.child.meta.fooevents_custom_telefoonnr_huisarts[0]}}</a>
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Tel. ouder 1</td>
-					<td><a href="tel: {{modal.child.meta.fooevents_custom_telefoonnr_ouders[0]}}">{{modal.child.meta.fooevents_custom_telefoonnr_ouders[0]}}</a>
+					<td><a
+							href="tel: {{modal.child.meta.fooevents_custom_telefoonnr_ouders[0]}}">{{modal.child.meta.fooevents_custom_telefoonnr_ouders[0]}}</a>
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Tel. ouder 2</td>
-					<td><a href="tel: {{modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0]}}">{{modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0]}}</a>
+					<td><a
+							href="tel: {{modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0]}}">{{modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0]}}</a>
 					</td>
 				</tr>
 				<tr>
@@ -94,19 +104,29 @@
 				</tr>
 				<tr>
 					<td class='b'>Bandje</td>
-					<td><div *ngIf="modal.child.meta.wristband">{{modal.child.meta.wristband[0]}}</div></td>
+					<td>
+						<div *ngIf="modal.child.meta.wristband">{{modal.child.meta.wristband[0]}}</div>
+					</td>
 				</tr>
 				<tr>
 					<td class='b'>Hutnummer</td>
-					<td><div *ngIf="modal.child.meta.hutnr">{{modal.child.meta.hutnr[0]}}</div></td>
+					<td>
+						<div *ngIf="modal.child.meta.hutnr">{{modal.child.meta.hutnr[0]}}</div>
+					</td>
 				</tr>
 				<tr>
 					<td class='b'>Woensdag</td>
-					<td><div *ngIf="modal.child.meta.present_wed">Aanwezig</div><div *ngIf="!modal.child.meta.present_wed">Afwezig</div></td>
+					<td>
+						<div *ngIf="modal.child.meta.present_wed">Aanwezig</div>
+						<div *ngIf="!modal.child.meta.present_wed">Afwezig</div>
+					</td>
 				</tr>
 				<tr>
 					<td class='b'>Donderdag</td>
-					<td><div *ngIf="modal.child.meta.present_thu">Aanwezig</div><div *ngIf="!modal.child.meta.present_thu">Afwezig</div></td>
+					<td>
+						<div *ngIf="modal.child.meta.present_thu">Aanwezig</div>
+						<div *ngIf="!modal.child.meta.present_thu">Afwezig</div>
+					</td>
 				</tr>
 			</table>
 			<button ion-button full (click)="modal.showModal = false;" class="bg-green correction">Ok</button>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
+import { LoginPage } from '../login/login';
 
 @Component({
 	selector: 'page-presence',
@@ -12,6 +13,8 @@ export class PresencePage {
 	endpoint: string;
 	loading: boolean;
 	day: string;
+	loginError: boolean;
+	notLoggedIn: boolean;
 	login: {
 		username: string,
 		password: string
@@ -22,6 +25,7 @@ export class PresencePage {
 	name: string;
 
 	constructor(
+		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage
 	) {
@@ -38,6 +42,9 @@ export class PresencePage {
 		this.day = new Date().getDay()==4?"thu":"wed"; 
 		//^ If today is Thursday, this.day=thu. Else, show the next upcoming day, which defaults to Wednesday
 		
+		
+		this.loginError = false;
+		this.notLoggedIn = false;
 		
 		this.login = {
 			username: '',
@@ -97,14 +104,21 @@ export class PresencePage {
 					}
 					self.loading = false;
 				} else {
-					self.error = result.message;
-					self.loading = false;
+					if(result.message == 'access denied'){
+						this.notLoggedIn = true;
+					}else{
+						self.error = result.message;
+						self.loading = false;
+					}
 				}
 			}).catch((error) => {
-				self.error = error.message;
+				if(error.code === 'invalid_username' || error.code === 'incorrect_password'){
+					this.loginError = true;
+				}else{
+					self.error = error.message;
+				}
 				self.loading = false;
 			});
-
 		}
 	}
 
@@ -130,4 +144,8 @@ export class PresencePage {
 		});
 	}
 
+	
+	toLogin() {
+		this.navCtrl.setRoot(LoginPage);
+	}
 }

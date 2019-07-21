@@ -11,13 +11,19 @@
 
 <ion-content padding>
 	<div class="user-info">
-		<span style="color:red;">
+		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
 			{{error}}
 		</span>
+		<span *ngIf="loginError" style="color:red;font-weight:bold">
+			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+		</span>
+		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+		</span>
 		<div style='height: 20px;'>
-			<div *ngIf="loading">
-					Laden...
-				</div> 
+			<div *ngIf="loading&&!notLoggedIn">
+				Laden...
+			</div>
 		</div>
 	</div>
 	<div class="container">

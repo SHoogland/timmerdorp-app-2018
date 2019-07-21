@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
+import { LoginPage } from '../login/login';
 
 // import { ConnectChildToCabinStep_2Page } from '../connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
 /**
@@ -20,6 +21,8 @@ export class ConnectChildToCabinPage {
 	hutNr: string;
 	searchTerm: string;
 	error: string;
+	loginError: boolean;
+	notLoggedIn: boolean;
 	searchError: string;
 	endpoint: string;
 	loading: boolean;
@@ -56,6 +59,8 @@ export class ConnectChildToCabinPage {
 			username: '',
 			password: ''
 		}
+		this.loginError = false;
+		this.notLoggedIn = false;
 		this.loading = false;
 		this.error = '';
 		this.searchError = '';
@@ -115,6 +120,8 @@ export class ConnectChildToCabinPage {
 	}
 
 	searchHut() {
+		this.loginError = false;
+		this.notLoggedIn = false;
 		let self = this;
 		self.hutTickets = [];
 		self.error = '';
@@ -127,11 +134,19 @@ export class ConnectChildToCabinPage {
 				self.hutTickets = result.tickets;
 				self.loading = false;
 			} else {
-				self.error = result.message;
-				self.loading = false;
+				if(result.message == 'access denied'){
+					this.notLoggedIn = true;
+				}else{
+					self.error = result.message;
+					self.loading = false;
+				}
 			}
 		}).catch((error) => {
-			self.error = error.message;
+			if(error.code === 'invalid_username' || error.code === 'incorrect_password'){
+				this.loginError = true;
+			}else{
+				self.error = error.message;
+			}
 			self.loading = false;
 		});
 	}
@@ -170,6 +185,10 @@ export class ConnectChildToCabinPage {
 			self.searchError = error.message;
 			self.loading = false;
 		});
+	}
+
+	toLogin() {
+		this.navCtrl.setRoot(LoginPage);
 	}
 
 	addChildToHut(child) {
