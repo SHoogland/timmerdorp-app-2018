@@ -35,3 +35,4 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 app-release-unsigned.apk
 my-release-key.keystore
+zipalign.exe
