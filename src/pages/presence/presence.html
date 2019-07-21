@@ -1,10 +1,13 @@
 <ion-header>
+	<h1 id="ptitle">Timmerdorp 2019</h1>
 	<ion-navbar>
 		<button ion-button menuToggle>
 			<ion-icon name='menu'></ion-icon>
 		</button>
 		<ion-title>
-			<img src="assets/imgs/logo.png" onClick="javascript:document.getElementsByClassName('nav-items item item-block item-md')[0].click();//go to home page"align="middle" class="nav-logo">
+			<img src="assets/imgs/logo.png"
+				onClick="javascript:document.getElementsByClassName('nav-items item item-block item-md')[0].click();//go to home page"
+				align="middle" class="nav-logo">
 		</ion-title>
 	</ion-navbar>
 </ion-header>
@@ -29,17 +32,23 @@
 	<div class="container">
 		<div class="bracelet-number">
 			<h1>Aanwezigheid</h1>
-			<ion-input #nrInput type="tel" placeholder="Zoek op nummer" maxlength="3" [(ngModel)]="number" (ngModelChange)="getChild($event)"></ion-input>
+			<ion-input #nrInput type="tel" placeholder="Zoek op nummer" maxlength="3" [(ngModel)]="number"
+				(ngModelChange)="getChild($event)"></ion-input>
 		</div>
 	</div>
 	<div *ngFor="let child of tickets">
 		<button ion-button full (click)="updatePresence(child)" class="bg-grey color-mediumBlack">
 			{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
-			'-' }}) is er <span *ngIf="!child.meta['present_' + day]">&nbsp;niet&nbsp;</span> op&nbsp;<span *ngIf="day === 'wed'">woensdag</span><span *ngIf="day === 'thu'">donderdag</span>.&nbsp;
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'" style="background-color:yellow;padding: 0px 3px">({{ child.meta.hutnr}})</span>
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'" style="background-color:red;color:white;padding: 0px 3px">({{ child.meta.hutnr }})</span>
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'" style="background-color:blue;color:white;padding: 0px 3px">({{ child.meta.hutnr }})</span>
-			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'" style="background-color:green;color:white;padding: 0px 3px">({{ child.meta.hutnr}})</span>
+			'-' }}) is er <span *ngIf="!child.meta['present_' + day]">&nbsp;niet&nbsp;</span> op&nbsp;<span
+				*ngIf="day === 'wed'">woensdag</span><span *ngIf="day === 'thu'">donderdag</span>.&nbsp;
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
+				style="background-color:yellow;padding: 0px 3px">({{ child.meta.hutnr}})</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'"
+				style="background-color:red;color:white;padding: 0px 3px">({{ child.meta.hutnr }})</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'"
+				style="background-color:blue;color:white;padding: 0px 3px">({{ child.meta.hutnr }})</span>
+			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'"
+				style="background-color:green;color:white;padding: 0px 3px">({{ child.meta.hutnr}})</span>
 		</button>
 	</div>
 

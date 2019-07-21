@@ -45,6 +45,18 @@ h1 {
     background: #dfa401 !important;
   }
 }
+
+#ptitle{
+	position: absolute;
+	top: 0px;
+	margin-top: 21px;
+    width: calc(100% - 160px);
+    z-index: 100;
+    text-align: center;
+    left: 80px;
+	color: white;	
+}
+
 .bg-blue {
   background: $blue;
   &:hover{

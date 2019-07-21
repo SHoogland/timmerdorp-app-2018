@@ -1,4 +1,5 @@
 <ion-header>
+	<h1 id="ptitle">Timmerdorp 2019</h1>
 	<ion-navbar>
 		<button ion-button menuToggle>
 			<ion-icon name='menu'></ion-icon>
@@ -30,7 +31,6 @@
 	</div>
 	<div class="container">
 		<div class="bracelet-number">
-			<h1>Zoek kind:</h1>
 			<span class="search-on">Zoek op naam, armbandnummer of hutnummer</span>
 			<ion-input type="text" [(ngModel)]="searchTerm" (ngModelChange)="search($event)"></ion-input>
 		</div>
