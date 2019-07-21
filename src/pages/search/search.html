@@ -48,7 +48,7 @@
 	</div>
 
 	<!-- start modal box -->
-	<div *ngIf="modal.showModal" id="myModal" class="modal">
+	<div *ngIf="modal.showModal" id="myModal" (click)="$event.target.id==='myModal'?modal.showModal=false:''" class="modal">
 		<div class="modal-content">
 			<span class="close" (click)="modal.showModal = false;">&times;</span>
 			<h1 id='childDataHeader'>Gegevens</h1>

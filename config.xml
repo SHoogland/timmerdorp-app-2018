@@ -106,6 +106,6 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.2" />
     <plugin name="phonegap-plugin-barcodescanner" spec="^8.0.0" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
-    <engine name="ios" spec="^4.5.5" />
-    <engine name="android" spec="7.1.4" />
+    <engine name="ios" spec="^5.0.1" />
+    <engine name="android" spec="8.0.0" />
 </widget>
