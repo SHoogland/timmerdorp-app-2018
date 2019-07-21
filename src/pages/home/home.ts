@@ -40,11 +40,6 @@ export class HomePage {
 
 		this.pages = [
 			{
-				title: 'Scan Ticket',
-				component: ScanTicketPage,
-				class: 'bg-blue'
-			},
-			{
 				title: 'Koppel kind aan hut',
 				component: ConnectChildToCabinPage,
 				class: 'bg-blue'
