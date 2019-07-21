@@ -47,6 +47,9 @@ h1 {
 }
 .bg-blue {
   background: $blue;
+  &:hover{
+	  background: #0094f0!important;
+  }
 }
 .bg-green {
   background: $green;
