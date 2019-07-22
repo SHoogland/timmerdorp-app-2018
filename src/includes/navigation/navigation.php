@@ -1,10 +1,9 @@
 <ion-header>
-  <ion-navbar>
-	<button ion-button menuToggle>
-      <ion-icon name='menu'></ion-icon>
-    </button>
-    <ion-title>
-      <img src="assets/imgs/logo.png" (click)="goHome()"class="nav-logo">
-    </ion-title>
-  </ion-navbar>
+	<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
+	<h1 (click)="goHome()" id="ptitle">Timmerdorp 2019</h1>
+	<ion-navbar>
+		<ion-title>
+			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+		</ion-title>
+	</ion-navbar>
 </ion-header>

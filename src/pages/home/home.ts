@@ -70,7 +70,7 @@ export class HomePage {
 		// Reset the content nav to have just this page
 		// we wouldn't want the back button to show in this scenario
 
-		this.navCtrl.setRoot(page.component, {}, {animate: true, direction: 'forward'});
+		this.navCtrl.setRoot(page.component, {}, { animate: true, direction: 'forward' });
 	}
 
 	scanCode() {
@@ -84,6 +84,9 @@ export class HomePage {
 		} else {
 			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 420 });
 		}
+	}
 
+	goHome() {
+		return;
 	}
 }

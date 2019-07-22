@@ -120,6 +120,18 @@ button.bg-grey:hover, button.bg-grey.activated {
   }
 }
 
+.bar-button-menutoggle-md ion-icon{
+	font-size: 4rem;
+}
+
+.homeIcon{
+	position: absolute;
+    z-index: 1;
+    color: white;
+    font-size: 4.3rem;
+    left: 20px;
+    top: 18px;
+}
 
 button{
 	transition-duration: 300ms!important;
