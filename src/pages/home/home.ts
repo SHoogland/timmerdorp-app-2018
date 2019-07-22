@@ -3,12 +3,12 @@ import { Platform, NavController } from 'ionic-angular';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
-import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { SearchPage } from '../search/search';
 import { ConnectChildToCabinPage } from '../connect-child-to-cabin/connect-child-to-cabin';
 import { Storage } from '@ionic/storage';
 import { PresencePage } from '../presence/presence';
 import { LoginPage } from '../login/login';
+import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 
 @Component({
 	selector: 'page-home',
@@ -71,5 +71,19 @@ export class HomePage {
 		// we wouldn't want the back button to show in this scenario
 
 		this.navCtrl.setRoot(page.component);
+	}
+
+	scanCode() {	
+		if (this.platform.is('cordova')) {	
+			this.barcodeScanner.scan().then((barcodeData) => {	
+				this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });	
+			}, (error) => {	
+				console.log(error);	
+				this.error = error.message;	
+			});	
+		} else {	
+			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 420 });	
+		}	
+
 	}
 }
