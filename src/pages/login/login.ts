@@ -119,7 +119,7 @@ export class LoginPage {
 	}
 
 	toHome() {
-		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: 'backward'});
+		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: "back"});
 	}
 
 	getWpApi(route) {
@@ -135,6 +135,6 @@ export class LoginPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: 'backward'});
+		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: "back"});
 	}
 }

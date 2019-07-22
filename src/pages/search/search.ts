@@ -168,7 +168,7 @@ export class SearchPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: 'backward'});
+		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: "back"});
 	}
 
 }
