@@ -160,7 +160,7 @@ export class SearchPage {
 	}
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage);
+		this.navCtrl.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
 	}
 
 	scanChild(barcode) {
@@ -168,7 +168,7 @@ export class SearchPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage);
+		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: 'backward'});
 	}
 
 }

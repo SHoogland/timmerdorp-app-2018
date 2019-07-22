@@ -185,7 +185,7 @@ export class ConnectChildToCabinPage {
 	}
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage);
+		this.navCtrl.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
 	}
 
 	addChildToHut(child) {
@@ -258,6 +258,6 @@ export class ConnectChildToCabinPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage);
+		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: 'backward'});
 	}
 }
