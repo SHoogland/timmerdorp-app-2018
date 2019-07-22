@@ -1,12 +1,12 @@
 <ion-header>
-	<h1 click="navCtrl.setRoot(HomePage)" id="ptitle">Timmerdorp 2019</h1>
+	<h1 (click)="goHome()" id="ptitle">Timmerdorp 2019</h1>
 	<ion-navbar>
 		<button ion-button menuToggle>
 			<ion-icon name='menu'></ion-icon>
 		</button>
 		<ion-title>
 			<img src="assets/imgs/logo.png"
-				click="navCtrl.setRoot(HomePage)"
+				(click)="goHome()"
 				 class="nav-logo">
 		</ion-title>
 	</ion-navbar>

@@ -78,10 +78,15 @@ export class LoginPage {
 	}
 
 	checkLogin() {
+		this.loading = true;
+		this.success = false;
+		this.usernameError = false;
+		this.passwordError = false;
 		console.log("Determining whether login is correct by searching for random child '000'...")
 		//Try searching for random term: "000". If it fails, login details probably are incorrect
 		var wp = this.getWpApi('search');
 		wp.handler().param('search', "000").then((result) => {
+			this.loading = false;
 			if (result.code === 200) {
 				this.success = true;
 				this.usernameError = false;
@@ -96,6 +101,7 @@ export class LoginPage {
 				console.log(result);
 			}
 		}).catch((error) => {
+			this.loading = false;
 			if (error.code === 'invalid_username') {
 				this.success = false;
 				this.usernameError = true;
@@ -126,5 +132,9 @@ export class LoginPage {
 		wp.handler = wp.registerRoute('tickets', route, {});
 
 		return wp;
+	}
+
+	goHome() {
+		this.navCtrl.setRoot(HomePage);
 	}
 }

@@ -73,17 +73,17 @@ export class HomePage {
 		this.navCtrl.setRoot(page.component);
 	}
 
-	scanCode() {	
-		if (this.platform.is('cordova')) {	
-			this.barcodeScanner.scan().then((barcodeData) => {	
-				this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });	
-			}, (error) => {	
-				console.log(error);	
-				this.error = error.message;	
-			});	
-		} else {	
-			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 420 });	
-		}	
+	scanCode() {
+		if (this.platform.is('cordova')) {
+			this.barcodeScanner.scan().then((barcodeData) => {
+				this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });
+			}, (error) => {
+				console.log(error);
+				this.error = error.message;
+			});
+		} else {
+			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 420 });
+		}
 
 	}
 }

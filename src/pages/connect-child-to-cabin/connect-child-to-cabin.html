@@ -1,13 +1,11 @@
 <ion-header>
-	<h1 click="navCtrl.setRoot(HomePage)" id="ptitle">Timmerdorp 2019</h1>
+	<h1 (click)="goHome()" id="ptitle">Timmerdorp 2019</h1>
 	<ion-navbar>
 		<button ion-button menuToggle>
 			<ion-icon name='menu'></ion-icon>
 		</button>
 		<ion-title>
-			<img src="assets/imgs/logo.png"
-				click="navCtrl.setRoot(HomePage)"
-				class="nav-logo">
+			<img src="assets/imgs/logo.png" (click)="goHome()" class="nav-logo">
 		</ion-title>
 	</ion-navbar>
 </ion-header>
@@ -37,8 +35,7 @@
 	<div class="bracelet-number">
 		<h1>Kinderen in hut{{hutNr?' ' + hutNr:''}}:</h1>
 		<div *ngFor="let child of hutTickets">
-			<button ion-button full class="bg-grey color-mediumBlack"
-				(click)="removeChild = child; showRemoveModal();">
+			<button ion-button full class="bg-grey color-mediumBlack" (click)="removeChild = child; showRemoveModal();">
 				{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
 				'-' }})
 			</button>
@@ -88,7 +85,8 @@
 			(click)="$event.target.id==='removeModal'?closeRemoveModal():''" class="conditional modal stanModal">
 			<div class="modal-content">
 				<span class="close" (click)="closeRemoveModal()">&times;</span>
-				<h1 *ngIf="removeChild">Weet je zeker dat je {{ removeChild.meta.WooCommerceEventsAttendeeName[0] }} wilt verwijderen?</h1>
+				<h1 *ngIf="removeChild">Weet je zeker dat je {{ removeChild.meta.WooCommerceEventsAttendeeName[0] }}
+					wilt verwijderen?</h1>
 				<button ion-button full (click)="removeChildFromHut(removeChild)"
 					class="bg-green correction">Ja</button>
 				<button ion-button full (click)="closeRemoveModal()" class="bg-red correction">Nee</button>

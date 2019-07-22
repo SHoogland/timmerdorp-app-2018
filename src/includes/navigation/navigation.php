@@ -4,7 +4,7 @@
       <ion-icon name='menu'></ion-icon>
     </button>
     <ion-title>
-      <img src="assets/imgs/logo.png" click="navCtrl.setRoot(HomePage)" class="nav-logo">
+      <img src="assets/imgs/logo.png" (click)="goHome()"class="nav-logo">
     </ion-title>
   </ion-navbar>
 </ion-header>

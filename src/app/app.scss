@@ -60,6 +60,13 @@ h1 {
 	}
 }
 
+.bar-button-default-md{
+	transition-duration: 250ms!important;
+}
+.bar-button-default-md:hover:not(.disable-hover), .bar-button-clear-md-default:hover:not(.disable-hover), .bar-button-md-default:hover:not(.disable-hover) {
+    color: #d3d3d3!important;
+}
+
 .toolbar-title-md{
 	padding: 0!important;
 }

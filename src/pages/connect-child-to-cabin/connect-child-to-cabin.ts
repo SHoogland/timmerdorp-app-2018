@@ -3,6 +3,7 @@ import { NavController, NavParams, Platform } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
+import { HomePage } from '../home/home';
 
 // import { ConnectChildToCabinStep_2Page } from '../connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
 /**
@@ -193,7 +194,7 @@ export class ConnectChildToCabinPage {
 		wp.handler().param('hutnr', this.hutNr).param('wristband', child.meta.wristband).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
-				setTimeout(function(){
+				setTimeout(function () {
 					self.search();
 				}, 250);
 				self.loading = false;
@@ -214,7 +215,7 @@ export class ConnectChildToCabinPage {
 			console.log(result);
 			if (result.code === 200) {
 				this.closeRemoveModal();
-				setTimeout(function(){
+				setTimeout(function () {
 					self.search();
 				}, 250);
 				self.loading = false;
@@ -229,30 +230,34 @@ export class ConnectChildToCabinPage {
 	}
 
 	closeAddModal() {
-		this.addModal.show = false; 
-		setTimeout(function () { 
+		this.addModal.show = false;
+		setTimeout(function () {
 			document.querySelector('#myModal').classList.remove('high');
 		}, 400);
 	}
 
-	showAddModal(){
+	showAddModal() {
 		this.tickets = [];
 		this.addModal.show = true;
 		this.searchTerm = '';
 		document.querySelector('#myModal').classList.add('high');
 	}
 
-	showRemoveModal(){
+	showRemoveModal() {
 		console.log(this.removeChild);
 		this.removeModal.show = true;
 		this.searchTerm = '';
 		document.querySelector('#removeModal').classList.add('high');
 	}
 
-	closeRemoveModal(){
-		this.removeModal.show = false; 
-		setTimeout(function () { 
+	closeRemoveModal() {
+		this.removeModal.show = false;
+		setTimeout(function () {
 			document.querySelector('#removeModal').classList.remove('high');
 		}, 400);
+	}
+
+	goHome() {
+		this.navCtrl.setRoot(HomePage);
 	}
 }

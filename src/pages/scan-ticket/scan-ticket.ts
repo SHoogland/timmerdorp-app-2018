@@ -87,7 +87,7 @@ export class ScanTicketPage {
 		let self = this;
 
 		this.init();
-		
+
 		this.barcodeScanner.scan().then(barcodeData => {
 			console.log('Barcode data', barcodeData);
 			this.barcode = barcodeData.text;
@@ -152,7 +152,7 @@ export class ScanTicketPage {
 			.then((result) => {
 				console.log(result);
 				if (result.code === 200) {
-					self.goBack();
+					self.goHome();
 				} else {
 					self.error = result.message;
 					self.loading = false;
@@ -162,11 +162,11 @@ export class ScanTicketPage {
 			});
 	}
 
-	goBack() {
-		this.navCtrl.setRoot(HomePage);
-	}
-
 	toLogin() {
 		this.navCtrl.setRoot(LoginPage);
+	}
+
+	goHome() {
+		this.navCtrl.setRoot(HomePage);
 	}
 }

@@ -3,6 +3,7 @@ import { Platform, NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
+import { HomePage } from '../home/home';
 
 @Component({
 	selector: 'page-presence',
@@ -34,13 +35,13 @@ export class PresencePage {
 	}
 
 	init() {
-		this.day = new Date().getDay()==4?"thu":"wed"; 
+		this.day = new Date().getDay() == 4 ? "thu" : "wed";
 		//^ If today is Thursday, this.day=thu. Else, show the next upcoming day, which defaults to Wednesday
-		
-		
+
+
 		this.loginError = false;
 		this.notLoggedIn = false;
-		
+
 		this.login = {
 			username: '',
 			password: ''
@@ -100,17 +101,17 @@ export class PresencePage {
 					}
 					self.loading = false;
 				} else {
-					if(result.message == 'access denied'){
+					if (result.message == 'access denied') {
 						this.notLoggedIn = true;
-					}else{
+					} else {
 						self.error = result.message;
 						self.loading = false;
 					}
 				}
 			}).catch((error) => {
-				if(error.code === 'invalid_username' || error.code === 'incorrect_password'){
+				if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
 					this.loginError = true;
-				}else{
+				} else {
 					self.error = error.message;
 				}
 				self.loading = false;
@@ -128,7 +129,7 @@ export class PresencePage {
 				this.loading = false;
 				this.error = '';
 				this.tickets = [];
-		
+
 				this.number = '';
 				this.name = '';
 				self.loading = false;
@@ -140,8 +141,12 @@ export class PresencePage {
 		});
 	}
 
-	
+
 	toLogin() {
 		this.navCtrl.setRoot(LoginPage);
+	}
+
+	goHome() {
+		this.navCtrl.setRoot(HomePage);
 	}
 }
