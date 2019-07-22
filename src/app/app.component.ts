@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 
-// declare let cordova: any;
+declare let cordova: any;
 
 @Component({
 	templateUrl: 'app.html'
@@ -57,15 +57,15 @@ export class MyApp {
 				})
 			]).then(() => {
 				this.splashScreen.hide();
-				// if (cordova.platformId === 'android') {
-				// 	this.platform.registerBackButtonAction(() => {
-				// 		console.log("TERUG KNOP ANDROID");
-				// 		this.nav.setRoot(HomePage);
-				// 	});
-				// 	this.statusBar.backgroundColorByHexString("#0094f0");
-				// } else if (cordova.platformId === 'ios') {
-				// 	this.statusBar.backgroundColorByHexString("#30b0ff");
-				// }
+				if (cordova.platformId === 'android') {
+					this.platform.registerBackButtonAction(() => {
+						console.log("TERUG KNOP ANDROID");
+						this.nav.setRoot(HomePage);
+					});
+					this.statusBar.backgroundColorByHexString("#0094f0");
+				} else if (cordova.platformId === 'ios') {
+					this.statusBar.backgroundColorByHexString("#30b0ff");
+				}
 
 				this.preCheckLogin();
 			});
