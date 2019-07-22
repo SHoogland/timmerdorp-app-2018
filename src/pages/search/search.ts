@@ -108,7 +108,7 @@ export class SearchPage {
 	}
 
 	searchThis() {
-		if(this.searchTerm.length < 3){
+		if (this.searchTerm.length < 3) {
 			console.log("Cancelling search. Reason: term too short");
 			return false;
 		}
@@ -124,43 +124,51 @@ export class SearchPage {
 			console.log(result);
 			if (result.code === 200) {
 				self.tickets = result.tickets;
-				if(self.tickets.length === 0){
+				if (self.tickets.length === 0) {
 					self.error = 'no results';
 				}
 				self.loading = false;
 			} else {
-				if(result.message == 'access denied'){
+				if (result.message == 'access denied') {
 					this.notLoggedIn = true;
-				}else{
+				} else {
 					self.error = result.message;
 					self.loading = false;
 				}
 			}
 		}).catch((error) => {
-			if(error.code === 'invalid_username' || error.code === 'incorrect_password'){
+			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
 				this.loginError = true;
-			}else{
+			} else {
 				self.error = error.message;
 			}
 			self.loading = false;
 		});
 	}
 
-	goBack() {
-		this.navCtrl.setRoot(HomePage);
-	}
-
 	showModal(child) {
 		this.modal.child = child;
 		this.modal.showModal = true;
+		document.querySelector('#myModal').classList.add('high');
+	}
+
+	closeModal() {
+		this.modal.showModal = false;
+		setTimeout(function () {
+			document.querySelector('#myModal').classList.remove('high');
+		}, 400);
 	}
 
 	toLogin() {
 		this.navCtrl.setRoot(LoginPage);
 	}
 
-	scanChild(barcode){
+	scanChild(barcode) {
 		this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode });
+	}
+
+	goHome() {
+		this.navCtrl.setRoot(HomePage);
 	}
 
 }

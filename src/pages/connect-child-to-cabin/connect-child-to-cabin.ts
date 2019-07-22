@@ -229,18 +229,18 @@ export class ConnectChildToCabinPage {
 		});
 	}
 
-	closeAddModal() {
-		this.addModal.show = false;
-		setTimeout(function () {
-			document.querySelector('#myModal').classList.remove('high');
-		}, 400);
-	}
-
 	showAddModal() {
 		this.tickets = [];
 		this.addModal.show = true;
 		this.searchTerm = '';
 		document.querySelector('#myModal').classList.add('high');
+	}
+
+	closeAddModal() {
+		this.addModal.show = false;
+		setTimeout(function () {
+			document.querySelector('#myModal').classList.remove('high');
+		}, 400);
 	}
 
 	showRemoveModal() {

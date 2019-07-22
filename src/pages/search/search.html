@@ -1,13 +1,11 @@
 <ion-header>
-	<h1 (click)="goHome()"id="ptitle">Timmerdorp 2019</h1>
+	<h1 (click)="goHome()" id="ptitle">Timmerdorp 2019</h1>
 	<ion-navbar>
 		<button ion-button menuToggle>
 			<ion-icon name='menu'></ion-icon>
 		</button>
 		<ion-title>
-			<img src="assets/imgs/logo.png"
-				(click)="goHome()"
-				 class="nav-logo">
+			<img src="assets/imgs/logo.png" (click)="goHome()" class="nav-logo">
 		</ion-title>
 	</ion-navbar>
 </ion-header>
@@ -55,10 +53,10 @@
 	</div>
 
 	<!-- start modal box -->
-	<div *ngIf="modal.showModal" id="myModal" (click)="$event.target.id==='myModal'?modal.showModal=false:''"
-		class="modal">
-		<div class="modal-content">
-			<span class="close" (click)="modal.showModal = false;">&times;</span>
+	<div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
+		class="modal conditional">
+		<div class="modal-content" *ngIf="modal.child">
+			<span class="close" (click)="closeModal();">&times;</span>
 			<h1 id='childDataHeader'>Gegevens</h1>
 			<table>
 				<tr>
@@ -118,22 +116,20 @@
 				<tr>
 					<td class='b'>Woensdag</td>
 					<td>
-						<div *ngIf="modal.child.meta.present_wed">Aanwezig</div>
-						<div *ngIf="!modal.child.meta.present_wed">Afwezig</div>
+						{{modal.child.meta.present_wed?"Aanwezig":"Afwezig"}}
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Donderdag</td>
 					<td>
-						<div *ngIf="modal.child.meta.present_thu">Aanwezig</div>
-						<div *ngIf="!modal.child.meta.present_thu">Afwezig</div>
+						{{modal.child.meta.present_thu?"Aanwezig":"Afwezig"}}
 					</td>
 				</tr>
 			</table>
-			<button ion-button full (click)="modal.showModal = false;" class="bg-green correction">Ok</button>
+			<button ion-button full (click)="closeModal();" class="bg-green correction">Ok</button>
 			<button ion-button full (click)="scanChild(modal.child.meta.WooCommerceEventsTicketID[0])"
 				class="bg-yellow correction">Scan</button>
-			<button ion-button full (click)="goBack()" class="bg-red correction">Terug naar homepagina</button>
+			<button ion-button full (click)="goHome()" class="bg-red correction">Terug naar homepagina</button>
 		</div>
 	</div>
 </ion-content>
