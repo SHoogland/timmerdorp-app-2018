@@ -38,6 +38,7 @@ export class ConnectChildToCabinPage {
 		username: string,
 		password: string
 	};
+	removeChild: any;
 
 	constructor(
 		public navCtrl: NavController,
@@ -102,6 +103,7 @@ export class ConnectChildToCabinPage {
 	}
 
 	search() {
+		this.hutTickets = [];
 		if (this.hutNr.length === 3) {
 			try {
 				clearTimeout(this.typingTimer);
@@ -118,7 +120,6 @@ export class ConnectChildToCabinPage {
 		this.loginError = false;
 		this.notLoggedIn = false;
 		let self = this;
-		self.hutTickets = [];
 		self.error = '';
 		self.loading = true;
 		console.log('searching: ' + this.hutNr);
@@ -129,17 +130,17 @@ export class ConnectChildToCabinPage {
 				self.hutTickets = result.tickets;
 				self.loading = false;
 			} else {
-				if(result.message == 'access denied'){
+				if (result.message == 'access denied') {
 					this.notLoggedIn = true;
-				}else{
+				} else {
 					self.error = result.message;
 					self.loading = false;
 				}
 			}
 		}).catch((error) => {
-			if(error.code === 'invalid_username' || error.code === 'incorrect_password'){
+			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
 				this.loginError = true;
-			}else{
+			} else {
 				self.error = error.message;
 			}
 			self.loading = false;
@@ -169,7 +170,7 @@ export class ConnectChildToCabinPage {
 			if (result.code === 200) {
 				self.tickets = result.tickets;
 				if (self.tickets.length === 0) {
-					self.searchError = 'no results';
+					self.searchError = 'Geen resultaten';
 				}
 				self.loading = false;
 			} else {
@@ -192,7 +193,9 @@ export class ConnectChildToCabinPage {
 		wp.handler().param('hutnr', this.hutNr).param('wristband', child.meta.wristband).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
-				this.search();
+				setTimeout(function(){
+					self.search();
+				}, 250);
 				self.loading = false;
 			} else {
 				self.error = result.message;
@@ -210,8 +213,10 @@ export class ConnectChildToCabinPage {
 		wp.handler().param('hutnr', this.hutNr).param('wristband', child.meta.wristband).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
-				this.removeModal.show = false;
-				this.search();
+				this.closeRemoveModal();
+				setTimeout(function(){
+					self.search();
+				}, 250);
 				self.loading = false;
 			} else {
 				self.error = result.message;
@@ -223,4 +228,31 @@ export class ConnectChildToCabinPage {
 		});
 	}
 
+	closeAddModal() {
+		this.addModal.show = false; 
+		setTimeout(function () { 
+			document.querySelector('#myModal').classList.remove('high');
+		}, 400);
+	}
+
+	showAddModal(){
+		this.tickets = [];
+		this.addModal.show = true;
+		this.searchTerm = '';
+		document.querySelector('#myModal').classList.add('high');
+	}
+
+	showRemoveModal(){
+		console.log(this.removeChild);
+		this.removeModal.show = true;
+		this.searchTerm = '';
+		document.querySelector('#removeModal').classList.add('high');
+	}
+
+	closeRemoveModal(){
+		this.removeModal.show = false; 
+		setTimeout(function () { 
+			document.querySelector('#removeModal').classList.remove('high');
+		}, 400);
+	}
 }

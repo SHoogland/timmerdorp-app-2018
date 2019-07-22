@@ -1,13 +1,13 @@
 <ion-header>
-	<h1 id="ptitle">Timmerdorp 2019</h1>
+	<h1 click="navCtrl.setRoot(HomePage)" id="ptitle">Timmerdorp 2019</h1>
 	<ion-navbar>
 		<button ion-button menuToggle>
 			<ion-icon name='menu'></ion-icon>
 		</button>
 		<ion-title>
 			<img src="assets/imgs/logo.png"
-				onClick="javascript:document.getElementsByClassName('nav-items item item-block item-md')[0].click();//go to home page"
-				 class="nav-logo">
+				click="navCtrl.setRoot(HomePage)"
+				class="nav-logo">
 		</ion-title>
 	</ion-navbar>
 </ion-header>
@@ -30,28 +30,29 @@
 		</div>
 	</div>
 	<div class="user-info">
-		<h1>Hut nummer</h1>
+		<h1>Hutnummer:</h1>
 		<ion-input #nrInput type="tel" placeholder="123" [(ngModel)]="hutNr" (ngModelChange)="search($event)"
 			maxlength="3"></ion-input>
 	</div>
 	<div class="bracelet-number">
-		<h1>Kinderen:</h1>
+		<h1>Kinderen in hut{{hutNr?' ' + hutNr:''}}:</h1>
 		<div *ngFor="let child of hutTickets">
 			<button ion-button full class="bg-grey color-mediumBlack"
-				(click)="removeChild = child; removeModal.show = true;">
+				(click)="removeChild = child; showRemoveModal();">
 				{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
 				'-' }})
 			</button>
 		</div>
-		<button ion-button full (click)="addModal.show = true; searchTerm='';" class="bg-blue correction">
+		<button ion-button full (click)="showAddModal()" [ngClass]='hutNr > 99?"shown":""'
+			class="conditional bg-blue correction">
 			Kind toevoegen
 		</button>
 		<!-- Trigger/Open The Modal -->
 
-		<div *ngIf="addModal.show" (click)="$event.target.id==='myModal'?addModal.show=false:''" id="myModal"
-			class="modal">
+		<div [ngClass]="{'shown': addModal.show}" (click)="$event.target.id==='myModal'?closeAddModal():''" id="myModal"
+			class="modal conditional">
 			<div class="modal-content">
-				<span class="close" (click)="addModal.show = false;">&times;</span>
+				<span class="close" (click)="closeAddModal()">&times;</span>
 				<h1>Zoek een kind en voeg hem toe</h1>
 				<span style="color:red;">
 					{{searchError}}
@@ -59,11 +60,11 @@
 				<ion-input type="text" placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
 					(ngModelChange)="searchChild($event)"></ion-input>
 				<div *ngFor="let child of tickets">
-					<button ion-button full (click)="addChildToHut(child);addModal.show = false;"
+					<button ion-button full (click)="addChildToHut(child);closeAddModal()"
 						class="bg-grey color-mediumBlack">
 						{{ child.meta.WooCommerceEventsAttendeeName[0] }}
 						{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
-						'-' }})&nbsp;&mdash;&nbsp;
+						'-' }})&nbsp;{{child.meta.hutnr[0]?"&mdash;&nbsp;":''}}
 						<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
 							style="background-color:yellow;padding: 0px 6px">hutnummer:&nbsp;
 							{{ child.meta.hutnr}}</span>
@@ -83,13 +84,14 @@
 
 		</div>
 
-		<div *ngIf="removeModal.show" id="myModal" (click)="$event.target.id==='myModal'?removeModal.show=false:''"
-			class="modal stanModal">
+		<div [ngClass]="{'shown': removeModal.show}" id="removeModal"
+			(click)="$event.target.id==='removeModal'?closeRemoveModal():''" class="conditional modal stanModal">
 			<div class="modal-content">
-				<span class="close" (click)="removeModal.show = false;">&times;</span>
-				<h1>Weet je zeker dat je {{ removeChild.meta.WooCommerceEventsAttendeeName[0] }} wilt verwijderen?</h1>
+				<span class="close" (click)="closeRemoveModal()">&times;</span>
+				<h1 *ngIf="removeChild">Weet je zeker dat je {{ removeChild.meta.WooCommerceEventsAttendeeName[0] }} wilt verwijderen?</h1>
 				<button ion-button full (click)="removeChildFromHut(removeChild)"
-					class="bg-yellow correction">Ja</button>
+					class="bg-green correction">Ja</button>
+				<button ion-button full (click)="closeRemoveModal()" class="bg-red correction">Nee</button>
 			</div>
 		</div>
 	</div>

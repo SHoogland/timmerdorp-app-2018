@@ -52,6 +52,26 @@ h1 {
   }
 }
 
+.conditional{
+	opacity: 0;
+	transition: opacity linear 400ms;
+	&.modal{
+		z-index:-1;
+	}
+}
+
+.toolbar-title-md{
+	padding: 0!important;
+}
+
+.modal.high{
+	z-index: 10;
+}
+
+.shown{
+	opacity: 1;
+}
+
 #ptitle {
   position: absolute;
   top: 0px;
