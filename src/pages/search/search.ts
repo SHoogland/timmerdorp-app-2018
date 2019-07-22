@@ -125,7 +125,7 @@ export class SearchPage {
 			if (result.code === 200) {
 				self.tickets = result.tickets;
 				if (self.tickets.length === 0) {
-					self.error = 'no results';
+					self.error = 'Geen resultaten';
 				}
 				self.loading = false;
 			} else {
