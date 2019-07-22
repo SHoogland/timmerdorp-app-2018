@@ -93,7 +93,7 @@ h1 {
 
 .bg-blue {
   background: $blue;
-  &:hover {
+  &:hover, &.activated {
     background: #0094f0 !important;
   }
 }
@@ -103,13 +103,13 @@ h1 {
 .bg-red {
   background: $red;
 }
-button.bg-red:hover {
+button.bg-red:hover, button.bg-red.activated {
   background: #bd0a0a !important;
 }
-button.bg-green:hover {
+button.bg-green:hover, button.bg-green.activated {
   background: #75c935 !important;
 }
-button.bg-grey:hover {
+button.bg-grey:hover, button.bg-grey.activated {
   background: #ccc !important;
   color: black !important;
 }
@@ -118,6 +118,11 @@ button.bg-grey:hover {
   &:hover {
     color: $white;
   }
+}
+
+
+button{
+	transition-duration: 300ms!important;
 }
 
 .stanModal div button {
