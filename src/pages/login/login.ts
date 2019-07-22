@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
@@ -6,7 +6,7 @@ import { HomePage } from '../home/home';
 
 @Component({
 	selector: 'loginpage',
-	templateUrl: 'login.html',
+	templateUrl: 'login.html'
 })
 
 export class LoginPage {
@@ -30,7 +30,8 @@ export class LoginPage {
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
-		public storage: Storage
+		public storage: Storage,
+		private cd: ChangeDetectorRef
 	) {
 		this.endpoint = 'https://staging.timmerdorp.com/wp-json';
 		this.init();
@@ -92,6 +93,7 @@ export class LoginPage {
 				this.usernameError = false;
 				this.passwordError = false;
 				console.log("Succesvol ingelogd!");
+				setTimeout(() => {this.goHome()}, 800);
 			} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
 				this.success = false;
 				this.usernameError = false;
@@ -100,6 +102,8 @@ export class LoginPage {
 			} else {
 				console.log(result);
 			}
+
+			this.cd.detectChanges();
 		}).catch((error) => {
 			this.loading = false;
 			if (error.code === 'invalid_username') {
@@ -115,6 +119,7 @@ export class LoginPage {
 			} else {
 				console.log(error);//user is offline (probably)
 			}
+			this.cd.detectChanges();
 		});
 	}
 

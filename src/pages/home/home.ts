@@ -55,9 +55,9 @@ export class HomePage {
 				class: 'bg-blue'
 			},
 			{
-				title: 'Login',
+				title: 'Log uit',
 				component: LoginPage,
-				class: 'bg-green'
+				class: 'bg-red'
 			}
 		];
 	}

@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content padding>
-	<button ion-button class='bg-blue' full (click)='scanCode()'>Scan Ticket</button>
+	<button ion-button class='bg-blue' full (click)='scanCode()'>Scan ticket</button>
 	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class">
 		{{p.title}}
 	</button>
