@@ -7,7 +7,7 @@ import { HomePage } from '../home/home';
 
 @Component({
 	selector: 'page-presence',
-	templateUrl: 'presence.html',
+	templateUrl: 'presence.html'
 })
 export class PresencePage {
 	error: string;

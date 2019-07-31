@@ -57,14 +57,16 @@ export class MyApp {
 				})
 			]).then(() => {
 				this.splashScreen.hide();
-				if (cordova.platformId === 'android') {
-					this.platform.registerBackButtonAction(() => {
-						console.log("TERUG KNOP ANDROID");
-						this.nav.setRoot(HomePage);
-					});
-					this.statusBar.backgroundColorByHexString("#0094f0");
-				} else if (cordova.platformId === 'ios') {
-					this.statusBar.backgroundColorByHexString("#30b0ff");
+				if (cordova) {
+					if (cordova.platformId === 'android') {
+						this.platform.registerBackButtonAction(() => {
+							console.log("TERUG KNOP ANDROID");
+							this.nav.setRoot(HomePage);
+						});
+						this.statusBar.backgroundColorByHexString("#0094f0");
+					} else if (cordova.platformId === 'ios') {
+						this.statusBar.backgroundColorByHexString("#30b0ff");
+					}
 				}
 
 				this.preCheckLogin();
