@@ -13,6 +13,7 @@
 	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class">
 		{{p.title}}
 	</button>
-
+	<button ion-button style="background: white" full (click)='switchEnv()'>hidden</button>
+	<p *ngIf="staging">staging enabled</p>
 	<p>{{error}}</p>
 </ion-content>

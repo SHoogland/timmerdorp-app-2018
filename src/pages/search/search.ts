@@ -44,7 +44,7 @@ export class SearchPage {
 		public storage: Storage,
 		public sanitizer: DomSanitizer
 	) {
-		this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
 
@@ -91,6 +91,15 @@ export class SearchPage {
 				this.login.password = val;
 			}, (error) => {
 				this.login.password = '';
+			}),
+			this.storage.get('staging').then((val) => {
+				if(val){
+					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+				} else{
+					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+				}
+			}, (error) => {
+				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 			})
 		]).then(() => {
 		});

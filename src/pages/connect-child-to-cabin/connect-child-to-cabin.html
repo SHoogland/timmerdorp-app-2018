@@ -38,7 +38,7 @@
 				'-' }})
 			</button>
 		</div>
-		<button ion-button full (click)="showAddModal()" [ngClass]='hutNr > 99?"shown":""'
+		<button ion-button full (click)="showAddModal()" [ngClass]='hutNr && hutNr.length === 3 ? "shown":""'
 			class="conditional bg-blue correction">
 			Kind toevoegen
 		</button>
