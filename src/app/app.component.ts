@@ -39,7 +39,7 @@ export class MyApp {
 			username: '',
 			password: ''
 		}
-		this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 
 		this.platform.ready().then(() => {
 			// Okay, so the platform is ready and our plugins are available.
@@ -54,10 +54,19 @@ export class MyApp {
 					this.login.password = val;
 				}, (error) => {
 					this.login.password = '';
+				}),
+				this.storage.get('staging').then((val) => {
+					if(val){
+						this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+					} else{
+						this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+					}
+				}, (error) => {
+					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 				})
 			]).then(() => {
 				this.splashScreen.hide();
-				if (cordova) {
+				if (this.platform.is('cordova')) {
 					if (cordova.platformId === 'android') {
 						this.platform.registerBackButtonAction(() => {
 							console.log("TERUG KNOP ANDROID");
@@ -93,6 +102,7 @@ export class MyApp {
 				if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
 					this.toLogin();
 				} else {
+					this.toLogin();
 					console.log(error);//user is offline (probably)
 				}
 			});

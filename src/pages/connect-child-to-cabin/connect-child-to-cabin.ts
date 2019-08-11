@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
@@ -46,8 +46,9 @@ export class ConnectChildToCabinPage {
 		public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage,
+		private cd: ChangeDetectorRef
 	) {
-		this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
 
@@ -98,6 +99,15 @@ export class ConnectChildToCabinPage {
 				this.login.password = val;
 			}, (error) => {
 				this.login.password = '';
+			}),
+			this.storage.get('staging').then((val) => {
+				if(val){
+					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+				} else{
+					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+				}
+			}, (error) => {
+				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 			})
 		]).then(() => {
 		});
@@ -130,6 +140,7 @@ export class ConnectChildToCabinPage {
 			if (result.code === 200) {
 				self.hutTickets = result.tickets;
 				self.loading = false;
+				self.cd.detectChanges()
 			} else {
 				if (result.message == 'access denied') {
 					this.notLoggedIn = true;

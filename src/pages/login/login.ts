@@ -27,13 +27,17 @@ export class LoginPage {
 	number: string;
 	name: string;
 
+	clickedOnce = false;
+	clickedTwice = false;
+	staging = false;
+
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
 		private cd: ChangeDetectorRef
 	) {
-		this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
 
@@ -68,6 +72,19 @@ export class LoginPage {
 		}, (error) => {
 			this.login.password = '';
 		});
+
+		this.storage.get('staging').then((val) => {
+			this.staging = val;
+			if(val){
+				this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+			} else{
+				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+			}
+		}, (error) => {
+			this.staging = false;
+			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+		})
+
 	}
 
 
@@ -105,6 +122,7 @@ export class LoginPage {
 
 			this.cd.detectChanges();
 		}).catch((error) => {
+			console.log(error)
 			this.loading = false;
 			if (error.code === 'invalid_username') {
 				this.success = false;
@@ -138,6 +156,34 @@ export class LoginPage {
 
 		return wp;
 	}
+
+
+	switchEnv(){
+		const _this = this;
+		setTimeout(function(){
+			_this.clickedOnce = false;
+			_this.clickedTwice = false;
+		}, 1000)
+		if(this.clickedTwice){
+			if(!this.staging){
+				this.storage.set('staging', true);
+				this.staging = true;
+				this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+			} else {
+				this.storage.set('staging', false);
+				this.staging = false;
+				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+			}
+			this.clickedOnce = false;
+			this.clickedTwice = false;
+		}
+		if(this.clickedOnce){
+			this.clickedTwice = true;
+		}
+		this.clickedOnce = true;
+		this.cd.detectChanges();
+	}
+
 
 	goHome() {
 		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: "back"});

@@ -25,6 +25,9 @@ export class HomePage {
 		username: '',
 		password: ''
 	};
+	clickedOnce = false;
+	clickedTwice = false;
+	staging = false;
 
 	constructor(
 		public navCtrl: NavController,
@@ -64,6 +67,11 @@ export class HomePage {
 
 	ionViewDidLoad() {
 		this.init();
+		this.storage.get('staging').then((val) => {
+			this.staging = val;
+		}, (error) => {
+			this.staging = false;
+		})
 	}
 
 	openPage(page) {
@@ -84,6 +92,29 @@ export class HomePage {
 		} else {
 			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 420 });
 		}
+	}
+
+	switchEnv(){
+		const _this = this;
+		setTimeout(function(){
+			_this.clickedOnce = false;
+			_this.clickedTwice = false;
+		}, 1000)
+		if(this.clickedTwice){
+			if(!this.staging){
+				this.storage.set('staging', true);
+				this.staging = true;
+			} else {
+				this.storage.set('staging', false);
+				this.staging = false;
+			}
+			this.clickedOnce = false;
+			this.clickedTwice = false;
+		}
+		if(this.clickedOnce){
+			this.clickedTwice = true;
+		}
+		this.clickedOnce = true;
 	}
 
 	goHome() {
