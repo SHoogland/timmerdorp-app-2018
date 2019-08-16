@@ -36,8 +36,8 @@
 	</div>
 	<div *ngFor="let child of tickets; let i = index">
 		<h1 style='font-size: 1.5em;text-align:center;'>{{ child.meta.WooCommerceEventsAttendeeName[0] }}
-			{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
-				'-' }}; hutnummer:
+			{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} &mdash; {{ child.meta.wristband ||
+				'-' }} &mdash; hutnummer:
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
 				style="background-color:yellow;padding: 0px 3px">{{child.meta.hutnr}}</span>
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'"
@@ -45,9 +45,9 @@
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'"
 				style="background-color:blue;color:white;padding: 0px 3px">{{child.meta.hutnr}}</span>
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'"
-				style="background-color:green;color:white;padding: 0px 3px">{{child.meta.hutnr}}</span>)</h1>
+				style="background-color:green;color:white;padding: 0px 3px">{{child.meta.hutnr}}</span></h1>
 
-		<ion-list style="width: 70%;left: 15%;position: relative;">
+		<ion-list>
 			<ion-item>
 				<ion-label>Dinsdag</ion-label>
 				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_wed||[])[0]"
