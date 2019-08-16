@@ -128,19 +128,16 @@ export class PresencePage {
 		}
 	}
 
-	updatePresence(child) {
+	togglePresence(child, day) {
+		console.log(child, day);
 		let self = this;
 		self.loading = true;
 		var wp = this.getWpApi('presence');
-		wp.handler().param('wristband', this.number).param('day', this.day).then((result) => {
+		wp.handler().param('wristband', child.meta.wristband).param('day', day).then((result) => {
 			if (result.code === 200) {
 				console.log("Child presence update successful", result)
 				this.loading = false;
 				this.error = '';
-				this.tickets = [];
-
-				this.number = '';
-				this.name = '';
 				self.loading = false;
 			} else {
 				self.error = result.message;
