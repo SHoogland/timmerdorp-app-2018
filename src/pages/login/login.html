@@ -10,8 +10,12 @@
 <ion-content padding>
 	<h1 style='text-align: center; margin-top: 12px;'>Login</h1>
 	<form (ngSubmit)="loginNow()">
-		<ion-input type="text" name="username" [(ngModel)]="login.username" placeholder="Gebruikersnaam"></ion-input>
-		<ion-input type="password" name="password" [(ngModel)]="login.password" placeholder="Wachtwoord"></ion-input>
+		<ion-item>
+			<ion-input type="text" name="username" [(ngModel)]="login.username" placeholder="Gebruikersnaam"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-input type="password" name="password" [(ngModel)]="login.password" placeholder="Wachtwoord"></ion-input>
+		</ion-item>
 		<div style='height: 20px; font-size: 20px; padding-left: 8px; padding-top: 10px;'>
 			<div *ngIf="loading">
 				<b>Checken...</b>

@@ -27,8 +27,10 @@
 	</div>
 	<div class="user-info">
 		<h1>Hutnummer:</h1>
-		<ion-input #nrInput type="tel" placeholder="123" [(ngModel)]="hutNr" (ngModelChange)="search($event)"
-			maxlength="3"></ion-input>
+		<ion-item>
+			<ion-input #nrInput type="tel" placeholder="123" [(ngModel)]="hutNr" (ngModelChange)="search($event)"
+				maxlength="3"></ion-input>
+		</ion-item>
 	</div>
 	<div class="bracelet-number">
 		<h1>Kinderen in hut{{hutNr?' ' + hutNr:''}}:</h1>
@@ -52,8 +54,11 @@
 				<span style="color:red;">
 					{{searchError}}
 				</span>
-				<ion-input type="text" placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
-					(ngModelChange)="searchChild($event)"></ion-input>
+				<ion-item>
+
+					<ion-input type="text" placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
+						(ngModelChange)="searchChild($event)"></ion-input>
+				</ion-item>
 				<div *ngFor="let child of tickets">
 					<button ion-button full (click)="addChildToHut(child);closeAddModal()"
 						class="bg-grey color-mediumBlack">
