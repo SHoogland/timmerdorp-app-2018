@@ -32,20 +32,40 @@
 				(ngModelChange)="getChild($event)"></ion-input>
 		</div>
 	</div>
-	<div *ngFor="let child of tickets">
-		<button ion-button full (click)="updatePresence(child)" class="bg-grey color-mediumBlack">
-			{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
-			'-' }}) is er <span *ngIf="!child.meta['present_' + day]">&nbsp;niet&nbsp;</span> op&nbsp;<span
-				*ngIf="day === 'wed'">woensdag</span><span *ngIf="day === 'thu'">donderdag</span>.&nbsp;
+	<div *ngFor="let child of tickets; let i = index">
+		<h1 style='font-size: 1.5em;text-align:center;'>{{ child.meta.WooCommerceEventsAttendeeName[0] }}
+			{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
+				'-' }}; hutnummer:
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
-				style="background-color:yellow;padding: 0px 3px">({{ child.meta.hutnr}})</span>
+				style="background-color:yellow;padding: 0px 3px">{{child.meta.hutnr}}</span>
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'"
-				style="background-color:red;color:white;padding: 0px 3px">({{ child.meta.hutnr }})</span>
+				style="background-color:red;color:white;padding: 0px 3px">{{child.meta.hutnr}}</span>
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'"
-				style="background-color:blue;color:white;padding: 0px 3px">({{ child.meta.hutnr }})</span>
+				style="background-color:blue;color:white;padding: 0px 3px">{{child.meta.hutnr}}</span>
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'"
-				style="background-color:green;color:white;padding: 0px 3px">({{ child.meta.hutnr}})</span>
-		</button>
+				style="background-color:green;color:white;padding: 0px 3px">{{child.meta.hutnr}}</span>)</h1>
+
+		<ion-list style="width: 70%;left: 15%;position: relative;">
+			<ion-item>
+				<ion-label>Dinsdag</ion-label>
+				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_wed||[])[0]" (click)="togglePresence(tickets[i], 'tue')"></ion-toggle>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Woensdag</ion-label>
+				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_wed||[])[0]" (click)="togglePresence(tickets[i], 'wed')"></ion-toggle>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Donderdag</ion-label>
+				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_thu||[])[0]" (click)="togglePresence(tickets[i], 'thu')"></ion-toggle>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Vrijdag</ion-label>
+				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_fri||[])[0]" (click)="togglePresence(tickets[i], 'fri')"></ion-toggle>
+			</ion-item>
+		</ion-list>
 	</div>
 
 </ion-content>
