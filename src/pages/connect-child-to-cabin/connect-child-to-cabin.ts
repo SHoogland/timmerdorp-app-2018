@@ -207,7 +207,7 @@ export class ConnectChildToCabinPage {
 			if (result.code === 200) {
 				setTimeout(function () {
 					self.search();
-				}, 250);
+				}, 500);
 				self.loading = false;
 			} else {
 				self.error = result.message;
