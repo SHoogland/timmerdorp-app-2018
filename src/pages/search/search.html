@@ -116,25 +116,25 @@
 				<tr>
 					<td class='b'>Dinsdag</td>
 					<td>
-						{{modal.child.meta.present_tue?"Aanwezig":"Afwezig"}}
+						{{modal.child.meta.present_tue[0] === '1'?"Aanwezig":"Afwezig"}}
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Woensdag</td>
 					<td>
-						{{modal.child.meta.present_wed?"Aanwezig":"Afwezig"}}
+						{{modal.child.meta.present_wed[0] === '1'?"Aanwezig":"Afwezig"}}
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Donderdag</td>
 					<td>
-						{{modal.child.meta.present_thu?"Aanwezig":"Afwezig"}}
+						{{modal.child.meta.present_thu[0] === '1'?"Aanwezig":"Afwezig"}}
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Vrijdag</td>
 					<td>
-						{{modal.child.meta.present_fri?"Aanwezig":"Afwezig"}}
+						{{modal.child.meta.present_fri[0] === '1'?"Aanwezig":"Afwezig"}}
 					</td>
 				</tr>
 			</table>
