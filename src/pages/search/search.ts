@@ -122,7 +122,7 @@ export class SearchPage {
 	}
 
 	filterPhoneNr(num) {
-		return (num||[])[0].replace(/\D/g, '');
+		return (num||[""])[0].replace(/\D/g, '');
 	}
 
 	searchThis() {
