@@ -1,22 +1,22 @@
 <ion-header>
-		<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
-		<h1 (click)="goHome()" id="ptitle">Timmerdorp 2019</h1>
-		<ion-navbar>
-			<ion-title>
-				<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
-			</ion-title>
-		</ion-navbar>
-	</ion-header>
-	
-	<ion-content padding>
-		<button ion-button class='bg-blue' full (click)='scanCode()'>Scan ticket</button>
-		<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class">
-			{{p.title}}
-		</button>
-	
-		<div id='stagingSwitch'>
-			<button ion-button style="background: #fafafa; color: #fafafa;" full (click)='switchEnv()'>hidden</button>
-			<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
-		</div>
-		<p>{{error}}</p>
-	</ion-content>
+	<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
+	<h1 (click)="goHome()" id="ptitle">Timmerdorp 2019</h1>
+	<ion-navbar>
+		<ion-title>
+			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<button ion-button class='bg-blue' full (click)='scanCode()'>Scan ticket</button>
+	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class">
+		{{p.title}}
+	</button>
+
+	<div id='stagingSwitch'>
+		<button ion-button style="background: #fafafa; color: #fafafa;" full (click)='switchEnv()'>hidden</button>
+		<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
+	</div>
+	<p>{{error}}</p>
+</ion-content>
