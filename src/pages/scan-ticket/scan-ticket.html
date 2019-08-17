@@ -35,7 +35,9 @@
 		</div>
 		<div class="bracelet-number">
 			<h1>Armband nummer:</h1>
-			<ion-input #nrInput type="tel" placeholder="123" [(ngModel)]="ticket.wristBandNr" maxlength="3"></ion-input>
+			<ion-item>
+				<ion-input #nrInput type="tel" placeholder="123" [(ngModel)]="ticket.wristBandNr" maxlength="3"></ion-input>
+			</ion-item>
 			<span *ngIf="wristBandError" class="form-error">
 				{{ wristBandError }}
 			</span>

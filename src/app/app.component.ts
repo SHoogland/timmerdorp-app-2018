@@ -65,7 +65,6 @@ export class MyApp {
 					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 				})
 			]).then(() => {
-				this.splashScreen.hide();
 				if (this.platform.is('cordova')) {
 					if (cordova.platformId === 'android') {
 						this.platform.registerBackButtonAction(() => {

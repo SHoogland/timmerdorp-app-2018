@@ -32,7 +32,7 @@ button,
 }
 
 .toolbar-background {
-  background: #30b0ff !important;
+  background: $blue !important;
 }
 
 h1 {
@@ -45,7 +45,7 @@ h1 {
     background: #dfa401 !important;
   }
 }
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 410px) {
   #ptitle {
     font-size: 19px !important;
     margin-top: 29px !important;
@@ -94,7 +94,7 @@ h1 {
 .bg-blue {
   background: $blue;
   &:hover, &.activated {
-    background: #0094f0 !important;
+    background: $bluehover !important;
   }
 }
 .bg-green {
@@ -104,7 +104,7 @@ h1 {
   background: $red;
 }
 button.bg-red:hover, button.bg-red.activated {
-  background: #bd0a0a !important;
+  background: $redhover !important;
 }
 button.bg-green:hover, button.bg-green.activated {
   background: #75c935 !important;
@@ -299,7 +299,7 @@ ion-toolbar {
   text-transform: none;
 
   &:first-of-type {
-    margin-top: 40px;
+    margin-top: 20px;
   }
 }
 
@@ -336,6 +336,18 @@ ion-toolbar {
 
 #childDataHeader {
   margin: 20px 0;
+}
+
+input.text-input{
+    background: #fff;
+}
+ion-item{
+	background: #fafafa!important;
+}
+
+.content-md{
+	color: #202124;
+	background: #fafafa;
 }
 
 /* Modal Content/Box */

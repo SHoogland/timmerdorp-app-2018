@@ -30,6 +30,7 @@ export class LoginPage {
 	clickedOnce = false;
 	clickedTwice = false;
 	staging = false;
+	allowStaging = !(new Date().getDay() > 1 && new Date().getDay() < 6); //don't allow tuesday through friday
 
 	constructor(
 		public navCtrl: NavController,

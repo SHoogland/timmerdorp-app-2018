@@ -93,9 +93,9 @@ export class ScanTicketPage {
 				this.login.password = '';
 			}),
 			this.storage.get('staging').then((val) => {
-				if(val){
+				if (val) {
 					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else{
+				} else {
 					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 				}
 			}, (error) => {
@@ -116,7 +116,6 @@ export class ScanTicketPage {
 					self.ticket.wristBandNr = result.meta.wristband[0];
 					self.modal.text = 'Dit ticket heeft al een armband!';
 				}
-
 				self.loading = false;
 			} else {
 				if (result.message == 'access denied') {
@@ -148,7 +147,13 @@ export class ScanTicketPage {
 			.then((result) => {
 				console.log(result);
 				if (result.code === 200) {
-					self.goHome();
+					var wp = this.getWpApi('presence');
+					if (new Date().getDay() == 2) { //if today is tuesday
+						wp.handler().param('wristband', result.meta.wristband[0]).param('day', "tue").param("presence", true).then((result) => {
+							console.log("Child presence update successful", result)
+							self.goHome();
+						});
+					}
 				} else {
 					self.error = result.message;
 					self.loading = false;
@@ -159,10 +164,10 @@ export class ScanTicketPage {
 	}
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
+		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: "back"});
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "back" });
 	}
 }
