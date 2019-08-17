@@ -82,19 +82,19 @@
 				<tr>
 					<td class='b'>Tel. huisarts</td>
 					<td><a
-							href="tel: {{(modal.child.meta.fooevents_custom_telefoonnr_huisarts[0]||'').replace(/\D/g,'')}}">{{modal.child.meta.fooevents_custom_telefoonnr_huisarts[0]}}</a>
+							href="tel: {{filterPhoneNr(modal.child.meta.fooevents_custom_telefoonnr_huisarts[0])}}">{{modal.child.meta.fooevents_custom_telefoonnr_huisarts[0]}}</a>
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Tel. ouder 1</td>
 					<td><a
-							href="tel: {{(modal.child.meta.fooevents_custom_telefoonnr_ouders[0]||'').replace(/\D/g,'')}}">{{modal.child.meta.fooevents_custom_telefoonnr_ouders[0]}}</a>
+							href="tel: {{filterPhoneNr(modal.child.meta.fooevents_custom_telefoonnr_ouders[0])}}">{{modal.child.meta.fooevents_custom_telefoonnr_ouders[0]}}</a>
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Tel. ouder 2</td>
 					<td><a
-							href="tel: {{(modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0]||'').replace(/\D/g,'')}}">{{modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0]}}</a>
+							href="tel: {{filterPhoneNr(modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0])}}">{{modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'][0]}}</a>
 					</td>
 				</tr>
 				<tr>
@@ -116,25 +116,25 @@
 				<tr>
 					<td class='b'>Dinsdag</td>
 					<td>
-						{{modal.child.meta.present_tue[0] === '1'?"Aanwezig":"Afwezig"}}
+						{{(modal.child.meta.present_tue||[])[0] === '1'?"Aanwezig":"Afwezig"}}
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Woensdag</td>
 					<td>
-						{{modal.child.meta.present_wed[0] === '1'?"Aanwezig":"Afwezig"}}
+						{{(modal.child.meta.present_wed||[])[0] === '1'?"Aanwezig":"Afwezig"}}
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Donderdag</td>
 					<td>
-						{{modal.child.meta.present_thu[0] === '1'?"Aanwezig":"Afwezig"}}
+						{{(modal.child.meta.present_thu||[])[0] === '1'?"Aanwezig":"Afwezig"}}
 					</td>
 				</tr>
 				<tr>
 					<td class='b'>Vrijdag</td>
 					<td>
-						{{modal.child.meta.present_fri[0] === '1'?"Aanwezig":"Afwezig"}}
+						{{(modal.child.meta.present_fri||[])[0] === '1'?"Aanwezig":"Afwezig"}}
 					</td>
 				</tr>
 			</table>

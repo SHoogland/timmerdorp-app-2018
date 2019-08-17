@@ -93,9 +93,9 @@ export class SearchPage {
 				this.login.password = '';
 			}),
 			this.storage.get('staging').then((val) => {
-				if(val){
+				if (val) {
 					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else{
+				} else {
 					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 				}
 			}, (error) => {
@@ -114,6 +114,15 @@ export class SearchPage {
 		} catch (e) {
 			console.log(e);
 		}
+	}
+
+	getNr(nr){
+		console.log(nr);
+		return "0000";
+	}
+
+	filterPhoneNr(num) {
+		return (num||[])[0].replace(/\D/g, '');
 	}
 
 	searchThis() {
@@ -169,7 +178,7 @@ export class SearchPage {
 	}
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
+		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
 
 	scanChild(barcode) {
@@ -177,7 +186,7 @@ export class SearchPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: "back"});
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "back" });
 	}
 
 }
