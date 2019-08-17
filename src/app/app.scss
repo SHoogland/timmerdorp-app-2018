@@ -52,31 +52,33 @@ h1 {
   }
 }
 
-.conditional{
-	opacity: 0;
-	transition: opacity linear 400ms;
-	&.modal{
-		z-index:-1;
-	}
+.conditional {
+  opacity: 0;
+  transition: opacity linear 400ms;
+  &.modal {
+    z-index: -1;
+  }
 }
 
-.bar-button-default-md{
-	transition-duration: 250ms!important;
+.bar-button-default-md {
+  transition-duration: 250ms !important;
 }
-.bar-button-default-md:hover:not(.disable-hover), .bar-button-clear-md-default:hover:not(.disable-hover), .bar-button-md-default:hover:not(.disable-hover) {
-    color: #d3d3d3!important;
-}
-
-.toolbar-title-md{
-	padding: 0!important;
+.bar-button-default-md:hover:not(.disable-hover),
+.bar-button-clear-md-default:hover:not(.disable-hover),
+.bar-button-md-default:hover:not(.disable-hover) {
+  color: #d3d3d3 !important;
 }
 
-.modal.high{
-	z-index: 10;
+.toolbar-title-md {
+  padding: 0 !important;
 }
 
-.shown{
-	opacity: 1;
+.modal.high {
+  z-index: 10;
+}
+
+.shown {
+  opacity: 1;
 }
 
 #ptitle {
@@ -93,7 +95,8 @@ h1 {
 
 .bg-blue {
   background: $blue;
-  &:hover, &.activated {
+  &:hover,
+  &.activated {
     background: $bluehover !important;
   }
 }
@@ -103,13 +106,16 @@ h1 {
 .bg-red {
   background: $red;
 }
-button.bg-red:hover, button.bg-red.activated {
+button.bg-red:hover,
+button.bg-red.activated {
   background: $redhover !important;
 }
-button.bg-green:hover, button.bg-green.activated {
+button.bg-green:hover,
+button.bg-green.activated {
   background: #75c935 !important;
 }
-button.bg-grey:hover, button.bg-grey.activated {
+button.bg-grey:hover,
+button.bg-grey.activated {
   background: #ccc !important;
   color: black !important;
 }
@@ -120,21 +126,21 @@ button.bg-grey:hover, button.bg-grey.activated {
   }
 }
 
-.bar-button-menutoggle-md ion-icon{
-	font-size: 4rem;
+.bar-button-menutoggle-md ion-icon {
+  font-size: 4rem;
 }
 
-.homeIcon{
-	position: absolute;
-    z-index: 1;
-    color: white;
-    font-size: 4.3rem;
-    left: 20px;
-    top: 18px;
+.homeIcon {
+  position: absolute;
+  z-index: 1;
+  color: white;
+  font-size: 4.3rem;
+  left: 20px;
+  top: 18px;
 }
 
-button{
-	transition-duration: 300ms!important;
+button {
+  transition-duration: 300ms !important;
 }
 
 .stanModal div button {
@@ -294,7 +300,7 @@ ion-toolbar {
   height: 80px;
   box-shadow: none;
   font-size: 16px;
-  line-height:  20px;
+  line-height: 20px;
   letter-spacing: 0.5px;
   text-transform: none;
 
@@ -304,7 +310,13 @@ ion-toolbar {
 }
 
 input.text-input {
-    background: #e0e0e0!important;
+  background: #e0e0e0 !important;
+}
+
+* {
+  border-bottom-color: none!important;
+  -webkit-box-shadow: none!important;
+  box-shadow: none!important;
 }
 
 .container-bottom {
@@ -342,16 +354,16 @@ input.text-input {
   margin: 20px 0;
 }
 
-input.text-input{
-    background: #fff;
+input.text-input {
+  background: #fff;
 }
-ion-item{
-	background: #fafafa!important;
+ion-item {
+  background: #fafafa !important;
 }
 
-.content-md{
-	color: #202124;
-	background: #fafafa;
+.content-md {
+  color: #202124;
+  background: #fafafa;
 }
 
 /* Modal Content/Box */
