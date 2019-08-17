@@ -129,11 +129,11 @@ export class PresencePage {
 	}
 
 	togglePresence(child, day) {
-		console.log(child, day);
+		console.log('fissa');
 		let self = this;
 		self.loading = true;
 		var wp = this.getWpApi('presence');
-		wp.handler().param('wristband', child.meta.wristband).param('day', day).then((result) => {
+		wp.handler().param('wristband', child.meta.wristband).param('day', day).param('presence', !!child.meta['present_'+ day][0]).then((result) => {
 			if (result.code === 200) {
 				console.log("Child presence update successful", result)
 				this.loading = false;
@@ -144,6 +144,7 @@ export class PresencePage {
 				self.loading = false;
 			}
 		}).catch((error) => {
+			console.log(error);
 		});
 	}
 

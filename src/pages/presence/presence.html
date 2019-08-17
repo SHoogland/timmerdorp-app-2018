@@ -48,22 +48,22 @@
 		<ion-list style="width: 70%;left: 15%;position: relative;">
 			<ion-item>
 				<ion-label>Dinsdag</ion-label>
-				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_wed||[])[0]" (click)="togglePresence(tickets[i], 'tue')"></ion-toggle>
+				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_tue||[])[0]" (ionChange)="togglePresence(tickets[i], 'tue')"></ion-toggle>
 			</ion-item>
 
 			<ion-item>
 				<ion-label>Woensdag</ion-label>
-				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_wed||[])[0]" (click)="togglePresence(tickets[i], 'wed')"></ion-toggle>
+				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_wed||[])[0]" (ionChange)="togglePresence(tickets[i], 'wed')"></ion-toggle>
 			</ion-item>
 
 			<ion-item>
 				<ion-label>Donderdag</ion-label>
-				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_thu||[])[0]" (click)="togglePresence(tickets[i], 'thu')"></ion-toggle>
+				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_thu||[])[0]" (ionChange)="togglePresence(tickets[i], 'thu')"></ion-toggle>
 			</ion-item>
 
 			<ion-item>
 				<ion-label>Vrijdag</ion-label>
-				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_fri||[])[0]" (click)="togglePresence(tickets[i], 'fri')"></ion-toggle>
+				<ion-toggle [(ngModel)]="+(tickets[i].meta.present_fri||[])[0]" (ionChange)="togglePresence(tickets[i], 'fri')"></ion-toggle>
 			</ion-item>
 		</ion-list>
 	</div>
