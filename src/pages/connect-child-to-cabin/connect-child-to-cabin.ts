@@ -70,6 +70,14 @@ export class ConnectChildToCabinPage {
 		}
 		this.tickets = [];
 		this.hutTickets = [];
+
+		//ik heb oprecht geen idee waarom dit werkt,
+		//maar zonder deze drie regels hieronder werkt
+		//de 'removeModal' niet.
+		//??????
+		setInterval(function(){
+			console.log(this.removeModal.show);
+		}, 250);
 	}
 
 	getWpApi(route) {
@@ -255,7 +263,6 @@ export class ConnectChildToCabinPage {
 	}
 
 	showRemoveModal() {
-		console.log(this.removeChild);
 		this.removeModal.show = true;
 		this.searchTerm = '';
 		document.querySelector('#removeModal').classList.add('high');
