@@ -153,6 +153,8 @@ export class ScanTicketPage {
 							console.log("Child presence update successful", result)
 							self.goHome();
 						});
+					}else{
+						self.goHome();
 					}
 				} else {
 					self.error = result.message;
