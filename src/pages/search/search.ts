@@ -105,6 +105,20 @@ export class SearchPage {
 		});
 	}
 
+	getWijk(hutNr){
+		if(hutNr[0] == '0') {
+			return 'Geel';
+		}else if(hutNr[0] == '1'){
+			return 'Rood';
+		}else if(hutNr[0] == '2'){
+			return 'Blauw';
+		}else if(hutNr[0] == '3'){
+			return 'Groen';
+		}else{
+			return '';
+		}
+	}
+
 	search() {
 		try {
 			clearTimeout(this.typingTimer);

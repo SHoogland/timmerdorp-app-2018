@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content padding>
-	<button style='border-radius: 4px;' ion-button full *ngFor="let p of pages" (click)="openPage(p)"
+	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)"
 		[ngClass]="p.class">
 		<div style='text-align:left;'>
 			<ion-icon slot='start' name='{{p.icon||""}}' style='margin-right:8px;position:relative;'></ion-icon>

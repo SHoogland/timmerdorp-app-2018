@@ -28,10 +28,10 @@
 
 	<div *ngIf='showSelection' style='text-align: center'>
 		<h1>Kies je wijk</h1>
-		<button style='border-radius: 4px;' ion-button class='bg-blue' full (click)='kiesWijk("blue")'>Blauw</button>
-		<button style='border-radius: 4px;' ion-button class='bg-yellow' full (click)='kiesWijk("yellow")'>Geel</button>
-		<button style='border-radius: 4px;' ion-button class='bg-red' full (click)='kiesWijk("red")'>Rood</button>
-		<button style='border-radius: 4px;' ion-button class='bg-green' full (click)='kiesWijk("green")'>Groen</button>
+		<button ion-button class='bg-blue' full (click)='kiesWijk("blue")'>Blauw</button>
+		<button ion-button class='bg-yellow' full (click)='kiesWijk("yellow")'>Geel</button>
+		<button ion-button class='bg-red' full (click)='kiesWijk("red")'>Rood</button>
+		<button ion-button class='bg-green' full (click)='kiesWijk("green")'>Groen</button>
 	</div>
 	<div *ngIf='!showSelection' style='text-align: center'>
 		<h1>Wijkoverzicht {{getName(wijk)}}</h1>

@@ -114,6 +114,12 @@
 					</td>
 				</tr>
 				<tr>
+					<td class='b'>Wijk</td>
+					<td>
+						<div *ngIf="modal.child.meta.hutnr">{{getWijk(modal.child.meta.hutnr[0])}}</div>
+					</td>
+				</tr>
+				<tr>
 					<td class='b'>Dinsdag</td>
 					<td>
 						{{(modal.child.meta.present_tue||[])[0] === '1'?"Aanwezig":"Afwezig"}}
