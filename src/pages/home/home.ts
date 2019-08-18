@@ -43,7 +43,7 @@ export class HomePage {
 
 	init() {
 		this.storage.get('wijk').then((val) => {
-			this.wijk = val || 'blue';
+			this.wijk = val;
 			console.log('init');
 
 			this.pages = [
@@ -72,9 +72,9 @@ export class HomePage {
 					icon: "checkmark-circle-outline"
 				},
 				{
-					title: 'Wijkoverzicht',
+					title: 'Wijkoverzicht ' + this.getWijkName(this.wijk),
 					component: WijkPage,
-					class: 'bg-' + this.wijk,
+					class: 'bg-' + (this.wijk||'blue'),
 					icon: "analytics"
 				},
 				{
@@ -85,6 +85,15 @@ export class HomePage {
 				}
 			];
 		});
+	}
+	
+
+	getWijkName(kleur) {
+		if (kleur == 'blue') return 'Blauw';
+		if (kleur == 'yellow') return 'Geel';
+		if (kleur == 'red') return 'Rood';
+		if (kleur == 'green') return 'Groen';
+		return  '';
 	}
 
 	ionViewDidLoad() {
