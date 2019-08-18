@@ -76,7 +76,7 @@ export class ConnectChildToCabinPage {
 		//de 'removeModal' niet.
 		//??????
 		setInterval(function(){
-			console.log(this.removeModal.show);
+			console.log((this.removeModal||{}).show);
 		}, 250);
 	}
 

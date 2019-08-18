@@ -20,7 +20,8 @@ export class HomePage {
 	pages: Array<{
 		title: string,
 		component: any,
-		class: string
+		class: string,
+		icon: string
 	}>;
 	login: {
 		username: '',
@@ -47,29 +48,40 @@ export class HomePage {
 
 			this.pages = [
 				{
+					title: 'Scan ticket',
+					component: 'ticketscanner',
+					class: 'bg-blue',
+					icon: 'qr-scanner'
+				},
+				{
 					title: 'Koppel kind aan hut',
 					component: ConnectChildToCabinPage,
-					class: 'bg-blue'
+					class: 'bg-blue',
+					icon: 'person-add'
 				},
 				{
 					title: 'Zoek kind',
 					component: SearchPage,
-					class: 'bg-blue'
+					class: 'bg-blue',
+					icon: "search"
 				},
 				{
 					title: 'Aanwezigheid',
 					component: PresencePage,
-					class: 'bg-blue'
+					class: 'bg-blue',
+					icon: "checkmark-circle-outline"
 				},
 				{
 					title: 'Wijkoverzicht',
 					component: WijkPage,
-					class: 'bg-' + this.wijk
+					class: 'bg-' + this.wijk,
+					icon: "analytics"
 				},
 				{
 					title: 'Log uit',
 					component: LoginPage,
-					class: 'bg-red'
+					class: 'bg-darkred',
+					icon: "log-out"
 				}
 			];
 		});
@@ -85,10 +97,14 @@ export class HomePage {
 	}
 
 	openPage(page) {
-		// Reset the content nav to have just this page
-		// we wouldn't want the back button to show in this scenario
-
-		this.navCtrl.setRoot(page.component, {}, { animate: true, direction: 'forward' });
+		if(page.component == 'ticketscanner'){
+			this.scanCode();
+		}else{
+			// Reset the content nav to have just this page
+			// we wouldn't want the back button to show in this scenario
+	
+			this.navCtrl.setRoot(page.component, {}, { animate: true, direction: 'forward' });
+		}
 	}
 
 	scanCode() {

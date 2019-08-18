@@ -9,14 +9,18 @@
 </ion-header>
 
 <ion-content padding>
-	<button ion-button class='bg-blue' full (click)='scanCode()'>Scan ticket</button>
-	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class">
-		{{p.title}}
+	<button style='border-radius: 4px;' ion-button full *ngFor="let p of pages" (click)="openPage(p)"
+		[ngClass]="p.class">
+		<div style='text-align:left;'>
+			<ion-icon slot='start' name='{{p.icon||""}}' style='margin-right:8px;position:relative;'></ion-icon>
+			<span style='font-size:18px'>
+				{{p.title}}
+			</span>
+		</div>
 	</button>
 
-	<div id='stagingSwitch'>
-		<button ion-button style="background: #fff; color: #fff;" full (click)='switchEnv()'>hidden</button>
-		<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
-	</div>
+	<button ion-button style="background: #fafafa; color: #fafafa;" full (click)='switchEnv()'>hidden</button>
+	<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
+
 	<p>{{error}}</p>
 </ion-content>

@@ -28,15 +28,15 @@
 
 	<div *ngIf='showSelection' style='text-align: center'>
 		<h1>Kies je wijk</h1>
-		<button ion-button class='bg-blue' full (click)='kiesWijk("blue")'>Blauw</button>
-		<button ion-button class='bg-yellow' full (click)='kiesWijk("yellow")'>Geel</button>
-		<button ion-button class='bg-red' full (click)='kiesWijk("red")'>Rood</button>
-		<button ion-button class='bg-green' full (click)='kiesWijk("green")'>Groen</button>
+		<button style='border-radius: 4px;' ion-button class='bg-blue' full (click)='kiesWijk("blue")'>Blauw</button>
+		<button style='border-radius: 4px;' ion-button class='bg-yellow' full (click)='kiesWijk("yellow")'>Geel</button>
+		<button style='border-radius: 4px;' ion-button class='bg-red' full (click)='kiesWijk("red")'>Rood</button>
+		<button style='border-radius: 4px;' ion-button class='bg-green' full (click)='kiesWijk("green")'>Groen</button>
 	</div>
 	<div *ngIf='!showSelection' style='text-align: center'>
 		<h1>Wijkoverzicht {{getName(wijk)}}</h1>
 		<p (click)='clearWijkSelection()'><a href='javascript:null'>Verander wijkkeuze</a></p>
-		<table style='padding-left: 20px;'>
+		<table style='margin-left: 20px;'>
 			<tr>
 				<td style='text-align:left; padding-right:4px;'>
 					<b>Totaal aantal kinderen in wijk:&nbsp;</b>
@@ -81,7 +81,7 @@
 		<br>
 		<br>
 		<h1>Algemeen overzicht</h1>
-		<table style='padding-left: 20px;'>
+		<table style='margin-left: 20px;'>
 
 			<tr>
 				<td style='text-align:left; padding-right:4px;'>
