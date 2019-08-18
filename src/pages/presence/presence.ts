@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
@@ -28,7 +28,8 @@ export class PresencePage {
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
-		public storage: Storage
+		public storage: Storage,
+		private cd: ChangeDetectorRef
 	) {
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
@@ -133,19 +134,26 @@ export class PresencePage {
 		let self = this;
 		self.loading = true;
 		var wp = this.getWpApi('presence');
-		wp.handler().param('wristband', child.meta.wristband).param('day', day).param('presence', !!child.meta['present_'+ day][0]).then((result) => {
-			if (result.code === 200) {
-				console.log("Child presence update successful", result)
-				this.loading = false;
-				this.error = '';
-				self.loading = false;
-			} else {
-				self.error = result.message;
-				self.loading = false;
-			}
-		}).catch((error) => {
-			console.log(error);
-		});
+		wp.handler()
+			.param('wristband', child.meta.wristband)
+			.param('day', day)
+			.param('presence', !!child.meta['present_'+ day][0])
+			.then((result) => {
+				console.log('whut');
+				if (result.code === 200) {
+					console.log("Child presence update successful", result)
+					self.loading = false;
+					self.error = '';
+					self.loading = false;
+				} else {
+					self.error = result.message;
+					self.loading = false;
+				}
+				self.cd.detectChanges();
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 
 

@@ -84,9 +84,7 @@ export class LoginPage {
 			this.staging = false;
 			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		})
-
 	}
-
 
 	loginNow() {
 		this.storage.set('username', this.login.username);
@@ -157,7 +155,6 @@ export class LoginPage {
 		return wp;
 	}
 
-
 	switchEnv(){
 		const _this = this;
 		setTimeout(function(){
@@ -183,7 +180,6 @@ export class LoginPage {
 		this.clickedOnce = true;
 		this.cd.detectChanges();
 	}
-
 
 	goHome() {
 		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: "back"});
