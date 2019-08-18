@@ -29,7 +29,6 @@ export class PresencePage {
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
-		private cd: ChangeDetectorRef
 	) {
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
