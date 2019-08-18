@@ -25,7 +25,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div *ngIf='showSelection' style='text-align: center'>
 		<h1>Kies je wijk</h1>
 		<button ion-button class='bg-blue' full (click)='kiesWijk("blue")'>Blauw</button>
@@ -36,20 +36,109 @@
 	<div *ngIf='!showSelection' style='text-align: center'>
 		<h1>Wijkoverzicht {{getName(wijk)}}</h1>
 		<p (click)='clearWijkSelection()'><a href='javascript:null'>Verander wijkkeuze</a></p>
-		<b>Totaal aantal kinderen in wijk:&nbsp;</b><span *ngIf="statistieken">{{wijkstats.count||"???"}}</span><br>
-		<b>Aanwezig dinsdag:&nbsp;</b><span *ngIf="wijkstats">{{wijkstats.presentTue||"???"}}</span><br>
-		<b>Aanwezig woensdag:&nbsp;</b><span *ngIf="wijkstats">{{wijkstats.presentWed||"???"}}</span><br>
-		<b>Aanwezig donderdag:&nbsp;</b><span *ngIf="wijkstats">{{wijkstats.presentThu||"???"}}</span><br>
-		<b>Aanwezig vrijdag:&nbsp;</b><span *ngIf="wijkstats">{{wijkstats.presentFri||"???"}}</span>
+		<table style='padding-left: 20px;'>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Totaal aantal kinderen in wijk:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="statistieken">{{wijkstats.count||"&mdash;"}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Aanwezig disdag:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="wijkstats">{{wijkstats.presentTue||"&mdash;"}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Aanwezig woensdag:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="wijkstats">{{wijkstats.presentWed||"&mdash;"}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Aanwezig donderdag:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="wijkstats">{{wijkstats.presentThu||"&mdash;"}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Aanwezig vrijdag:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="wijkstats">{{wijkstats.presentFri||"&mdash;"}}</span>
+				</td>
+			</tr>
+		</table>
 		<br>
 		<br>
 		<h1>Algemeen overzicht</h1>
-		<b>Totaal aantal kinderen:&nbsp;</b><span *ngIf="statistieken">{{statistieken.count}}</span><br>
-		<b>Aantal kinderen met hutnummer:&nbsp;</b><span *ngIf="statistieken">{{statistieken.haveHutnr}}</span><br>
-		<b>Aantal kinderen met armbandje:&nbsp;</b><span *ngIf="statistieken">{{statistieken.haveWristband}}</span><br>
-		<b>Aanwezig dinsdag:&nbsp;</b><span *ngIf="statistieken">{{statistieken.presentTue||"???"}}</span><br>
-		<b>Aanwezig woensdag:&nbsp;</b><span *ngIf="statistieken">{{statistieken.presentWed||"???"}}</span><br>
-		<b>Aanwezig donderdag:&nbsp;</b><span *ngIf="statistieken">{{statistieken.presentThu||"???"}}</span><br>
-		<b>Aanwezig vrijdag:&nbsp;</b><span *ngIf="statistieken">{{statistieken.presentFri||"???"}}</span>
+		<table style='padding-left: 20px;'>
+
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Totaal aantal kinderen:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="statistieken">{{statistieken.count}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Aantal kinderen met hutnummer:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="statistieken">{{statistieken.haveHutnr}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Aantal kinderen met armbandje:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="statistieken">{{statistieken.haveWristband}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Aanwezig dinsdag:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="statistieken">{{statistieken.presentTue||"&mdash;"}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Aanwezig woensdag:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="statistieken">{{statistieken.presentWed||"&mdash;"}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Aanwezig donderdag:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="statistieken">{{statistieken.presentThu||"&mdash;"}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:left; padding-right:4px;'>
+					<b>Aanwezig vrijdag:&nbsp;</b>
+				</td>
+				<td style='text-align:left; padding-right:4px;'>
+					<span *ngIf="statistieken">{{statistieken.presentFri||"&mdash;"}}</span>
+				</td>
+			</tr>
+		</table>
 	</div>
 </ion-content>
