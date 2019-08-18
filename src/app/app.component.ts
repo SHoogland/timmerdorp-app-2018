@@ -71,9 +71,9 @@ export class MyApp {
 							console.log("TERUG KNOP ANDROID");
 							this.nav.setRoot(HomePage);
 						});
-						this.statusBar.backgroundColorByHexString("#0094f0");
+						this.statusBar.backgroundColorByHexString("#045c9f");
 					} else if (cordova.platformId === 'ios') {
-						this.statusBar.backgroundColorByHexString("#30b0ff");
+						this.statusBar.backgroundColorByHexString("#0572c8");
 					}
 				}
 
