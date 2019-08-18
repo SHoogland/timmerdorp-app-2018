@@ -38,7 +38,6 @@ export class HomePage {
 		public platform: Platform,
 		public storage: Storage
 	) {
-		this.init();
 	}
 
 	init() {

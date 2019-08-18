@@ -92,10 +92,6 @@ export class WijkPage {
 		});
 	}
 
-	ionViewDidLoad() {
-		this.init();
-	}
-
 	goHome() {
 		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "back" });
 	}

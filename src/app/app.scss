@@ -31,8 +31,9 @@ button,
   font-family: Mikado-Bold;
 }
 
-.toolbar-background {
-  background: $blue !important;
+.toolbar-background, .toolbar {
+  background: #009685 !important;
+  border-bottom: none!important;
 }
 
 h1 {
@@ -314,9 +315,9 @@ input.text-input {
 }
 
 * {
-  border-bottom-color: none!important;
-  -webkit-box-shadow: none!important;
-  box-shadow: none!important;
+  border-bottom-color: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .container-bottom {
@@ -407,14 +408,19 @@ ion-navbar .nav-logo {
   width: 75px !important;
 }
 
-button.bg-darkred {
-    background: #b20606!important;
+.toolbar-background.bg-darkred, button.bg-darkred {
+  background: #b20606 !important;
 }
 
-.item-md{
-	background: #fff!important;
+.item-md {
+  background: #fff !important;
 }
 
-button{
-	border-radius: 4px!important;
+button {
+  border-radius: 4px !important;
+}
+
+h1,
+button {
+  font-family: Roboto, Arial !important;
 }
