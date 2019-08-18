@@ -1,0 +1,57 @@
+<ion-header>
+	<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
+	<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+	<ion-navbar>
+		<ion-title>
+			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<div class="user-info" style='border: none!important;'>
+		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
+			{{error}}
+		</span>
+		<span *ngIf="loginError" style="color:red;font-weight:bold">
+			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+		</span>
+		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+		</span>
+		<div style='height: 20px;'>
+			<div *ngIf="loading&&!notLoggedIn">
+				Laden...
+			</div>
+		</div>
+	</div>
+	
+	<div *ngIf='showSelection' style='text-align: center'>
+		<h1>Kies je wijk</h1>
+		<button ion-button class='bg-blue' full (click)='kiesWijk("blue")'>Blauw</button>
+		<button ion-button class='bg-yellow' full (click)='kiesWijk("yellow")'>Geel</button>
+		<button ion-button class='bg-red' full (click)='kiesWijk("red")'>Rood</button>
+		<button ion-button class='bg-green' full (click)='kiesWijk("green")'>Groen</button>
+	</div>
+	<div *ngIf='!showSelection' style='text-align: center'>
+		<h1>Wijkoverzicht {{getName(wijk)}}</h1>
+		<p (click)='clearWijkSelection()'><a href='javascript:null'>Verander wijkkeuze</a></p>
+		<p>Hier komen gegevens over jouw wijk.</p>
+		<b>Totaal aantal kinderen in wijk:&nbsp;</b><span *ngIf="statistieken">{{wijkstats.count||"???"}}</span><br>
+		<b>Aanwezig dinsdag:&nbsp;</b><span *ngIf="wijkstats">{{wijkstats.presentTue||"???"}}</span><br>
+		<b>Aanwezig woensdag:&nbsp;</b><span *ngIf="wijkstats">{{wijkstats.presentWed||"???"}}</span><br>
+		<b>Aanwezig donderdag:&nbsp;</b><span *ngIf="wijkstats">{{wijkstats.presentThu||"???"}}</span><br>
+		<b>Aanwezig vrijdag:&nbsp;</b><span *ngIf="wijkstats">{{wijkstats.presentFri||"???"}}</span>
+		<br>
+		<br>
+		<h1>Algemeen overzicht</h1>
+		<p (click)='clearWijkSelection()'><a href='javascript:null'>Verander wijkkeuze</a></p>
+		<b>Totaal aantal kinderen:&nbsp;</b><span *ngIf="statistieken">{{statistieken.count}}</span><br>
+		<b>Aantal kinderen met hutnummer:&nbsp;</b><span *ngIf="statistieken">{{statistieken.haveHutnr}}</span><br>
+		<b>Aantal kinderen met armbandje:&nbsp;</b><span *ngIf="statistieken">{{statistieken.haveWristband}}</span><br>
+		<b>Aanwezig dinsdag:&nbsp;</b><span *ngIf="statistieken">{{statistieken.presentTue||"???"}}</span><br>
+		<b>Aanwezig woensdag:&nbsp;</b><span *ngIf="statistieken">{{statistieken.presentWed||"???"}}</span><br>
+		<b>Aanwezig donderdag:&nbsp;</b><span *ngIf="statistieken">{{statistieken.presentThu||"???"}}</span><br>
+		<b>Aanwezig vrijdag:&nbsp;</b><span *ngIf="statistieken">{{statistieken.presentFri||"???"}}</span>
+	</div>
+</ion-content>

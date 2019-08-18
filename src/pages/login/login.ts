@@ -83,7 +83,7 @@ export class LoginPage {
 		}, (error) => {
 			this.staging = false;
 			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-		})
+		});
 	}
 
 	loginNow() {

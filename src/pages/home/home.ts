@@ -3,6 +3,7 @@ import { Platform, NavController } from 'ionic-angular';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
+import { WijkPage } from '../wijk/wijk';
 import { SearchPage } from '../search/search';
 import { ConnectChildToCabinPage } from '../connect-child-to-cabin/connect-child-to-cabin';
 import { Storage } from '@ionic/storage';
@@ -28,6 +29,7 @@ export class HomePage {
 	clickedOnce = false;
 	clickedTwice = false;
 	staging = false;
+	wijk: string
 
 	constructor(
 		public navCtrl: NavController,
@@ -39,30 +41,38 @@ export class HomePage {
 	}
 
 	init() {
-		console.log('init');
+		this.storage.get('wijk').then((val) => {
+			this.wijk = val || 'blue';
+			console.log('init');
 
-		this.pages = [
-			{
-				title: 'Koppel kind aan hut',
-				component: ConnectChildToCabinPage,
-				class: 'bg-blue'
-			},
-			{
-				title: 'Zoek kind',
-				component: SearchPage,
-				class: 'bg-blue'
-			},
-			{
-				title: 'Aanwezigheid',
-				component: PresencePage,
-				class: 'bg-blue'
-			},
-			{
-				title: 'Log uit',
-				component: LoginPage,
-				class: 'bg-red'
-			}
-		];
+			this.pages = [
+				{
+					title: 'Koppel kind aan hut',
+					component: ConnectChildToCabinPage,
+					class: 'bg-blue'
+				},
+				{
+					title: 'Zoek kind',
+					component: SearchPage,
+					class: 'bg-blue'
+				},
+				{
+					title: 'Aanwezigheid',
+					component: PresencePage,
+					class: 'bg-blue'
+				},
+				{
+					title: 'Wijkoverzicht',
+					component: WijkPage,
+					class: 'bg-' + this.wijk
+				},
+				{
+					title: 'Log uit',
+					component: LoginPage,
+					class: 'bg-red'
+				}
+			];
+		});
 	}
 
 	ionViewDidLoad() {
@@ -94,14 +104,14 @@ export class HomePage {
 		}
 	}
 
-	switchEnv(){
+	switchEnv() {
 		const _this = this;
-		setTimeout(function(){
+		setTimeout(function () {
 			_this.clickedOnce = false;
 			_this.clickedTwice = false;
 		}, 1000)
-		if(this.clickedTwice){
-			if(!this.staging){
+		if (this.clickedTwice) {
+			if (!this.staging) {
 				this.storage.set('staging', true);
 				this.staging = true;
 			} else {
@@ -111,7 +121,7 @@ export class HomePage {
 			this.clickedOnce = false;
 			this.clickedTwice = false;
 		}
-		if(this.clickedOnce){
+		if (this.clickedOnce) {
 			this.clickedTwice = true;
 		}
 		this.clickedOnce = true;

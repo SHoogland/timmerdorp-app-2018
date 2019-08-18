@@ -14,6 +14,7 @@ import { ScanTicketPage } from '../pages/scan-ticket/scan-ticket';
 import { ConnectChildToCabinPage } from '../pages/connect-child-to-cabin/connect-child-to-cabin';
 import { PresencePage } from '../pages/presence/presence';
 import { LoginPage } from '../pages/login/login';
+import { WijkPage } from '../pages/wijk/wijk';
 
 @NgModule({
 	declarations: [
@@ -23,7 +24,8 @@ import { LoginPage } from '../pages/login/login';
 		SearchPage,
 		ConnectChildToCabinPage,
 		PresencePage,
-		LoginPage
+		LoginPage,
+		WijkPage
 	],
 	imports: [
 		BrowserModule,
@@ -38,7 +40,8 @@ import { LoginPage } from '../pages/login/login';
 		SearchPage,
 		ConnectChildToCabinPage,
 		PresencePage,
-		LoginPage
+		LoginPage,
+		WijkPage
 	],
 	providers: [
 		StatusBar,
