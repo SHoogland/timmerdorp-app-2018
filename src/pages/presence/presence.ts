@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
@@ -28,7 +28,8 @@ export class PresencePage {
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
-		public storage: Storage
+		public storage: Storage,
+		private cd: ChangeDetectorRef
 	) {
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
@@ -129,7 +130,6 @@ export class PresencePage {
 	}
 
 	togglePresence(child, day) {
-		console.log('fissa');
 		let self = this;
 		self.loading = true;
 		var wp = this.getWpApi('presence');
