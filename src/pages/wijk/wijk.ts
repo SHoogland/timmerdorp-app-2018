@@ -75,15 +75,20 @@ export class WijkPage {
 				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 			})
 		]).then(() => {
-			var wp = this.getWpApi('stats');
-			wp.handler().then((result) => {
-				this.statistieken = result;
-				console.log(result.quarters[this.wijk])
-				this.wijkstats = result.quarters[this.wijk];
-				console.log(result);
-			}).catch((error) => {
+			this.updateData();
+		});
+	}
 
-			});
+	updateData() {
+		console.log(this.wijk);
+		var wp = this.getWpApi('stats');
+		wp.handler().then((result) => {
+			this.statistieken = result;
+			console.log(result.quarters[this.wijk])
+			this.wijkstats = result.quarters[this.wijk];
+			console.log(result);
+		}).catch((error) => {
+			console.log(error);
 		});
 	}
 
@@ -99,6 +104,7 @@ export class WijkPage {
 		this.storage.set("wijk", kleur).then((val) => {
 			this.showSelection = false;
 			this.wijk = val;
+			this.updateData();
 		});
 	}
 
