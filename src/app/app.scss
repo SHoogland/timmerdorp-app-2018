@@ -32,7 +32,7 @@ button,
 }
 
 .toolbar-background, .toolbar {
-  background: $blue !important;
+  background: #0572c8 !important;
   border-bottom: none!important;
 }
 
@@ -423,4 +423,9 @@ button {
 h1,
 button {
   font-family: Roboto, Arial !important;
+}
+
+
+.scroll-content{
+	margin-top: 64px;
 }
