@@ -36,7 +36,6 @@
 	<div *ngIf='!showSelection' style='text-align: center'>
 		<h1>Wijkoverzicht {{getName(wijk)}}</h1>
 		<p (click)='clearWijkSelection()'><a href='javascript:null'>Verander wijkkeuze</a></p>
-		<p>Hier komen gegevens over jouw wijk.</p>
 		<b>Totaal aantal kinderen in wijk:&nbsp;</b><span *ngIf="statistieken">{{wijkstats.count||"???"}}</span><br>
 		<b>Aanwezig dinsdag:&nbsp;</b><span *ngIf="wijkstats">{{wijkstats.presentTue||"???"}}</span><br>
 		<b>Aanwezig woensdag:&nbsp;</b><span *ngIf="wijkstats">{{wijkstats.presentWed||"???"}}</span><br>
