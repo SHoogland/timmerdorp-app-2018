@@ -9,23 +9,6 @@
 </ion-header>
 
 <ion-content padding>
-	<div class="user-info" style='border: none!important;'>
-		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
-			{{error}}
-		</span>
-		<span *ngIf="loginError" style="color:red;font-weight:bold">
-			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
-		</span>
-		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
-			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
-		</span>
-		<div style='height: 20px;'>
-			<div *ngIf="loading&&!notLoggedIn">
-				Laden...
-			</div>
-		</div>
-	</div>
-
 	<div *ngIf='showSelection' style='text-align: center'>
 		<h1>Kies je wijk</h1>
 		<button ion-button class='bg-blue' full (click)='kiesWijk("blue")'>Blauw</button>
@@ -34,6 +17,11 @@
 		<button ion-button class='bg-green' full (click)='kiesWijk("green")'>Groen</button>
 	</div>
 	<div *ngIf='!showSelection' style='text-align: center'>
+		<div id='spinner' [ngClass]="{'hidden': !(loading&&!notLoggedIn)}">
+			<div *ngIf="loading&&!notLoggedIn">
+				<ion-spinner color='primary'></ion-spinner>
+			</div>
+		</div>
 		<h1>Wijkoverzicht {{getName(wijk)}}</h1>
 		<p (click)='clearWijkSelection()'><a href='javascript:null'>Verander wijkkeuze</a></p>
 		<table style='margin-left: 20px;'>
@@ -140,5 +128,16 @@
 				</td>
 			</tr>
 		</table>
+	</div>
+	<div class="user-info" style='border: none!important;'>
+		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
+			{{error}}
+		</span>
+		<span *ngIf="loginError" style="color:red;font-weight:bold">
+			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+		</span>
+		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+		</span>
 	</div>
 </ion-content>

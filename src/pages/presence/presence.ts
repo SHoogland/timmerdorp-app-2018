@@ -121,6 +121,8 @@ export class PresencePage {
 				}
 				self.loading = false;
 			});
+		}else{
+			this.tickets = [];
 		}
 	}
 

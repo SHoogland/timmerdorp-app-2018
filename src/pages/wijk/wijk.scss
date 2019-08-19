@@ -1,3 +1,11 @@
 page-wijk {
-
+	#spinner{
+		transition-duration: 400ms;
+		height: 20px;
+		margin-bottom:40px;
+		&.hidden{
+			height: 0px;
+			margin-bottom: 0px;
+		}
+	}
 }

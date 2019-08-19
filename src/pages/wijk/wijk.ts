@@ -80,9 +80,11 @@ export class WijkPage {
 	}
 
 	updateData() {
+		this.loading = true;
 		console.log(this.wijk);
 		var wp = this.getWpApi('stats');
 		wp.handler().then((result) => {
+			this.loading = false;
 			this.statistieken = result;
 			console.log(result.quarters[this.wijk])
 			this.wijkstats = result.quarters[this.wijk];

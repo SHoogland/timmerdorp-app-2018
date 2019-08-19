@@ -130,13 +130,7 @@ export class SearchPage {
 		}
 	}
 
-	getNr(nr){
-		console.log(nr);
-		return "0000";
-	}
-
 	filterPhoneNr(num) {
-		console.log((num||[""])[0]);
 		return (num||[""])[0].replace(/[^0-9+]/g, '');
 	}
 

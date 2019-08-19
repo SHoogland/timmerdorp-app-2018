@@ -268,12 +268,18 @@ ion-toolbar {
   padding-top: 20;
   text-align: center;
   padding: 12px 0;
-  border-bottom: 2px dashed $lightGrey;
+  border-bottom: none;
 
   h1 {
     padding-bottom: 15px;
   }
 }
+
+ion-spinner{
+    width: 48px;
+    height: 48px;
+}
+
 
 .bracelet-number {
   padding-top: 20px;

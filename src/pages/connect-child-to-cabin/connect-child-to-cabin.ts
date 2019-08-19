@@ -182,6 +182,7 @@ export class ConnectChildToCabinPage {
 		let self = this;
 		self.tickets = [];
 		self.searchError = '';
+		if(this.searchTerm.length < 3) return;
 		self.loading = true;
 		console.log('searching: ' + this.searchTerm);
 		var wp = this.getWpApi('search');
@@ -250,6 +251,7 @@ export class ConnectChildToCabinPage {
 
 	showAddModal() {
 		this.tickets = [];
+		this.loading = false;
 		this.addModal.show = true;
 		this.searchTerm = '';
 		document.querySelector('#myModal').classList.add('high');

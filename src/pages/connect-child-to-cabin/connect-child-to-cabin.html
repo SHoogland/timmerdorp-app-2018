@@ -10,22 +10,6 @@
 
 <ion-content padding>
 	<div class="user-info">
-		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
-			{{error}}
-		</span>
-		<span *ngIf="loginError" style="color:red;font-weight:bold">
-			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
-		</span>
-		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
-			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
-		</span>
-		<div style='height: 20px;'>
-			<div *ngIf="loading&&!notLoggedIn">
-				Laden...
-			</div>
-		</div>
-	</div>
-	<div class="user-info">
 		<h1>Hutnummer:</h1>
 		<ion-item>
 			<ion-input #nrInput type="tel" placeholder="123" [(ngModel)]="hutNr" (ngModelChange)="search($event)"
@@ -34,6 +18,22 @@
 	</div>
 	<div class="bracelet-number">
 		<h1>Kinderen in hut{{hutNr?' ' + hutNr:''}}:</h1>
+		<div class="user-info">
+			<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
+				{{error}}
+			</span>
+			<span *ngIf="loginError" style="color:red;font-weight:bold">
+				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+			</span>
+			<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+				Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+			</span>
+			<div style='height: 20px;'>
+				<div *ngIf="loading&&!notLoggedIn">
+					<ion-spinner color='primary'></ion-spinner>
+				</div>
+			</div>
+		</div>
 		<div *ngFor="let child of hutTickets">
 			<button ion-button full class="bg-grey color-mediumBlack" (click)="removeChild = child; showRemoveModal();">
 				{{ child.meta.WooCommerceEventsAttendeeName[0] }} {{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
@@ -51,14 +51,18 @@
 			<div class="modal-content">
 				<span class="close" (click)="closeAddModal()">&times;</span>
 				<h1>Zoek een kind en voeg het toe</h1>
-				<span style="color:red;">
-					{{searchError}}
-				</span>
 				<ion-item>
-
 					<ion-input type="text" placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
 						(ngModelChange)="searchChild($event)"></ion-input>
 				</ion-item>
+
+				<span style="color:red;">
+					{{searchError}}
+				</span>
+				<div style='height: 40px; margin-top: 10px'>
+					<ion-spinner *ngIf='loading&&!notLoggedIn' color='primary'></ion-spinner>
+				</div>
+
 				<div *ngFor="let child of tickets">
 					<button ion-button full (click)="addChildToHut(child);closeAddModal()"
 						class="bg-grey color-mediumBlack">

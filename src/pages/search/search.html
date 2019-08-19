@@ -9,22 +9,6 @@
 </ion-header>
 
 <ion-content padding>
-	<div class="user-info">
-		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
-			{{error}}
-		</span>
-		<span *ngIf="loginError" style="color:red;font-weight:bold">
-			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
-		</span>
-		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
-			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
-		</span>
-		<div style='height: 20px;'>
-			<div *ngIf="loading&&!notLoggedIn">
-				Laden...
-			</div>
-		</div>
-	</div>
 	<div class="container">
 		<div class="bracelet-number">
 			<h1>Zoek kind:</h1>
@@ -37,7 +21,7 @@
 	<div *ngFor="let child of tickets">
 		<button ion-button full (click)="showModal(child)" class="bg-grey color-mediumBlack">
 			{{child.meta.WooCommerceEventsAttendeeName[0]}} {{child.meta.WooCommerceEventsAttendeeLastName[0]}} ({{child.meta.wristband ||
-			'-'}})&nbsp;&nbsp;
+				'-'}})&nbsp;&nbsp;
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
 				style="background-color:yellow;padding: 2px 6px">(hutnummer:&nbsp; {{child.meta.hutnr}})</span>
 			<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'"
@@ -148,6 +132,22 @@
 			<button ion-button full (click)="scanChild(modal.child.meta.WooCommerceEventsTicketID[0])"
 				class="bg-yellow correction">Scan</button>
 			<button ion-button full (click)="goHome()" class="bg-red correction">Terug naar homepagina</button>
+		</div>
+	</div>
+	<div class="user-info">
+		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
+			{{error}}
+		</span>
+		<span *ngIf="loginError" style="color:red;font-weight:bold">
+			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+		</span>
+		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+		</span>
+		<div style='height: 20px;'>
+			<div *ngIf="loading&&!notLoggedIn">
+				<ion-spinner color='primary'></ion-spinner>
+			</div>
 		</div>
 	</div>
 </ion-content>
