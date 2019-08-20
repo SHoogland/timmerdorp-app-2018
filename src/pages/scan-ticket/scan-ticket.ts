@@ -149,7 +149,7 @@ export class ScanTicketPage {
 				if (result.code === 200) {
 					var wp = this.getWpApi('presence');
 					if (new Date().getDay() == 2) { //if today is tuesday
-						wp.handler().param('wristband', result.meta.wristband[0]).param('day', "tue").param("presence", true).then((result) => {
+						wp.handler().param('wristband', self.ticket.wristBandNr).param('day', "tue").param("presence", true).then((result) => {
 							console.log("Child presence update successful", result)
 							self.goHome();
 						});
