@@ -37,7 +37,7 @@
 	<div *ngFor="let child of tickets; let i = index">
 		<h1 style='font-size: 1.5em;text-align:center;'>{{ child.meta.WooCommerceEventsAttendeeName[0] }}
 			{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} &mdash; {{ child.meta.wristband ||
-					'-' }}<div style='display: inline-block' *ngIf='child.meta.hutnr[0]'> &mdash; hutnummer:
+					'-' }}<div style='display: inline-block' *ngIf='child.meta.hutnr && child.meta.hutnr[0]'> &mdash; hutnummer:
 				<span *ngIf="child.meta.hutnr[0][0] === '0'"
 					style="background-color:yellow;padding: 0px 3px">{{child.meta.hutnr}}</span>
 				<span *ngIf="child.meta.hutnr[0][0] === '1'"
