@@ -79,9 +79,9 @@ export class PresencePage {
 				this.login.password = '';
 			}),
 			this.storage.get('staging').then((val) => {
-				if(val){
+				if (val) {
 					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else{
+				} else {
 					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 				}
 			}, (error) => {
@@ -100,6 +100,12 @@ export class PresencePage {
 				console.log(result);
 				if (result.code === 200) {
 					self.error = '';
+					result.tickets.sort(function (a, b) {
+						if((a.meta.wristband||[])[0] == self.number){
+							return -1;
+						}
+						return 1;
+					});
 					self.tickets = result.tickets;
 					if (self.tickets.length === 0) {
 						self.error = 'Geen resultaten';
@@ -121,7 +127,7 @@ export class PresencePage {
 				}
 				self.loading = false;
 			});
-		}else{
+		} else {
 			this.tickets = [];
 		}
 	}
@@ -130,11 +136,11 @@ export class PresencePage {
 		let self = this;
 		self.loading = true;
 		var wp = this.getWpApi('presence');
-		if(child.meta['present_'+ day] + '' == 'undefined'){
-			child.meta['present_'+ day] = [true]
+		if (child.meta['present_' + day] + '' == 'undefined') {
+			child.meta['present_' + day] = [true]
 		}
-		var pres = !!(child.meta['present_'+ day]||[])[0];
-		console.log(child.meta['present_'+ day], pres);
+		var pres = !!(child.meta['present_' + day] || [])[0];
+		console.log(child.meta['present_' + day], pres);
 		wp.handler().param('wristband', child.meta.wristband).param('day', day).param('presence', pres).then((result) => {
 			if (result.code === 200) {
 				console.log("Child presence update successful", result)
@@ -152,10 +158,10 @@ export class PresencePage {
 
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
+		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: "back"});
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "back" });
 	}
 }
