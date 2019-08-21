@@ -130,7 +130,12 @@ export class PresencePage {
 		let self = this;
 		self.loading = true;
 		var wp = this.getWpApi('presence');
-		wp.handler().param('wristband', child.meta.wristband).param('day', day).param('presence', !!(child.meta['present_'+ day]||[])[0]).then((result) => {
+		if(child.meta['present_'+ day] + '' == 'undefined'){
+			child.meta['present_'+ day] = [true]
+		}
+		var pres = !!(child.meta['present_'+ day]||[])[0];
+		console.log(child.meta['present_'+ day], pres);
+		wp.handler().param('wristband', child.meta.wristband).param('day', day).param('presence', pres).then((result) => {
 			if (result.code === 200) {
 				console.log("Child presence update successful", result)
 				this.loading = false;
