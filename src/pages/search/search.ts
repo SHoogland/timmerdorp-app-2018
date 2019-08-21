@@ -105,16 +105,16 @@ export class SearchPage {
 		});
 	}
 
-	getWijk(hutNr){
-		if(hutNr[0] == '0') {
+	getWijk(hutNr) {
+		if (hutNr[0] == '0') {
 			return 'Geel';
-		}else if(hutNr[0] == '1'){
+		} else if (hutNr[0] == '1') {
 			return 'Rood';
-		}else if(hutNr[0] == '2'){
+		} else if (hutNr[0] == '2') {
 			return 'Blauw';
-		}else if(hutNr[0] == '3'){
+		} else if (hutNr[0] == '3') {
 			return 'Groen';
-		}else{
+		} else {
 			return '';
 		}
 	}
@@ -131,18 +131,18 @@ export class SearchPage {
 	}
 
 	filterPhoneNr(num) {
-		return (num||[""])[0].replace(/[^0-9+]/g, '');
+		return (num || [""])[0].replace(/[^0-9+]/g, '');
 	}
 
 	searchThis() {
+		let self = this;
+		self.tickets = [];
 		if (this.searchTerm.length < 3) {
 			console.log("Cancelling search. Reason: term too short");
 			return false;
 		}
 		this.loginError = false;
 		this.notLoggedIn = false;
-		let self = this;
-		self.tickets = [];
 		self.error = '';
 		self.loading = true;
 		console.log('searching: ' + this.searchTerm);
@@ -150,6 +150,14 @@ export class SearchPage {
 		wp.handler().param('search', this.searchTerm).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
+				if (!isNaN(+self.searchTerm)) {
+					result.tickets.sort(function (a, b) { //if the search term is a number
+						if ((a.meta.wristband || [])[0] == self.searchTerm) {
+							return -1;
+						}
+						return 1;
+					}); //give priority to wristbands over hut numbers
+				}
 				self.tickets = result.tickets;
 				if (self.tickets.length === 0) {
 					self.error = 'Geen resultaten';

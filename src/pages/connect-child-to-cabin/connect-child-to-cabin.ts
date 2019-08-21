@@ -75,8 +75,8 @@ export class ConnectChildToCabinPage {
 		//maar zonder deze drie regels hieronder werkt
 		//de 'removeModal' niet.
 		//??????
-		setInterval(function(){
-			console.log((this.removeModal||{}).show);
+		setInterval(function () {
+			console.log((this.removeModal || {}).show);
 		}, 250);
 	}
 
@@ -109,9 +109,9 @@ export class ConnectChildToCabinPage {
 				this.login.password = '';
 			}),
 			this.storage.get('staging').then((val) => {
-				if(val){
+				if (val) {
 					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else{
+				} else {
 					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 				}
 			}, (error) => {
@@ -182,13 +182,21 @@ export class ConnectChildToCabinPage {
 		let self = this;
 		self.tickets = [];
 		self.searchError = '';
-		if(this.searchTerm.length < 3) return;
+		if (this.searchTerm.length < 3) return;
 		self.loading = true;
 		console.log('searching: ' + this.searchTerm);
 		var wp = this.getWpApi('search');
 		wp.handler().param('search', this.searchTerm).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
+				if (!isNaN(+self.searchTerm)) {
+					result.tickets.sort(function (a, b) { //if the search term is a number
+						if ((a.meta.wristband || [])[0] == self.searchTerm) {
+							return -1;
+						}
+						return 1;
+					}); //give priority to wristbands over hut numbers
+				}
 				self.tickets = result.tickets;
 				if (self.tickets.length === 0) {
 					self.searchError = 'Geen resultaten';
@@ -205,7 +213,7 @@ export class ConnectChildToCabinPage {
 	}
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
+		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
 
 	addChildToHut(child) {
@@ -278,6 +286,6 @@ export class ConnectChildToCabinPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: 'back'});
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'back' });
 	}
 }
