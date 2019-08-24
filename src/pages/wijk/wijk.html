@@ -17,10 +17,21 @@
 		<button ion-button class='bg-green' full (click)='kiesWijk("green")'>Groen</button>
 	</div>
 	<div *ngIf='!showSelection' style='text-align: center'>
-		<div id='spinner' [ngClass]="{'hidden': !(loading&&!notLoggedIn)}">
-			<div *ngIf="loading&&!notLoggedIn">
-				<ion-spinner color='primary'></ion-spinner>
+		<div class="user-info" style='border: none!important;'>
+			<div id='spinner' [ngClass]="{'hidden': !(loading&&!notLoggedIn)}">
+				<div *ngIf="loading&&!notLoggedIn">
+					<ion-spinner color='primary'></ion-spinner>
+				</div>
 			</div>
+			<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
+				{{error}}
+			</span>
+			<span *ngIf="loginError" style="color:red;font-weight:bold">
+				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+			</span>
+			<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+				Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+			</span>
 		</div>
 		<h1>Wijkoverzicht {{getName(wijk)}}</h1>
 		<p (click)='clearWijkSelection()'><a href='javascript:null'>Verander wijkkeuze</a></p>
@@ -128,16 +139,5 @@
 				</td>
 			</tr>
 		</table>
-	</div>
-	<div class="user-info" style='border: none!important;'>
-		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
-			{{error}}
-		</span>
-		<span *ngIf="loginError" style="color:red;font-weight:bold">
-			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
-		</span>
-		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
-			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
-		</span>
 	</div>
 </ion-content>

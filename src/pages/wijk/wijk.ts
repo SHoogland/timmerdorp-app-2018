@@ -4,6 +4,7 @@ import * as WPAPI from 'wpapi';
 
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
+import { LoginPage } from '../login/login';
 
 @Component({
 	selector: 'page-wijk',
@@ -84,14 +85,34 @@ export class WijkPage {
 		console.log(this.wijk);
 		var wp = this.getWpApi('stats');
 		wp.handler().then((result) => {
-			this.loading = false;
-			this.statistieken = result;
-			console.log(result.quarters[this.wijk])
-			this.wijkstats = result.quarters[this.wijk];
 			console.log(result);
+			if (result.code === 200) {
+				this.loading = false;
+				this.statistieken = result;
+				console.log(result.quarters[this.wijk])
+				this.wijkstats = result.quarters[this.wijk];
+
+			} else {
+				if (result.message == 'access denied') {
+					this.notLoggedIn = true;
+				} else {
+					this.error = result.message;
+					this.loading = false;
+				}
+			}
 		}).catch((error) => {
-			console.log(error);
+			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
+				this.loginError = true;
+			} else {
+				this.error = error.message;
+			}
+			this.loading = false;
 		});
+	}
+
+	
+	toLogin() {
+		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
 
 	goHome() {
@@ -107,6 +128,7 @@ export class WijkPage {
 	}
 
 	clearWijkSelection() {
+		this.wijkstats = {};
 		this.storage.set("wijk", undefined).then((val) => {
 			this.showSelection = true;
 			this.wijk = undefined;
