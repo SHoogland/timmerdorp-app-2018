@@ -2,7 +2,7 @@
 <widget android-versionCode="10006" id="nl.matise.tdorpscanner" version="1.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Timmerdorp</name>
     <description>Scan tickets with your phone.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <author email="stanvanbaarsen@hotmail.com" href="http://timmerdorp.com/">Stephan Hoogland en Stan van Baarsen</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
