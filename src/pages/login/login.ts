@@ -56,10 +56,6 @@ export class LoginPage {
 
 		this.number = '';
 		this.name = '';
-		this.login = {
-			username: '',
-			password: ''
-		}
 
 		this.storage.get('username').then((val) => {
 			this.login.username = val;
@@ -98,6 +94,7 @@ export class LoginPage {
 		this.success = false;
 		this.usernameError = false;
 		this.passwordError = false;
+		this.cd.detectChanges();
 		console.log("Determining whether login is correct by searching for random child '000'...")
 		//Try searching for random term: "000". If it fails, login details probably are incorrect
 		var wp = this.getWpApi('search');
@@ -117,7 +114,6 @@ export class LoginPage {
 			} else {
 				console.log(result);
 			}
-
 			this.cd.detectChanges();
 		}).catch((error) => {
 			console.log(error)
