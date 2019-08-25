@@ -76,6 +76,10 @@ export class AppInfoPage {
 		return "om " + this.prependZero(t.getHours()) + ":" + this.prependZero(t.getMinutes());
 	}
 
+	belStan() {
+		window.location.href = 'tel:0640516654'
+	}
+
 	prependZero(n) {
 		if (n < 10 && n > -10) {
 			return '0' + n;

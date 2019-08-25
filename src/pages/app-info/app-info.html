@@ -17,14 +17,17 @@
 		</tr>
 		<tr>
 			<td>Staging:</td>
-			<td>{{staging}}</td>
+			<td>{{!!staging}}</td>
 		</tr>
 		<tr>
 			<td>Wijkkeuze:</td>
 			<td>{{getWijkName(wijk)}}</td>
 		</tr>
 	</table>
-
+	<br>
+	<p>Voor vragen over de app kun je terecht bij Stan van Baarsen uit blauw of Stephan Hoogland uit geel</p>
+	<button ion-button full (click)="belStan()" class="bg-green correction">Bel Stan</button>
+	<br>
 	<h1 id='title'>Updates</h1>
 
 	<div *ngFor='let u of updates'>
@@ -48,7 +51,7 @@
 			</tr>
 			<tr *ngIf="version && version != 'Desktop'">
 				<td>Nieuwer dan huidige versie:</td>
-				<td>{{compareVersions(u.latest, version)}}</td>
+				<td>{{compareVersions(u.version, version)}}</td>
 			</tr>
 		</table>
 		<br>
