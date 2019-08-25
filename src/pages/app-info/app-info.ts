@@ -59,17 +59,19 @@ export class AppInfoPage {
 		d2.setHours(0);
 		d2.setMinutes(0);
 		d2.setSeconds(0);
+		d2.setMilliseconds(0);
 		let today = new Date();
 		today.setHours(0);
 		today.setMinutes(0);
 		today.setSeconds(0);
+		today.setMilliseconds(0);
 
-		if (d2 == today) {
+		if (+d2 === +today) {
 			return "Vandaag " + this.tijdstip(d);
 		} else if (+today - +d2 == 24 * 60 * 60 * 1000) {
 			return "Gisteren " + this.tijdstip(d);
 		}
-		return this.prependZero(d.getDate()) + "-" + this.prependZero(d.getMonth()) + '-' + d.getFullYear() + ' ' + this.tijdstip(d);
+		return this.prependZero(d.getDate()) + "-" + this.prependZero(d.getMonth() + 1) + '-' + d.getFullYear() + ' ' + this.tijdstip(d);
 	}
 
 	tijdstip(t) {
