@@ -322,8 +322,6 @@ input.text-input {
 
 * {
   border-bottom-color: none !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
 }
 
 .container-bottom {
@@ -417,13 +415,13 @@ ion-item {
 ion-navbar .nav-logo {
   width: 75px !important;
 }
-
+ 
 .toolbar-background.bg-darkred, button.bg-darkred {
   background: #b20606 !important;
 }
 
 .item-md {
-  background: #fff !important;
+  background: #fafafa !important;
 }
 
 button {

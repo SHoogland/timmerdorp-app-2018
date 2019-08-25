@@ -14,6 +14,7 @@ import { AppInfoPage } from '../app-info/app-info';
 import { HttpClient } from '@angular/common/http';
 import { SchedulePage } from '../schedule/schedule';
 import { ChangeWristbandPage } from '../change-wristband/change-wristband';
+import { FilesPage } from '../files/files';
 
 declare let cordova: any;
 
@@ -62,7 +63,8 @@ export class HomePage {
 			"app-info": AppInfoPage,
 			"login": LoginPage,
 			"schedule": SchedulePage,
-			"change-wristband": ChangeWristbandPage
+			"change-wristband": ChangeWristbandPage,
+			"files": FilesPage
 		}
 		
 		this.modalShown = false;
@@ -105,7 +107,7 @@ export class HomePage {
 					icon: 'person-add'
 				},
 				{
-					title: 'Verander polsbandnummer',
+					title: 'Verander polsbandje',
 					component: "change-wristband",
 					class: 'bg-blue',
 					icon: 'create'
@@ -121,6 +123,12 @@ export class HomePage {
 					component: "schedule",
 					class: 'bg-blue',
 					icon: "list"
+				},
+				{
+					title: 'Foto\'s en Bijlagen',
+					component: "files",
+					class: 'bg-blue',
+					icon: "images"
 				},
 				{
 					title: 'App info',

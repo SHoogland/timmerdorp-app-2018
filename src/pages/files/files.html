@@ -1,0 +1,39 @@
+<ion-header>
+	<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
+	<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+	<ion-navbar>
+		<ion-title>
+			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+		</ion-title>
+	</ion-navbar> 
+</ion-header>
+
+<ion-content padding>
+	<h1 id='title' style='text-align: center;'>Bijlagen</h1>
+	<div style='column-count: 2;'>
+		<div *ngFor='let file of files'>
+			<ion-card (click)='openFile(file.url)' button>
+				<img src="assets/imgs/pdf.png" />
+				<div style='position: relative; width:0;height:0;'>
+					<ion-icon class='file-icon' name='document'>
+					</ion-icon>
+				</div>
+				<ion-card-header>
+					<h5>{{file.title}}</h5>
+				</ion-card-header>
+			</ion-card>
+		</div>
+	</div>
+
+	<h1 style='text-align: center;'>Fotoalbums {{photoyear}}</h1>
+	<div style='column-count: 2;'>
+		<div *ngFor='let a of albums'>
+			<ion-card (click)='openAlbum(a.id)' button>
+				<img [src]="a['primary_photo_extras']['url_m']" />
+				<ion-card-header>
+					<h5>{{a.title['_content']}}</h5>
+				</ion-card-header>
+			</ion-card>
+		</div>
+	</div>
+</ion-content>

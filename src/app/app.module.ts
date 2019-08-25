@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -19,6 +19,7 @@ import { AppInfoPage } from '../pages/app-info/app-info';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { ChangeWristbandPage } from '../pages/change-wristband/change-wristband';
+import { FilesPage } from '../pages/files/files';
 
 @NgModule({
 	declarations: [
@@ -32,7 +33,8 @@ import { ChangeWristbandPage } from '../pages/change-wristband/change-wristband'
 		WijkPage,
 		AppInfoPage,
 		SchedulePage,
-		ChangeWristbandPage
+		ChangeWristbandPage,
+		FilesPage
 	],
 	imports: [
 		BrowserModule,
@@ -52,7 +54,8 @@ import { ChangeWristbandPage } from '../pages/change-wristband/change-wristband'
 		WijkPage,
 		AppInfoPage,
 		SchedulePage,
-		ChangeWristbandPage
+		ChangeWristbandPage,
+		FilesPage
 	],
 	providers: [
 		StatusBar,
@@ -60,6 +63,7 @@ import { ChangeWristbandPage } from '../pages/change-wristband/change-wristband'
 		HttpClient,
 		BarcodeScanner,
 		{ provide: ErrorHandler, useClass: IonicErrorHandler }
-	]
+	],
+	schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }

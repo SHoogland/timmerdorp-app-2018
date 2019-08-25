@@ -1,0 +1,23 @@
+files {
+  ion-card {
+    break-inside: avoid-column;
+    border-radius: 8px !important;
+	margin-top: 0px !important;
+	display: inline-grid;
+    margin-bottom: 32px !important;
+  }
+
+  ion-card-header > * {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .file-icon {
+    color: white;
+  }
+
+  h1 {
+    margin-bottom: 24px;
+  }
+}
