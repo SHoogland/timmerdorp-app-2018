@@ -106,14 +106,14 @@ export class ScanTicketPage {
 			return wp.handler().param('barcode', this.navParams.get('barcode'));
 		}).then((result) => {
 			if (result.code === 200) {
-				self.ticket.barcode = result.meta.WooCommerceEventsTicketID[0];
-				self.ticket.firstName = result.meta.WooCommerceEventsAttendeeName[0];
-				self.ticket.lastName = result.meta.WooCommerceEventsAttendeeLastName[0];
-				self.ticket.birthDate = result.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'][0];
+				self.ticket.barcode = (result.meta.WooCommerceEventsTicketID||[])[0];
+				self.ticket.firstName = (result.meta.WooCommerceEventsAttendeeName||[])[0];
+				self.ticket.lastName = (result.meta.WooCommerceEventsAttendeeLastName||[])[0];
+				self.ticket.birthDate = (result.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)']||[])[0];
 
 				if (result.meta.wristband) {
 					self.modal.showModal = true;
-					self.ticket.wristBandNr = result.meta.wristband[0];
+					self.ticket.wristBandNr = (result.meta.wristband||[])[0];
 					self.modal.text = 'Dit ticket heeft al een armband!';
 				}
 				self.loading = false;
@@ -161,7 +161,8 @@ export class ScanTicketPage {
 					self.loading = false;
 				}
 			}).catch((error) => {
-				console.log(error);
+				alert(error);
+				self.loading = false;
 			});
 	}
 

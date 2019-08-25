@@ -62,15 +62,15 @@
 		<table>
 			<tr>
 				<td class='b'>Voornaam</td>
-				<td>{{modal.child.meta.WooCommerceEventsAttendeeName[0]}}</td>
+				<td>{{(modal.child.meta.WooCommerceEventsAttendeeName||[])[0]}}</td>
 			</tr>
 			<tr>
 				<td class='b'>Achternaam</td>
-				<td>{{modal.child.meta.WooCommerceEventsAttendeeLastName[0]}}</td>
+				<td>{{(modal.child.meta.WooCommerceEventsAttendeeLastName||[])[0]}}</td>
 			</tr>
 			<tr>
 				<td class='b'>Geboortedatum</td>
-				<td>{{modal.child.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'][0]}}</td>
+				<td>{{(modal.child.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)']||[])[0]}}</td>
 			</tr>
 			<tr>
 				<td class='b'>Huisarts</td>
@@ -83,7 +83,7 @@
 			<tr>
 				<td class='b'>Tel. huisarts</td>
 				<td><a
-						href="tel: {{filterPhoneNr(modal.child.meta.fooevents_custom_telefoonnr_huisarts)}}">{{modal.child.meta.fooevents_custom_telefoonnr_huisarts[0]}}</a>
+						href="tel: {{filterPhoneNr(modal.child.meta.fooevents_custom_telefoonnr_huisarts)}}">{{(modal.child.meta.fooevents_custom_telefoonnr_huisarts||[])[0]}}</a>
 				</td>
 			</tr>
 			<tr>
@@ -100,24 +100,24 @@
 			</tr>
 			<tr>
 				<td class='b'>E-mailadres</td>
-				<td>{{modal.child.meta.WooCommerceEventsPurchaserEmail[0]}}</td>
+				<td>{{(modal.child.meta.WooCommerceEventsPurchaserEmail||[])[0]}}</td>
 			</tr>
 			<tr>
 				<td class='b'>Bandje</td>
 				<td>
-					<div *ngIf="modal.child.meta.wristband">{{modal.child.meta.wristband[0]}}</div>
+					<div *ngIf="modal.child.meta.wristband">{{(modal.child.meta.wristband||[])[0]}}</div>
 				</td>
 			</tr>
 			<tr>
 				<td class='b'>Hutnummer</td>
 				<td>
-					<div *ngIf="modal.child.meta.hutnr">{{modal.child.meta.hutnr[0]}}</div>
+					<div *ngIf="modal.child.meta.hutnr">{{(modal.child.meta.hutnr||[])[0]}}</div>
 				</td>
 			</tr>
 			<tr>
 				<td class='b'>Wijk</td>
 				<td>
-					<div *ngIf="modal.child.meta.hutnr">{{getWijk(modal.child.meta.hutnr[0])}}</div>
+					<div *ngIf="modal.child.meta.hutnr">{{getWijk((modal.child.meta.hutnr||[])[0])}}</div>
 				</td>
 			</tr>
 			<tr>
