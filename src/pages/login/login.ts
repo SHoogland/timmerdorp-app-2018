@@ -71,9 +71,9 @@ export class LoginPage {
 
 		this.storage.get('staging').then((val) => {
 			this.staging = val;
-			if(val){
+			if (val) {
 				this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-			} else{
+			} else {
 				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 			}
 		}, (error) => {
@@ -105,7 +105,7 @@ export class LoginPage {
 				this.usernameError = false;
 				this.passwordError = false;
 				console.log("Succesvol ingelogd!");
-				setTimeout(() => {this.goHome()}, 800);
+				setTimeout(() => { this.goHome() }, 800);
 			} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
 				this.success = false;
 				this.usernameError = false;
@@ -136,7 +136,7 @@ export class LoginPage {
 	}
 
 	toHome() {
-		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: "back"});
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "back" });
 	}
 
 	getWpApi(route) {
@@ -151,14 +151,14 @@ export class LoginPage {
 		return wp;
 	}
 
-	switchEnv(){
+	switchEnv() {
 		const _this = this;
-		setTimeout(function(){
+		setTimeout(function () {
 			_this.clickedOnce = false;
 			_this.clickedTwice = false;
 		}, 1000)
-		if(this.clickedTwice){
-			if(!this.staging){
+		if (this.clickedTwice) {
+			if (!this.staging) {
 				this.storage.set('staging', true);
 				this.staging = true;
 				this.endpoint = 'https://staging.timmerdorp.com/wp-json';
@@ -170,7 +170,7 @@ export class LoginPage {
 			this.clickedOnce = false;
 			this.clickedTwice = false;
 		}
-		if(this.clickedOnce){
+		if (this.clickedOnce) {
 			this.clickedTwice = true;
 		}
 		this.clickedOnce = true;
@@ -178,6 +178,10 @@ export class LoginPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: "back"});
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "back" });
+	}
+
+	belStan() {
+		window.location.href = 'tel:0640516654'
 	}
 }

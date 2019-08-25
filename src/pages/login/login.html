@@ -34,6 +34,10 @@
 		</div>
 		<button ion-button full type="submit" class='bg-green'>Opslaan</button>
 	</form>
+	<br><br>
+	<p>Neem contact op met Stan van Baarsen uit wijk blauw of Stephan Hoogand uit wijk geel voor het krijgen van de
+		inloggegevens.</p>
+	<button ion-button full type="submit" (click)="belStan()" class='bg-blue'>Bel Stan</button>
 	<div id='stagingSwitch'>
 		<button ion-button style="background: #fafafa; color: #fafafa;" full (click)='switchEnv()'>hidden</button>
 		<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
