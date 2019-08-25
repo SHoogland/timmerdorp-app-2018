@@ -1,5 +1,5 @@
 # App feedback en aandachtspunten 2019
-&nbsp;
+**Het belangrijkste volgens velen: de app goed vooraf testen a.u.b. Iedereen vond dat het goed werkte, maar het zou leuk zijn als het dinsdagochtend meteen al werkt**
 ## Gefixt:
 ##### (MOET WEL NOG GETEST WORDEN; staging doet het ook niet meer ineens)
 - Update waarschuwingspop-up in de app
