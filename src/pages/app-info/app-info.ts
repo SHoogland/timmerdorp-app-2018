@@ -32,8 +32,9 @@ export class AppInfoPage {
 			this.wijk = val;
 		});
 		if (this.platform.is("cordova")) {
+			let self = this;
 			cordova.getAppVersion(function (version) {
-				this.version = version;
+				self.version = version;
 			});
 		} else {
 			this.version = 'Desktop';
