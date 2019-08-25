@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
 import { HttpClient } from '@angular/common/http';
 
-import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
 
-declare let cordova: any;
 
 @Component({
 	selector: 'page-schedule',
