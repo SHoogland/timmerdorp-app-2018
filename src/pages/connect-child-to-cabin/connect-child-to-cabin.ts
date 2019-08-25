@@ -19,6 +19,7 @@ import { HomePage } from '../home/home';
 })
 export class ConnectChildToCabinPage {
 	typingTimer: any;
+	isTue: boolean;//if it's tuesday, show the auto-presence toggle
 	hutNr: string;
 	searchTerm: string;
 	error: string;
@@ -29,6 +30,7 @@ export class ConnectChildToCabinPage {
 	loading: boolean;
 	tickets: Array<any>;
 	hutTickets: Array<any>;
+	autoPresence: boolean;
 	addModal: {
 		show: boolean;
 	}
@@ -57,10 +59,12 @@ export class ConnectChildToCabinPage {
 			username: '',
 			password: ''
 		}
+		this.autoPresence = true;
 		this.loginError = false;
 		this.notLoggedIn = false;
 		this.loading = false;
 		this.error = '';
+		this.isTue = new Date().getDay() == 0;
 		this.searchError = '';
 		this.addModal = {
 			show: false
@@ -128,7 +132,7 @@ export class ConnectChildToCabinPage {
 				clearTimeout(this.typingTimer);
 				this.typingTimer = setTimeout(() => {
 					this.searchHut();
-				}, 500);
+				}, 200);
 			} catch (e) {
 				console.log(e);
 			}
@@ -166,18 +170,18 @@ export class ConnectChildToCabinPage {
 			self.loading = false;
 		});
 	}
-
+	
 	searchChild() {
 		try {
 			clearTimeout(this.typingTimer);
 			this.typingTimer = setTimeout(() => {
 				this.searchThisChild();
-			}, 500);
+			}, 200);
 		} catch (e) {
 			console.log(e);
 		}
 	}
-
+	
 	searchThisChild() {
 		let self = this;
 		self.tickets = [];
@@ -211,12 +215,29 @@ export class ConnectChildToCabinPage {
 			self.loading = false;
 		});
 	}
-
+	
 	toLogin() {
 		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
 
 	addChildToHut(child) {
+		let self = this;
+		if (this.autoPresence && new Date().getDay() == 0) {
+			var wp = this.getWpApi('presence');
+			wp.handler().param('wristband', child.wristBandNr).param('day', "tue").param("presence", true).then((result) => {
+				console.log("kind aanwezig gemeld vandaag");
+			}).catch((error) => {
+				self.error = error.message;
+				self.loading = false;
+				console.log(error);
+				console.log("at least we tried");
+			});
+		} else {
+			this.addChildPart2(child);
+		}
+	}
+
+	addChildPart2(child) {
 		let self = this;
 		var wp = this.getWpApi('hut-add');
 		wp.handler().param('hutnr', this.hutNr).param('wristband', child.meta.wristband).then((result) => {
@@ -266,9 +287,12 @@ export class ConnectChildToCabinPage {
 	}
 
 	closeAddModal() {
+		let self = this;
 		this.addModal.show = false;
 		setTimeout(function () {
 			document.querySelector('#myModal').classList.remove('high');
+			self.searchError = '';
+			self.error = '';
 		}, 400);
 	}
 

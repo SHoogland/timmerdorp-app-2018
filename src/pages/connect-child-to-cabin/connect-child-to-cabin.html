@@ -52,10 +52,16 @@
 	<div class="modal-content">
 		<span class="close" (click)="closeAddModal()">&times;</span>
 		<h1>Zoek een kind en voeg het toe</h1>
+		<ion-item *ngIf="isTue">
+			<ion-label>Automatisch aanwezig melden</ion-label>
+			<ion-toggle [(ngModel)]="autoPresence"></ion-toggle>
+		</ion-item>
+	
 		<ion-item>
 			<ion-input type="text" placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
 				(ngModelChange)="searchChild($event)"></ion-input>
 		</ion-item>
+
 
 		<span style="color:red;">
 			{{searchError}}
