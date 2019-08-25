@@ -24,6 +24,7 @@ declare let cordova: any;
 })
 export class HomePage {
 	error: string;
+	updates: any;
 	pages: Array<{
 		title: string,
 		component: any,
@@ -54,6 +55,7 @@ export class HomePage {
 	}
 
 	init() {
+		this.updates = [];
 		this.readablePageList = {
 			"scan-ticket": "ticketscanner",
 			"connect-child-to-cabin": ConnectChildToCabinPage,
@@ -66,7 +68,7 @@ export class HomePage {
 			"change-wristband": ChangeWristbandPage,
 			"files": FilesPage
 		}
-		
+
 		this.modalShown = false;
 
 		if (this.platform.is("android")) this.android = true;
@@ -157,6 +159,15 @@ export class HomePage {
 
 	ionViewDidLoad() {
 		this.init();
+		let self = this;
+		this.httpClient.get("https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json")
+			.subscribe((data: any) => {
+				self.updates = data.updates;
+				self.updates.sort(function (a, b) {
+					return b.date - a.date;
+				});
+
+			});
 		this.storage.get('staging').then((val) => {
 			this.staging = val;
 		}, (error) => {
@@ -164,51 +175,43 @@ export class HomePage {
 		})
 	}
 
-	openStore(){
-		if(this.platform.is("android")){
+	openStore() {
+		if (this.platform.is("android")) {
 			window.location.href = 'https://play.google.com/store/apps/details?id=nl.matise.tdorpscanner';
 		}
-		if(this.platform.is('ios')){
+		if (this.platform.is('ios')) {
 			window.location.href = 'https://testflight.apple.com/join/0zJLQ88Q';
 		}
 	}
 
 	openPage(page) {
 		this.openedPage = page;
-		this.httpClient.get("https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json")
-			.subscribe((data: any) => {
-				let u = data.updates;
-				u.sort(function (a, b) {
-					return b.date - a.date;
-				});
+		console.log(this.openedPage.component);
 
-				console.log(this.openedPage.component);
-
-				let blockOpening = false;
-				if (this.platform.is("cordova")) {
-					for (let i = 0; i < u.length; i++) {
-						if (this.compareVersions(u[i].version, this.version)) {
-							console.log("found newer update: ")
-							console.log(u[i]);
-							if (u[i].editedPages.indexOf(this.openedPage.component) > -1) {
-								blockOpening = true;
-							}
-						}
+		let blockOpening = false;
+		if (this.platform.is("cordova")) {
+			for (let i = 0; i < this.updates.length; i++) {
+				if (this.compareVersions(this.updates[i].version, this.version)) {
+					console.log("found newer update: ")
+					console.log(this.updates[i]);
+					if (this.updates[i].editedPages.indexOf(this.openedPage.component) > -1) {
+						blockOpening = true;
 					}
 				}
+			}
+		}
 
 
-				if (!blockOpening) {
-					this.openedPage.component = this.readablePageList[this.openedPage.component];
-					if (this.openedPage.component == 'ticketscanner') {
-						this.scanCode();
-					} else {
-						this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, direction: 'forward' });
-					}
-				} else {
-					this.showModal();
-				}
-			});
+		if (!blockOpening) {
+			this.openedPage.component = this.readablePageList[this.openedPage.component];
+			if (this.openedPage.component == 'ticketscanner') {
+				this.scanCode();
+			} else {
+				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, direction: 'forward' });
+			}
+		} else {
+			this.showModal();
+		}
 	}
 
 	showModal() {
