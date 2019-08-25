@@ -12,6 +12,7 @@ import { LoginPage } from '../login/login';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { AppInfoPage } from '../app-info/app-info';
 import { HttpClient } from '@angular/common/http';
+import { SchedulePage } from '../schedule/schedule';
 
 declare let cordova: any;
 
@@ -58,7 +59,8 @@ export class HomePage {
 			"presence": PresencePage,
 			"wijk": WijkPage,
 			"app-info": AppInfoPage,
-			"login": LoginPage
+			"login": LoginPage,
+			"schedule": SchedulePage
 		}
 		
 		this.modalShown = false;
@@ -105,6 +107,12 @@ export class HomePage {
 					component: "wijk",
 					class: 'bg-' + (this.wijk || 'blue'),
 					icon: "analytics"
+				},
+				{
+					title: 'Programma',
+					component: "schedule",
+					class: 'bg-blue',
+					icon: "list"
 				},
 				{
 					title: 'App info',

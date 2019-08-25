@@ -17,6 +17,7 @@ import { LoginPage } from '../pages/login/login';
 import { WijkPage } from '../pages/wijk/wijk';
 import { AppInfoPage } from '../pages/app-info/app-info';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { SchedulePage } from '../pages/schedule/schedule';
 
 @NgModule({
 	declarations: [
@@ -28,7 +29,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 		PresencePage,
 		LoginPage,
 		WijkPage,
-		AppInfoPage
+		AppInfoPage,
+		SchedulePage
 	],
 	imports: [
 		BrowserModule,
@@ -46,7 +48,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 		PresencePage,
 		LoginPage,
 		WijkPage,
-		AppInfoPage
+		AppInfoPage,
+		SchedulePage
 	],
 	providers: [
 		StatusBar,
