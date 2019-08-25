@@ -418,6 +418,9 @@ ion-navbar .nav-logo {
  
 .toolbar-background.bg-darkred, button.bg-darkred {
   background: #b20606 !important;
+  &:hover{
+	  background: #9e0c0c!important;
+  }
 }
 
 .item-md {

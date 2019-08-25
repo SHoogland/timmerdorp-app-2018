@@ -12,7 +12,7 @@
 	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class">
 		<div style='text-align:left;'>
 			<ion-icon slot='start' name='{{p.icon||""}}' style='margin-right:8px;position:relative;'></ion-icon>
-			<span style='font-size:18px'>
+			<span *ngIf="p.class.split('small').length==1" style='font-size:18px'>
 				{{p.title}}
 			</span>
 		</div>

@@ -1,15 +1,32 @@
 page-home {
-	.button-inner {
-		display: block !important;
-	}
-	.modal-content {
-		ul {
-			li {
-				list-style: none;
-			}
-		}
-	}
-	.correction{
-		padding-top: 20px;
-	}
+  .button-inner {
+    display: block !important;
+  }
+  .modal-content {
+    ul {
+      li {
+        list-style: none;
+      }
+    }
+  }
+  .correction {
+    padding-top: 20px;
+  }
+
+  button.small {
+    width: calc(20% - 8px);
+    margin-right: 8px;
+    display: inline-block;
+    padding: 0 !important;
+  }
+
+  button.small > span > div > ion-icon {
+    font-size: 2em;
+    width: 100%;
+    text-align: center;
+    top: 24px;
+  }
+  button.small:last-of-type {
+    margin-right: 0px !important;
+  }
 }

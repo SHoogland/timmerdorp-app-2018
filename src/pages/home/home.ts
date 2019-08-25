@@ -115,31 +115,31 @@ export class HomePage {
 				{
 					title: 'Wijkoverzicht ' + this.getWijkName(this.wijk),
 					component: "wijk",
-					class: 'bg-' + (this.wijk || 'blue'),
+					class: 'small bg-' + (this.wijk || 'blue'),
 					icon: "analytics"
 				},
 				{
 					title: 'Programma',
 					component: "schedule",
-					class: 'bg-blue',
-					icon: "list"
+					class: 'bg-blue small',
+					icon: "calendar"
 				},
 				{
 					title: 'Foto\'s en Bijlagen',
 					component: "files",
-					class: 'bg-blue',
+					class: 'bg-blue small',
 					icon: "images"
 				},
 				{
 					title: 'App info',
 					component: "app-info",
-					class: 'bg-blue',
-					icon: "information-circle"
+					class: 'bg-blue small',
+					icon: "settings"
 				},
 				{
 					title: 'Log uit',
 					component: "login",
-					class: 'bg-darkred',
+					class: 'bg-darkred small',
 					icon: "log-out"
 				}
 			];
