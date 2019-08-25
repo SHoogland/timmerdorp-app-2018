@@ -32,9 +32,7 @@
 		<p>Voor het openen van deze pagina <b>moet</b> je de nieuwste versie gebruiken, anders kunnen wij niet
 			garanderen dat het allemaal werkt.</p>
 		<button ion-button full (click)="belStan()" class="bg-green correction">Bel Stan</button>
-		<button ion-button full *ngIf="android" (click)="openStore()" class="bg-blue correction">Open Play
-			Store</button>
-		<button ion-button full *ngIf="!android" (click)="openStore()" class="bg-blue correction">Open App
+		<button ion-button full (click)="openStore()" class="bg-blue correction">Open {{android?"Play":"App"}}
 			Store</button>
 		<button ion-button full (click)="closeModal()" class="bg-red correction">Terug</button>
 		<button ion-button full (click)="forceOpenPage()" class='correction' style='background: black;'>Toch openen
