@@ -65,9 +65,10 @@ export class HomePage {
 
 		if (this.platform.is("android")) this.android = true;
 
-		if (this.platform.is("cordova")) {
+		let self = this;
+		if (self.platform.is("cordova")) {
 			cordova.getAppVersion(function (version) {
-				this.version = version;
+				self.version = version;
 			});
 		}
 
@@ -163,7 +164,8 @@ export class HomePage {
 				if (this.platform.is("cordova")) {
 					for (let i = 0; i < u.length; i++) {
 						if (this.compareVersions(u[i].version, this.version)) {
-							console.log("found newer update: " + u[i]);
+							console.log("found newer update: ")
+							console.log(u[i]);
 							if (u[i].editedPages.indexOf(this.openedPage.component) > -1) {
 								blockOpening = true;
 							}
