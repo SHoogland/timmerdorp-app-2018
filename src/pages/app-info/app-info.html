@@ -1,0 +1,55 @@
+<ion-header>
+	<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
+	<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+	<ion-navbar>
+		<ion-title>
+			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<h1 id='title'>App informatie</h1>
+	<table>
+		<tr>
+			<td>Versienummer:</td>
+			<td>{{version}}</td>
+		</tr>
+		<tr>
+			<td>Staging:</td>
+			<td>{{staging}}</td>
+		</tr>
+		<tr>
+			<td>Wijkkeuze:</td>
+			<td>{{getWijkName(wijk)}}</td>
+		</tr>
+	</table>
+
+	<h1 id='title'>Updates</h1>
+
+	<div *ngFor='let u of updates'>
+		<h3 style='text-align: center;'>Versie: {{u.version}}</h3>
+		<table>
+			<tr>
+				<td>Datum:</td>
+				<td>{{datum(u.date)}}</td>
+			</tr>
+			<tr>
+				<td>Bijwerken verplicht:</td>
+				<td>{{u.editedPages.length > 0}}</td>
+			</tr>
+			<tr>
+				<td>Categorie wijzigingen:</td>
+				<td>{{u.changes}}</td>
+			</tr>
+			<tr>
+				<td>Nieuwste:</td>
+				<td>{{!!u.latest}}</td>
+			</tr>
+			<tr *ngIf="version && version != 'Desktop'">
+				<td>Nieuwer dan huidige versie:</td>
+				<td>{{compareVersions(u.latest, version)}}</td>
+			</tr>
+		</table>
+	</div>
+</ion-content>

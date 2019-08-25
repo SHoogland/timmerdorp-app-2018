@@ -9,8 +9,7 @@
 </ion-header>
 
 <ion-content padding>
-	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)"
-		[ngClass]="p.class">
+	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class">
 		<div style='text-align:left;'>
 			<ion-icon slot='start' name='{{p.icon||""}}' style='margin-right:8px;position:relative;'></ion-icon>
 			<span style='font-size:18px'>
@@ -23,4 +22,22 @@
 	<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
 
 	<p>{{error}}</p>
+
 </ion-content>
+<div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
+	class="modal conditional">
+	<div class="modal-content">
+		<span class="close" (click)="closeModal();">&times;</span>
+		<h1>Waarschuwing</h1>
+		<p>Voor het openen van deze pagina <b>moet</b> je de nieuwste versie gebruiken, anders kunnen wij niet
+			garanderen dat het allemaal werkt.</p>
+		<button ion-button full (click)="belStan()" class="bg-green correction">Bel Stan</button>
+		<button ion-button full *ngIf="android" (click)="openStore()" class="bg-blue correction">Open Play
+			Store</button>
+		<button ion-button full *ngIf="!android" (click)="openStore()" class="bg-blue correction">Open App
+			Store</button>
+		<button ion-button full (click)="closeModal()" class="bg-red correction">Terug</button>
+		<button ion-button full (click)="forceOpenPage()" class='correction' style='background: black;'>Toch openen
+			(alleen als je weet waar je mee bezig bent!!!)</button>
+	</div>
+</div>

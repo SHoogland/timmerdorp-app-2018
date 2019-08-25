@@ -15,6 +15,8 @@ import { ConnectChildToCabinPage } from '../pages/connect-child-to-cabin/connect
 import { PresencePage } from '../pages/presence/presence';
 import { LoginPage } from '../pages/login/login';
 import { WijkPage } from '../pages/wijk/wijk';
+import { AppInfoPage } from '../pages/app-info/app-info';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [
@@ -25,12 +27,14 @@ import { WijkPage } from '../pages/wijk/wijk';
 		ConnectChildToCabinPage,
 		PresencePage,
 		LoginPage,
-		WijkPage
+		WijkPage,
+		AppInfoPage
 	],
 	imports: [
 		BrowserModule,
 		IonicModule.forRoot(MyApp),
-		IonicStorageModule.forRoot()
+		IonicStorageModule.forRoot(),
+		HttpClientModule
 	],
 	bootstrap: [IonicApp],
 	entryComponents: [
@@ -41,11 +45,13 @@ import { WijkPage } from '../pages/wijk/wijk';
 		ConnectChildToCabinPage,
 		PresencePage,
 		LoginPage,
-		WijkPage
+		WijkPage,
+		AppInfoPage
 	],
 	providers: [
 		StatusBar,
 		SplashScreen,
+		HttpClient,
 		BarcodeScanner,
 		{ provide: ErrorHandler, useClass: IonicErrorHandler }
 	]

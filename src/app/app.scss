@@ -342,6 +342,10 @@ input.text-input {
   }
 }
 
+html, body{
+	height: 100%;
+}
+
 // Modalbox
 /* The Modal (background) */
 .modal {
@@ -351,7 +355,7 @@ input.text-input {
   top: 0;
   padding: 10px;
   width: 100%; /* Full width */
-  height: 100vh; /* Full height */
+  height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(16, 16, 16, 0.9); /* Black w/ opacity */

@@ -1,5 +1,15 @@
 page-home {
-  .button-inner {
-    display: block !important;
-  }
+	.button-inner {
+		display: block !important;
+	}
+	.modal-content {
+		ul {
+			li {
+				list-style: none;
+			}
+		}
+	}
+	.correction{
+		padding-top: 20px;
+	}
 }

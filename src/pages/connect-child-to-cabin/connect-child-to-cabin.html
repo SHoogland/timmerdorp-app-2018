@@ -44,60 +44,57 @@
 			class="conditional bg-blue correction">
 			Kind toevoegen
 		</button>
-		<!-- Trigger/Open The Modal -->
-
-		<div [ngClass]="{'shown': addModal.show}" (click)="$event.target.id==='myModal'?closeAddModal():''" id="myModal"
-			class="modal conditional">
-			<div class="modal-content">
-				<span class="close" (click)="closeAddModal()">&times;</span>
-				<h1>Zoek een kind en voeg het toe</h1>
-				<ion-item>
-					<ion-input type="text" placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
-						(ngModelChange)="searchChild($event)"></ion-input>
-				</ion-item>
-
-				<span style="color:red;">
-					{{searchError}}
-				</span>
-				<div style='height: 40px; margin-top: 10px'>
-					<ion-spinner *ngIf='loading&&!notLoggedIn' color='primary'></ion-spinner>
-				</div>
-
-				<div *ngFor="let child of tickets">
-					<button ion-button full (click)="addChildToHut(child);closeAddModal()"
-						class="bg-grey color-mediumBlack">
-						{{ child.meta.WooCommerceEventsAttendeeName[0] }}
-						{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
-						'-' }})&nbsp;{{(child.meta.hutnr||[])[0]?"&mdash;&nbsp;":''}}
-						<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
-							style="background-color:yellow;padding: 0px 6px">hutnummer:&nbsp;
-							{{ child.meta.hutnr}}</span>
-						<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'"
-							style="background-color:red;color:white;padding: 0px 6px">hutnummer:&nbsp;
-							{{ child.meta.hutnr }}</span>
-						<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'"
-							style="background-color:blue;color:white;padding: 0px 6px">hutnummer:&nbsp;
-							{{ child.meta.hutnr }}</span>
-						<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'"
-							style="background-color:green;color:white;padding: 0px 6px">hutnummer:&nbsp;
-							{{ child.meta.hutnr}}</span>
-					</button>
-				</div>
-
-			</div>
-
-		</div>
-
-		<div [ngClass]="{'shown': removeModal.show}" id="removeModal"
-			(click)="$event.target.id==='removeModal'?closeRemoveModal():''" class="conditional modal stanModal">
-			<div class="modal-content">
-				<span class="close" (click)="closeRemoveModal()">&times;</span>
-				<h1 *ngIf="removeChild">Weet je zeker dat je {{ removeChild.meta.WooCommerceEventsAttendeeName[0] }}
-					wilt verwijderen?</h1>
-				<button ion-button full (click)="removeChildFromHut(removeChild)"
-					class="bg-green correction">Ja</button>
-				<button ion-button full (click)="closeRemoveModal()" class="bg-red correction">Nee</button>
-			</div>
-		</div>
 	</div>
 </ion-content>
+<!-- Trigger/Open The Modal -->
+<div [ngClass]="{'shown': addModal.show}" (click)="$event.target.id==='myModal'?closeAddModal():''" id="myModal"
+	class="modal conditional">
+	<div class="modal-content">
+		<span class="close" (click)="closeAddModal()">&times;</span>
+		<h1>Zoek een kind en voeg het toe</h1>
+		<ion-item>
+			<ion-input type="text" placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
+				(ngModelChange)="searchChild($event)"></ion-input>
+		</ion-item>
+
+		<span style="color:red;">
+			{{searchError}}
+		</span>
+		<div style='height: 40px; margin-top: 10px'>
+			<ion-spinner *ngIf='loading&&!notLoggedIn' color='primary'></ion-spinner>
+		</div>
+
+		<div *ngFor="let child of tickets">
+			<button ion-button full (click)="addChildToHut(child);closeAddModal()" class="bg-grey color-mediumBlack">
+				{{ child.meta.WooCommerceEventsAttendeeName[0] }}
+				{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
+					'-' }})&nbsp;{{(child.meta.hutnr||[])[0]?"&mdash;&nbsp;":''}}
+				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
+					style="background-color:yellow;padding: 0px 6px">hutnummer:&nbsp;
+					{{ child.meta.hutnr}}</span>
+				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'"
+					style="background-color:red;color:white;padding: 0px 6px">hutnummer:&nbsp;
+					{{ child.meta.hutnr }}</span>
+				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'"
+					style="background-color:blue;color:white;padding: 0px 6px">hutnummer:&nbsp;
+					{{ child.meta.hutnr }}</span>
+				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'"
+					style="background-color:green;color:white;padding: 0px 6px">hutnummer:&nbsp;
+					{{ child.meta.hutnr}}</span>
+			</button>
+		</div>
+
+	</div>
+
+</div>
+
+<div [ngClass]="{'shown': removeModal.show}" id="removeModal"
+	(click)="$event.target.id==='removeModal'?closeRemoveModal():''" class="conditional modal stanModal">
+	<div class="modal-content">
+		<span class="close" (click)="closeRemoveModal()">&times;</span>
+		<h1 *ngIf="removeChild">Weet je zeker dat je {{ removeChild.meta.WooCommerceEventsAttendeeName[0] }}
+			wilt verwijderen?</h1>
+		<button ion-button full (click)="removeChildFromHut(removeChild)" class="bg-green correction">Ja</button>
+		<button ion-button full (click)="closeRemoveModal()" class="bg-red correction">Nee</button>
+	</div>
+</div>
