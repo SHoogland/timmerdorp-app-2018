@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
@@ -13,6 +13,7 @@ export class PresencePage {
 	error: string;
 	endpoint: string;
 	loading: boolean;
+	greenBtn: boolean;
 	day: string;
 	loginError: boolean;
 	notLoggedIn: boolean;
@@ -20,6 +21,7 @@ export class PresencePage {
 		username: string,
 		password: string
 	};
+	modalShown: boolean;
 	tickets: Array<any>;
 
 	number: string;
@@ -29,12 +31,31 @@ export class PresencePage {
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
+		private cd: ChangeDetectorRef
 	) {
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
 
 	init() {
+		switch (new Date().getDay()) {
+			case 2:
+				this.day = "tue";
+				break;
+			case 3:
+				this.day = 'wed';
+				break;
+			case 4:
+				this.day = 'thu';
+				break;
+			case 5:
+				this.day = 'fri';
+				break;
+			default:
+				this.day = 'thu'; //sample day
+		}
+		this.modalShown = false;
+		this.greenBtn = false;
 		this.loginError = false;
 		this.notLoggedIn = false;
 
@@ -60,6 +81,13 @@ export class PresencePage {
 		wp.handler = wp.registerRoute('tickets', route, {});
 
 		return wp;
+	}
+
+	getDayName(d) {
+		if (d == 'tue') return "Dinsdag"
+		if (d == 'wed') return "Woensdag"
+		if (d == 'thu') return "Donderdag"
+		if (d == 'fri') return "Vrijdag"
 	}
 
 	ionViewDidLoad() {
@@ -98,13 +126,14 @@ export class PresencePage {
 			var wp = this.getWpApi('search');
 			wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
 				console.log(result);
+				document.body.focus()
 				if (result.code === 200) {
 					self.error = '';
-					result.tickets.sort(function (a, b) {
-						if((a.meta.wristband||[])[0] == self.number){
-							return -1;
+					result.tickets.filter(function (a) {
+						if ((a.meta.wristband || [])[0] == self.number) {
+							return false;
 						}
-						return 1;
+						return true;
 					});
 					self.tickets = result.tickets;
 					if (self.tickets.length === 0) {
@@ -132,18 +161,20 @@ export class PresencePage {
 		}
 	}
 
-	togglePresence(child, day) {
-		let self = this;
-		self.loading = true;
-		var wp = this.getWpApi('presence');
-		if (child.meta['present_' + day] + '' == 'undefined') {
-			child.meta['present_' + day] = [true]
+	makeAbsent() {
+		this.closeModal();
+		if (this.number.length < 3) return;
+		if (!this.tickets[0]) {
+			this.error = 'Geen kind gevonden!';
+			return;
 		}
-		var pres = !!(child.meta['present_' + day] || [])[0];
-		console.log(child.meta['present_' + day], pres);
-		wp.handler().param('wristband', child.meta.wristband).param('day', day).param('presence', pres).then((result) => {
+
+		let self = this;
+		var wp = this.getWpApi('presence');
+		wp.handler().param('wristband', this.number).param('day', this.day).param('presence', false).then((result) => {
 			if (result.code === 200) {
-				console.log("Child presence update successful", result)
+				this.markDone();
+				console.log("Child absence update successful for " + self.day, result)
 				this.loading = false;
 				this.error = '';
 				self.loading = false;
@@ -152,10 +183,72 @@ export class PresencePage {
 				self.loading = false;
 			}
 		}).catch((error) => {
+			self.loading = false;
+			console.log(error);
+		});
+
+	}
+
+	togglePresence() {
+		if (this.number.length < 3) return;
+		if (!this.tickets[0]) {
+			this.error = 'Geen kind gevonden!';
+			return;
+		}
+		let self = this;
+		self.loading = true;
+		if (this.tickets[0].meta['present_' + this.day] + '' == 'undefined') {
+			this.tickets[0].meta['present_' + this.day] = [false]
+		}
+		var pres = !(this.tickets[0].meta['present_' + this.day] || [])[0];
+		console.log(pres);
+		if (!pres) {
+			console.log("warning user that child is already present");
+			this.showModal();
+			return;
+		}
+		var wp = this.getWpApi('presence');
+		wp.handler().param('wristband', this.number).param('day', this.day).param('presence', pres).then((result) => {
+			if (result.code === 200) {
+				this.markDone();
+				console.log("Child presence update successful for " + self.day, result)
+				this.loading = false;
+				this.error = '';
+				self.loading = false;
+			} else {
+				self.error = result.message;
+				self.loading = false;
+			}
+		}).catch((error) => {
+			self.loading = false;
 			console.log(error);
 		});
 	}
 
+	showModal() {
+		this.modalShown = true;
+		document.querySelector('#myModal').classList.add('high');
+	}
+
+	closeModal() {
+		this.modalShown = false;
+		setTimeout(function () {
+			document.querySelector('#myModal').classList.remove('high');
+		}, 400);
+	}
+
+
+	markDone() {
+		this.greenBtn = true;
+		let self = this;
+		document.getElementById("btnLabel").innerHTML = "Opgeslagen!";
+		document.getElementById("numberInput").children[0].focus();
+		setTimeout(function () {
+			self.greenBtn = false;
+			self.cd.detectChanges();
+			document.getElementById("btnLabel").innerHTML = "Opslaan";
+		}, 1000);
+	}
 
 	toLogin() {
 		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
