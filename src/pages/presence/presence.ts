@@ -120,13 +120,15 @@ export class PresencePage {
 	}
 
 	getChild() {
+		this.error = '';
+		this.loginError = false;
+		this.notLoggedIn = false;
 		let self = this;
 		if (this.number.length === 3) {
 			this.loading = true;
 			var wp = this.getWpApi('search');
 			wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
 				console.log(result);
-				document.body.focus()
 				if (result.code === 200) {
 					self.error = '';
 					result.tickets.filter(function (a) {
@@ -157,6 +159,7 @@ export class PresencePage {
 				self.loading = false;
 			});
 		} else {
+			this.loading = false;
 			this.tickets = [];
 		}
 	}
@@ -190,6 +193,7 @@ export class PresencePage {
 	}
 
 	togglePresence() {
+		this.hideKeyboard();
 		if (this.number.length < 3) return;
 		if (!this.tickets[0]) {
 			this.error = 'Geen kind gevonden!';
@@ -242,12 +246,28 @@ export class PresencePage {
 		this.greenBtn = true;
 		let self = this;
 		document.getElementById("btnLabel").innerHTML = "Opgeslagen!";
-		document.getElementById("numberInput").children[0].focus();
+		(<HTMLScriptElement>document.querySelector("#numberInput > input")).focus();
+		self.number = '';
 		setTimeout(function () {
 			self.greenBtn = false;
-			self.cd.detectChanges();
+			(<HTMLScriptElement>document.querySelector("#numberInput > input")).focus();
 			document.getElementById("btnLabel").innerHTML = "Opslaan";
+			self.cd.detectChanges();
 		}, 1000);
+	}
+
+	hideKeyboard() {
+		var field = document.createElement('input');
+		field.setAttribute('type', 'text');
+		document.body.appendChild(field);
+
+		setTimeout(function () {
+			field.focus();
+			setTimeout(function () {
+				field.setAttribute('style', 'display:none;');
+				field.parentNode.removeChild(field);
+			}, 50);
+		}, 50);
 	}
 
 	toLogin() {

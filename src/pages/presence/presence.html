@@ -40,20 +40,21 @@
 			</div>
 		</div>
 	</div>
-	<div *ngIf='(child||{}).meta'>
+	<div *ngIf='(this.tickets[0]||{}).meta'>
 		<h1 style='text-align:center;'>Kind #{{number}}</h1>
-		<p><b>Naam: </b>{{child.meta.WooCommerceEventsAttendeeName[0]}}
-			{{ child.meta.WooCommerceEventsAttendeeLastName[0] }}</p>
-		<p><b>Polsbandnummer:</b>{{ child.meta.wristband || '-' }}</p>
-		<div style='display: inline-block' *ngIf='child.meta.hutnr && child.meta.hutnr[0]'> <b>Hutnummer</b>:
-			<span *ngIf="child.meta.hutnr[0][0] === '0'"
-				style="background-color:yellow;padding: 0px 3px">{{child.meta.hutnr}}</span>
-			<span *ngIf="child.meta.hutnr[0][0] === '1'"
-				style="background-color:red;color:white;padding: 0px 3px">{{child.meta.hutnr}}</span>
-			<span *ngIf="child.meta.hutnr[0][0] === '2'"
-				style="background-color:blue;color:white;padding: 0px 3px">{{child.meta.hutnr}}</span>
-			<span *ngIf="child.meta.hutnr[0][0] === '3'"
-				style="background-color:green;color:white;padding: 0px 3px">{{child.meta.hutnr}}</span>
+		<p><b>Naam: </b>{{tickets[0].meta.WooCommerceEventsAttendeeName[0]}}
+			{{ tickets[0].meta.WooCommerceEventsAttendeeLastName[0] }}</p>
+		<p><b>Polsbandnummer:</b>{{ tickets[0].meta.wristband || '-' }}</p>
+		<p><b>Aanwezig {{getDayName(day).toLowerCase()}}: </b>{{tickets[0].meta["present_" + ]}}</p>
+		<div style='display: inline-block' *ngIf='tickets[0].meta.hutnr && tickets[0].meta.hutnr[0]'> <b>Hutnummer</b>:
+			<span *ngIf="tickets[0].meta.hutnr[0][0] === '0'"
+				style="background-color:yellow;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+			<span *ngIf="tickets[0].meta.hutnr[0][0] === '1'"
+				style="background-color:red;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+			<span *ngIf="tickets[0].meta.hutnr[0][0] === '2'"
+				style="background-color:blue;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+			<span *ngIf="tickets[0].meta.hutnr[0][0] === '3'"
+				style="background-color:green;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
 		</div>
 	</div>
 
