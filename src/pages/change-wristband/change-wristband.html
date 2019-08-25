@@ -1,0 +1,63 @@
+<ion-header>
+	<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
+	<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+	<ion-navbar>
+		<ion-title>
+			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<h1 id='title' style='text-align: center;'>Verander Polsbandnummer</h1>
+
+	<div class="bracelet-number">
+		<h3>Oud nummer</h3>
+		<ion-item>
+			<ion-input placeholder="Huidig polsbandje" [(ngModel)]="oldNr" maxlength='3'>
+			</ion-input>
+		</ion-item>
+		<span *ngIf="wristBandError" class="form-error">
+			{{ wristBandError }}
+		</span>
+	</div>
+	<button [ngClass]="{'shown': (oldNr||'').length >= 3 }" ion-button full (click)="searchTicket()"
+		class="bg-blue correction">Zoeken </button>
+
+	<div class="user-info">
+		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
+			{{error}}
+		</span>
+		<span *ngIf="loginError" style="color:red;font-weight:bold">
+			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+		</span>
+		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+		</span>
+		<div style='height: 20px;'>
+			<div *ngIf="loading&&!notLoggedIn">
+				<ion-spinner color='primary'></ion-spinner>
+			</div>
+		</div>
+	</div>
+
+	<div class="user-info" *ngIf="searched">
+		<h1>Kind #{{oldNr}}</h1>
+		{{ticket.firstName}} {{ticket.lastName}}
+		<br> {{ticket.barcode}}
+		<br> {{ticket.birthDate}}
+		<br><br>
+		<h3>Nieuw nummer</h3>
+		<ion-item>
+			<ion-input placeholder="Nieuw polsbandje" [(ngModel)]="newNr" maxlength='3'>
+			</ion-input>
+		</ion-item>
+		<button [ngClass]="{'shown': (newNr||'').length >= 3 }" ion-button full (click)="saveNr()"
+			class="bg-blue correction">Opslaan </button>
+		<div style='height: 20px;'>
+			<div *ngIf="loading2">
+				<ion-spinner color='primary'></ion-spinner>
+			</div>
+		</div>
+	</div>
+</ion-content>

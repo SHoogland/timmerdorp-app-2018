@@ -13,6 +13,7 @@ import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { AppInfoPage } from '../app-info/app-info';
 import { HttpClient } from '@angular/common/http';
 import { SchedulePage } from '../schedule/schedule';
+import { ChangeWristbandPage } from '../change-wristband/change-wristband';
 
 declare let cordova: any;
 
@@ -60,7 +61,8 @@ export class HomePage {
 			"wijk": WijkPage,
 			"app-info": AppInfoPage,
 			"login": LoginPage,
-			"schedule": SchedulePage
+			"schedule": SchedulePage,
+			"change-wristband": ChangeWristbandPage
 		}
 		
 		this.modalShown = false;
@@ -79,6 +81,18 @@ export class HomePage {
 
 			this.pages = [
 				{
+					title: 'Zoek kind',
+					component: "search",
+					class: 'bg-blue',
+					icon: "search"
+				},
+				{
+					title: 'Aanwezigheid',
+					component: "presence",
+					class: 'bg-blue',
+					icon: "checkmark-circle-outline"
+				},
+				{
 					title: 'Scan ticket',
 					component: "scan-ticket",
 					class: 'bg-blue',
@@ -91,16 +105,10 @@ export class HomePage {
 					icon: 'person-add'
 				},
 				{
-					title: 'Zoek kind',
-					component: "search",
+					title: 'Verander polsbandnummer',
+					component: "change-wristband",
 					class: 'bg-blue',
-					icon: "search"
-				},
-				{
-					title: 'Aanwezigheid',
-					component: "presence",
-					class: 'bg-blue',
-					icon: "checkmark-circle-outline"
+					icon: 'create'
 				},
 				{
 					title: 'Wijkoverzicht ' + this.getWijkName(this.wijk),

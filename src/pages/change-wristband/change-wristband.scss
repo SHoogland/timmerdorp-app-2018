@@ -1,0 +1,9 @@
+page-changeWristband {
+button {
+	transition: opacity 400ms!important;
+	opacity: 0!important;
+  }
+  button.shown {
+    opacity: 1!important;
+  }
+}

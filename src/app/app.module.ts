@@ -18,6 +18,7 @@ import { WijkPage } from '../pages/wijk/wijk';
 import { AppInfoPage } from '../pages/app-info/app-info';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SchedulePage } from '../pages/schedule/schedule';
+import { ChangeWristbandPage } from '../pages/change-wristband/change-wristband';
 
 @NgModule({
 	declarations: [
@@ -30,7 +31,8 @@ import { SchedulePage } from '../pages/schedule/schedule';
 		LoginPage,
 		WijkPage,
 		AppInfoPage,
-		SchedulePage
+		SchedulePage,
+		ChangeWristbandPage
 	],
 	imports: [
 		BrowserModule,
@@ -49,7 +51,8 @@ import { SchedulePage } from '../pages/schedule/schedule';
 		LoginPage,
 		WijkPage,
 		AppInfoPage,
-		SchedulePage
+		SchedulePage,
+		ChangeWristbandPage
 	],
 	providers: [
 		StatusBar,
