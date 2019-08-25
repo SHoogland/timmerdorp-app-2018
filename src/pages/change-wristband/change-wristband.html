@@ -49,7 +49,7 @@
 		<br><br>
 		<h3>Nieuw nummer</h3>
 		<ion-item>
-			<ion-input placeholder="Nieuw polsbandje" [(ngModel)]="newNr" maxlength='3'>
+			<ion-input type='tel' placeholder="Nieuw polsbandje" [(ngModel)]="newNr" maxlength='3'>
 			</ion-input>
 		</ion-item>
 		<button [ngClass]="{'shown': (newNr||'').length >= 3 }" ion-button full (click)="saveNr()"
