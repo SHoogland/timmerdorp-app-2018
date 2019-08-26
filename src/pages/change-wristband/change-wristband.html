@@ -22,7 +22,10 @@
 		</span>
 	</div>
 	<button [ngClass]="{'shown': (oldNr||'').length >= 3 }" ion-button full (click)="searchTicket()"
-		class="bg-blue correction">Zoeken </button>
+		class="bg-blue correction">
+		<ion-icon slot='start' name='search' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
+		Zoeken
+	</button>
 
 	<div class="user-info">
 		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
@@ -49,11 +52,14 @@
 		<br><br>
 		<h3>Nieuw nummer</h3>
 		<ion-item>
-			<ion-input type='tel' placeholder="Nieuw polsbandje" [(ngModel)]="newNr" maxlength='3'>
+			<ion-input type='tel' #nrInput placeholder="Nieuw polsbandje" [(ngModel)]="newNr" maxlength='3'>
 			</ion-input>
 		</ion-item>
 		<button [ngClass]="{'shown': (newNr||'').length >= 3 }" ion-button full (click)="saveNr()"
-			class="bg-blue correction">Opslaan </button>
+			class="bg-blue correction">
+			<ion-icon slot='start' name='checkmark' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>		
+			Opslaan
+		</button>
 		<div style='height: 20px;'>
 			<div *ngIf="loading2">
 				<ion-spinner color='primary'></ion-spinner>

@@ -26,7 +26,12 @@
 	</table>
 	<br>
 	<p>Voor vragen over de app kun je terecht bij Stan van Baarsen uit wijk blauw of Stephan Hoogland uit wijk geel.</p>
-	<button ion-button full (click)="belStan()" class="bg-green">Bel Stan</button>
+	<button ion-button full (click)="belStan()" class="bg-green">
+		<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
+		<span style='font-size: 18px;'>
+			Bel Stan
+		</span>
+</button>
 	<br>
 	<h1 id='title'>Updates</h1>
 

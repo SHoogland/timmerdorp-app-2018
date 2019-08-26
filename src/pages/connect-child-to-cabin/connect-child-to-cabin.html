@@ -42,6 +42,7 @@
 		</div>
 		<button ion-button full (click)="showAddModal()" [ngClass]='hutNr && hutNr.length === 3 ? "shown":""'
 			class="conditional bg-blue correction">
+			<ion-icon slot='start' name='add' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
 			Kind toevoegen
 		</button>
 	</div>
@@ -56,7 +57,7 @@
 			<ion-label>Automatisch aanwezig melden</ion-label>
 			<ion-toggle [(ngModel)]="autoPresence"></ion-toggle>
 		</ion-item>
-	
+
 		<ion-item>
 			<ion-input type="text" placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
 				(ngModelChange)="searchChild($event)"></ion-input>

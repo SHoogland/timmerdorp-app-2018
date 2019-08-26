@@ -11,7 +11,7 @@
 <ion-content padding>
 	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class">
 		<div style='text-align:left;'>
-			<ion-icon slot='start' name='{{p.icon||""}}' style='margin-right:8px;position:relative;'></ion-icon>
+			<ion-icon slot='start' name='{{p.icon||""}}' style='margin-right:12px;position:relative;'></ion-icon>
 			<span *ngIf="p.class.split('small').length==1" style='font-size:18px'>
 				{{p.title}}
 			</span>
@@ -31,7 +31,12 @@
 		<h1>Waarschuwing</h1>
 		<p>Voor het openen van deze pagina <b>moet</b> je de nieuwste versie gebruiken, anders kunnen wij niet
 			garanderen dat het allemaal werkt.</p>
-		<button ion-button full (click)="belStan()" class="bg-green correction">Bel Stan</button>
+		<button ion-button full (click)="belStan()" class="bg-green correction">
+		<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
+		<span style='font-size: 18px;'>
+			Bel Stan
+		</span>
+</button>
 		<button ion-button full (click)="openStore()" class="bg-blue correction">Open {{android?"Play":"App"}}
 			Store</button>
 		<button ion-button full (click)="closeModal()" class="bg-red correction">Terug</button>

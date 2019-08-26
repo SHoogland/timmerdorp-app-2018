@@ -34,7 +34,6 @@
 			</span>
 		</div>
 		<h1>Wijkoverzicht {{getName(wijk)}}</h1>
-		<p (click)='clearWijkSelection()'><a href='javascript:null'>Verander wijkkeuze</a></p>
 		<table style='margin-left: 20px;'>
 			<tr>
 				<td style='text-align:left; padding-right:4px;'>
@@ -78,8 +77,14 @@
 			</tr>
 		</table>
 		<br>
+		<button ion-button full (click)="clearWijkSelection()" class='bg-blue'>
+			<ion-icon slot='start' name='create' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
+			<span style='font-size:18px'>
+				Verander wijkkeuze
+			</span>
+		</button>
 		<br>
-		<h1>Algemeen overzicht</h1>
+		<h1>Algemene Statistieken</h1>
 		<table style='margin-left: 20px;'>
 
 			<tr>

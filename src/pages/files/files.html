@@ -5,7 +5,7 @@
 		<ion-title>
 			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
 		</ion-title>
-	</ion-navbar> 
+	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
@@ -25,13 +25,20 @@
 		</div>
 	</div>
 
-	<h1 style='text-align: center;'>Fotoalbums {{photoyear}}</h1>
+	<h1 style='text-align: center;'>Fotoalbums {{photoYear}}</h1>
+	<ion-input #nrInput type="tel" placeholder="Foto-jaar" [(ngModel)]="photoYear" maxlength='4' style='margin-bottom: 20px;' (ngModelChange)="filterAlbums()"></ion-input>
+	<div>
+		<div *ngIf="loading" style='width: 100%; text-align: center;'>
+			<ion-spinner color='primary'></ion-spinner>
+		</div>
+	</div>
+
 	<div style='column-count: 2;'>
 		<div *ngFor='let a of albums'>
 			<ion-card (click)='openAlbum(a.id)' button>
-				<img [src]="a['primary_photo_extras']['url_m']" />
+				<img [src]="((a||{})['primary_photo_extras']||{})['url_m']" />
 				<ion-card-header>
-					<h5>{{a.title['_content']}}</h5>
+					<h5>{{((a||{}).title||{})['_content']}}</h5>
 				</ion-card-header>
 			</ion-card>
 		</div>
