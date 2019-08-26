@@ -56,9 +56,9 @@ export class MyApp {
 					this.login.password = '';
 				}),
 				this.storage.get('staging').then((val) => {
-					if(val){
+					if (val) {
 						this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-					} else{
+					} else {
 						this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 					}
 				}, (error) => {
@@ -121,10 +121,10 @@ export class MyApp {
 	}
 
 	toLogin() {
-		this.nav.setRoot(LoginPage);
+		this.nav.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
 
 	openPage(page) {
-		this.nav.setRoot(page.component);
+		this.nav.setRoot(page.component, { animate: true, direction: 'forward' });
 	}
 }

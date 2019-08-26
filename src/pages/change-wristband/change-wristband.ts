@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { HomePage } from '../home/home';
 import { Storage } from '@ionic/storage';
+import { LoginPage } from '../login/login';
 
 
 @Component({
@@ -77,6 +78,10 @@ export class ChangeWristbandPage {
 			self.loading = false;
 		});
 		
+	}
+
+	toLogin() {
+		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
 	
 	ionViewDidLoad() {
