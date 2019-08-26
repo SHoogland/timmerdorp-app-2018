@@ -45,7 +45,7 @@
 		<p><b>Naam: </b>{{tickets[0].meta.WooCommerceEventsAttendeeName[0]}}
 			{{ tickets[0].meta.WooCommerceEventsAttendeeLastName[0] }}</p>
 		<p><b>Polsbandnummer:</b>{{ tickets[0].meta.wristband || '-' }}</p>
-		<p><b>Aanwezig {{getDayName(day).toLowerCase()}}: </b>{{tickets[0].meta["present_" + ]}}</p>
+		<p><b>Aanwezig {{getDayName(day).toLowerCase()}}: </b>{{tickets[0].meta["present_" + day]}}</p>
 		<div style='display: inline-block' *ngIf='tickets[0].meta.hutnr && tickets[0].meta.hutnr[0]'> <b>Hutnummer</b>:
 			<span *ngIf="tickets[0].meta.hutnr[0][0] === '0'"
 				style="background-color:yellow;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
