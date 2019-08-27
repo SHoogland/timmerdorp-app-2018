@@ -38,10 +38,10 @@ export class ChangeWristbandPage {
 
 	init() {
 	}
-	
+
 	searchTicket(nr) {
 		let self = this;
-		
+
 		self.ticket = {};
 		console.log(this.oldNr);
 		if (this.oldNr.length < 3) {
@@ -51,19 +51,37 @@ export class ChangeWristbandPage {
 		this.loginError = false;
 		this.notLoggedIn = false;
 		this.error = '';
+		this.ticket = {};
+		this.searched = false;
 		this.loading2 = false;
 		this.loading = true;
 		console.log('searching: ' + this.oldNr);
 		var wp = this.getWpApi('search');
 		wp.handler().param('search', this.oldNr).then((result) => {
+			console.log(result);
+			let t = result.tickets;
+			console.log(t, result);
+			if(!t.length){
+				self.error = 'Geen tickets gevonden :('
+				self.loading = false;
+				return;
+			}
+			t.filter(function (a) {
+				return (a.meta || {}).wristband === self.oldNr;
+			});
+			self.ticket = t[0];
 			if (result.code == 200) {
-				self.ticket.barcode = (result.meta.WooCommerceEventsTicketID || [])[0];
-				self.ticket.firstName = (result.meta.WooCommerceEventsAttendeeName || [])[0];
-				self.ticket.lastName = (result.meta.WooCommerceEventsAttendeeLastName || [])[0];
-				self.ticket.birthDate = (result.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'] || [])[0];
+				self.ticket.barcode = (self.ticket.meta.WooCommerceEventsTicketID || [])[0];
+				self.ticket.firstName = (self.ticket.meta.WooCommerceEventsAttendeeName || [])[0];
+				self.ticket.lastName = (self.ticket.meta.WooCommerceEventsAttendeeLastName || [])[0];
+				self.ticket.birthDate = (self.ticket.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'] || [])[0];
+				self.loading = false;
+				self.searched = true;
+				console.log(self.ticket);
 			} else {
 				if (result.message == 'access denied') {
 					this.notLoggedIn = true;
+					self.loading = false;
 				} else {
 					self.error = result.message;
 					self.loading = false;
@@ -77,13 +95,13 @@ export class ChangeWristbandPage {
 			}
 			self.loading = false;
 		});
-		
+
 	}
 
 	toLogin() {
 		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
-	
+
 	ionViewDidLoad() {
 		this.login = {
 			username: '',
@@ -123,13 +141,14 @@ export class ChangeWristbandPage {
 		});
 	}
 
-	saveNr(){
+	saveNr() {
 		this.loading2 = true;
 		let self = this;
 		var wp = this.getWpApi('add-wristband');
+		console.log(this.ticket);
 		wp
 			.handler()
-			.param('barcode', (this.ticket.WooCommerceEventsTicketID||[])[0])
+			.param('barcode', this.ticket.barcode)
 			.param('wristband', this.newNr)
 			.then((result) => {
 				console.log(result);

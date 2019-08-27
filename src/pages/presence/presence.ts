@@ -137,6 +137,7 @@ export class PresencePage {
 						}
 						return true;
 					});
+					console.log(result.tickets);
 					self.tickets = result.tickets;
 					if (self.tickets.length === 0) {
 						self.error = 'Geen resultaten';
@@ -243,6 +244,7 @@ export class PresencePage {
 
 
 	markDone() {
+		this.tickets = [];
 		this.greenBtn = true;
 		let self = this;
 		document.getElementById("btnLabel").innerHTML = "Opgeslagen!";

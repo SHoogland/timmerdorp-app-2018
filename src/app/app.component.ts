@@ -84,28 +84,28 @@ export class MyApp {
 
 
 	preCheckLogin() {
-		// if (!this.login.username || !this.login.password) {
-		// 	this.toLogin();
-		// } else {
-		// 	console.log("Determining whether login is correct by searching for random child '000'...")
-		// 	var wp = this.getWpApi('search');
-		// 	wp.handler().param('search', "000").then((result) => {
-		// 		if (result.code === 200) {
-		// 			console.log("Logingegevens kloppen!");
-		// 		} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
-		// 			this.toLogin();
-		// 		} else {
-		// 			console.log(result);
-		// 		}
-		// 	}).catch((error) => {
-		// 		if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-		// 			this.toLogin();
-		// 		} else {
-		// 			this.toLogin();
-		// 			console.log(error);//user is offline (probably)
-		// 		}
-		// 	});
-		// }
+		if (!this.login.username || !this.login.password) {
+			this.toLogin();
+		} else {
+			console.log("Determining whether login is correct by searching for random child '000'...")
+			var wp = this.getWpApi('search');
+			wp.handler().param('search', "000").then((result) => {
+				if (result.code === 200) {
+					console.log("Logingegevens kloppen!");
+				} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
+					this.toLogin();
+				} else {
+					console.log(result);
+				}
+			}).catch((error) => {
+				if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
+					this.toLogin();
+				} else {
+					this.toLogin();
+					console.log(error);//user is offline (probably)
+				}
+			});
+		}
 	}
 
 	getWpApi(route) {
