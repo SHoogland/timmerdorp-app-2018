@@ -24,7 +24,8 @@
 - Je kunt nu zoeken op voornaam óf achternaam, maar het is natuurlijk wel zo handig als je op beide achter elkaar zou kunnen zoeken (e.g.: nu zoek je "stan", of "van Baarsen", maar als je "Stan van Baarsen" zoekt, vind je niks)
 - Hopelijk kan ik in 2020 ook zelf de database beheren vanaf mijn laptop en het liefst ook nog de Play Store
 - De login-check is er nu uit gecomment, maar moet er zeker weer in in de production versie
-
+- Meer reserve polsbandjes kopen (725 in totaal misschien?) want kinderen raken die dingen bizar snel kwijt.
+- Een kraampje opstellen met een bord met: "Nieuw polsbandje nodig? Gegevens wijzigen? Kom hier!" ofzo. Als je deze "kraam" naast de dranghekken zet, hoef je in de rij voor de poort alleen nog maar aanwezigheid te melden. 
 
 ## Website feedback:
 - Laadtijd
