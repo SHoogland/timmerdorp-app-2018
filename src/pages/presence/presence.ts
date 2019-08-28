@@ -131,8 +131,8 @@ export class PresencePage {
 				console.log(result);
 				if (result.code === 200) {
 					self.error = '';
-					result.tickets.filter(function (a) {
-						if ((a.meta.wristband || [])[0] == self.number) {
+					result.tickets = result.tickets.filter(function (a) {
+						if ((a.meta.wristband || [])[0] !== self.number) {
 							return false;
 						}
 						return true;
