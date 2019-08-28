@@ -14,7 +14,7 @@
 	<div class="bracelet-number">
 		<h3>Oud nummer</h3>
 		<ion-item>
-			<ion-input placeholder="Huidig polsbandje" [(ngModel)]="oldNr" maxlength='3'>
+			<ion-input #nrInput type='tel' placeholder="Huidig polsbandje" [(ngModel)]="oldNr" maxlength='3'>
 			</ion-input>
 		</ion-item>
 		<span *ngIf="wristBandError" class="form-error">
@@ -52,12 +52,13 @@
 		<br><br>
 		<h3>Nieuw nummer</h3>
 		<ion-item>
-			<ion-input type='tel' #nrInput placeholder="Nieuw polsbandje" [(ngModel)]="newNr" maxlength='3'>
+			<ion-input #nrInput type='tel' placeholder="Nieuw polsbandje" [(ngModel)]="newNr" id='secondInput' maxlength='3'>
 			</ion-input>
 		</ion-item>
 		<button [ngClass]="{'shown': (newNr||'').length >= 3 }" ion-button full (click)="saveNr()"
 			class="bg-blue correction">
-			<ion-icon slot='start' name='checkmark' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>		
+			<ion-icon slot='start' name='checkmark' style='margin-right:12px;position:relative;font-size:1.8em;'>
+			</ion-icon>
 			Opslaan
 		</button>
 		<div style='height: 20px;'>

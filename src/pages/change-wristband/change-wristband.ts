@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 
@@ -16,6 +16,7 @@ import { LoginPage } from '../login/login';
 export class ChangeWristbandPage {
 	ticket: any;
 	oldNr: string;
+	inputField: any;
 	newNr: string;
 	endpoint: string;
 	loading: boolean;
@@ -28,11 +29,13 @@ export class ChangeWristbandPage {
 		username: string,
 		password: string
 	};
+	@ViewChild('secondInput') secondInput: ElementRef;
 
 	constructor(
 		public navCtrl: NavController,
 		public httpClient: HttpClient,
-		public storage: Storage
+		public storage: Storage,
+		public cd: ChangeDetectorRef
 	) {
 	}
 
@@ -42,9 +45,9 @@ export class ChangeWristbandPage {
 	searchTicket(nr) {
 		let self = this;
 
-		self.ticket = {};
-		console.log(this.oldNr);
+		this.ticket = {};
 		if (this.oldNr.length < 3) {
+			this.cd.detectChanges();	
 			console.log("Cancelling search. Reason: term too short");
 			return false;
 		}
@@ -77,7 +80,12 @@ export class ChangeWristbandPage {
 				self.ticket.birthDate = (self.ticket.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'] || [])[0];
 				self.loading = false;
 				self.searched = true;
-				console.log(self.ticket);
+				self.cd.detectChanges();
+				setTimeout(function(){
+					let el = document.getElementById("secondInput").getElementsByTagName("input")[0];
+					console.log(el);
+					el.focus();
+				}, 250);
 			} else {
 				if (result.message == 'access denied') {
 					this.notLoggedIn = true;
