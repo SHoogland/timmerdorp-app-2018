@@ -64,7 +64,7 @@ export class ConnectChildToCabinPage {
 		this.notLoggedIn = false;
 		this.loading = false;
 		this.error = '';
-		this.isTue = new Date().getDay() == 0;
+		this.isTue = new Date().getDay() == 2;
 		this.searchError = '';
 		this.addModal = {
 			show: false
