@@ -25,7 +25,7 @@ export class FilesPage {
 	}
 
 	init() {
-		this.photoYear = 2019;
+		this.photoYear = new Date().getFullYear();
 		let self = this;
 		this.loading = true;
 		this.httpClient
