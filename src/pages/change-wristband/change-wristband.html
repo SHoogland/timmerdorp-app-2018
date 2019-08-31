@@ -21,11 +21,36 @@
 			{{ wristBandError }}
 		</span>
 	</div>
+
 	<button [ngClass]="{'shown': (oldNr||'').length >= 3 }" ion-button full (click)="searchTicket()"
-		class="bg-blue correction">
-		<ion-icon slot='start' name='search' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
+		class="bg-blue correction" style='z-index:400;position:relative;margin-top:0;'>
+		<ion-icon slot='start' name='search' style='margin-right:12px;position:relative;font-size:1.8em;'>
+		</ion-icon>
 		Zoeken
 	</button>
+
+	<ion-list *ngIf="!searched && history && history.length > 0">
+		<ion-list-header>
+			Wijzigingsgeschiedenis
+		</ion-list-header>
+
+
+		<ion-item *ngFor="let h of history">
+			<ion-label>
+				<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
+					[ngStyle]='{"color": h.wijk}'></ion-icon>
+				<div style='position:relative; left: 80px;'>
+					<h2>{{h.name}}</h2>
+					<p><b>Oud polsbandje:</b> {{h.oldNr}}</p>
+					<p><b>Nieuw polsbandje:</b> {{h.newNr}}</p>
+				</div>
+				<ion-button size="small" (click)='oldNr=""+h.newNr;searched=true;searchTicket()'
+					style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
+					Zoeken</ion-button>
+			</ion-label>
+		</ion-item>
+	</ion-list>
+
 
 	<div class="user-info">
 		<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
@@ -46,13 +71,15 @@
 
 	<div class="user-info" *ngIf="searched">
 		<h1>Kind #{{oldNr}}</h1>
-		{{ticket.firstName}} {{ticket.lastName}}
-		<br> {{ticket.barcode}}
-		<br> {{ticket.birthDate}}
+		<b>Naam: </b>{{ticket.firstName}} {{ticket.lastName}}
+		<br><b>Ticket-barcode: </b>{{ticket.barcode}}
+		<br><b>Geboortedatum: </b> {{ticket.birthDate}}
+		<br><b>Hutnummer: </b> {{ticket.hutnr}}
 		<br><br>
 		<h3>Nieuw nummer</h3>
 		<ion-item>
-			<ion-input #nrInput type='tel' placeholder="Nieuw polsbandje" [(ngModel)]="newNr" id='secondInput' maxlength='3'>
+			<ion-input #nrInput type='tel' placeholder="Nieuw polsbandje" [(ngModel)]="newNr" id='secondInput'
+				maxlength='3'>
 			</ion-input>
 		</ion-item>
 		<button [ngClass]="{'shown': (newNr||'').length >= 3 }" ion-button full (click)="saveNr()"

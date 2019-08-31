@@ -25,6 +25,7 @@ export class ChangeWristbandPage {
 	error: string;
 	searched: boolean;
 	loading2: boolean;
+	history: any;
 	login: {
 		username: string,
 		password: string
@@ -42,12 +43,12 @@ export class ChangeWristbandPage {
 	init() {
 	}
 
-	searchTicket(nr) {
+	searchTicket() {
 		let self = this;
 
 		this.ticket = {};
 		if (this.oldNr.length < 3) {
-			this.cd.detectChanges();	
+			this.cd.detectChanges();
 			console.log("Cancelling search. Reason: term too short");
 			return false;
 		}
@@ -64,7 +65,7 @@ export class ChangeWristbandPage {
 			console.log(result);
 			let t = result.tickets;
 			console.log(t, result);
-			if(!t.length){
+			if (!t.length) {
 				self.error = 'Geen tickets gevonden :('
 				self.loading = false;
 				return;
@@ -77,11 +78,12 @@ export class ChangeWristbandPage {
 				self.ticket.barcode = (self.ticket.meta.WooCommerceEventsTicketID || [])[0];
 				self.ticket.firstName = (self.ticket.meta.WooCommerceEventsAttendeeName || [])[0];
 				self.ticket.lastName = (self.ticket.meta.WooCommerceEventsAttendeeLastName || [])[0];
+				self.ticket.hutnr = (self.ticket.meta.hutnr || [])[0];
 				self.ticket.birthDate = (self.ticket.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'] || [])[0];
 				self.loading = false;
 				self.searched = true;
 				self.cd.detectChanges();
-				setTimeout(function(){
+				setTimeout(function () {
 					let el = document.getElementById("secondInput").getElementsByTagName("input")[0];
 					console.log(el);
 					el.focus();
@@ -106,6 +108,33 @@ export class ChangeWristbandPage {
 
 	}
 
+	getColor(w) {
+		let res = 'black';
+		console.log((w + "")[0])
+		switch ((w + "")[0]) {
+			case '0':
+				console.log("wat1");
+				res = '#ffc800';
+				break;
+			case '1':
+				console.log("wat2");
+				res = '#f44336';
+				break;
+			case '2':
+				console.log("wat3");
+				res = '#2196F3';
+				break;
+			case '3':
+				console.log("wat4");
+				res = '#9ae263';
+				break;
+			default:
+				console.log("wat5");
+				res = 'black';
+		}
+		return res;
+	}
+
 	toLogin() {
 		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
@@ -125,6 +154,13 @@ export class ChangeWristbandPage {
 		this.loginError = false;
 		this.notLoggedIn = false;
 		Promise.all([
+			this.storage.get('editHistory').then((val) => {
+				this.history = val || [];
+				let seenChildren = [];
+				console.log(this.history);
+			}, (error) => {
+				this.history = [];
+			}),
 			this.storage.get('username').then((val) => {
 				this.login.username = val;
 			}, (error) => {
@@ -145,6 +181,10 @@ export class ChangeWristbandPage {
 				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 			})
 		]).then(() => {
+			let self = this;
+			setInterval(function () {
+				console.log(self.newNr);
+			}, 200);
 			this.init();
 		});
 	}
@@ -154,12 +194,25 @@ export class ChangeWristbandPage {
 		let self = this;
 		var wp = this.getWpApi('add-wristband');
 		console.log(this.ticket);
+
 		wp
 			.handler()
 			.param('barcode', this.ticket.barcode)
 			.param('wristband', this.newNr)
 			.then((result) => {
 				console.log(result);
+				let t = self.ticket;
+				let m = t.meta;
+				self.history.unshift({
+					name: m.WooCommerceEventsAttendeeName[0] + " " + m.WooCommerceEventsAttendeeLastName[0],
+					oldNr: m.wristband,
+					newNr: self.newNr,
+					wijk: self.getColor(m.hutnr)
+				});
+				console.log(self.history);
+
+				self.storage.set("editHistory", self.history);
+
 				if (result.code === 200) {
 					self.goHome();
 				} else {
