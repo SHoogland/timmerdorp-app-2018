@@ -40,12 +40,14 @@
 			</div>
 		</div>
 	</div>
-	<div *ngIf='(this.tickets[0]||{}).meta'>
+	<div *ngIf='(tickets[0]||{}).meta' style='margin-top: -50px;'>
 		<h1 style='text-align:center;'>Kind #{{number}}</h1>
 		<p><b>Naam: </b>{{tickets[0].meta.WooCommerceEventsAttendeeName[0]}}
 			{{ tickets[0].meta.WooCommerceEventsAttendeeLastName[0] }}</p>
 		<p><b>Polsbandnummer:</b>{{ tickets[0].meta.wristband || '-' }}</p>
-		<p><b>Aanwezig {{getDayName(day).toLowerCase()}}: </b>{{tickets[0].meta["present_" + day] && ("" + tickets[0].meta["present_" + day]).length > 0?"Ja":"Nee"}}</p>
+		<p><b>Aanwezig {{getDayName(day).toLowerCase()}}:
+			</b>{{tickets[0].meta["present_" + day] && ("" + tickets[0].meta["present_" + day]).length > 0?"Ja":"Nee"}}
+		</p>
 		<div style='display: inline-block' *ngIf='tickets[0].meta.hutnr && tickets[0].meta.hutnr[0]'> <b>Hutnummer</b>:
 			<span *ngIf="tickets[0].meta.hutnr[0][0] === '0'"
 				style="background-color:yellow;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
@@ -58,6 +60,27 @@
 		</div>
 	</div>
 
+	<div *ngIf='!(tickets[0]||{}).meta && history && history.length > 0'>
+		<ion-list>
+			<ion-list-header>
+				Zoekgeschiedenis
+			</ion-list-header>
+
+			<ion-item *ngFor="let h of history">
+				<ion-label>
+					<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
+						[ngStyle]='{"color": h.wijk}'></ion-icon>
+					<div style='position:relative; left: 80px;'>
+						<h2>{{h.name}}</h2>
+						<h3>{{h.wristband}}</h3>
+						<p>Hutnummer: {{h.hutnr}}</p>
+					</div>
+					<ion-button size="small" (click)='number=""+h.wristband;getChild()' style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>Zoeken</ion-button>
+				</ion-label>
+
+			</ion-item>
+		</ion-list>
+	</div>
 </ion-content>
 <div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
 	class="modal conditional">

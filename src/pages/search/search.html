@@ -18,6 +18,31 @@
 			</ion-item>
 		</div>
 	</div>
+
+	<div *ngIf='!tickets.length && history && history.length > 0'>
+		<ion-list>
+			<ion-list-header>
+				Zoekgeschiedenis
+			</ion-list-header>
+
+			<ion-item *ngFor="let h of history">
+				<ion-label>
+					<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
+						[ngStyle]='{"color": h.wijk}'></ion-icon>
+					<div style='position:relative; left: 80px;'>
+						<h2>{{h.name}}</h2>
+						<h3>{{h.wristband}}</h3>
+						<p>Hutnummer: {{h.hutnr}}</p>
+					</div>
+					<ion-button size="small" (click)='searchTerm=""+h.wristband;searchThis()'
+						style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
+						Zoeken</ion-button>
+				</ion-label>
+
+			</ion-item>
+		</ion-list>
+	</div>
+
 	<div *ngFor="let child of tickets">
 		<button ion-button full (click)="showModal(child)" class="bg-grey color-mediumBlack">
 			{{child.meta.WooCommerceEventsAttendeeName[0]}} {{child.meta.WooCommerceEventsAttendeeLastName[0]}} ({{child.meta.wristband ||

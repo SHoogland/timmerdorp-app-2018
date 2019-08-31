@@ -21,6 +21,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class SearchPage {
 	typingTimer: any;
+	history: any;
 	searchTerm: string;
 	loginError: boolean;
 	notLoggedIn: boolean;
@@ -77,11 +78,17 @@ export class SearchPage {
 	}
 
 	ionViewDidLoad() {
-		// let self = this;
-
 		this.init();
 
 		Promise.all([
+			this.storage.get('searchChildHistory').then((val) => {
+				this.history = val || [];
+				let seenChildren = [];
+				this.filterHistory();
+				console.log(this.history);
+			}, (error) => {
+				this.history = [];
+			}),
 			this.storage.get('username').then((val) => {
 				this.login.username = val;
 			}, (error) => {
@@ -134,6 +141,18 @@ export class SearchPage {
 		return (num || [""])[0].replace(/[^0-9+]/g, '');
 	}
 
+	filterHistory() {
+		let seenChildren = [];
+		this.history = this.history.filter(function (a) {
+			if (seenChildren.indexOf(a.wristband[0]) == -1) {
+				seenChildren.push(a.wristband[0]);
+				return true;
+			} else {
+				return false;
+			}
+		});
+	}
+
 	searchThis() {
 		let self = this;
 		self.tickets = [];
@@ -184,7 +203,44 @@ export class SearchPage {
 	showModal(child) {
 		this.modal.child = child;
 		this.modal.showModal = true;
+		let t = child;
+		let m = t.meta;
+		this.history.unshift({
+			name: m.WooCommerceEventsAttendeeName[0] + " " + m.WooCommerceEventsAttendeeLastName[0],
+			wristband: m.wristband,
+			hutnr: m.hutnr,
+			wijk: this.getColor(m.hutnr)
+		});
+		this.filterHistory();
+		this.storage.set("searchChildHistory", this.history);
 		document.querySelector('#myModal').classList.add('high');
+	}
+
+	getColor(w) {
+		let res = 'black';
+		console.log((w + "")[0])
+		switch ((w + "")[0]) {
+			case '0':
+				console.log("wat1");
+				res = '#ffc800';
+				break;
+			case '1':
+				console.log("wat2");
+				res = '#f44336';
+				break;
+			case '2':
+				console.log("wat3");
+				res = '#2196F3';
+				break;
+			case '3':
+				console.log("wat4");
+				res = '#9ae263';
+				break;
+			default:
+				console.log("wat5");
+				res = 'black';
+		}
+		return res;
 	}
 
 	closeModal() {

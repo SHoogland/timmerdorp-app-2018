@@ -21,6 +21,7 @@ export class PresencePage {
 		username: string,
 		password: string
 	};
+	history: any;
 	modalShown: boolean;
 	tickets: Array<any>;
 
@@ -90,58 +91,89 @@ export class PresencePage {
 		if (d == 'fri') return "Vrijdag"
 	}
 
-	ionViewDidLoad() {
-		// let self = this;
-
-		this.init();
-
-		Promise.all([
-			this.storage.get('username').then((val) => {
-				this.login.username = val;
-			}, (error) => {
-				this.login.username = '';
-			}),
-			this.storage.get('password').then((val) => {
-				this.login.password = val;
-			}, (error) => {
-				this.login.password = '';
-			}),
-			this.storage.get('staging').then((val) => {
-				if (val) {
-					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else {
-					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-				}
-			}, (error) => {
-				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-			})
-		]).then(() => {
+	filterHistory() {
+		let seenChildren = [];
+		this.history = this.history.filter(function (a) {
+			if (seenChildren.indexOf(a.wristband[0]) == -1) {
+				seenChildren.push(a.wristband[0]);
+				return true;
+			} else {
+				return false;
+			}
 		});
 	}
 
+	ionViewDidLoad() {
+			this.init();
+
+			Promise.all([
+				this.storage.get('presHistory').then((val) => {
+					this.history = val || [];
+					let seenChildren = [];
+					this.filterHistory();
+					console.log(this.history);
+				}, (error) => {
+					this.history = [];
+				}),
+				this.storage.get('username').then((val) => {
+					this.login.username = val;
+				}, (error) => {
+					this.login.username = '';
+				}),
+				this.storage.get('password').then((val) => {
+					this.login.password = val;
+				}, (error) => {
+					this.login.password = '';
+				}),
+				this.storage.get('staging').then((val) => {
+					if (val) {
+						this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+					} else {
+						this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+					}
+				}, (error) => {
+					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+				})
+			]).then(() => {
+			});
+		}
+
 	getChild() {
-		this.error = '';
-		this.loginError = false;
-		this.notLoggedIn = false;
-		let self = this;
-		if (this.number.length === 3) {
+			this.error = '';
+			this.loginError = false;
+			this.notLoggedIn = false;
+			let self = this;
+			if(this.number.length === 3) {
 			this.loading = true;
 			var wp = this.getWpApi('search');
 			wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
 				console.log(result);
 				if (result.code === 200) {
 					self.error = '';
+
+					if (result.tickets.length === 0) {
+						self.error = 'Geen resultaten';
+						self.loading = false;
+						return;
+					}
 					result.tickets = result.tickets.filter(function (a) {
 						if ((a.meta.wristband || [])[0] !== self.number) {
 							return false;
 						}
 						return true;
 					});
+					let t = result.tickets[0];
+					let m = t.meta;
+					self.history.unshift({
+						name: m.WooCommerceEventsAttendeeName[0] + " " + m.WooCommerceEventsAttendeeLastName[0],
+						wristband: m.wristband,
+						hutnr: m.hutnr,
+						wijk: self.getColor(m.hutnr)
+					});
+					this.filterHistory();
+					self.storage.set("presHistory", self.history);
 					console.log(result.tickets);
 					self.tickets = result.tickets;
-					if (self.tickets.length === 0) {
-						self.error = 'Geen resultaten';
-					}
 					self.loading = false;
 				} else {
 					if (result.message == 'access denied') {
@@ -163,6 +195,33 @@ export class PresencePage {
 			this.loading = false;
 			this.tickets = [];
 		}
+	}
+
+	getColor(w) {
+		let res = 'black';
+		console.log((w + "")[0])
+		switch ((w + "")[0]) {
+			case '0':
+				console.log("wat1");
+				res = '#ffc800';
+				break;
+			case '1':
+				console.log("wat2");
+				res = '#f44336';
+				break;
+			case '2':
+				console.log("wat3");
+				res = '#2196F3';
+				break;
+			case '3':
+				console.log("wat4");
+				res = '#9ae263';
+				break;
+			default:
+				console.log("wat5");
+				res = 'black';
+		}
+		return res;
 	}
 
 	makeAbsent() {
