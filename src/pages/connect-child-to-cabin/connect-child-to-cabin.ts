@@ -247,7 +247,7 @@ export class ConnectChildToCabinPage {
 		this.closeAddModal();
 		if (this.autoPresence && new Date().getDay() == 0) {
 			var wp = this.getWpApi('presence');
-			wp.handler().param('wristband', child.wristBandNr).param('day', "tue").param("presence", true).then((result) => {
+			wp.handler().param('wristband', child.meta.wristband).param('day', "tue").param("presence", true).then((result) => {
 				console.log("kind aanwezig gemeld vandaag");
 			}).catch((error) => {
 				self.error = error.message;
