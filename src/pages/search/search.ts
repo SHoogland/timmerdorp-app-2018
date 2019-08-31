@@ -83,7 +83,6 @@ export class SearchPage {
 		Promise.all([
 			this.storage.get('searchChildHistory').then((val) => {
 				this.history = val || [];
-				let seenChildren = [];
 				this.filterHistory();
 				console.log(this.history);
 			}, (error) => {

@@ -156,7 +156,6 @@ export class ChangeWristbandPage {
 		Promise.all([
 			this.storage.get('editHistory').then((val) => {
 				this.history = val || [];
-				let seenChildren = [];
 				console.log(this.history);
 			}, (error) => {
 				this.history = [];

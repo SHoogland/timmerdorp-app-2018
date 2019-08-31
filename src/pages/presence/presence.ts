@@ -109,7 +109,6 @@ export class PresencePage {
 			Promise.all([
 				this.storage.get('presHistory').then((val) => {
 					this.history = val || [];
-					let seenChildren = [];
 					this.filterHistory();
 					console.log(this.history);
 				}, (error) => {
