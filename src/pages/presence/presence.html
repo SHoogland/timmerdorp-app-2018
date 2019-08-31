@@ -42,22 +42,34 @@
 	</div>
 	<div *ngIf='(tickets[0]||{}).meta' style='margin-top: -50px;'>
 		<h1 style='text-align:center;'>Kind #{{number}}</h1>
-		<p><b>Naam: </b>{{tickets[0].meta.WooCommerceEventsAttendeeName[0]}}
-			{{ tickets[0].meta.WooCommerceEventsAttendeeLastName[0] }}</p>
-		<p><b>Polsbandnummer:</b>{{ tickets[0].meta.wristband || '-' }}</p>
-		<p><b>Aanwezig {{getDayName(day).toLowerCase()}}:
-			</b>{{tickets[0].meta["present_" + day] && ("" + tickets[0].meta["present_" + day]).length > 0?"Ja":"Nee"}}
-		</p>
-		<div style='display: inline-block' *ngIf='tickets[0].meta.hutnr && tickets[0].meta.hutnr[0]'> <b>Hutnummer</b>:
-			<span *ngIf="tickets[0].meta.hutnr[0][0] === '0'"
-				style="background-color:yellow;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
-			<span *ngIf="tickets[0].meta.hutnr[0][0] === '1'"
-				style="background-color:red;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
-			<span *ngIf="tickets[0].meta.hutnr[0][0] === '2'"
-				style="background-color:blue;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
-			<span *ngIf="tickets[0].meta.hutnr[0][0] === '3'"
-				style="background-color:green;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
-		</div>
+		<table>
+			<tr>
+				<td>Naam: </td>
+				<td>{{tickets[0].meta.WooCommerceEventsAttendeeName[0]}}
+					{{ tickets[0].meta.WooCommerceEventsAttendeeLastName[0] }}</td>
+			</tr>
+			<tr>
+				<td>Polsbandnummer: </td>
+				<td>{{tickets[0].meta.wristband}}</td>
+			</tr>
+			<tr>
+				<td>Hutnummer: </td>
+				<td><span *ngIf="tickets[0].meta.hutnr[0][0] === '0'"
+						style="background-color:yellow;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+					<span *ngIf="tickets[0].meta.hutnr[0][0] === '1'"
+						style="background-color:red;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+					<span *ngIf="tickets[0].meta.hutnr[0][0] === '2'"
+						style="background-color:blue;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+					<span *ngIf="tickets[0].meta.hutnr[0][0] === '3'"
+						style="background-color:green;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Aanwezig {{getDayName(day).toLowerCase()}}: </td>
+				<td>{{tickets[0].meta["present_" + day] && ("" + tickets[0].meta["present_" + day]).length > 0?"Ja":"Nee"}}
+				</td>
+			</tr>
+		</table>
 	</div>
 
 	<div *ngIf='!(tickets[0]||{}).meta && history && history.length > 0'>
@@ -75,7 +87,9 @@
 						<h3>{{h.wristband}}</h3>
 						<p>Hutnummer: {{h.hutnr}}</p>
 					</div>
-					<ion-button size="small" (click)='number=""+h.wristband;getChild()' style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>Zoeken</ion-button>
+					<ion-button size="small" (click)='number=""+h.wristband;getChild()'
+						style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
+						Zoeken</ion-button>
 				</ion-label>
 
 			</ion-item>
