@@ -72,7 +72,7 @@
 		</table>
 	</div>
 
-	<div *ngIf='!(tickets[0]||{}).meta && history && history.length > 0'>
+	<div *ngIf='!(tickets[0]||{}).meta && history && history.length > 0 && !loading'>
 		<ion-list>
 			<ion-list-header>
 				Zoekgeschiedenis

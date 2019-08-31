@@ -23,6 +23,7 @@ export class ConnectChildToCabinPage {
 	hutNr: string;
 	searchTerm: string;
 	error: string;
+	selectedChild: any;
 	loginError: boolean;
 	notLoggedIn: boolean;
 	searchError: string;
@@ -31,7 +32,12 @@ export class ConnectChildToCabinPage {
 	tickets: Array<any>;
 	hutTickets: Array<any>;
 	autoPresence: boolean;
+	removeChild: any;
+	searched: boolean;
 	addModal: {
+		show: boolean;
+	}
+	warningModal: {
 		show: boolean;
 	}
 	removeModal: {
@@ -41,7 +47,6 @@ export class ConnectChildToCabinPage {
 		username: string,
 		password: string
 	};
-	removeChild: any;
 
 	constructor(
 		public navCtrl: NavController,
@@ -69,11 +74,15 @@ export class ConnectChildToCabinPage {
 		this.addModal = {
 			show: false
 		}
+		this.warningModal = {
+			show: false
+		}
 		this.removeModal = {
 			show: false
 		}
 		this.tickets = [];
 		this.hutTickets = [];
+		this.searched = false;
 
 		//ik heb oprecht geen idee waarom dit werkt,
 		//maar zonder deze drie regels hieronder werkt
@@ -97,8 +106,6 @@ export class ConnectChildToCabinPage {
 	}
 
 	ionViewDidLoad() {
-		// let self = this;
-
 		this.init();
 
 		Promise.all([
@@ -126,6 +133,7 @@ export class ConnectChildToCabinPage {
 	}
 
 	search() {
+		this.searched = false;
 		this.hutTickets = [];
 		if (this.hutNr.length === 3) {
 			try {
@@ -140,19 +148,21 @@ export class ConnectChildToCabinPage {
 	}
 
 	searchHut() {
+		console.log('searching: ' + this.hutNr);
 		this.loginError = false;
 		this.notLoggedIn = false;
+		this.loading = true;
+		this.error = '';
+		this.cd.detectChanges();
 		let self = this;
-		self.error = '';
-		self.loading = true;
-		console.log('searching: ' + this.hutNr);
 		var wp = this.getWpApi('hut');
 		wp.handler().param('hutnr', this.hutNr).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
 				self.hutTickets = result.tickets;
 				self.loading = false;
-				self.cd.detectChanges()
+				self.cd.detectChanges();
+				self.searched = true;
 			} else {
 				if (result.message == 'access denied') {
 					this.notLoggedIn = true;
@@ -170,7 +180,7 @@ export class ConnectChildToCabinPage {
 			self.loading = false;
 		});
 	}
-	
+
 	searchChild() {
 		try {
 			clearTimeout(this.typingTimer);
@@ -181,7 +191,7 @@ export class ConnectChildToCabinPage {
 			console.log(e);
 		}
 	}
-	
+
 	searchThisChild() {
 		let self = this;
 		self.tickets = [];
@@ -215,13 +225,26 @@ export class ConnectChildToCabinPage {
 			self.loading = false;
 		});
 	}
-	
+
 	toLogin() {
 		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
 	}
 
 	addChildToHut(child) {
+		this.selectedChild = child;
+		console.log(child.meta.hutnr);
+		if (child.meta.hutnr) {
+			this.showWarningModal();
+		} else {
+			this.reallyAddChildNow();
+		}
+	}
+
+	reallyAddChildNow() {
+		let child = this.selectedChild;
 		let self = this;
+		this.closeWarningModal();
+		this.closeAddModal();
 		if (this.autoPresence && new Date().getDay() == 0) {
 			var wp = this.getWpApi('presence');
 			wp.handler().param('wristband', child.wristBandNr).param('day', "tue").param("presence", true).then((result) => {
@@ -285,8 +308,9 @@ export class ConnectChildToCabinPage {
 		this.searchTerm = '';
 		document.querySelector('#myModal').classList.add('high');
 	}
-
+	
 	closeAddModal() {
+		console.log("what?");
 		let self = this;
 		this.addModal.show = false;
 		setTimeout(function () {
@@ -306,6 +330,19 @@ export class ConnectChildToCabinPage {
 		this.removeModal.show = false;
 		setTimeout(function () {
 			document.querySelector('#removeModal').classList.remove('high');
+		}, 400);
+	}
+	
+	showWarningModal() {
+		this.warningModal.show = true;
+		this.searchTerm = '';
+		document.querySelector('#warningModal').classList.add('high');
+	}
+	
+	closeWarningModal() {
+		this.warningModal.show = false;
+		setTimeout(function () {
+			document.querySelector('#warningModal').classList.remove('high');
 		}, 400);
 	}
 

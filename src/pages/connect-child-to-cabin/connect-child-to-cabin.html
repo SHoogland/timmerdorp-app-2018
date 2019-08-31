@@ -21,7 +21,7 @@
 		<div class="user-info">
 			<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
 				{{error}}
-			</span>
+			</span> 
 			<span *ngIf="loginError" style="color:red;font-weight:bold">
 				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
 			</span>
@@ -33,6 +33,7 @@
 					<ion-spinner color='primary'></ion-spinner>
 				</div>
 			</div>
+			<p style='color: red;font-weight:bold;' *ngIf="searched && hutTickets && !hutTickets.length && !notLoggedIn && hutNr && hutNr.length === 3">Nog geen kindertjes in dit hutje :(</p>
 		</div>
 		<div *ngFor="let child of hutTickets">
 			<button ion-button full class="bg-grey color-mediumBlack" (click)="removeChild = child; showRemoveModal();">
@@ -72,7 +73,7 @@
 		</div>
 
 		<div *ngFor="let child of tickets">
-			<button ion-button full (click)="addChildToHut(child);closeAddModal()" class="bg-grey color-mediumBlack">
+			<button ion-button full (click)="addChildToHut(child);" class="bg-grey color-mediumBlack">
 				{{ child.meta.WooCommerceEventsAttendeeName[0] }}
 				{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
 					'-' }})&nbsp;{{(child.meta.hutnr||[])[0]?"&mdash;&nbsp;":''}}
@@ -99,9 +100,23 @@
 	(click)="$event.target.id==='removeModal'?closeRemoveModal():''" class="conditional modal stanModal">
 	<div class="modal-content">
 		<span class="close" (click)="closeRemoveModal()">&times;</span>
-		<h1 *ngIf="removeChild">Weet je zeker dat je {{ removeChild.meta.WooCommerceEventsAttendeeName[0] }}
-			wilt verwijderen?</h1>
+		<h1>Waarschuwing!</h1>
+		<p *ngIf="removeChild">Weet je zeker dat je {{ removeChild.meta.WooCommerceEventsAttendeeName[0] }}
+			wilt verwijderen?</p>
 		<button ion-button full (click)="removeChildFromHut(removeChild)" class="bg-green correction">Ja</button>
 		<button ion-button full (click)="closeRemoveModal()" class="bg-red correction">Nee</button>
+	</div>
+</div>
+
+<div [ngClass]="{'shown': warningModal.show}" id="warningModal"
+	(click)="$event.target.id==='warningModal'?closeWarningModal():''" class="conditional modal stanModal">
+	<div class="modal-content">
+		<span class="close" (click)="closeWarningModal()">&times;</span>
+		<h1>Waarschuwing!</h1>
+		<p *ngIf="selectedChild">{{ selectedChild.meta.WooCommerceEventsAttendeeName[0] }} heeft al een hutje! Weet je
+			zeker dat je
+			hem/haar wilt overplaatsen van hutje {{selectedChild.meta.hutnr}} naar hutje {{hutNr}}?</p>
+		<button ion-button full (click)="reallyAddChildNow()" class="bg-green correction">Ja</button>
+		<button ion-button full (click)="closeWarningModal()" class="bg-red correction">Nee</button>
 	</div>
 </div>
