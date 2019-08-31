@@ -113,23 +113,18 @@ export class ChangeWristbandPage {
 		console.log((w + "")[0])
 		switch ((w + "")[0]) {
 			case '0':
-				console.log("wat1");
 				res = '#ffc800';
 				break;
 			case '1':
-				console.log("wat2");
 				res = '#f44336';
 				break;
 			case '2':
-				console.log("wat3");
 				res = '#2196F3';
 				break;
 			case '3':
-				console.log("wat4");
 				res = '#9ae263';
 				break;
 			default:
-				console.log("wat5");
 				res = 'black';
 		}
 		return res;

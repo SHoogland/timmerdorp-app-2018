@@ -18,22 +18,30 @@ import { HomePage } from '../home/home';
 	templateUrl: 'connect-child-to-cabin.html',
 })
 export class ConnectChildToCabinPage {
-	typingTimer: any;
-	isTue: boolean;//if it's tuesday, show the auto-presence toggle
-	hutNr: string;
-	searchTerm: string;
-	error: string;
-	selectedChild: any;
-	loginError: boolean;
-	notLoggedIn: boolean;
 	searchError: string;
+	searchTerm: string;
 	endpoint: string;
-	loading: boolean;
-	tickets: Array<any>;
+	hutNr: string;
+	error: string;
+
+	selectedChild: any;
+	removedChild: any;
+	typingTimer: any;
+	nieuwHutje: any;
+	tempHutNr: any;
+	history: any;
+
 	hutTickets: Array<any>;
+	tickets: Array<any>;
+
 	autoPresence: boolean;
-	removeChild: any;
+	notLoggedIn: boolean;
+	loginError: boolean;
+	isUndoing: boolean;
 	searched: boolean;
+	loading: boolean;
+	isTue: boolean; //if it's tuesday, show the auto-presence toggle
+
 	addModal: {
 		show: boolean;
 	}
@@ -64,25 +72,30 @@ export class ConnectChildToCabinPage {
 			username: '',
 			password: ''
 		}
-		this.autoPresence = true;
-		this.loginError = false;
-		this.notLoggedIn = false;
-		this.loading = false;
-		this.error = '';
 		this.isTue = new Date().getDay() == 2;
+
+		this.autoPresence = true;
+		this.notLoggedIn = false;
+		this.loginError = false;
+		this.isUndoing = false;
+		this.searched = false;
+		this.loading = false;
+
 		this.searchError = '';
-		this.addModal = {
-			show: false
-		}
+		this.error = '';
+
 		this.warningModal = {
 			show: false
 		}
 		this.removeModal = {
 			show: false
 		}
-		this.tickets = [];
+		this.addModal = {
+			show: false
+		}
+
 		this.hutTickets = [];
-		this.searched = false;
+		this.tickets = [];
 
 		//ik heb oprecht geen idee waarom dit werkt,
 		//maar zonder deze drie regels hieronder werkt
@@ -109,6 +122,12 @@ export class ConnectChildToCabinPage {
 		this.init();
 
 		Promise.all([
+			this.storage.get('cabinAddHistory').then((val) => {
+				this.history = val || [];
+				console.log(this.history);
+			}, (error) => {
+				this.history = [];
+			}),
 			this.storage.get('username').then((val) => {
 				this.login.username = val;
 			}, (error) => {
@@ -135,7 +154,7 @@ export class ConnectChildToCabinPage {
 	search() {
 		this.searched = false;
 		this.hutTickets = [];
-		if (this.hutNr.length === 3) {
+		if (this.hutNr && this.hutNr.length === 3) {
 			try {
 				clearTimeout(this.typingTimer);
 				this.typingTimer = setTimeout(() => {
@@ -232,8 +251,7 @@ export class ConnectChildToCabinPage {
 
 	addChildToHut(child) {
 		this.selectedChild = child;
-		console.log(child.meta.hutnr);
-		if (child.meta.hutnr) {
+		if ((child.meta.hutnr || [])[0]) {
 			this.showWarningModal();
 		} else {
 			this.reallyAddChildNow();
@@ -242,29 +260,59 @@ export class ConnectChildToCabinPage {
 
 	reallyAddChildNow() {
 		let child = this.selectedChild;
+		console.log(child);
 		let self = this;
+		this.loading = true;
+		this.nieuwHutje = this.hutNr;
+		if (this.tempHutNr) this.nieuwHutje = this.tempHutNr;
+		this.nieuwHutje = typeof this.nieuwHutje === 'object' ? this.nieuwHutje[0] : this.nieuwHutje;
 		this.closeWarningModal();
 		this.closeAddModal();
-		if (this.autoPresence && new Date().getDay() == 0) {
+		if (this.autoPresence && !this.isUndoing && new Date().getDay() == 2) {
+			this.isUndoing = false;
+			this.tempHutNr = null;
 			var wp = this.getWpApi('presence');
 			wp.handler().param('wristband', child.meta.wristband).param('day', "tue").param("presence", true).then((result) => {
 				console.log("kind aanwezig gemeld vandaag");
+				this.addChildPart2(child);
 			}).catch((error) => {
 				self.error = error.message;
 				self.loading = false;
 				console.log(error);
 				console.log("at least we tried");
+				this.addChildPart2(child);
 			});
 		} else {
 			this.addChildPart2(child);
 		}
 	}
 
+
 	addChildPart2(child) {
 		let self = this;
 		var wp = this.getWpApi('hut-add');
-		wp.handler().param('hutnr', this.hutNr).param('wristband', child.meta.wristband).then((result) => {
+		console.log(this.nieuwHutje);
+		if(!this.nieuwHutje) {
+			this.removeChildFromHut(child);
+			return;
+		}
+		wp.handler().param('hutnr', this.nieuwHutje).param('wristband', child.meta.wristband).then((result) => {
 			console.log(result);
+			let t = self.selectedChild;
+			let m = t.meta;
+			self.history.unshift({
+				name: m.WooCommerceEventsAttendeeName[0] + " " + m.WooCommerceEventsAttendeeLastName[0],
+				wristband: m.wristband,
+				oldNr: m.hutnr,
+				hutnr: self.nieuwHutje,
+				wijk: self.getColor(self.nieuwHutje),
+				ticket: self.updateT(t)
+			});
+
+
+
+			self.storage.set("cabinAddHistory", self.history);
+
 			if (result.code === 200) {
 				setTimeout(function () {
 					self.search();
@@ -280,17 +328,66 @@ export class ConnectChildToCabinPage {
 		});
 	}
 
+	updateT(ticket) {
+		ticket.meta.hutnr = ["" + this.nieuwHutje];
+		return ticket;
+	}
+
+	getColor(w) {
+		let res = 'black';
+		switch ((w + "")[0]) {
+			case '0':
+				res = '#ffc800';
+				break;
+			case '1':
+				res = '#f44336';
+				break;
+			case '2':
+				res = '#2196F3';
+				break;
+			case '3':
+				res = '#9ae263';
+				break;
+			default:
+				res = 'black';
+		}
+		return res;
+	}
+
+	updateT2(t) {
+		t.meta.hutnr = [""];
+		return t;
+	}
+
+
 	removeChildFromHut(child) {
 		let self = this;
 		var wp = this.getWpApi('hut-remove');
-		wp.handler().param('hutnr', this.hutNr).param('wristband', child.meta.wristband).then((result) => {
+		this.removedChild = child;
+		wp.handler().param('hutnr', child.meta.hutnr).param('wristband', child.meta.wristband).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
-				this.closeRemoveModal();
+				self.closeRemoveModal();
+				let t = self.removedChild;
+				let m = t.meta;
+
+				let newItem = {
+					name: m.WooCommerceEventsAttendeeName[0] + " " + m.WooCommerceEventsAttendeeLastName[0],
+					wristband: m.wristband,
+					oldNr: m.hutnr,
+					ticket: self.updateT2(t),
+					removal: true
+				};
+				self.history.unshift(newItem);
+
+
+				self.storage.set("cabinAddHistory", self.history);
+
 				setTimeout(function () {
 					self.search();
 				}, 250);
 				self.loading = false;
+				self.removedChild = null;
 			} else {
 				self.error = result.message;
 				self.loading = false;
@@ -308,9 +405,8 @@ export class ConnectChildToCabinPage {
 		this.searchTerm = '';
 		document.querySelector('#myModal').classList.add('high');
 	}
-	
+
 	closeAddModal() {
-		console.log("what?");
 		let self = this;
 		this.addModal.show = false;
 		setTimeout(function () {
@@ -332,13 +428,13 @@ export class ConnectChildToCabinPage {
 			document.querySelector('#removeModal').classList.remove('high');
 		}, 400);
 	}
-	
+
 	showWarningModal() {
 		this.warningModal.show = true;
 		this.searchTerm = '';
 		document.querySelector('#warningModal').classList.add('high');
 	}
-	
+
 	closeWarningModal() {
 		this.warningModal.show = false;
 		setTimeout(function () {

@@ -16,12 +16,45 @@
 				maxlength="3"></ion-input>
 		</ion-item>
 	</div>
-	<div class="bracelet-number">
+
+	<div *ngIf='!(hutNr && hutNr.length === 3) && history && history.length > 0 && !loading'>
+		<ion-list>
+			<ion-list-header>
+				Wijzigingsgeschiedenis
+			</ion-list-header>
+
+			<ion-item *ngFor="let h of history">
+				<ion-label>
+					<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
+						[ngStyle]='{"color": h.wijk}'></ion-icon>
+					<div style='position:relative; left: 80px;' *ngIf="!h.removal">
+						<h2>{{h.name}}</h2>
+						<h3>Polsbandje: {{h.wristband}}</h3>
+						<p>Oud hutnummer: {{h.oldNr||"-"}}</p>
+						<p>Nieuw hutnummer: {{h.hutnr}}</p>
+					</div>
+					<div style='position:relative; left: 80px;' *ngIf="h.removal">
+						<h2><b>Verwijderd uit hutje: </b>{{h.name}}</h2>
+						<h3>Polsbandje: {{h.wristband}}</h3>
+						<p>Oud hutnummer: {{h.oldNr||"-"}}</p>
+						<p>Nieuw hutnummer: -</p>
+					</div>
+					<ion-button size="small"
+						(click)='tempHutNr=h.oldNr;isUndoing=true;selectedChild = h.ticket;reallyAddChildNow()'
+						style='background: #F44336;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
+						Ongedaan maken</ion-button>
+				</ion-label>
+
+			</ion-item>
+		</ion-list>
+	</div>
+
+	<div class="bracelet-number conditional" [ngClass]='hutNr && hutNr.length === 3 ? "shown":""'>
 		<h1>Kinderen in hut{{hutNr?' ' + hutNr:''}}:</h1>
 		<div class="user-info">
 			<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
 				{{error}}
-			</span> 
+			</span>
 			<span *ngIf="loginError" style="color:red;font-weight:bold">
 				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
 			</span>
@@ -33,7 +66,9 @@
 					<ion-spinner color='primary'></ion-spinner>
 				</div>
 			</div>
-			<p style='color: red;font-weight:bold;' *ngIf="searched && hutTickets && !hutTickets.length && !notLoggedIn && hutNr && hutNr.length === 3">Nog geen kindertjes in dit hutje :(</p>
+			<p style='color: red;font-weight:bold;'
+				*ngIf="searched && hutTickets && !hutTickets.length && !notLoggedIn && hutNr && hutNr.length === 3">Nog
+				geen kindertjes in dit hutje :(</p>
 		</div>
 		<div *ngFor="let child of hutTickets">
 			<button ion-button full class="bg-grey color-mediumBlack" (click)="removeChild = child; showRemoveModal();">
@@ -41,8 +76,7 @@
 				'-' }})
 			</button>
 		</div>
-		<button ion-button full (click)="showAddModal()" [ngClass]='hutNr && hutNr.length === 3 ? "shown":""'
-			class="conditional bg-blue correction">
+		<button ion-button full (click)="showAddModal()" class="bg-blue correction">
 			<ion-icon slot='start' name='add' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
 			Kind toevoegen
 		</button>
