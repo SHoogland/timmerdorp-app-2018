@@ -148,6 +148,21 @@ export class ScanTicketPage {
 			.then((result) => {
 				console.log(result);
 				if (result.code === 200) {
+					self.storage.get('editHistory').then((val) => {
+						let editHis = val || [];
+						let t = self.ticket;
+						editHis.unshift({
+							name: t.firstName + " " + t.lastName,
+							oldNr: "onbekend",
+							newNr: t.wristBandNr,
+							wijk: "#222"
+						});
+						console.log(editHis);
+
+						self.storage.set("editHistory", editHis);
+
+					});
+
 					self.goHome();
 				} else {
 					self.error = result.message;
