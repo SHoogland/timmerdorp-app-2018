@@ -17,35 +17,35 @@
 		</ion-item>
 	</div>
 
-	<div *ngIf='!(hutNr && hutNr.length === 3) && history && history.length > 0 && !loading'>
+	<div *ngIf='!(hutNr && hutNr.length === 3) && history && history.length > 0 && (!loading || isUndoing)'>
 		<ion-list>
 			<ion-list-header>
 				Wijzigingsgeschiedenis
 			</ion-list-header>
 
-			<ion-item *ngFor="let h of history">
-				<ion-label>
-					<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
-						[ngStyle]='{"color": h.wijk}'></ion-icon>
-					<div style='position:relative; left: 80px;' *ngIf="!h.removal">
-						<h2>{{h.name}}</h2>
-						<h3>Polsbandje: {{h.wristband}}</h3>
-						<p>Oud hutnummer: {{h.oldNr||"-"}}</p>
-						<p>Nieuw hutnummer: {{h.hutnr}}</p>
-					</div>
-					<div style='position:relative; left: 80px;' *ngIf="h.removal">
-						<h2><b>Verwijderd uit hutje: </b>{{h.name}}</h2>
-						<h3>Polsbandje: {{h.wristband}}</h3>
-						<p>Oud hutnummer: {{h.oldNr||"-"}}</p>
-						<p>Nieuw hutnummer: -</p>
-					</div>
-					<ion-button size="small"
-						(click)='tempHutNr=h.oldNr;isUndoing=true;selectedChild = h.ticket;reallyAddChildNow()'
-						style='background: #F44336;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
-						Ongedaan maken</ion-button>
-				</ion-label>
-
-			</ion-item>
+			<div *ngFor="let h of history; let i = index">
+				<ion-item [ngClass]="giveAccent&&!i?'accent':''">
+					<ion-label>
+						<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
+							[ngStyle]='{"color": h.wijk}'></ion-icon>
+						<div style='position:relative; left: 80px;' *ngIf="!h.removal">
+							<h2>{{h.name}}</h2>
+							<h3>Polsbandje: {{h.wristband}}</h3>
+							<p>Oud hutnummer: {{((h.oldNr||[])[0])||"-"}}</p>
+							<p>Nieuw hutnummer: {{h.hutnr}}</p>
+						</div>
+						<div style='position:relative; left: 80px;' *ngIf="h.removal">
+							<h2><b>Verwijderd uit hutje: </b>{{h.name}}</h2>
+							<h3>Polsbandje: {{h.wristband}}</h3>
+							<p>Oud hutnummer: {{((h.oldNr||[])[0])||"-"}}</p>
+							<p>Nieuw hutnummer: -</p>
+						</div>
+						<ion-button size="small" class='undoButton' id='{{i}}'
+							(click)='tempHutNr=h.oldNr;isUndoing=true;selectedChild = h.ticket;reallyAddChildNow();undo(i);'>
+							{{undoingIsDone&&undoItem===i?"Ongedaan gemaakt!":"Ongedaan maken"}}</ion-button>
+					</ion-label>
+				</ion-item>
+			</div>
 		</ion-list>
 	</div>
 

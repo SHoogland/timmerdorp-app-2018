@@ -24,19 +24,23 @@ export class ConnectChildToCabinPage {
 	hutNr: string;
 	error: string;
 
+	undoingInterval: any;
 	selectedChild: any;
 	removedChild: any;
 	typingTimer: any;
 	nieuwHutje: any;
 	tempHutNr: any;
+	undoItem: any;
 	history: any;
 
 	hutTickets: Array<any>;
 	tickets: Array<any>;
 
+	undoingIsDone: boolean;
 	autoPresence: boolean;
 	notLoggedIn: boolean;
 	loginError: boolean;
+	giveAccent: boolean;
 	isUndoing: boolean;
 	searched: boolean;
 	loading: boolean;
@@ -75,8 +79,11 @@ export class ConnectChildToCabinPage {
 		this.isTue = new Date().getDay() == 2;
 
 		this.autoPresence = true;
+
+		this.undoingIsDone = false;
 		this.notLoggedIn = false;
 		this.loginError = false;
+		this.giveAccent = false;
 		this.isUndoing = false;
 		this.searched = false;
 		this.loading = false;
@@ -149,6 +156,27 @@ export class ConnectChildToCabinPage {
 			})
 		]).then(() => {
 		});
+	}
+
+	undo(i) {
+		this.undoItem = i + 1;
+		let self = this;
+		this.undoingInterval = setInterval(function () {
+			if (!self.loading) {
+				if(document.getElementById(self.undoItem)){
+					document.getElementById(self.undoItem).classList.add("done");
+				}
+				self.undoingIsDone = true;
+				clearInterval(self.undoingInterval);
+
+				setTimeout(function () {
+					self.undoingIsDone = false;
+					if(document.getElementById(self.undoItem)){
+						document.getElementById(self.undoItem).classList.remove("done");
+					}
+				}, 1500);
+			}
+		}, 200);
 	}
 
 	search() {
@@ -264,13 +292,20 @@ export class ConnectChildToCabinPage {
 		let self = this;
 		this.loading = true;
 		this.nieuwHutje = this.hutNr;
-		if (this.tempHutNr) this.nieuwHutje = this.tempHutNr;
+		console.log(this.nieuwHutje, this.tempHutNr);
+		console.log("A" + this.tempHutNr + "A")
+		console.log(typeof this.tempHutNr)
+		this.tempHutNr = typeof this.tempHutNr === 'object' && this.tempHutNr !== null ? this.tempHutNr[0] : this.tempHutNr;
+		console.log(this.nieuwHutje, this.tempHutNr);
+		if (typeof this.tempHutNr == 'string') this.nieuwHutje = this.tempHutNr;
+		console.log(this.nieuwHutje);
 		this.nieuwHutje = typeof this.nieuwHutje === 'object' ? this.nieuwHutje[0] : this.nieuwHutje;
 		this.closeWarningModal();
+		console.log(this.nieuwHutje);
 		this.closeAddModal();
+		this.isUndoing = false;
+		this.tempHutNr = null;
 		if (this.autoPresence && !this.isUndoing && new Date().getDay() == 2) {
-			this.isUndoing = false;
-			this.tempHutNr = null;
 			var wp = this.getWpApi('presence');
 			wp.handler().param('wristband', child.meta.wristband).param('day', "tue").param("presence", true).then((result) => {
 				console.log("kind aanwezig gemeld vandaag");
@@ -292,7 +327,7 @@ export class ConnectChildToCabinPage {
 		let self = this;
 		var wp = this.getWpApi('hut-add');
 		console.log(this.nieuwHutje);
-		if(!this.nieuwHutje) {
+		if (!this.nieuwHutje) {
 			this.removeChildFromHut(child);
 			return;
 		}
@@ -309,9 +344,13 @@ export class ConnectChildToCabinPage {
 				ticket: self.updateT(t)
 			});
 
-
-
 			self.storage.set("cabinAddHistory", self.history);
+
+			self.giveAccent = true;
+
+			setTimeout(function(){
+				self.giveAccent = false;
+			}, 1500);
 
 			if (result.code === 200) {
 				setTimeout(function () {

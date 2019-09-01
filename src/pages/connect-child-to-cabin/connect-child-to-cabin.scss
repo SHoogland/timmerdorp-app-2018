@@ -5,7 +5,25 @@ page-connect-child-to-cabin {
       margin-top: -8px;
     }
   }
-  .item-md{
-      background: #ffffff !important;
+  .item-md {
+    background: #ffffff !important;
+  }
+  .undoButton {
+    background: #f44336;
+    padding: 11px;
+    border-radius: 4px;
+    color: white;
+    right: 8px;
+    top: 15px;
+	position: absolute;
+	transition-duration: 400ms;
+  }
+
+  .undoButton.done{
+	  background: $green;
+  }
+
+  ion-item.accent{
+	  background: red;
   }
 }
