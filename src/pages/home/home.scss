@@ -63,7 +63,8 @@ page-home {
 
 
 ion-header {
-	height: 320px;
+	min-height: 320px;
+	height: calc(100vh - 6 * 80px);
 	z-index: 10;
 	background-position: center;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
