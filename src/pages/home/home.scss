@@ -67,8 +67,9 @@ ion-header {
 	height: calc(100vh - 6 * 80px);
 	z-index: 10;
 	background-position: center;
+	background-size: cover;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url(https://www.peterbijkerk.eu/wordpress/wp-content/uploads/2010/08/timmerdorpfik.jpg);
+      url(../assets/imgs/header_bg.jpg);
   }
 
   .nav-logo {
