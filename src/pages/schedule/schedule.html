@@ -1,14 +1,15 @@
-<ion-header>
-	<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
-	<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
-	<ion-navbar>
-		<ion-title>
-			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
-		</ion-title>
-	</ion-navbar>
-</ion-header>
-
 <ion-content padding>
-	<h1 id='title' style='text-align: center;'>Programma</h1>
-	<div [innerHTML]="schedule"></div>
+	<ion-header>
+		<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
+		<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+		<ion-navbar>
+			<ion-title>
+				<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+			</ion-title>
+		</ion-navbar>
+	</ion-header>
+	<div class='content'>
+		<h1 id='title' style='text-align: center;'>Programma</h1>
+		<div [innerHTML]="schedule"></div>
+	</div>
 </ion-content>

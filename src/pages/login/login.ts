@@ -136,7 +136,7 @@ export class LoginPage {
 	}
 
 	toHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "back" });
+		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: "back" });
 	}
 
 	getWpApi(route) {
@@ -178,7 +178,7 @@ export class LoginPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "back" });
+		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: "back" });
 	}
 
 	belStan() {

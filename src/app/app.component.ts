@@ -121,10 +121,10 @@ export class MyApp {
 	}
 
 	toLogin() {
-		this.nav.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
+		this.nav.setRoot(LoginPage, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
 	}
 
 	openPage(page) {
-		this.nav.setRoot(page.component, { animate: true, direction: 'forward' });
+		this.nav.setRoot(page.component, { animate:true,animation:"ios-transition", direction: 'forward' });
 	}
 }

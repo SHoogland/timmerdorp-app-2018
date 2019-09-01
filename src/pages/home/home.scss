@@ -1,3 +1,8 @@
+@font-face {
+	font-family: ProductSans;
+	src: url("../assets/fonts/ProductSans-Bold.woff");
+}
+
 page-home {
   .button-inner {
     display: block !important;
@@ -14,8 +19,8 @@ page-home {
   }
 
   button.small {
-    width: calc(20% - 8px);
-    margin-right: 8px;
+    width: 20%;
+    margin-right: 0px;
     display: inline-block;
     padding: 0 !important;
   }
@@ -28,5 +33,62 @@ page-home {
   }
   button.small:last-of-type {
     margin-right: 0px !important;
+  }
+
+  ion-header,
+  ion-content {
+    position: relative;
+  }
+
+  ion-content {
+    margin-top: 0px;
+  }
+
+  ion-content,
+  .scroll-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0px !important;
+  }
+
+  .homeButton {
+    border-radius: 0px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .homeButton.bg-blue:nth-of-type(2n+1){
+	  background: #1c8ae1;
+  }
+
+
+ion-header {
+	height: 320px;
+	z-index: 10;
+	background-position: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url(https://www.peterbijkerk.eu/wordpress/wp-content/uploads/2010/08/timmerdorpfik.jpg);
+  }
+
+  .nav-logo {
+    width: 140px;
+    height: 140px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 10px;
+    margin-left: auto;
+    position: relative;
+	top: 40px;
+    display: block;
+    margin-right: auto;
+  }
+
+  #ptitle {
+	font-family: ProductSans!important;
+	bottom: 10px!important;
+	top: unset!important;
+	width: calc(100% - 30px);
+	left: 15px!important;
+    font-size: 48px !important;
   }
 }

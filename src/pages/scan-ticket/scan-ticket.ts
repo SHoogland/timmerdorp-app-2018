@@ -167,10 +167,10 @@ export class ScanTicketPage {
 	}
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
+		this.navCtrl.setRoot(LoginPage, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "back" });
+		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: "back" });
 	}
 }

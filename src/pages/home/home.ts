@@ -207,7 +207,7 @@ export class HomePage {
 			if (this.openedPage.component == 'ticketscanner') {
 				this.scanCode();
 			} else {
-				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, direction: 'forward' });
+				this.navCtrl.setRoot(this.openedPage.component, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
 			}
 		} else {
 			this.showModal();
@@ -231,7 +231,7 @@ export class HomePage {
 		if (this.openedPage.component == 'ticketscanner') {
 			this.scanCode();
 		} else {
-			this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, direction: 'forward' });
+			this.navCtrl.setRoot(this.openedPage.component, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
 		}
 	}
 
@@ -262,29 +262,6 @@ export class HomePage {
 		} else {
 			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 420 });
 		}
-	}
-
-	switchEnv() {
-		const _this = this;
-		setTimeout(function () {
-			_this.clickedOnce = false;
-			_this.clickedTwice = false;
-		}, 1000)
-		if (this.clickedTwice) {
-			if (!this.staging) {
-				this.storage.set('staging', true);
-				this.staging = true;
-			} else {
-				this.storage.set('staging', false);
-				this.staging = false;
-			}
-			this.clickedOnce = false;
-			this.clickedTwice = false;
-		}
-		if (this.clickedOnce) {
-			this.clickedTwice = true;
-		}
-		this.clickedOnce = true;
 	}
 
 	goHome() {

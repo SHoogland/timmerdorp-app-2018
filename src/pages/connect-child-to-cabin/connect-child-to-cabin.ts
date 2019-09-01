@@ -274,7 +274,7 @@ export class ConnectChildToCabinPage {
 	}
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
+		this.navCtrl.setRoot(LoginPage, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
 	}
 
 	addChildToHut(child) {
@@ -292,13 +292,8 @@ export class ConnectChildToCabinPage {
 		let self = this;
 		this.loading = true;
 		this.nieuwHutje = this.hutNr;
-		console.log(this.nieuwHutje, this.tempHutNr);
-		console.log("A" + this.tempHutNr + "A")
-		console.log(typeof this.tempHutNr)
 		this.tempHutNr = typeof this.tempHutNr === 'object' && this.tempHutNr !== null ? this.tempHutNr[0] : this.tempHutNr;
-		console.log(this.nieuwHutje, this.tempHutNr);
 		if (typeof this.tempHutNr == 'string') this.nieuwHutje = this.tempHutNr;
-		console.log(this.nieuwHutje);
 		this.nieuwHutje = typeof this.nieuwHutje === 'object' ? this.nieuwHutje[0] : this.nieuwHutje;
 		this.closeWarningModal();
 		console.log(this.nieuwHutje);
@@ -482,6 +477,6 @@ export class ConnectChildToCabinPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'back' });
+		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: 'back' });
 	}
 }

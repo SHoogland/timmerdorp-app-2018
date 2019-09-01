@@ -69,6 +69,6 @@ export class FilesPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'back' });
+		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: 'back' });
 	}
 }

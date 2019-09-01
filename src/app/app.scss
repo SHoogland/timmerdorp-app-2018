@@ -31,9 +31,10 @@ button,
   font-family: Mikado-Bold;
 }
 
-.toolbar-background, .toolbar {
+.toolbar-background,
+.toolbar {
   background: #0572c8 !important;
-  border-bottom: none!important;
+  border-bottom: none !important;
 }
 
 h1 {
@@ -44,12 +45,6 @@ h1 {
   background: $yellow;
   &:hover {
     background: #dfa401 !important;
-  }
-}
-@media only screen and (max-width: 410px) {
-  #ptitle {
-    font-size: 19px !important;
-    margin-top: 29px !important;
   }
 }
 
@@ -92,6 +87,26 @@ h1 {
   text-align: center;
   left: 80px;
   color: white;
+}
+
+ion-header{
+	position: relative;
+}
+
+div.content{
+    padding: 10px!important;
+}
+
+@media only screen and (max-width: 410px) {
+  #ptitle {
+	font-size: 19px !important;
+	margin-top: 29px !important;
+  }
+}
+
+ion-content:not(.homeContent) > .scroll-content{
+	margin-top: 0px!important;
+	padding: 0px!important;
 }
 
 .bg-blue {
@@ -275,11 +290,10 @@ ion-toolbar {
   }
 }
 
-ion-spinner{
-    width: 48px;
-    height: 48px;
+ion-spinner {
+  width: 48px;
+  height: 48px;
 }
-
 
 .bracelet-number {
   padding-top: 20px;
@@ -300,8 +314,8 @@ ion-spinner{
   // height: 100%;
 }
 
-.item-inner{
-	box-shadow: none!important;
+.item-inner {
+  box-shadow: none !important;
 }
 
 .button-md,
@@ -344,8 +358,9 @@ input.text-input {
   }
 }
 
-html, body{
-	height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 // Modalbox
@@ -419,11 +434,12 @@ ion-item {
 ion-navbar .nav-logo {
   width: 75px !important;
 }
- 
-.toolbar-background.bg-darkred, button.bg-darkred {
+
+.toolbar-background.bg-darkred,
+button.bg-darkred {
   background: #b20606 !important;
-  &:hover{
-	  background: #9e0c0c!important;
+  &:hover {
+    background: #9e0c0c !important;
   }
 }
 
@@ -440,7 +456,6 @@ button {
   font-family: Roboto, Arial !important;
 }
 
-
-.scroll-content{
-	margin-top: 64px;
+.scroll-content {
+  margin-top: 64px;
 }

@@ -1,64 +1,66 @@
-<ion-header>
-	<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
-	<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
-	<ion-navbar>
-		<ion-title>
-			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
-		</ion-title>
-	</ion-navbar>
-</ion-header>
-
 <ion-content padding>
-	<h1 id='title'>App informatie</h1>
-	<table>
-		<tr>
-			<td>Versienummer:</td>
-			<td>{{version}}</td>
-		</tr>
-		<tr>
-			<td>Staging:</td>
-			<td>{{!!staging}}</td>
-		</tr>
-		<tr>
-			<td>Wijkkeuze:</td>
-			<td>{{getWijkName(wijk)}}</td>
-		</tr>
-	</table>
-	<br>
-	<p>Voor vragen over de app kun je terecht bij Stan van Baarsen uit wijk blauw of Stephan Hoogland uit wijk geel.</p>
-	<button ion-button full (click)="belStan()" class="bg-green">
-		<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
-		<span style='font-size: 18px;'>
-			Bel Stan
-		</span>
-</button>
-	<br>
-	<h1 id='title'>Updates</h1>
-
-	<div *ngFor='let u of updates'>
-		<h3 style='text-align: center;'>Versie: {{u.version}}</h3>
+	<ion-header>
+		<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
+		<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+		<ion-navbar>
+			<ion-title>
+				<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+			</ion-title>
+		</ion-navbar>
+	</ion-header>
+	<div class='content'>
+		<h1 id='title'>App informatie</h1>
 		<table>
 			<tr>
-				<td>Datum:</td>
-				<td>{{datum(u.date)}}</td>
+				<td>Versienummer:</td>
+				<td>{{version}}</td>
 			</tr>
 			<tr>
-				<td>Bijwerken verplicht:</td>
-				<td>{{u.editedPages.length > 0}}</td>
+				<td>Staging:</td>
+				<td>{{!!staging}}</td>
 			</tr>
 			<tr>
-				<td>Categorie wijzigingen:</td>
-				<td>{{u.changes}}</td>
-			</tr>
-			<tr>
-				<td>Nieuwste:</td>
-				<td>{{!!u.latest}}</td>
-			</tr>
-			<tr *ngIf="version && version != 'Desktop'">
-				<td>Nieuwer dan huidige versie:</td>
-				<td>{{compareVersions(u.version, version)}}</td>
+				<td>Wijkkeuze:</td>
+				<td>{{getWijkName(wijk)}}</td>
 			</tr>
 		</table>
 		<br>
+		<p>Voor vragen over de app kun je terecht bij Stan van Baarsen uit wijk blauw of Stephan Hoogland uit wijk geel.
+		</p>
+		<button ion-button full (click)="belStan()" class="bg-green">
+			<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
+			<span style='font-size: 18px;'>
+				Bel Stan
+			</span>
+		</button>
+		<br>
+		<h1 id='title'>Updates</h1>
+
+		<div *ngFor='let u of updates'>
+			<h3 style='text-align: center;'>Versie: {{u.version}}</h3>
+			<table>
+				<tr>
+					<td>Datum:</td>
+					<td>{{datum(u.date)}}</td>
+				</tr>
+				<tr>
+					<td>Bijwerken verplicht:</td>
+					<td>{{u.editedPages.length > 0}}</td>
+				</tr>
+				<tr>
+					<td>Categorie wijzigingen:</td>
+					<td>{{u.changes}}</td>
+				</tr>
+				<tr>
+					<td>Nieuwste:</td>
+					<td>{{!!u.latest}}</td>
+				</tr>
+				<tr *ngIf="version && version != 'Desktop'">
+					<td>Nieuwer dan huidige versie:</td>
+					<td>{{compareVersions(u.version, version)}}</td>
+				</tr>
+			</table>
+			<br>
+		</div>
 	</div>
 </ion-content>

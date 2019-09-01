@@ -1,99 +1,100 @@
-<ion-header>
-	<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
-	<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
-	<ion-navbar>
-		<ion-title>
-			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
-		</ion-title>
-	</ion-navbar>
-</ion-header>
-
 <ion-content padding>
-	<div class="container">
-		<div class="bracelet-number">
-			<h1>Aanwezigheid</h1>
-			<h3>Aanwezigheid registreren voor <u style='color: green;'>{{getDayName(day)}}</u></h3>
-			<ion-input id='numberInput' #nrInput type="tel" placeholder="Zoek op polsbandnummer" maxlength="3"
-				[(ngModel)]="number" (ngModelChange)="getChild($event)"></ion-input>
-			<button (click)='togglePresence()' id='sendButton' ion-button type="submit"
-				[ngClass]='greenBtn ? "bg-green" : "bg-blue"' block>
-				<ion-icon style='font-size: 1.5em;margin-right: 8px;' name="send"></ion-icon>
-				<span id='btnLabel'>
-					Opslaan
-				</span>
-			</button>
-		</div>
-	</div>
-	<div class="user-info">
-		<span *ngIf="error" style="color:red;font-weight:bold">
-			{{error}}<br>
-		</span>
-		<span *ngIf="loginError" style="color:red;font-weight:bold">
-			Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
-		</span>
-		<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
-			Je moet eerst <a (click)='toLogin()'>inloggen</a>!
-		</span>
-		<div style='height: 40px;'>
-			<div *ngIf="loading&&!notLoggedIn">
-				<ion-spinner color='primary'></ion-spinner>
+	<ion-header>
+		<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
+		<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+		<ion-navbar>
+			<ion-title>
+				<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+			</ion-title>
+		</ion-navbar>
+	</ion-header>
+	<div class='content'>
+		<div class="container">
+			<div class="bracelet-number">
+				<h1>Aanwezigheid</h1>
+				<h3>Aanwezigheid registreren voor <u style='color: green;'>{{getDayName(day)}}</u></h3>
+				<ion-input id='numberInput' #nrInput type="tel" placeholder="Zoek op polsbandnummer" maxlength="3"
+					[(ngModel)]="number" (ngModelChange)="getChild($event)"></ion-input>
+				<button (click)='togglePresence()' id='sendButton' ion-button type="submit"
+					[ngClass]='greenBtn ? "bg-green" : "bg-blue"' block>
+					<ion-icon style='font-size: 1.5em;margin-right: 8px;' name="send"></ion-icon>
+					<span id='btnLabel'>
+						Opslaan
+					</span>
+				</button>
 			</div>
 		</div>
-	</div>
-	<div *ngIf='(tickets[0]||{}).meta' style='margin-top: -50px;'>
-		<h1 style='text-align:center;'>Kind #{{number}}</h1>
-		<table>
-			<tr>
-				<td>Naam: </td>
-				<td>{{tickets[0].meta.WooCommerceEventsAttendeeName[0]}}
-					{{ tickets[0].meta.WooCommerceEventsAttendeeLastName[0] }}</td>
-			</tr>
-			<tr>
-				<td>Polsbandnummer: </td>
-				<td>{{tickets[0].meta.wristband}}</td>
-			</tr>
-			<tr>
-				<td>Hutnummer: </td>
-				<td><span *ngIf="tickets[0].meta.hutnr[0][0] === '0'"
-						style="background-color:yellow;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
-					<span *ngIf="tickets[0].meta.hutnr[0][0] === '1'"
-						style="background-color:red;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
-					<span *ngIf="tickets[0].meta.hutnr[0][0] === '2'"
-						style="background-color:blue;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
-					<span *ngIf="tickets[0].meta.hutnr[0][0] === '3'"
-						style="background-color:green;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
-				</td>
-			</tr>
-			<tr>
-				<td>Aanwezig {{getDayName(day).toLowerCase()}}: </td>
-				<td>{{tickets[0].meta["present_" + day] && ("" + tickets[0].meta["present_" + day]).length > 0?"Ja":"Nee"}}
-				</td>
-			</tr>
-		</table>
-	</div>
+		<div class="user-info">
+			<span *ngIf="error" style="color:red;font-weight:bold">
+				{{error}}<br>
+			</span>
+			<span *ngIf="loginError" style="color:red;font-weight:bold">
+				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+			</span>
+			<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+				Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+			</span>
+			<div style='height: 40px;'>
+				<div *ngIf="loading&&!notLoggedIn">
+					<ion-spinner color='primary'></ion-spinner>
+				</div>
+			</div>
+		</div>
+		<div *ngIf='(tickets[0]||{}).meta' style='margin-top: -50px;'>
+			<h1 style='text-align:center;'>Kind #{{number}}</h1>
+			<table>
+				<tr>
+					<td>Naam: </td>
+					<td>{{tickets[0].meta.WooCommerceEventsAttendeeName[0]}}
+						{{ tickets[0].meta.WooCommerceEventsAttendeeLastName[0] }}</td>
+				</tr>
+				<tr>
+					<td>Polsbandnummer: </td>
+					<td>{{tickets[0].meta.wristband}}</td>
+				</tr>
+				<tr>
+					<td>Hutnummer: </td>
+					<td><span *ngIf="tickets[0].meta.hutnr[0][0] === '0'"
+							style="background-color:yellow;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+						<span *ngIf="tickets[0].meta.hutnr[0][0] === '1'"
+							style="background-color:red;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+						<span *ngIf="tickets[0].meta.hutnr[0][0] === '2'"
+							style="background-color:blue;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+						<span *ngIf="tickets[0].meta.hutnr[0][0] === '3'"
+							style="background-color:green;color:white;padding: 0px 3px">{{tickets[0].meta.hutnr}}</span>
+					</td>
+				</tr>
+				<tr>
+					<td>Aanwezig {{getDayName(day).toLowerCase()}}: </td>
+					<td>{{tickets[0].meta["present_" + day] && ("" + tickets[0].meta["present_" + day]).length > 0?"Ja":"Nee"}}
+					</td>
+				</tr>
+			</table>
+		</div>
 
-	<div *ngIf='!(tickets[0]||{}).meta && history && history.length > 0 && !loading'>
-		<ion-list>
-			<ion-list-header>
-				Zoekgeschiedenis
-			</ion-list-header>
+		<div *ngIf='!(tickets[0]||{}).meta && history && history.length > 0 && !loading'>
+			<ion-list>
+				<ion-list-header>
+					Zoekgeschiedenis
+				</ion-list-header>
 
-			<ion-item *ngFor="let h of history">
-				<ion-label>
-					<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
-						[ngStyle]='{"color": h.wijk}'></ion-icon>
-					<div style='position:relative; left: 80px;'>
-						<h2>{{h.name}}</h2>
-						<h3>{{h.wristband}}</h3>
-						<p>Hutnummer: {{h.hutnr}}</p>
-					</div>
-					<ion-button size="small" (click)='number=""+h.wristband;getChild()'
-						style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
-						Zoeken</ion-button>
-				</ion-label>
+				<ion-item *ngFor="let h of history">
+					<ion-label>
+						<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
+							[ngStyle]='{"color": h.wijk}'></ion-icon>
+						<div style='position:relative; left: 80px;'>
+							<h2>{{h.name}}</h2>
+							<h3>{{h.wristband}}</h3>
+							<p>Hutnummer: {{h.hutnr}}</p>
+						</div>
+						<ion-button size="small" (click)='number=""+h.wristband;getChild()'
+							style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
+							Zoeken</ion-button>
+					</ion-label>
 
-			</ion-item>
-		</ion-list>
+				</ion-item>
+			</ion-list>
+		</div>
 	</div>
 </ion-content>
 <div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"

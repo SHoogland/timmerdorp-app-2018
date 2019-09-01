@@ -1,55 +1,57 @@
-<ion-header>
-	<h1 id="ptitle">Timmerdorp</h1>
-	<ion-navbar>
-		<ion-title>
-			<img src="assets/imgs/logo.png" class="nav-logo">
-		</ion-title>
-	</ion-navbar>
-</ion-header>
-
 <ion-content padding>
-	<h1 style='text-align: center; margin-top: 12px;'>Login</h1>
-	<form (ngSubmit)="loginNow()">
-		<ion-item>
-			<ion-input type="text" name="username" [(ngModel)]="login.username" placeholder="Gebruikersnaam">
-			</ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-input type="password" name="password" [(ngModel)]="login.password" placeholder="Wachtwoord">
-			</ion-input>
-		</ion-item>
-		<div style='height: 20px; font-size: 20px; padding-left: 8px; padding-top: 10px;'>
-			<div *ngIf="loading">
-				<b>Laden...</b>
+	<ion-header>
+		<h1 id="ptitle">Timmerdorp</h1>
+		<ion-navbar>
+			<ion-title>
+				<img src="assets/imgs/logo.png" class="nav-logo">
+			</ion-title>
+		</ion-navbar>
+	</ion-header>
+	<div class='content'>
+		<h1 style='text-align: center; margin-top: 12px;'>Login</h1>
+		<form (ngSubmit)="loginNow()">
+			<ion-item>
+				<ion-input type="text" name="username" [(ngModel)]="login.username" placeholder="Gebruikersnaam">
+				</ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-input type="password" name="password" [(ngModel)]="login.password" placeholder="Wachtwoord">
+				</ion-input>
+			</ion-item>
+			<div style='height: 20px; font-size: 20px; padding-left: 8px; padding-top: 10px;'>
+				<div *ngIf="loading">
+					<b>Laden...</b>
+				</div>
+				<div *ngIf="success">
+					<b style='color: green'>Ingelogd!</b>
+				</div>
+				<div *ngIf="usernameError">
+					<b style='color: red'>Verkeerde gebruikersnaam</b>
+				</div>
+				<div *ngIf="passwordError">
+					<b style='color: red'>Verkeerd wachtwoord</b>
+				</div>
 			</div>
-			<div *ngIf="success">
-				<b style='color: green'>Ingelogd!</b>
-			</div>
-			<div *ngIf="usernameError">
-				<b style='color: red'>Verkeerde gebruikersnaam</b>
-			</div>
-			<div *ngIf="passwordError">
-				<b style='color: red'>Verkeerd wachtwoord</b>
-			</div>
-		</div>
-		<button ion-button full type="submit" class='bg-green'>
-			<ion-icon slot='start' name='log-in' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
-			<span style='font-size:18px'>
-				Opslaan
+			<button ion-button full type="submit" class='bg-green'>
+				<ion-icon slot='start' name='log-in' style='margin-right:12px;position:relative;font-size:1.8em;'>
+				</ion-icon>
+				<span style='font-size:18px'>
+					Opslaan
+				</span>
+			</button>
+		</form>
+		<br><br>
+		<p>Neem contact op met Stan van Baarsen uit wijk blauw of Stephan Hoogand uit wijk geel voor het krijgen van de
+			inloggegevens.</p>
+		<button ion-button full type="submit" (click)="belStan()" class='bg-blue'>
+			<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
+			<span style='font-size: 18px;'>
+				Bel Stan
 			</span>
 		</button>
-	</form>
-	<br><br>
-	<p>Neem contact op met Stan van Baarsen uit wijk blauw of Stephan Hoogand uit wijk geel voor het krijgen van de
-		inloggegevens.</p>
-	<button ion-button full type="submit" (click)="belStan()" class='bg-blue'>
-		<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
-		<span style='font-size: 18px;'>
-			Bel Stan
-		</span>
-	</button>
-	<div id='stagingSwitch'>
-		<button ion-button style="background: #fafafa; color: #fafafa;" full (click)='switchEnv()'>hidden</button>
-		<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
+		<div id='stagingSwitch'>
+			<button ion-button style="background: #fafafa; color: #fafafa;" full (click)='switchEnv()'>hidden</button>
+			<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
+		</div>
 	</div>
 </ion-content>

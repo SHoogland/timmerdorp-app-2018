@@ -1,14 +1,14 @@
-<ion-header>
-	<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
-	<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
-	<ion-navbar>
-		<ion-title>
-			<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
-		</ion-title>
-	</ion-navbar>
-</ion-header>
-
 <ion-content padding>
+	<ion-header>
+		<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
+		<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+		<ion-navbar>
+			<ion-title>
+				<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+			</ion-title>
+		</ion-navbar>
+	</ion-header>
+	<div class='content'>
 	<h1 id='title' style='text-align: center;'>Bijlagen</h1>
 	<div style='column-count: 2;'>
 		<div *ngFor='let file of files'>
@@ -26,7 +26,8 @@
 	</div>
 
 	<h1 style='text-align: center;'>Fotoalbums {{photoYear}}</h1>
-	<ion-input #nrInput type="tel" placeholder="Foto-jaar" [(ngModel)]="photoYear" maxlength='4' style='margin-bottom: 20px;' (ngModelChange)="filterAlbums()"></ion-input>
+	<ion-input #nrInput type="tel" placeholder="Foto-jaar" [(ngModel)]="photoYear" maxlength='4'
+		style='margin-bottom: 20px;' (ngModelChange)="filterAlbums()"></ion-input>
 	<div>
 		<div *ngIf="loading" style='width: 100%; text-align: center;'>
 			<ion-spinner color='primary'></ion-spinner>
@@ -42,5 +43,6 @@
 				</ion-card-header>
 			</ion-card>
 		</div>
+	</div>
 	</div>
 </ion-content>
