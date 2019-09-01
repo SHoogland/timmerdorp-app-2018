@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Keyboard } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 
 import { Storage } from '@ionic/storage';
@@ -28,7 +28,8 @@ export class WijkPage {
 
 	constructor(
 		public navCtrl: NavController,
-		public storage: Storage
+		public storage: Storage,
+		public keyboard: Keyboard
 	) {
 		this.showSelection = false;
 		this.init();
@@ -110,13 +111,21 @@ export class WijkPage {
 		});
 	}
 
-	
+
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
+		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+	}
+
+	hideKeyboard() {
+		this.keyboard.close();
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: "back" });
+		this.hideKeyboard();
+		let self = this;
+		setTimeout(function () {
+			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+		}, 300);
 	}
 
 	kiesWijk(kleur) {

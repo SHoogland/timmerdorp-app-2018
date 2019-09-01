@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, NavParams } from 'ionic-angular';
+import { Platform, NavController, NavParams, Keyboard } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import * as WPAPI from 'wpapi';
 import { HomePage } from '../home/home';
@@ -36,7 +36,8 @@ export class ScanTicketPage {
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		public platform: Platform,
-		public storage: Storage
+		public storage: Storage,
+		public keyboard: Keyboard
 	) {
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
@@ -106,14 +107,14 @@ export class ScanTicketPage {
 			return wp.handler().param('barcode', this.navParams.get('barcode'));
 		}).then((result) => {
 			if (result.code === 200) {
-				self.ticket.barcode = (result.meta.WooCommerceEventsTicketID||[])[0];
-				self.ticket.firstName = (result.meta.WooCommerceEventsAttendeeName||[])[0];
-				self.ticket.lastName = (result.meta.WooCommerceEventsAttendeeLastName||[])[0];
-				self.ticket.birthDate = (result.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)']||[])[0];
+				self.ticket.barcode = (result.meta.WooCommerceEventsTicketID || [])[0];
+				self.ticket.firstName = (result.meta.WooCommerceEventsAttendeeName || [])[0];
+				self.ticket.lastName = (result.meta.WooCommerceEventsAttendeeLastName || [])[0];
+				self.ticket.birthDate = (result.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'] || [])[0];
 
 				if (result.meta.wristband) {
 					self.modal.showModal = true;
-					self.ticket.wristBandNr = (result.meta.wristband||[])[0];
+					self.ticket.wristBandNr = (result.meta.wristband || [])[0];
 					self.modal.text = 'Dit ticket heeft al een armband!';
 				}
 				self.loading = false;
@@ -153,7 +154,7 @@ export class ScanTicketPage {
 							console.log("Child presence update successful", result)
 							self.goHome();
 						});
-					}else{
+					} else {
 						self.goHome();
 					}
 				} else {
@@ -167,10 +168,18 @@ export class ScanTicketPage {
 	}
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
+		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+	}
+
+	hideKeyboard() {
+		this.keyboard.close();
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: "back" });
+		this.hideKeyboard();
+		let self = this;
+		setTimeout(function () {
+			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+		}, 300);
 	}
 }

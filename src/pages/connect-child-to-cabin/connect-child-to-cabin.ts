@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform, Keyboard } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
@@ -65,7 +65,8 @@ export class ConnectChildToCabinPage {
 		public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
+		public keyboard: Keyboard
 	) {
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
@@ -163,7 +164,7 @@ export class ConnectChildToCabinPage {
 		let self = this;
 		this.undoingInterval = setInterval(function () {
 			if (!self.loading) {
-				if(document.getElementById(self.undoItem)){
+				if (document.getElementById(self.undoItem)) {
 					document.getElementById(self.undoItem).classList.add("done");
 				}
 				self.undoingIsDone = true;
@@ -171,7 +172,7 @@ export class ConnectChildToCabinPage {
 
 				setTimeout(function () {
 					self.undoingIsDone = false;
-					if(document.getElementById(self.undoItem)){
+					if (document.getElementById(self.undoItem)) {
 						document.getElementById(self.undoItem).classList.remove("done");
 					}
 				}, 1500);
@@ -274,7 +275,7 @@ export class ConnectChildToCabinPage {
 	}
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
+		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 	}
 
 	addChildToHut(child) {
@@ -343,7 +344,7 @@ export class ConnectChildToCabinPage {
 
 			self.giveAccent = true;
 
-			setTimeout(function(){
+			setTimeout(function () {
 				self.giveAccent = false;
 			}, 1500);
 
@@ -476,7 +477,15 @@ export class ConnectChildToCabinPage {
 		}, 400);
 	}
 
+	hideKeyboard() {
+		this.keyboard.close();
+	}
+
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: 'back' });
+		this.hideKeyboard();
+		let self = this;
+		setTimeout(function () {
+			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+		}, 300);
 	}
 }

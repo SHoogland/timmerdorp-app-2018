@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { Platform, NavController, Keyboard } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
@@ -35,7 +35,8 @@ export class LoginPage {
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
+		public keyboard: Keyboard
 	) {
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
@@ -136,7 +137,7 @@ export class LoginPage {
 	}
 
 	toHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: "back" });
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 	}
 
 	getWpApi(route) {
@@ -177,8 +178,16 @@ export class LoginPage {
 		this.cd.detectChanges();
 	}
 
+	hideKeyboard() {
+		this.keyboard.close();
+	}
+
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: "back" });
+		this.hideKeyboard();
+		let self = this;
+		setTimeout(function () {
+			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+		}, 300);
 	}
 
 	belStan() {

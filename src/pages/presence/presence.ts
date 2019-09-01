@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { Platform, NavController, Keyboard } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
@@ -32,7 +32,8 @@ export class PresencePage {
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
+		public keyboard: Keyboard
 	) {
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
@@ -104,45 +105,45 @@ export class PresencePage {
 	}
 
 	ionViewDidLoad() {
-			this.init();
+		this.init();
 
-			Promise.all([
-				this.storage.get('presHistory').then((val) => {
-					this.history = val || [];
-					this.filterHistory();
-					console.log(this.history);
-				}, (error) => {
-					this.history = [];
-				}),
-				this.storage.get('username').then((val) => {
-					this.login.username = val;
-				}, (error) => {
-					this.login.username = '';
-				}),
-				this.storage.get('password').then((val) => {
-					this.login.password = val;
-				}, (error) => {
-					this.login.password = '';
-				}),
-				this.storage.get('staging').then((val) => {
-					if (val) {
-						this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-					} else {
-						this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-					}
-				}, (error) => {
+		Promise.all([
+			this.storage.get('presHistory').then((val) => {
+				this.history = val || [];
+				this.filterHistory();
+				console.log(this.history);
+			}, (error) => {
+				this.history = [];
+			}),
+			this.storage.get('username').then((val) => {
+				this.login.username = val;
+			}, (error) => {
+				this.login.username = '';
+			}),
+			this.storage.get('password').then((val) => {
+				this.login.password = val;
+			}, (error) => {
+				this.login.password = '';
+			}),
+			this.storage.get('staging').then((val) => {
+				if (val) {
+					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+				} else {
 					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-				})
-			]).then(() => {
-			});
-		}
+				}
+			}, (error) => {
+				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+			})
+		]).then(() => {
+		});
+	}
 
 	getChild() {
-			this.error = '';
-			this.loginError = false;
-			this.notLoggedIn = false;
-			let self = this;
-			if(this.number.length === 3) {
+		this.error = '';
+		this.loginError = false;
+		this.notLoggedIn = false;
+		let self = this;
+		if (this.number.length === 3) {
 			this.loading = true;
 			var wp = this.getWpApi('search');
 			wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
@@ -317,24 +318,18 @@ export class PresencePage {
 	}
 
 	hideKeyboard() {
-		var field = document.createElement('input');
-		field.setAttribute('type', 'text');
-		document.body.appendChild(field);
-
-		setTimeout(function () {
-			field.focus();
-			setTimeout(function () {
-				field.setAttribute('style', 'display:none;');
-				field.parentNode.removeChild(field);
-			}, 50);
-		}, 50);
+		this.keyboard.close();
 	}
 
 	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
+		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: "back" });
+		this.hideKeyboard();
+		let self = this;
+		setTimeout(function () {
+			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+		}, 300);
 	}
 }

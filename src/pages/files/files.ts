@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Keyboard } from 'ionic-angular';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -20,6 +20,7 @@ export class FilesPage {
 	constructor(
 		public navCtrl: NavController,
 		public httpClient: HttpClient,
+		public keyboard: Keyboard
 	) {
 		this.loading = false;
 	}
@@ -40,12 +41,12 @@ export class FilesPage {
 			.get("https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json")
 			.subscribe((data: any) => {
 				console.log(data);
-				self.files = data.files||[];
+				self.files = data.files || [];
 			});
 	}
 
-	filterAlbums(){
-		if(this.photoYear < 2000 ) {
+	filterAlbums() {
+		if (this.photoYear < 2000) {
 			this.albums = [];
 			return;
 		}
@@ -60,7 +61,7 @@ export class FilesPage {
 		window.location.href = "https://www.flickr.com/photos/timmerdorpheiloo/albums/" + id;
 	}
 
-	openFile(url){
+	openFile(url) {
 		window.location.href = url;
 	}
 
@@ -68,7 +69,15 @@ export class FilesPage {
 		this.init();
 	}
 
+	hideKeyboard() {
+		this.keyboard.close();
+	}
+
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: 'back' });
+		this.hideKeyboard();
+		let self = this;
+		setTimeout(function () {
+			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+		}, 300);;
 	}
 }
