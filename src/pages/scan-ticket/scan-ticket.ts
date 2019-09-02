@@ -178,7 +178,13 @@ export class ScanTicketPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-	}
-
+		if (this.modal.showModal) {
+			let self = this;
+			this.modal.showModal = false;
+			setTimeout(function(){
+				self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+			}, 200);
+		}else{
+			this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+		}	}
 }
