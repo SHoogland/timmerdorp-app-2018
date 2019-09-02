@@ -22,6 +22,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class SearchPage {
 	tableCategories: any;
 	typingTimer: any;
+	timeOut: any;
 	tickets: any;
 	history: any;
 
@@ -62,6 +63,8 @@ export class SearchPage {
 			child: null,
 			showModal: false
 		}
+
+		this.timeOut = setTimeout;
 
 		this.notLoggedIn = false;
 		this.loginError = false;
@@ -341,6 +344,14 @@ export class SearchPage {
 	}
 
 	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+		if (this.modal.showModal) {
+			let self = this;
+			this.closeModal();
+			setTimeout(function(){
+				self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+			}, 400);
+		}else{
+			this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+		}
 	}
 }
