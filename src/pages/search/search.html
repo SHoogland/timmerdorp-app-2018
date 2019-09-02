@@ -19,6 +19,23 @@
 			</div>
 		</div>
 
+		<div class="user-info">
+			<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
+				{{error}}
+			</span>
+			<span *ngIf="loginError" style="color:red;font-weight:bold">
+				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+			</span>
+			<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+				Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+			</span>
+			<div style='height: 20px;'>
+				<div *ngIf="loading&&!notLoggedIn">
+					<ion-spinner color='primary'></ion-spinner>
+				</div>
+			</div>
+		</div>
+
 		<div *ngIf='!tickets.length && history && history.length > 0'>
 			<ion-list>
 				<ion-list-header>
@@ -38,12 +55,32 @@
 							style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
 							Zoeken</ion-button>
 					</ion-label>
-
 				</ion-item>
 			</ion-list>
 		</div>
 
-		<div *ngFor="let child of tickets">
+		<ion-list *ngIf='tickets.length'>
+			<ion-list-header>
+				Zoekresultaten
+			</ion-list-header>
+
+			<ion-item *ngFor="let child of tickets">
+				<ion-label>
+					<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
+						[ngStyle]='{"color": getColor(child.meta.hutnr)}'></ion-icon>
+					<div style='position:relative; left: 80px;'>
+						<h2>{{child.meta.WooCommerceEventsAttendeeName[0]}}
+							{{child.meta.WooCommerceEventsAttendeeLastName[0]}}</h2>
+						<h3>{{child.meta.wristband}}</h3>
+						<p>Hutje: {{child.meta.hutnr}}</p>
+					</div>
+					<ion-button size="small" (click)='showModal(child)'
+						style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
+						Details</ion-button>
+				</ion-label>
+			</ion-item>
+		</ion-list>
+		<!-- <div *ngFor="let child of tickets">
 			<button ion-button full (click)="showModal(child)" class="bg-grey color-mediumBlack">
 				{{child.meta.WooCommerceEventsAttendeeName[0]}} {{child.meta.WooCommerceEventsAttendeeLastName[0]}} ({{child.meta.wristband ||
 				'-'}})&nbsp;&nbsp;
@@ -59,24 +96,8 @@
 					style="background-color:green;color:white;padding: 2px 6px">(hutje:&nbsp;
 					{{child.meta.hutnr}})</span>
 			</button>
-		</div>
+		</div> -->
 
-		<div class="user-info">
-			<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
-				{{error}}
-			</span>
-			<span *ngIf="loginError" style="color:red;font-weight:bold">
-				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
-			</span>
-			<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
-				Je moet eerst <a (click)='toLogin()'>inloggen</a>!
-			</span>
-			<div style='height: 20px;'>
-				<div *ngIf="loading&&!notLoggedIn">
-					<ion-spinner color='primary'></ion-spinner>
-				</div>
-			</div>
-		</div>
 	</div>
 </ion-content>
 <!-- start modal box -->
