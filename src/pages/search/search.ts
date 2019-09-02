@@ -20,15 +20,19 @@ import { DomSanitizer } from '@angular/platform-browser';
 	templateUrl: 'search.html',
 })
 export class SearchPage {
+	tableCategories: any;
 	typingTimer: any;
+	tickets: any;
 	history: any;
-	searchTerm: string;
-	loginError: boolean;
+
 	notLoggedIn: boolean;
-	error: string;
-	endpoint: string;
+	loginError: boolean;
 	loading: boolean;
-	tickets: Array<any>;
+
+	searchTerm: string;
+	endpoint: string;
+	error: string;
+
 	modal: {
 		showModal: boolean;
 		child: any;
@@ -54,14 +58,98 @@ export class SearchPage {
 			username: '',
 			password: ''
 		}
-		this.loading = false;
-		this.error = '';
-		this.loginError = false;
-		this.notLoggedIn = false;
 		this.modal = {
 			child: null,
 			showModal: false
 		}
+
+		this.notLoggedIn = false;
+		this.loginError = false;
+		this.loading = false;
+
+		this.error = '';
+
+		this.tableCategories = [
+			{
+				name: "Gegevens huisarts",
+				items: [
+					{
+						title: "Naam huisarts",
+						name: "fooevents_custom_naam_huisarts"
+					},
+					{
+						title: "Tel. huisarts",
+						name: "fooevents_custom_telefoonnr_huisarts",
+						tel: true
+					}
+				]
+			},
+			{
+				name: "Contactgegevens ouders",
+				items: [
+					{
+						title: "Tel. ouder 1",
+						name: "fooevents_custom_telefoonnr_ouders",
+						tel: true
+					},
+					{
+						title: "Tel. ouder 2",
+						name: "fooevents_custom_telefoonnr_ouders_(2)",
+						tel: true
+					},
+					{
+						title: "E-mailadres",
+						name: "WooCommerceEventsPurchaserEmail"
+					}
+				]
+			},
+			{
+				name: "Gegevens Kind",
+				items: [
+					{
+						title: "Geboortedatum",
+						name: "fooevents_custom_geboortedatum_(dd-mm-jjjj)"
+					},
+					{
+						title: "Bandje",
+						name: "wristband"
+					},
+					{
+						title: "Hutnummer",
+						name: "hutnr"
+					},
+					{
+						title: "Wijk",
+						name: ""
+					},
+					{
+						title: "Opmerkingen",
+						name: "fooevents_custom_opmerkingen,_allergien"
+					}
+				]
+			},
+			{
+				name: "Aanwezigheid",
+				items: [
+					{
+						title: "Dinsdag",
+						name: "tue"
+					},
+					{
+						title: "Woensdag",
+						name: "wed"
+					},
+					{
+						title: "Donderdag",
+						name: "thu"
+					},
+					{
+						title: "Vrijdag",
+						name: "fri"
+					},
+				]
+			}
+		]
 		this.tickets = [];
 	}
 

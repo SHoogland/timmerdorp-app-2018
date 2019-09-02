@@ -32,7 +32,7 @@
 						<div style='position:relative; left: 80px;'>
 							<h2>{{h.name}}</h2>
 							<h3>{{h.wristband}}</h3>
-							<p>Hutnummer: {{h.hutnr}}</p>
+							<p>Hutje: {{h.hutnr}}</p>
 						</div>
 						<ion-button size="small" (click)='searchTerm=""+h.wristband;searchThis()'
 							style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
@@ -83,94 +83,30 @@
 <div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
 	class="modal conditional">
 	<div class="modal-content" *ngIf="modal.child">
-		<span class="close" (click)="closeModal();">&times;</span>
-		<h1 id='childDataHeader'>Gegevens</h1>
-		<table>
-			<tr>
-				<td class='b'>Voornaam</td>
-				<td>{{(modal.child.meta.WooCommerceEventsAttendeeName||[])[0]}}</td>
-			</tr>
-			<tr>
-				<td class='b'>Achternaam</td>
-				<td>{{(modal.child.meta.WooCommerceEventsAttendeeLastName||[])[0]}}</td>
-			</tr>
-			<tr>
-				<td class='b'>Geboortedatum</td>
-				<td>{{(modal.child.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)']||[])[0]}}</td>
-			</tr>
-			<tr>
-				<td class='b'>Huisarts</td>
-				<td>{{(modal.child.meta.fooevents_custom_naam_huisarts||[])[0]}}</td>
-			</tr>
-			<tr>
-				<td class='b'>Opmerkingen</td>
-				<td>{{(modal.child.meta['fooevents_custom_opmerkingen,_allergien']||[])[0]}}</td>
-			</tr>
-			<tr>
-				<td class='b'>Tel. huisarts</td>
-				<td><a
-						href="tel: {{filterPhoneNr(modal.child.meta.fooevents_custom_telefoonnr_huisarts)}}">{{(modal.child.meta.fooevents_custom_telefoonnr_huisarts||[])[0]}}</a>
-				</td>
-			</tr>
-			<tr>
-				<td class='b'>Tel. ouder 1</td>
-				<td><a
-						href="tel: {{filterPhoneNr(modal.child.meta.fooevents_custom_telefoonnr_ouders)}}">{{(modal.child.meta.fooevents_custom_telefoonnr_ouders||[])[0]}}</a>
-				</td>
-			</tr>
-			<tr>
-				<td class='b'>Tel. ouder 2</td>
-				<td><a
-						href="tel: {{filterPhoneNr(modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)'])}}">{{(modal.child.meta['fooevents_custom_telefoonnr_ouders_(2)']||[])[0]}}</a>
-				</td>
-			</tr>
-			<tr>
-				<td class='b'>E-mailadres</td>
-				<td>{{(modal.child.meta.WooCommerceEventsPurchaserEmail||[])[0]}}</td>
-			</tr>
-			<tr>
-				<td class='b'>Bandje</td>
-				<td>
-					<div *ngIf="modal.child.meta.wristband">{{(modal.child.meta.wristband||[])[0]}}</div>
-				</td>
-			</tr>
-			<tr>
-				<td class='b'>Hutnummer</td>
-				<td>
-					<div *ngIf="modal.child.meta.hutnr">{{(modal.child.meta.hutnr||[])[0]}}</div>
-				</td>
-			</tr>
-			<tr>
-				<td class='b'>Wijk</td>
-				<td>
-					<div *ngIf="modal.child.meta.hutnr">{{getWijk((modal.child.meta.hutnr||[])[0])}}</div>
-				</td>
-			</tr>
-			<tr>
-				<td class='b'>Dinsdag</td>
-				<td>
-					{{(modal.child.meta.present_tue||[])[0] === '1'?"Aanwezig":"Afwezig"}}
-				</td>
-			</tr>
-			<tr>
-				<td class='b'>Woensdag</td>
-				<td>
-					{{(modal.child.meta.present_wed||[])[0] === '1'?"Aanwezig":"Afwezig"}}
-				</td>
-			</tr>
-			<tr>
-				<td class='b'>Donderdag</td>
-				<td>
-					{{(modal.child.meta.present_thu||[])[0] === '1'?"Aanwezig":"Afwezig"}}
-				</td>
-			</tr>
-			<tr>
-				<td class='b'>Vrijdag</td>
-				<td>
-					{{(modal.child.meta.present_fri||[])[0] === '1'?"Aanwezig":"Afwezig"}}
-				</td>
-			</tr>
-		</table>
+		<div id='modalTop'>
+		</div>
+		<div id='modalBottom'>
+			<span class="close" (click)="closeModal();">&times;</span>
+			<h1 id='childDataHeader'>{{(modal.child.meta.WooCommerceEventsAttendeeName||[])[0]}}
+				{{(modal.child.meta.WooCommerceEventsAttendeeLastName||[])[0]}}</h1>
+			<table>
+				<div *ngFor="let c of tableCategories">
+					<h3>{{c.name}}</h3>
+					<tr *ngFor="let i of c.items">
+						<td>{{i.title}}:</td>
+
+						<td *ngIf="!i.tel&&i.title!=='Wijk'&&c.name!='Aanwezigheid'">
+							{{(modal.child.meta[i.name]||[])[0]}}</td>
+						<td *ngIf="c.name==='Aanwezigheid'">
+							{{(modal.child.meta["present_" + i.day]||[])[0] === '1'?"Aanwezig":"Afwezig"}}</td>
+						<td *ngIf="i.title==='Wijk'">{{getWijk((modal.child.meta.hutnr||[])[0])}}</td>
+						<td *ngIf='i.tel'><a
+								href="tel: {{filterPhoneNr(modal.child.meta[i.name])}}">{{(modal.child.meta[i.name]||[])[0]}}</a>
+						</td>
+					</tr>
+				</div>
+			</table>
+		</div>
 		<button ion-button full (click)="closeModal();" class="bg-green correction">Ok</button>
 		<button ion-button full (click)="scanChild(modal.child.meta.WooCommerceEventsTicketID[0])"
 			class="bg-yellow correction">Scan</button>
