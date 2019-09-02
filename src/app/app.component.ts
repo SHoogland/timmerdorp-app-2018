@@ -69,7 +69,7 @@ export class MyApp {
 					if (cordova.platformId === 'android') {
 						this.platform.registerBackButtonAction(() => {
 							console.log("TERUG KNOP ANDROID");
-							this.nav.setRoot(HomePage);
+							this.nav.setRoot(HomePage, {}, {animate: true, animation: "ios-transition", direction: "backward"});
 						});
 						this.statusBar.backgroundColorByHexString("#045c9f");
 					} else if (cordova.platformId === 'ios') {
