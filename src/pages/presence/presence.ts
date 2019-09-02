@@ -138,6 +138,10 @@ export class PresencePage {
 		});
 	}
 
+	hideKeyboard(){
+		this.keyboard.close();
+	}
+
 	getChild() {
 		this.error = '';
 		this.loginError = false;
@@ -317,19 +321,11 @@ export class PresencePage {
 		}, 1000);
 	}
 
-	hideKeyboard() {
-		this.keyboard.close();
-	}
-
 	toLogin() {
 		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 	}
 
 	goHome() {
-		this.hideKeyboard();
-		let self = this;
-		setTimeout(function () {
-			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-		}, 300);
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 	}
 }

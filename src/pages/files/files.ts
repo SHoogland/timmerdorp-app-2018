@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Keyboard } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -19,8 +19,7 @@ export class FilesPage {
 	allAlbums: any;
 	constructor(
 		public navCtrl: NavController,
-		public httpClient: HttpClient,
-		public keyboard: Keyboard
+		public httpClient: HttpClient
 	) {
 		this.loading = false;
 	}
@@ -69,15 +68,8 @@ export class FilesPage {
 		this.init();
 	}
 
-	hideKeyboard() {
-		this.keyboard.close();
+	goHome() {
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 	}
 
-	goHome() {
-		this.hideKeyboard();
-		let self = this;
-		setTimeout(function () {
-			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-		}, 300);;
-	}
 }

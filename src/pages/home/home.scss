@@ -1,6 +1,6 @@
 @font-face {
-	font-family: ProductSans;
-	src: url("../assets/fonts/ProductSans-Bold.woff");
+  font-family: ProductSans;
+  src: url("../assets/fonts/ProductSans-Bold.woff");
 }
 
 page-home {
@@ -57,19 +57,22 @@ page-home {
     margin-bottom: 0 !important;
   }
 
-  .homeButton.bg-blue:nth-of-type(2n+1){
-	  background: #1c8ae1;
+  .homeButton.bg-blue:nth-of-type(2n + 1) {
+    background: #1c8ae1;
   }
 
+  .scroll-content {
+	  padding: 0px!important;
+	  margin-top: 0px!important;
+  }
 
-ion-header {
-	min-height: 320px;
-	height: calc(100vh - 6 * 80px);
-	z-index: 10;
-	background-position: center;
-	background-size: cover;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url(../assets/imgs/header_bg.jpg);
+  ion-header {
+    min-height: 320px;
+    height: calc(100vh - 6 * 80px);
+    z-index: 10;
+    background-position: center;
+    background-size: cover;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/imgs/header_bg.jpg);
   }
 
   .nav-logo {
@@ -80,17 +83,17 @@ ion-header {
     padding: 10px;
     margin-left: auto;
     position: relative;
-	top: 40px;
+    top: 40px;
     display: block;
     margin-right: auto;
   }
 
   #ptitle {
-	font-family: ProductSans!important;
-	bottom: 10px!important;
-	top: unset!important;
-	width: calc(100% - 30px);
-	left: 15px!important;
+    font-family: ProductSans !important;
+    bottom: 10px !important;
+    top: unset !important;
+    width: calc(100% - 30px);
+    left: 15px !important;
     font-size: 48px !important;
   }
 }

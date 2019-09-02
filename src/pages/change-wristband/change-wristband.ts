@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-import { NavController, Keyboard } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 
 import { HttpClient } from '@angular/common/http';
@@ -36,8 +36,7 @@ export class ChangeWristbandPage {
 		public navCtrl: NavController,
 		public httpClient: HttpClient,
 		public storage: Storage,
-		public cd: ChangeDetectorRef,
-		public keyboard: Keyboard
+		public cd: ChangeDetectorRef
 	) {
 	}
 
@@ -233,15 +232,7 @@ export class ChangeWristbandPage {
 		return wp;
 	}
 
-	hideKeyboard() {
-		this.keyboard.close();
-	}
-
 	goHome() {
-		this.hideKeyboard();
-		let self = this;
-		setTimeout(function () {
-			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-		}, 300);
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 	}
 }

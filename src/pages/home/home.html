@@ -1,9 +1,9 @@
-<ion-header>
-	<h1 id="ptitle">Timmerdorp<br>2020</h1>
-	<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
-</ion-header>
-
 <ion-content class='homeContent' padding>
+	<ion-header>
+		<h1 id="ptitle">Timmerdorp<br>2020</h1>
+		<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+	</ion-header>
+
 	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class" class='homeButton'>
 		<div style='text-align:left;'>
 			<ion-icon slot='start' name='{{p.icon||""}}' style='margin-right:12px;position:relative;'></ion-icon>

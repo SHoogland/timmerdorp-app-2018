@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, Keyboard } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 
@@ -43,8 +43,7 @@ export class SearchPage {
 		public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage,
-		public sanitizer: DomSanitizer,
-		public keyboard: Keyboard
+		public sanitizer: DomSanitizer
 	) {
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
@@ -253,15 +252,7 @@ export class SearchPage {
 		this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode });
 	}
 
-	hideKeyboard() {
-		this.keyboard.close();
-	}
-
 	goHome() {
-		this.hideKeyboard();
-		let self = this;
-		setTimeout(function () {
-			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-		}, 300);
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 	}
 }

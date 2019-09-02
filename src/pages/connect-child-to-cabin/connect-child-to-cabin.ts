@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { NavController, NavParams, Platform, Keyboard } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
@@ -65,8 +65,7 @@ export class ConnectChildToCabinPage {
 		public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage,
-		private cd: ChangeDetectorRef,
-		public keyboard: Keyboard
+		private cd: ChangeDetectorRef
 	) {
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
@@ -477,15 +476,7 @@ export class ConnectChildToCabinPage {
 		}, 400);
 	}
 
-	hideKeyboard() {
-		this.keyboard.close();
-	}
-
 	goHome() {
-		this.hideKeyboard();
-		let self = this;
-		setTimeout(function () {
-			self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-		}, 300);
+		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 	}
 }

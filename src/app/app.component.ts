@@ -76,7 +76,6 @@ export class MyApp {
 						this.statusBar.backgroundColorByHexString("#0572c8");
 					}
 				}
-
 				this.preCheckLogin();
 			});
 		});
