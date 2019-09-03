@@ -42,7 +42,7 @@
     "ionicons": "4.6.3",
     "list": "2.0.18",
     "phonegap-plugin-barcodescanner": "^8.1.0",
-    "rxjs": "^6.5.2",
+    "rxjs": "^6.5.3",
     "rxjs-compat": "^6.5.2",
     "sw-toolbox": "3.6.0",
     "wpapi": "^1.1.2",
