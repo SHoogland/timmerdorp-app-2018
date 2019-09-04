@@ -5,13 +5,7 @@ import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 
-// import { ConnectChildToCabinStep_2Page } from '../connect-child-to-cabin-step-2/connect-child-to-cabin-step-2';
-/**
- * Generated class for the ConnectChildToCabinPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+declare let cordova: any;
 
 @Component({
 	selector: 'page-connect-child-to-cabin',
@@ -67,6 +61,21 @@ export class ConnectChildToCabinPage {
 		public storage: Storage,
 		private cd: ChangeDetectorRef
 	) {
+		if (this.platform.is('cordova')) {
+			if (cordova.platformId === 'android') {
+				this.platform.registerBackButtonAction(() => {
+					if (this.addModal.show) {
+						this.addModal.show = false;
+					} else if (this.removeModal.show) {
+						this.removeModal.show = false;
+					} else if (this.warningModal.show) {
+						this.warningModal.show = false;
+					} else {
+						this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+					}
+				});
+			}
+		}
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}

@@ -7,13 +7,8 @@ import { HomePage } from '../home/home';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { LoginPage } from '../login/login';
 import { DomSanitizer } from '@angular/platform-browser';
-/**
- * Generated class for the SearchPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
+declare let cordova: any;
 
 @Component({
 	selector: 'page-search',
@@ -50,6 +45,18 @@ export class SearchPage {
 		public storage: Storage,
 		public sanitizer: DomSanitizer
 	) {
+		console.log(this);
+		if (this.platform.is('cordova')) {
+			if (cordova.platformId === 'android') {
+				this.platform.registerBackButtonAction(() => {
+					if (this.modal.showModal) {
+						this.modal.showModal = false;
+					} else {
+						this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+					}
+				});
+			}
+		}
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
@@ -347,10 +354,10 @@ export class SearchPage {
 		if (this.modal.showModal) {
 			let self = this;
 			this.closeModal();
-			setTimeout(function(){
+			setTimeout(function () {
 				self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 			}, 400);
-		}else{
+		} else {
 			this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 		}
 	}

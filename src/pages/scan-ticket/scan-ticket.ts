@@ -5,6 +5,8 @@ import * as WPAPI from 'wpapi';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
 
+declare let cordova: any;
+
 @Component({
 	selector: 'page-scan-ticket',
 	templateUrl: 'scan-ticket.html',
@@ -38,6 +40,17 @@ export class ScanTicketPage {
 		public platform: Platform,
 		public storage: Storage
 	) {
+		if (this.platform.is('cordova')) {
+			if (cordova.platformId === 'android') {
+				this.platform.registerBackButtonAction(() => {
+					if (this.modal.showModal) {
+						this.modal.showModal = false;
+					} else {
+						this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+					}
+				});
+			}
+		}
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
@@ -181,10 +194,11 @@ export class ScanTicketPage {
 		if (this.modal.showModal) {
 			let self = this;
 			this.modal.showModal = false;
-			setTimeout(function(){
+			setTimeout(function () {
 				self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 			}, 200);
-		}else{
+		} else {
 			this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-		}	}
+		}
+	}
 }

@@ -46,12 +46,23 @@ export class HomePage {
 	readablePageList: any;
 
 	constructor(
-		public navCtrl: NavController,
 		private barcodeScanner: BarcodeScanner,
+		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
 		public httpClient: HttpClient
 	) {
+		if (this.platform.is('cordova')) {
+			if (cordova.platformId === 'android') {
+				this.platform.registerBackButtonAction(() => {
+					if (this.modalShown) {
+						this.modalShown = false;
+					} else {
+						return;
+					}
+				});
+			}
+		}
 	}
 
 	init() {
@@ -207,7 +218,7 @@ export class HomePage {
 			if (this.openedPage.component == 'ticketscanner') {
 				this.scanCode();
 			} else {
-				this.navCtrl.setRoot(this.openedPage.component, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
+				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 			}
 		} else {
 			this.showModal();
@@ -231,7 +242,7 @@ export class HomePage {
 		if (this.openedPage.component == 'ticketscanner') {
 			this.scanCode();
 		} else {
-			this.navCtrl.setRoot(this.openedPage.component, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
+			this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 		}
 	}
 

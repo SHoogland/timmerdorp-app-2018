@@ -35,7 +35,12 @@ export class MyApp {
 			if (cordova.platformId === 'android') {
 				this.platform.registerBackButtonAction(() => {
 					console.log("TERUG KNOP ANDROID");
-					this.nav.setRoot(HomePage, {}, {animate: true, animation: "ios-transition", direction: "back"});
+					let preventBack = ['page-search', 'page-connect-child-to-cabin', 'page-home', 'page-presence', 'page-scan-ticket']
+					if(preventBack.indexOf(this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()) > -1){
+						this.nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+					}else{
+						console.log("close the modal, if opened");
+					}
 				});
 				this.statusBar.backgroundColorByHexString("#045c9f");
 			} else if (cordova.platformId === 'ios') {
@@ -120,10 +125,10 @@ export class MyApp {
 	}
 
 	toLogin() {
-		this.nav.setRoot(LoginPage, {}, { animate:true,animation:"ios-transition", direction: 'forward' });
+		this.nav.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 	}
 
 	openPage(page) {
-		this.nav.setRoot(page.component, { animate:true,animation:"ios-transition", direction: 'forward' });
+		this.nav.setRoot(page.component, { animate: true, animation: "ios-transition", direction: 'forward' });
 	}
 }

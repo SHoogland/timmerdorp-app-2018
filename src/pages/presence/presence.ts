@@ -5,6 +5,8 @@ import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 
+declare let cordova: any;
+
 @Component({
 	selector: 'page-presence',
 	templateUrl: 'presence.html'
@@ -35,6 +37,17 @@ export class PresencePage {
 		private cd: ChangeDetectorRef,
 		public keyboard: Keyboard
 	) {
+		if (this.platform.is('cordova')) {
+			if (cordova.platformId === 'android') {
+				this.platform.registerBackButtonAction(() => {
+					if (this.modalShown) {
+						this.modalShown = false;
+					} else {
+						this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+					}
+				});
+			}
+		}
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
@@ -138,7 +151,7 @@ export class PresencePage {
 		});
 	}
 
-	hideKeyboard(){
+	hideKeyboard() {
 		this.keyboard.close();
 	}
 
