@@ -19,10 +19,12 @@
   src: url("../assets/fonts/Mikado-Bold.woff");
 }
 
-.input-wrapper, ion-list, .item-md, .item-ios{
-	background: #fafafa!important;
+.input-wrapper,
+ion-list,
+.item-md,
+.item-ios {
+  background: #fafafa !important;
 }
-
 
 body {
   font-size: 16px;
@@ -94,28 +96,28 @@ h1 {
   color: white;
 }
 
-ion-header{
-	position: relative;
+ion-header {
+  position: relative;
 }
 
-div.content{
-    padding: 10px!important;
+div.content {
+  padding: 10px !important;
 }
 
 @media only screen and (max-width: 410px) {
   #ptitle {
-	font-size: 19px !important;
-	margin-top: 29px !important;
+    font-size: 19px !important;
+    margin-top: 29px !important;
   }
 }
 
-.label{
-    font-size: 18px;
+.label {
+  font-size: 18px;
 }
 
-ion-content:not(.homeContent) > .scroll-content{
-	margin-top: 0px!important;
-	padding: 0px!important;
+ion-content:not(.homeContent) > .scroll-content {
+  margin-top: 0px !important;
+  padding: 0px !important;
 }
 
 .bg-blue {
@@ -394,8 +396,15 @@ body {
 input.text-input {
   background: #fff;
 }
-ion-item {
-  background: #fafafa !important;
+.modalInput {
+  background: #fff !important;
+}
+ion-item,
+.item-md,
+.item-ios {
+	&:not(.modalInput){
+		background: #fafafa !important;
+	}
 }
 
 .content-md {
@@ -450,10 +459,6 @@ button.bg-darkred {
   &:hover {
     background: #9e0c0c !important;
   }
-}
-
-.item-md {
-  background: #fafafa !important;
 }
 
 button {

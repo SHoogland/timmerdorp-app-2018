@@ -16,10 +16,25 @@ page-search {
       &:nth-of-type(2n + 1) {
         background: #1c8ae1;
       }
-      &:hover {
+      &:hover,
+      &.activated {
         background: $bluehover !important;
       }
     }
+  }
+
+  .fab {
+    height: 48px;
+    width: 48px;
+    background: #2196f3;
+    padding: 11px;
+    color: white;
+    right: 0px;
+    padding-top: 0px !important;
+    top: 15px;
+    position: absolute;
+    border-radius: 50% !important;
+    padding-left: 12px !important;
   }
 
   table {

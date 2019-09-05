@@ -87,9 +87,9 @@
 							<h3>{{h.wristband}}</h3>
 							<p>Hutnummer: {{h.hutnr}}</p>
 						</div>
-						<ion-button size="small" (click)='number=""+h.wristband;getChild()'
-							style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
-							Zoeken</ion-button>
+						<ion-button size="small" class='fab' (click)='number=""+h.wristband;getChild()'>
+							<ion-icon name='search'></ion-icon>
+						</ion-button>
 					</ion-label>
 
 				</ion-item>

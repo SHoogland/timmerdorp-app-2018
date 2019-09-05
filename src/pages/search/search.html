@@ -51,9 +51,9 @@
 							<h3>{{h.wristband}}</h3>
 							<p>Hutje: {{h.hutnr}}</p>
 						</div>
-						<ion-button size="small" (click)='searchTerm=""+h.wristband;searchThis()'
-							style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
-							Zoeken</ion-button>
+						<ion-button size="small" class='fab' (click)='searchTerm=""+h.wristband;searchThis()'>
+							<ion-icon name='search'></ion-icon>
+						</ion-button>
 					</ion-label>
 				</ion-item>
 			</ion-list>
@@ -74,9 +74,9 @@
 						<h3>{{child.meta.wristband}}</h3>
 						<p>Hutje: {{child.meta.hutnr}}</p>
 					</div>
-					<ion-button size="small" (click)='showModal(child)'
-						style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
-						Details</ion-button>
+					<ion-button size="small" class='fab' (click)='showModal(child)'>
+						<ion-icon name='information-circle'></ion-icon>
+					</ion-button>
 				</ion-label>
 			</ion-item>
 		</ion-list>
