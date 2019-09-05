@@ -20,8 +20,8 @@ before_install:
 - npm i -g ionic cordova
 script:
 - npm install
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ionic cordova build ios
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ionic cordova build android
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ionic cordova build ios fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ionic cordova build android fi
 env:
   global:
   - JAVA_HOME=/usr/lib/jvm/java-8-oracle
