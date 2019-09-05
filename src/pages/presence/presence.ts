@@ -34,7 +34,7 @@ export class PresencePage {
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
-		private cd: ChangeDetectorRef,
+		public cd: ChangeDetectorRef,
 		public keyboard: Keyboard
 	) {
 		if (this.platform.is('cordova')) {

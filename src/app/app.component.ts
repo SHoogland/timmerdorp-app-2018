@@ -14,7 +14,7 @@ declare let cordova: any;
 	templateUrl: 'app.html'
 })
 export class MyApp {
-	@ViewChild(Nav, {static: false}) nav: Nav;
+	@ViewChild(Nav) nav: Nav;
 
 	rootPage: any = HomePage;
 	pages: Array<{ title: string, component: any }>;

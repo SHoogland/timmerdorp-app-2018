@@ -30,7 +30,7 @@ export class ChangeWristbandPage {
 		username: string,
 		password: string
 	};
-	@ViewChild('secondInput', { static: false }) secondInput: ElementRef;
+	@ViewChild('secondInput') secondInput: ElementRef;
 
 	constructor(
 		public navCtrl: NavController,
