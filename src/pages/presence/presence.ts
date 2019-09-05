@@ -67,7 +67,7 @@ export class PresencePage {
 				this.day = 'fri';
 				break;
 			default:
-				this.day = 'thu'; //sample day
+				this.day = 'fri'; //sample day
 		}
 		this.modalShown = false;
 		this.greenBtn = false;

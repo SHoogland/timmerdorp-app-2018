@@ -36,7 +36,7 @@
 			</div>
 		</div>
 
-		<div *ngIf='!tickets.length && history && history.length > 0'>
+		<div *ngIf='!tickets.length && history && history.length > 0 && !(searchTerm||"").length'>
 			<ion-list>
 				<ion-list-header>
 					Zoekgeschiedenis
@@ -80,27 +80,9 @@
 				</ion-label>
 			</ion-item>
 		</ion-list>
-		<!-- <div *ngFor="let child of tickets">
-			<button ion-button full (click)="showModal(child)" class="bg-grey color-mediumBlack">
-				{{child.meta.WooCommerceEventsAttendeeName[0]}} {{child.meta.WooCommerceEventsAttendeeLastName[0]}} ({{child.meta.wristband ||
-				'-'}})&nbsp;&nbsp;
-				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
-					style="background-color:yellow;padding: 2px 6px">(hutje:&nbsp; {{child.meta.hutnr}})</span>
-				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'"
-					style="background-color:red;color:white;padding: 2px 6px">(hutje:&nbsp;
-					{{child.meta.hutnr}})</span>
-				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'"
-					style="background-color:blue;color:white;padding: 2px 6px">(hutje:&nbsp;
-					{{child.meta.hutnr}})</span>
-				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'"
-					style="background-color:green;color:white;padding: 2px 6px">(hutje:&nbsp;
-					{{child.meta.hutnr}})</span>
-			</button>
-		</div> -->
-
 	</div>
 </ion-content>
-<!-- start modal box -->
+
 <div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
 	class="modal conditional">
 	<div class="modal-content" *ngIf="modal.child">
@@ -115,7 +97,6 @@
 					<h3>{{c.name}}</h3>
 					<tr *ngFor="let i of c.items">
 						<td>{{i.title}}:</td>
-
 						<td *ngIf="!i.tel&&i.title!=='Wijk'&&c.name!='Aanwezigheid'">
 							{{(modal.child.meta[i.name]||[])[0]}}</td>
 						<td *ngIf="c.name==='Aanwezigheid'">

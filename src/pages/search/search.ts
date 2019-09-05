@@ -143,19 +143,19 @@ export class SearchPage {
 				items: [
 					{
 						title: "Dinsdag",
-						name: "tue"
+						day: "tue"
 					},
 					{
 						title: "Woensdag",
-						name: "wed"
+						day: "wed"
 					},
 					{
 						title: "Donderdag",
-						name: "thu"
+						day: "thu"
 					},
 					{
 						title: "Vrijdag",
-						name: "fri"
+						day: "fri"
 					},
 				]
 			}
