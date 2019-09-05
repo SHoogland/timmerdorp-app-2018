@@ -23,7 +23,13 @@ declare let cordova: any;
 	templateUrl: 'home.html'
 })
 export class HomePage {
+	modalShown: boolean;
+	android: boolean;
+
+	version: string;
 	error: string;
+	wijk: string;
+	
 	updates: any;
 	pages: Array<{
 		title: string,
@@ -31,19 +37,20 @@ export class HomePage {
 		class: string,
 		icon: string
 	}>;
-	modalShown: boolean;
+	
 	login: {
 		username: '',
 		password: ''
 	};
-	clickedOnce = false;
+	
 	clickedTwice = false;
+	clickedOnce = false;
 	staging = false;
-	wijk: string;
-	openedPage: any;
-	android: Boolean;
-	version: string;
+	
 	readablePageList: any;
+	openedPage: any;
+	
+	y: Number;
 
 	constructor(
 		private barcodeScanner: BarcodeScanner,
@@ -52,6 +59,7 @@ export class HomePage {
 		public storage: Storage,
 		public httpClient: HttpClient
 	) {
+		this.y = new Date().getFullYear();
 		if (this.platform.is('cordova')) {
 			if (cordova.platformId === 'android') {
 				this.platform.registerBackButtonAction(() => {
