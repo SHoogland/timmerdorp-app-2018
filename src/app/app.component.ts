@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 
@@ -14,7 +14,7 @@ declare let cordova: any;
 	templateUrl: 'app.html'
 })
 export class MyApp {
-	@ViewChild(Nav) nav: Nav;
+	@ViewChild(Nav, {static: false}) nav: Nav;
 
 	rootPage: any = HomePage;
 	pages: Array<{ title: string, component: any }>;

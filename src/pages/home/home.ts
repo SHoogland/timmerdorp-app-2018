@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
 
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 import { WijkPage } from '../wijk/wijk';
 import { SearchPage } from '../search/search';
