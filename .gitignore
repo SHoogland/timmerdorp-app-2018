@@ -40,3 +40,7 @@ timmerdorp.apk
 androidBuildScript.sh
 tdorp keystore2.jpg
 timmerdorp app keystore.jpg
+
+Timmerdorp.ipa
+fastlane/report.xml
+Timmerdorp.app.dSYM.zip
