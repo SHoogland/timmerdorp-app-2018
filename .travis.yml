@@ -1,8 +1,27 @@
-language: objective-c
+matrix:
+  include:
+  - os: linux
+    language: android
+    dist: trusty
+    android:
+    components:
+      - tools
+      - platform-tools
+      - build-tools-26.0.2
+      - android-26
+      - extra-google-google_play_services
+      - extra-google-m2repository
+      - extra-android-m2repository
+  - os: osx
+    language: objective-c
 before_install:
 - export LANG=en_US.UTF-8
 - nvm install 12
 - npm i -g ionic cordova
 script:
 - npm install
-- ionic cordova build ios
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ionic cordova build ios
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ionic cordova build android
+env:
+  global:
+  - JAVA_HOME=/usr/lib/jvm/java-8-oracle
