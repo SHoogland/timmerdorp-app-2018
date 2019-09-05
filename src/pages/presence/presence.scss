@@ -5,15 +5,15 @@ page-presence {
     top: -5px;
   }
 
-  tr > td:first-of-type{
-	  font-weight: bold;
-	  padding-right: 18px;
+  tr > td:first-of-type {
+    font-weight: bold;
+    padding-right: 18px;
   }
 
-  table{
-	  position:relative;
-	  margin-left: auto;
-	  margin-right: auto;
+  table {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   #numberInput {
@@ -21,5 +21,19 @@ page-presence {
     display: inline-block;
     margin-right: 12px;
     width: calc(50% - 8px) !important;
+  }
+
+  .fab {
+    height: 48px;
+    width: 48px;
+    background: #2196f3;
+    padding: 11px;
+    color: white;
+    right: 0px;
+    padding-top: 0px !important;
+    top: 15px;
+    position: absolute;
+    border-radius: 50% !important;
+    padding-left: 12px !important;
   }
 }

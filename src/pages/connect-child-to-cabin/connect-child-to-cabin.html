@@ -69,8 +69,7 @@
 				</div>
 				<p style='color: red;font-weight:bold;'
 					*ngIf="searched && hutTickets && !hutTickets.length && !notLoggedIn && hutNr && hutNr.length === 3">
-					Nog
-					geen kindertjes in dit hutje :(</p>
+					Nog geen kindertjes in dit hutje :(</p>
 			</div>
 			<div *ngFor="let child of hutTickets">
 				<button ion-button full class="bg-grey color-mediumBlack"
@@ -99,8 +98,8 @@
 			<ion-toggle [(ngModel)]="autoPresence"></ion-toggle>
 		</ion-item>
 
-		<ion-item>
-			<ion-input type="text" placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
+		<ion-item class='modalInput'>
+			<ion-input type="text" class='modalInput' placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
 				(ngModelChange)="searchChild($event)"></ion-input>
 		</ion-item>
 
@@ -118,16 +117,16 @@
 				{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
 					'-' }})&nbsp;{{(child.meta.hutnr||[])[0]?"&mdash;&nbsp;":''}}
 				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
-					style="background-color:yellow;padding: 0px 6px">hutnummer:&nbsp;
+					style="background-color:yellow;padding: 0px 6px">hutje:&nbsp;
 					{{ child.meta.hutnr}}</span>
 				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'"
-					style="background-color:red;color:white;padding: 0px 6px">hutnummer:&nbsp;
+					style="background-color:red;color:white;padding: 0px 6px">hutje:&nbsp;
 					{{ child.meta.hutnr }}</span>
 				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'"
-					style="background-color:blue;color:white;padding: 0px 6px">hutnummer:&nbsp;
+					style="background-color:blue;color:white;padding: 0px 6px">hutje:&nbsp;
 					{{ child.meta.hutnr }}</span>
 				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'"
-					style="background-color:green;color:white;padding: 0px 6px">hutnummer:&nbsp;
+					style="background-color:green;color:white;padding: 0px 6px">hutje:&nbsp;
 					{{ child.meta.hutnr}}</span>
 			</button>
 		</div>
