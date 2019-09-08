@@ -37,9 +37,9 @@ export class MyApp {
 					console.log("TERUG KNOP ANDROID");
 					let preventBack = ['page-search', 'page-connect-child-to-cabin', 'page-home', 'page-presence', 'page-scan-ticket']
 					if(preventBack.indexOf(this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()) > -1){
-						this.nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-					}else{
 						console.log("close the modal, if opened");
+					}else{
+						this.nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 					}
 				});
 				this.statusBar.backgroundColorByHexString("#045c9f");
