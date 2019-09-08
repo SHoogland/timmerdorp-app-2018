@@ -18,7 +18,7 @@ matrix:
     language: objective-c
     osx_image: xcode10.3
 before_install:
-- yes | sdkmanager "platforms;android-27"
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then yes | sdkmanager "platforms;android-27"
 - export LANG=en_US.UTF-8
 - nvm install 12
 - npm i -g ionic cordova
