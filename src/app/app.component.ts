@@ -33,15 +33,6 @@ export class MyApp {
 	) {
 		if (this.platform.is('cordova')) {
 			if (cordova.platformId === 'android') {
-				this.platform.registerBackButtonAction(() => {
-					console.log("TERUG KNOP ANDROID");
-					let preventBack = ['page-search', 'page-connect-child-to-cabin', 'page-home', 'page-presence', 'page-scan-ticket']
-					if(preventBack.indexOf(this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()) > -1){
-						console.log("close the modal, if opened");
-					}else{
-						this.nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-					}
-				});
 				this.statusBar.backgroundColorByHexString("#045c9f");
 			} else if (cordova.platformId === 'ios') {
 				this.statusBar.backgroundColorByHexString("#0572c8");
@@ -79,6 +70,21 @@ export class MyApp {
 					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 				})
 			]).then(() => {
+				if (this.platform.is('cordova')) {
+					if (cordova.platformId === 'android') {
+						let self = this;
+						document.addEventListener("backbutton", () => {
+							console.log("TERUG KNOP ANDROID", this);
+							let preventBack = ['page-search', 'page-connect-child-to-cabin', 'page-home', 'page-presence', 'page-scan-ticket']
+							if (preventBack.indexOf(this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()) > -1) {
+								console.log("close the modal, if opened");
+							} else {
+								self.nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+							}
+						});
+					}
+				}
+				
 				this.preCheckLogin();
 			});
 		});
