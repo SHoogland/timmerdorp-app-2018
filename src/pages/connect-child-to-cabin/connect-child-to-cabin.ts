@@ -167,6 +167,29 @@ export class ConnectChildToCabinPage {
 		});
 	}
 
+	getBg(hutnr){
+		let res = '#000';
+		let a = (hutnr + "")[0];
+		
+		switch(a){
+			case '0':
+				res = '#ffc800';
+				break;
+			case '1':
+				res = '#f44336';
+				break;
+			case '2':
+				res = '#2196F3';
+				break;
+			case '3':
+				res = '#9ae263';
+				break;
+			default:
+				res = '#000';
+		}
+		return res;
+	}
+
 	undo(i) {
 		this.undoItem = i + 1;
 		let self = this;
@@ -378,6 +401,7 @@ export class ConnectChildToCabinPage {
 
 	getColor(w) {
 		let res = 'black';
+		console.log(w);
 		switch ((w + "")[0]) {
 			case '0':
 				res = '#ffc800';
@@ -394,6 +418,7 @@ export class ConnectChildToCabinPage {
 			default:
 				res = 'black';
 		}
+		console.log(res);
 		return res;
 	}
 

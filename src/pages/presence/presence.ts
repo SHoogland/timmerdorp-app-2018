@@ -312,6 +312,7 @@ export class PresencePage {
 	}
 
 	closeModal() {
+		this.loading = false;
 		this.modalShown = false;
 		setTimeout(function () {
 			document.querySelector('#myModal').classList.remove('high');
@@ -332,6 +333,10 @@ export class PresencePage {
 			document.getElementById("btnLabel").innerHTML = "Opslaan";
 			self.cd.detectChanges();
 		}, 1000);
+	}
+
+	alert(){
+		alert("Om fouten te voorkomen is het niet mogelijk aanwezigheid te veranderen voor andere dagen. Vragen of toch een wijziging aanvragen? Zoek Stan van wijk blauw/Stephan van wijk geel");
 	}
 
 	toLogin() {

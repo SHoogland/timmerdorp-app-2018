@@ -13,17 +13,21 @@
 		</div>
 	</button>
 
-	<p>{{error}}</p>
+	<span>{{error}}</span>
 
 </ion-content>
 
 <div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
 	class="modal conditional">
 	<div class="modal-content">
-		<span class="close" (click)="closeModal();">&times;</span>
-		<h1>Waarschuwing</h1>
-		<p>Voor het openen van deze pagina <b>moet</b> je de nieuwste versie gebruiken, anders kunnen wij niet
-			garanderen dat het allemaal werkt.</p>
+		<div id='modalTop' class='warnModal'>
+		</div>
+		<div id='modalBottom'>
+			<span class="close" (click)="closeModal();">&times;</span>
+			<h1>Waarschuwing</h1>
+			<p>Voor het openen van deze pagina <b>moet</b> je de nieuwste versie gebruiken, anders kunnen wij niet
+				garanderen dat het allemaal werkt.</p>
+		</div>
 		<button ion-button full (click)="belStan()" class="bg-green correction">
 			<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
 			<span style='font-size: 18px;'>

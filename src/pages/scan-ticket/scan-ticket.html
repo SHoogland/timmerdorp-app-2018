@@ -9,10 +9,9 @@
 		</ion-navbar>
 	</ion-header>
 	<div class='content'>
-
 		<div class="user-info">
 			<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
-				{{error}}
+				{{error=="no ticket found"?"Geen ticket gevonden.":error}}
 			</span>
 			<span *ngIf="loginError" style="color:red;font-weight:bold">
 				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
@@ -26,12 +25,14 @@
 				</div>
 			</div>
 		</div>
+
 		<div *ngIf="ticket.barcode.length > 0">
 			<div class="user-info">
 				<h1>Gegevens ticket</h1>
-				{{ticket.firstName}} {{ticket.lastName}}
-				<br> {{ticket.barcode}}
-				<br> {{ticket.birthDate}}
+				<b>Naam: </b>{{ticket.firstName}} {{ticket.lastName}}
+				<br><b>Ticket-barcode: </b>{{ticket.barcode}}
+				<br><b>Geboortedatum: </b> {{ticket.birthDate}}
+				<div *ngIf='ticket.hutNr'><b>Hutnummer: </b> {{ticket.hutNr}}</div>
 			</div>
 			<div class="bracelet-number">
 				<h1>Armband nummer:</h1>
@@ -44,17 +45,23 @@
 				</span>
 			</div>
 		</div>
-
-		<button ion-button full (click)="goHome()" class="bg-red correction">Terug</button>
-		<button *ngIf="ticket.wristBandNr.length > 2" ion-button full (click)="saveTicket()"
-			class="bg-green correction">Opslaan </button>
 	</div>
+	<button ion-button full (click)="goHome()" class="bg-red correction modern">Terug</button>
+	<button *ngIf="ticket.wristBandNr.length > 2" ion-button full (click)="saveTicket()"
+		class="bg-green correction modern">Opslaan </button>
 </ion-content>
 
-<div *ngIf="modal.showModal" id="myModal" class="modal">
+<div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
+	class="modal conditional">
 	<div class="modal-content">
-		<span class="close" (click)="modal.showModal = false;">&times;</span>
-		<h1>{{modal.text}}</h1>
-		<button ion-button full (click)="goHome()" class="bg-red correction">Terug naar homepagina</button>
+		<div id='modalTop' class='warnModal'>
+		</div>
+		<div id='modalBottom'>
+			<span class="close" (click)="closeModal();">&times;</span>
+			<h1>Waarschuwing</h1>
+			<p>Dit ticket heeft al een armband!</p>
+		</div>
+		<button ion-button full (click)="closeModal();" class="correction">Alsnog doorgaan</button>
+		<button ion-button full (click)="goHome()" class="correction">Terug naar homepagina</button>
 	</div>
 </div>

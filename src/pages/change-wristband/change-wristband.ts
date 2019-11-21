@@ -84,9 +84,11 @@ export class ChangeWristbandPage {
 				self.searched = true;
 				self.cd.detectChanges();
 				setTimeout(function () {
-					let el = document.getElementById("secondInput").getElementsByTagName("input")[0];
-					console.log(el);
-					el.focus();
+					if(document.getElementById("secondInput")){
+						let el = document.getElementById("secondInput").getElementsByTagName("input")[0];
+						console.log(el);
+						el.focus();
+					}
 				}, 250);
 			} else {
 				if (result.message == 'access denied') {
@@ -109,7 +111,7 @@ export class ChangeWristbandPage {
 	}
 
 	getColor(w) {
-		let res = 'black';
+		let res = '#222';
 		console.log((w + "")[0])
 		switch ((w + "")[0]) {
 			case '0':
@@ -125,7 +127,7 @@ export class ChangeWristbandPage {
 				res = '#9ae263';
 				break;
 			default:
-				res = 'black';
+				res = '#222';
 		}
 		return res;
 	}

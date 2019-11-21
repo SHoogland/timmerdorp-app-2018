@@ -73,8 +73,7 @@
 			<b>Naam: </b>{{ticket.firstName}} {{ticket.lastName}}
 			<br><b>Ticket-barcode: </b>{{ticket.barcode}}
 			<br><b>Geboortedatum: </b> {{ticket.birthDate}}
-			<br><b>Hutnummer: </b> {{ticket.hutnr}}
-			<br><br>
+			<div *ngIf='ticket.hutnr'><b>Hutnummer: </b> {{ticket.hutnr}}</div>
 			<h3>Nieuw nummer</h3>
 			<ion-item>
 				<ion-input #nrInput type='tel' placeholder="Nieuw polsbandje" [(ngModel)]="newNr" id='secondInput'

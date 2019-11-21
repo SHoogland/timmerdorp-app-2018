@@ -8,14 +8,14 @@
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
+	<div *ngIf='showSelection' style='text-align: center'>
+		<h1 style='margin-top: 20px;'>Kies je wijk</h1>
+		<button ion-button class='bg-blue modern customColoured' full (click)='kiesWijk("blue")'>Blauw</button>
+		<button ion-button class='bg-yellow modern customColoured' full (click)='kiesWijk("yellow")'>Geel</button>
+		<button ion-button class='bg-red modern customColoured' full (click)='kiesWijk("red")'>Rood</button>
+		<button ion-button class='bg-green modern customColoured' full (click)='kiesWijk("green")'>Groen</button>
+	</div>
 	<div class='content'>
-		<div *ngIf='showSelection' style='text-align: center'>
-			<h1>Kies je wijk</h1>
-			<button ion-button class='bg-blue' full (click)='kiesWijk("blue")'>Blauw</button>
-			<button ion-button class='bg-yellow' full (click)='kiesWijk("yellow")'>Geel</button>
-			<button ion-button class='bg-red' full (click)='kiesWijk("red")'>Rood</button>
-			<button ion-button class='bg-green' full (click)='kiesWijk("green")'>Groen</button>
-		</div>
 		<div *ngIf='!showSelection' style='text-align: center'>
 			<div class="user-info" style='border: none!important;'>
 				<div id='spinner' [ngClass]="{'hidden': !(loading&&!notLoggedIn)}">

@@ -170,8 +170,17 @@ button {
   transition-duration: 300ms !important;
 }
 
+.bg-black{
+	background: #000;
+}
+
+button.modern, button.modern *, button.modern > *{
+	color: white!important;
+}
+
 .stanModal div button {
-  margin: 0px 0 40px 0 !important;
+  color: white!important;
+  margin: 0px 0 0px 0 !important;
 }
 
 .color-mediumBlack {
@@ -381,7 +390,7 @@ body {
   z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
-  padding: 10px;
+  padding: 24px;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
@@ -402,9 +411,9 @@ input.text-input {
 ion-item,
 .item-md,
 .item-ios {
-	&:not(.modalInput){
-		background: #fafafa !important;
-	}
+  &:not(.modalInput) {
+    background: #fafafa !important;
+  }
 }
 
 .content-md {
@@ -416,9 +425,8 @@ ion-item,
 .modal-content {
   position: relative;
   // top: 160px;
-  padding: 10px;
   background-color: $white;
-  margin: 15% auto;
+  margin: 20px auto;
   padding: 20px;
   text-align: center;
 
@@ -428,6 +436,79 @@ ion-item,
   span {
     line-height: 40px;
   }
+
+  padding: 0;
+
+  ul {
+    li {
+      list-style: none;
+    }
+  }
+
+  .input-wrapper,
+  ion-item:not(.modalInput),
+  .item-md:not(.modalInput),
+  .item-ios:not(.modalInput) {
+    background: rgba(0, 0, 0, 0) !important;
+  }
+
+  button {
+    border-radius: 0px !important;
+    margin: 0px;
+    &:nth-of-type(2n) {
+      background: $blue;
+    }
+    &:nth-of-type(2n + 1) {
+      background: #1c8ae1;
+    }
+    &:hover,
+    &.activated {
+      background: $bluehover !important;
+    }
+  }
+}
+
+#modalTop.warnModal {
+  background: #e82525;
+}
+
+button.modern {
+  border-radius: 0px !important;
+  margin: 0px;
+  &:nth-of-type(2n):not(.customColoured) {
+    background: $blue;
+  }
+  &:nth-of-type(2n + 1):not(.customColoured) {
+    background: #1c8ae1;
+  }
+  &:hover:not(.customColoured),
+  &.activated:not(.customColoured) {
+    background: $bluehover !important;
+  }
+}
+
+#modalBottom {
+  padding: 16px;
+  z-index: 200;
+  position: relative;
+  span {
+    color: white;
+    margin-top: 12px;
+    font-size: 56px;
+  }
+  h1 {
+    color: white;
+    margin-top: 15px !important;
+    margin-bottom: 48px;
+    font-weight: normal;
+  }
+}
+
+#modalTop {
+  background: #2196f3;
+  width: 100%;
+  height: 100px;
+  position: absolute;
 }
 
 /* The Close Button */

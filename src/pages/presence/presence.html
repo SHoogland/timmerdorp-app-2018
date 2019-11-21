@@ -12,7 +12,7 @@
 		<div class="container">
 			<div class="bracelet-number">
 				<h1>Aanwezigheid</h1>
-				<h3>Aanwezigheid registreren voor <u style='color: green;'>{{getDayName(day)}}</u></h3>
+				<h3>Aanwezigheid registreren voor <u style='color: green;' (click)='alert()'>{{getDayName(day).toLowerCase()}}</u></h3>
 				<ion-input id='numberInput' #nrInput type="tel" placeholder="Zoek op polsbandnummer" maxlength="3"
 					[(ngModel)]="number" (ngModelChange)="getChild($event)"></ion-input>
 				<button (click)='togglePresence()' id='sendButton' ion-button type="submit"
@@ -97,12 +97,17 @@
 		</div>
 	</div>
 </ion-content>
+
 <div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
 	class="modal conditional">
 	<div class="modal-content">
-		<span class="close" (click)="closeModal();">&times;</span>
-		<h1>Waarschuwing</h1>
-		<p>Dit kind is al aanwezig gemeld voor {{getDayName(day).toLowerCase()}}! Je hebt twee opties:</p>
+		<div id='modalTop' class='warnModal'>
+		</div>
+		<div id='modalBottom'>
+			<span class="close" (click)="closeModal();">&times;</span>
+			<h1>Waarschuwing</h1>
+			<p>Dit kind is al aanwezig gemeld voor {{getDayName(day).toLowerCase()}}! Je hebt twee opties:</p>
+		</div>
 		<button ion-button full (click)="closeModal()" class="bg-red correction">Terug</button>
 		<button ion-button full (click)="makeAbsent()" class="bg-blue correction">Afwezig
 			melden</button>

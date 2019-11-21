@@ -315,7 +315,7 @@ export class SearchPage {
 
 	getColor(w) {
 		let res = 'black';
-		console.log((w + "")[0])
+		// console.log((w + "")[0])
 		switch ((w + "")[0]) {
 			case '0':
 				res = '#ffc800';
@@ -333,7 +333,7 @@ export class SearchPage {
 				res = 'black';
 		}
 		return res;
-	}
+	} 
 
 	closeModal() {
 		this.modal.showModal = false;

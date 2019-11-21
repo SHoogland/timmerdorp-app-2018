@@ -86,7 +86,7 @@
 <div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
 	class="modal conditional">
 	<div class="modal-content" *ngIf="modal.child">
-		<div id='modalTop'>
+		<div id='modalTop' class='bg-red'>
 		</div>
 		<div id='modalBottom'>
 			<span class="close" (click)="closeModal();">&times;</span>

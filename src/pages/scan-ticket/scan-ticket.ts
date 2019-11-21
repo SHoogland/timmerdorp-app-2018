@@ -12,16 +12,19 @@ declare let cordova: any;
 	templateUrl: 'scan-ticket.html',
 })
 export class ScanTicketPage {
-	loginError: boolean;
+	wristBandError: boolean;
 	notLoggedIn: boolean;
-	error: string;
-	endpoint: string;
+	loginError: boolean;
 	loading: boolean;
+
+	oldNumber: string;
+	endpoint: string;
+	error: string;
+
+
 	modal: {
 		showModal: boolean;
-		text: string;
 	}
-	wristBandError: boolean;
 	login: {
 		username: string,
 		password: string
@@ -31,7 +34,8 @@ export class ScanTicketPage {
 		firstName: string,
 		lastName: string,
 		birthDate: string,
-		wristBandNr: string
+		wristBandNr: string,
+		hutNr: string
 	};
 
 	constructor(
@@ -65,13 +69,13 @@ export class ScanTicketPage {
 			firstName: '',
 			lastName: '',
 			birthDate: '',
-			wristBandNr: ''
+			wristBandNr: '',
+			hutNr: null
 		}
 		this.loginError = false;
 		this.notLoggedIn = false;
 		this.loading = true;
 		this.modal = {
-			text: '',
 			showModal: false
 		}
 		this.wristBandError = false;
@@ -124,10 +128,12 @@ export class ScanTicketPage {
 				self.ticket.lastName = (result.meta.WooCommerceEventsAttendeeLastName || [])[0];
 				self.ticket.birthDate = (result.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'] || [])[0];
 
+				if (result.meta.hutnr) self.ticket.hutNr = result.meta.hutnr;
+
 				if (result.meta.wristband) {
-					self.modal.showModal = true;
 					self.ticket.wristBandNr = (result.meta.wristband || [])[0];
-					self.modal.text = 'Dit ticket heeft al een armband!';
+					self.oldNumber = self.ticket.wristBandNr;
+					self.showModal();
 				}
 				self.loading = false;
 			} else {
@@ -165,9 +171,9 @@ export class ScanTicketPage {
 						let t = self.ticket;
 						editHis.unshift({
 							name: t.firstName + " " + t.lastName,
-							oldNr: "onbekend",
+							oldNr: self.oldNumber || "onbekend",
 							newNr: t.wristBandNr,
-							wijk: "#222"
+							wijk: self.getColor(t.hutNr)
 						});
 						console.log(editHis);
 
@@ -186,8 +192,42 @@ export class ScanTicketPage {
 			});
 	}
 
+	getColor(w) {
+		let res = '#222';
+		console.log((w + "")[0])
+		switch ((w + "")[0]) {
+			case '0':
+				res = '#ffc800';
+				break;
+			case '1':
+				res = '#f44336';
+				break;
+			case '2':
+				res = '#2196F3';
+				break;
+			case '3':
+				res = '#9ae263';
+				break;
+			default:
+				res = '#222';
+		}
+		return res;
+	}
+
 	toLogin() {
 		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+	}
+
+	closeModal() {
+		this.modal.showModal = false;
+		setTimeout(function () {
+			document.querySelector('#myModal').classList.remove('high');
+		}, 400);
+	}
+
+	showModal() {
+		this.modal.showModal = true;
+		document.querySelector('#myModal').classList.add('high');
 	}
 
 	goHome() {
