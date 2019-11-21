@@ -13,7 +13,7 @@
 		<div class="bracelet-number">
 			<h3>Oud nummer</h3>
 			<ion-item>
-				<ion-input #nrInput type='tel' placeholder="Huidig polsbandje" [(ngModel)]="oldNr" maxlength='3'>
+				<ion-input #nrInput type='tel' placeholder="Huidig polsbandje" [(ngModel)]="oldNr" (ngModelChange)='valueChanged()' maxlength='3'>
 				</ion-input>
 			</ion-item>
 			<span *ngIf="wristBandError" class="form-error">
@@ -28,7 +28,7 @@
 			Zoeken
 		</button>
 
-		<ion-list *ngIf="!searched && history && history.length > 0">
+		<ion-list *ngIf="!searched && !error && !loading && history && history.length > 0">
 			<ion-list-header>
 				Wijzigingsgeschiedenis
 			</ion-list-header>

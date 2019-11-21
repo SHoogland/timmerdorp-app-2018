@@ -62,9 +62,10 @@ export class ChangeWristbandPage {
 		console.log('searching: ' + this.oldNr);
 		var wp = this.getWpApi('search');
 		wp.handler().param('search', this.oldNr).then((result) => {
-			console.log(result);
 			let t = result.tickets;
-			console.log(t, result);
+			t = t.filter(function(a){
+				return a.meta.wristband[0] == self.oldNr;
+			});
 			if (!t.length) {
 				self.error = 'Geen tickets gevonden :('
 				self.loading = false;
@@ -108,6 +109,14 @@ export class ChangeWristbandPage {
 			self.loading = false;
 		});
 
+	}
+
+	valueChanged(){
+		if(this.searched){
+			this.searched = false;
+			this.loading = false;
+			this.ticket = {}
+		}
 	}
 
 	getColor(w) {
