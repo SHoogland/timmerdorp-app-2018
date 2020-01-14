@@ -63,7 +63,7 @@ export class ChangeWristbandPage {
 		var wp = this.getWpApi('search');
 		wp.handler().param('search', this.oldNr).then((result) => {
 			let t = result.tickets;
-			t = t.filter(function(a){
+			t = t.filter(function (a) {
 				return a.meta.wristband[0] == self.oldNr;
 			});
 			if (!t.length) {
@@ -85,7 +85,7 @@ export class ChangeWristbandPage {
 				self.searched = true;
 				self.cd.detectChanges();
 				setTimeout(function () {
-					if(document.getElementById("secondInput")){
+					if (document.getElementById("secondInput")) {
 						let el = document.getElementById("secondInput").getElementsByTagName("input")[0];
 						console.log(el);
 						el.focus();
@@ -111,8 +111,8 @@ export class ChangeWristbandPage {
 
 	}
 
-	valueChanged(){
-		if(this.searched){
+	valueChanged() {
+		if (this.searched) {
 			this.searched = false;
 			this.loading = false;
 			this.ticket = {}
@@ -212,7 +212,7 @@ export class ChangeWristbandPage {
 					name: m.WooCommerceEventsAttendeeName[0] + " " + m.WooCommerceEventsAttendeeLastName[0],
 					oldNr: m.wristband,
 					newNr: self.newNr,
-					wijk: self.getColor(m.hutnr)
+					hutnr: m.hutnr
 				});
 				console.log(self.history);
 
@@ -245,5 +245,21 @@ export class ChangeWristbandPage {
 
 	goHome() {
 		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+	}
+
+	getWijk(hutNr) {
+		console.log(hutNr);
+		return 'Rood';
+		if (hutNr[0] == '0') {
+			return 'Geel';
+		} else if (hutNr[0] == '1') {
+			return 'Rood';
+		} else if (hutNr[0] == '2') {
+			return 'Blauw';
+		} else if (hutNr[0] == '3') {
+			return 'Groen';
+		} else {
+			return '';
+		}
 	}
 }

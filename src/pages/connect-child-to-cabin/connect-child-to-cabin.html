@@ -10,7 +10,7 @@
 	</ion-header>
 	<div class='content'>
 		<div class="user-info">
-			<h1>Hutnummer:</h1>
+			<h1 id='hutHeader'>Hutnummer</h1>
 			<ion-item>
 				<ion-input #nrInput type="tel" placeholder="123" [(ngModel)]="hutNr" (ngModelChange)="search($event)"
 					maxlength="3"></ion-input>
@@ -49,15 +49,15 @@
 		</div>
 
 		<div class="bracelet-number conditional" [ngClass]='hutNr && hutNr.length === 3 ? "shown":""'>
-			<h1>Kinderen in hut{{hutNr?' ' + hutNr:''}}:</h1>
+			<h1 id='hutHeader'>Kinderen in hut {{hutNr}}</h1>
 			<div class="user-info">
-				<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
+				<span *ngIf="!loginError&&!notLoggedIn" class='errorMsg'>
 					{{error}}
 				</span>
-				<span *ngIf="loginError" style="color:red;font-weight:bold">
+				<span *ngIf="loginError" class='errorMsg'>
 					Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
 				</span>
-				<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+				<span *ngIf="notLoggedIn" class='errorMsg'>
 					Je moet eerst <a (click)='toLogin()'>inloggen</a>!
 				</span>
 				<div style='height: 20px;'>
@@ -96,6 +96,7 @@
 			<span class="close" (click)="closeAddModal();">&times;</span>
 			<h1>Kind toevoegen</h1>
 			<p>Zoek een kind en voeg het toe aan hutje {{hutNr}}.</p>
+
 			<ion-item *ngIf="isTue">
 				<ion-label>Automatisch aanwezig melden</ion-label>
 				<ion-toggle [(ngModel)]="autoPresence"></ion-toggle>
@@ -106,15 +107,15 @@
 					(ngModelChange)="searchChild($event)"></ion-input>
 			</ion-item>
 
-
 			<p style="color:red; font-weight: bold;">
 				{{searchError}}
 			</p>
+
 			<div style='height: 40px; margin-top: 10px'>
 				<ion-spinner *ngIf='loading&&!notLoggedIn' color='primary'></ion-spinner>
 			</div>
-
 		</div>
+
 		<div *ngFor="let child of tickets">
 			<button ion-button full (click)="addChildToHut(child);" class="bg-grey modern">
 				{{ child.meta.WooCommerceEventsAttendeeName[0] }}
@@ -134,9 +135,7 @@
 					{{ child.meta.hutnr}}</span>
 			</button>
 		</div>
-
 	</div>
-
 </div>
 
 <div [ngClass]="{'shown': removeModal.show}" id="removeModal"
@@ -146,8 +145,8 @@
 		</div>
 		<div id='modalBottom'>
 			<span class="close" (click)="closeRemoveModal();">&times;</span>
-			<h1>Waarschuwing</h1>
-			<p *ngIf="removeChild">Weet je zeker dat je {{ removeChild.meta.WooCommerceEventsAttendeeName[0] }}
+			<h1 style='font-size: 31px;'>Waarschuwing</h1>
+			<p *ngIf="removeChild">Weet je zeker dat je {{removeChild.meta.WooCommerceEventsAttendeeName[0] }}
 				wilt verwijderen?</p>
 		</div>
 		<button ion-button full (click)="removeChildFromHut(removeChild)" class="bg-green correction modern">Ja</button>

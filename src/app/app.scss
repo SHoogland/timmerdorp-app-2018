@@ -104,7 +104,7 @@ div.content {
   padding: 10px !important;
 }
 
-@media only screen and (max-width: 410px) {
+@media only screen and (max-width: 340px) {
   #ptitle {
     font-size: 19px !important;
     margin-top: 29px !important;
@@ -302,7 +302,7 @@ ion-toolbar {
 }
 
 .user-info {
-  padding-top: 20;
+  padding-top: 20px;
   text-align: center;
   padding: 12px 0;
   border-bottom: none;
@@ -569,7 +569,7 @@ button {
   }
 
   ion-item {
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 30px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 24px;
     border-radius: 6px;
     padding: 0px;
     height: 80px;
@@ -673,4 +673,39 @@ button {
       padding-left: 12px !important;
     }
   }
+}
+
+.infoCard {
+  position: relative;
+  border-radius: 8px;
+  width: 280px;
+  .inhoud {
+    border-radius: 8px;
+    padding-top: 20px;
+    padding-left: 16px;
+  }
+
+  tr td:first-of-type {
+    padding-right: 12px;
+  }
+  box-shadow: 4px 4px 24px #aaa;
+  margin: auto;
+  background: #f0f0f0;
+  .inhoud.Rood {
+    border-left: 10px solid $red;
+  }
+  .inhoud.Blauw {
+    border-left: 10px solid $blue;
+  }
+  .inhoud.Groen {
+    border-left: 10px solid $green;
+  }
+  .inhoud.Geel {
+    border-left: 10px solid $yellow;
+  }
+}
+
+.errorMsg {
+  color: red;
+  font-weight: bold;
 }

@@ -21,13 +21,13 @@
 		</div>
 
 		<div class="user-info">
-			<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
+			<span *ngIf="!loginError&&!notLoggedIn&&searchTerm" class='errorMsg'>
 				{{error}}
 			</span>
-			<span *ngIf="loginError" style="color:red;font-weight:bold">
+			<span *ngIf="loginError" class='errorMsg'>
 				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
 			</span>
-			<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+			<span *ngIf="notLoggedIn" class='errorMsg'>
 				Je moet eerst <a (click)='toLogin()'>inloggen</a>!
 			</span>
 			<div style='height: 20px;'>

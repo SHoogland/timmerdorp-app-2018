@@ -63,4 +63,17 @@ page-search {
       }
     }
   }
+
+  .bracelet-number {
+    width: calc(100% - 36px);
+    margin-left: 18px;
+  }
+
+  h1 {
+    margin-top: 0px;
+  }
+
+  .user-info {
+    padding: 0 !important;
+  }
 }

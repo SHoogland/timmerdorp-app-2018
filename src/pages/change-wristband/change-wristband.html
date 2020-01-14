@@ -10,84 +10,102 @@
 	</ion-header>
 	<h1 id='title' style='text-align: center;'>Verander Polsbandnummer</h1>
 	<div class='content'>
-		<div class="bracelet-number">
-			<h3>Oud nummer</h3>
-			<ion-item>
-				<ion-input #nrInput type='tel' placeholder="Huidig polsbandje" [(ngModel)]="oldNr" (ngModelChange)='valueChanged()' maxlength='3'>
-				</ion-input>
-			</ion-item>
-			<span *ngIf="wristBandError" class="form-error">
-				{{ wristBandError }}
-			</span>
+		<div id='columns'>
+			<div id='old'>
+				<div class="bracelet-number">
+					<h3>Oud nummer</h3>
+					<ion-item>
+						<ion-input #nrInput type='tel' placeholder="Huidig polsbandje" [(ngModel)]="oldNr"
+							(ngModelChange)='valueChanged()' maxlength='3'>
+						</ion-input>
+					</ion-item>
+					<span *ngIf="wristBandError" class="form-error">
+						{{ wristBandError }}
+					</span>
+				</div>
+
+				<button ion-button full (click)="searchTicket()" class="bg-blue correction shown" id='searchBtn2'>
+					<ion-icon slot='start' name='search' style='margin-right:12px;position:relative;font-size:1.8em;'>
+					</ion-icon>
+					Zoeken
+				</button>
+			</div>
+
+			<div class="user-info" id='new' *ngIf="searched">
+				<h3>Nieuw nummer</h3>
+				<ion-item>
+					<ion-input #nrInput type='tel' placeholder="Nieuw polsbandje" [(ngModel)]="newNr" id='secondInput'
+						maxlength='3'>
+					</ion-input>
+				</ion-item>
+				<button ion-button full (click)="saveNr()" class="bg-blue correction shown">
+					<ion-icon slot='start' name='checkmark'
+						style='margin-right:12px;position:relative;font-size:1.8em;'>
+					</ion-icon>
+					Opslaan
+				</button>
+			</div>
 		</div>
-
-		<button [ngClass]="{'shown': (oldNr||'').length >= 3 }" ion-button full (click)="searchTicket()"
-			class="bg-blue correction" style='z-index:400;position:relative;margin-top:0;'>
-			<ion-icon slot='start' name='search' style='margin-right:12px;position:relative;font-size:1.8em;'>
-			</ion-icon>
-			Zoeken
-		</button>
-
-		<ion-list *ngIf="!searched && !error && !loading && history && history.length > 0">
+		<div *ngIf='searched' class='infoCard'>
+			<div class='{{"inhoud " + getWijk(ticket.hutnr)}}'>
+				<h1>Kind #{{oldNr}}</h1>
+				<table>
+					<tr>
+						<td><b>Naam: </b></td>
+						<td>{{ticket.firstName}} {{ticket.lastName}}</td>
+					</tr>
+					<tr>
+						<td><b>Ticket-barcode: </b></td>
+						<td>{{ticket.barcode}}</td>
+					</tr>
+					<tr>
+						<td><b>Geboortedatum: </b></td>
+						<td>{{ticket.birthDate}}</td>
+					</tr>
+					<tr *ngIf='ticket.hutnr'>
+						<td><b>Hutnummer: </b></td>
+						<td>{{ticket.hutnr}}</td>
+					</tr>
+				</table>
+				<div style=' height: 20px;'>
+					<div *ngIf="loading2">
+						<ion-spinner color='primary'></ion-spinner>
+					</div>
+				</div>
+			</div>
+		</div>
+		<ion-list class='peopleList' *ngIf="!searched && !error && !loading && history && history.length > 0">
 			<ion-list-header>
 				Wijzigingsgeschiedenis
 			</ion-list-header>
-
-
-			<ion-item *ngFor="let h of history">
+			<ion-item (click)='oldNr=""+h.newNr;searched=true;searchTicket()' *ngFor="let h of history"
+				class='{{"item item-block item-md " + getWijk((h.hutnr||[])[0])}}'>
 				<ion-label>
-					<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
-						[ngStyle]='{"color": h.wijk}'></ion-icon>
-					<div style='position:relative; left: 80px;'>
-						<h2>{{h.name}}</h2>
-						<p><b>Oud polsbandje:</b> {{h.oldNr}}</p>
-						<p><b>Nieuw polsbandje:</b> {{h.newNr}}</p>
+					<div>
+						<h3>Oud: <span>{{h.oldNr}}</span></h3>
+						<h3>Nieuw: <span>{{h.newNr}}</span></h3>
 					</div>
-					<ion-button size="small" (click)='oldNr=""+h.newNr;searched=true;searchTicket()'
-						style='background: #2196f3;padding: 11px;border-radius: 4px;color: white;right: 0px;top: 15px;position: absolute;'>
+					<div>
+						<h2>{{h.name}}</h2>
+					</div>
+					<ion-button id='searchBtn' size="small">
 						Zoeken</ion-button>
 				</ion-label>
 			</ion-item>
 		</ion-list>
 
-
 		<div class="user-info">
-			<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
+			<span *ngIf="!loginError&&!notLoggedIn" class='errorMsg'>
 				{{error}}
 			</span>
-			<span *ngIf="loginError" style="color:red;font-weight:bold">
+			<span *ngIf="loginError" class='errorMsg'>
 				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
 			</span>
-			<span *ngIf="notLoggedIn" style="color:red;font-weight:bold">
+			<span *ngIf="notLoggedIn" class='errorMsg'>
 				Je moet eerst <a (click)='toLogin()'>inloggen</a>!
 			</span>
 			<div style='height: 20px;'>
 				<div *ngIf="loading&&!notLoggedIn">
-					<ion-spinner color='primary'></ion-spinner>
-				</div>
-			</div>
-		</div>
-
-		<div class="user-info" *ngIf="searched">
-			<h1>Kind #{{oldNr}}</h1>
-			<b>Naam: </b>{{ticket.firstName}} {{ticket.lastName}}
-			<br><b>Ticket-barcode: </b>{{ticket.barcode}}
-			<br><b>Geboortedatum: </b> {{ticket.birthDate}}
-			<div *ngIf='ticket.hutnr'><b>Hutnummer: </b> {{ticket.hutnr}}</div>
-			<h3>Nieuw nummer</h3>
-			<ion-item>
-				<ion-input #nrInput type='tel' placeholder="Nieuw polsbandje" [(ngModel)]="newNr" id='secondInput'
-					maxlength='3'>
-				</ion-input>
-			</ion-item>
-			<button [ngClass]="{'shown': (newNr||'').length >= 3 }" ion-button full (click)="saveNr()"
-				class="bg-blue correction">
-				<ion-icon slot='start' name='checkmark' style='margin-right:12px;position:relative;font-size:1.8em;'>
-				</ion-icon>
-				Opslaan
-			</button>
-			<div style='height: 20px;'>
-				<div *ngIf="loading2">
 					<ion-spinner color='primary'></ion-spinner>
 				</div>
 			</div>
