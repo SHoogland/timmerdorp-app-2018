@@ -27,17 +27,17 @@ page-presence {
     background: #e82525;
   }
 
-  .fab {
-    height: 48px;
-    width: 48px;
-    background: #2196f3;
-    padding: 11px;
-    color: white;
-    right: 0px;
-    padding-top: 0px !important;
-    top: 15px;
-    position: absolute;
-    border-radius: 50% !important;
-    padding-left: 12px !important;
+  .peopleList {
+    ion-item {
+      .input-wrapper ion-label {
+        div:first-of-type {
+          margin-top: 4px;
+        }
+
+        div:nth-of-type(2n) {
+          margin-top: 5px;
+        }
+      }
+    }
   }
 }

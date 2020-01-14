@@ -11,7 +11,7 @@
 	<div class='content'>
 		<div class="user-info">
 			<span *ngIf="!loginError&&!notLoggedIn" style="color:red;font-weight:bold">
-				{{error=="no ticket found"?"Geen ticket gevonden.":error}}
+				{{!navParams.get('barcode')?"Geen barcode gescand":(error=="no ticket found"?"Geen ticket gevonden.":error)}}
 			</span>
 			<span *ngIf="loginError" style="color:red;font-weight:bold">
 				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>

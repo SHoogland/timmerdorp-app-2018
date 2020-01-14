@@ -5,24 +5,70 @@ page-connect-child-to-cabin {
       margin-top: -8px;
     }
   }
-  
+
   .undoButton {
     background: #f44336;
     padding: 11px;
     border-radius: 4px;
     color: white;
-    right: 8px;
-	top: 15px;
+    @media screen and(max-width:370px) {
+      right: 0px !important;
+    }
+    right: 14px;
+    top: 20px;
     font-size: 0.8em;
-	position: absolute;
-	transition-duration: 400ms;
+    position: absolute;
+    transition-duration: 400ms;
   }
 
-  .undoButton.done{
-	  background: $green;
+  .undoButton.done {
+    background: $green;
   }
 
-  ion-item.accent{
-	  background: red;
+  ion-item.accent {
+    background: red;
+  }
+
+  .peopleList {
+    ion-item {
+      .input-wrapper ion-label {
+        @media screen and (min-width: 440px) {
+          div:first-of-type {
+            width: 172px;
+            margin-right: 16px;
+          }
+        }
+        @media screen and (max-width: 440px) {
+          div:first-of-type {
+            width: 128px;
+            margin-right: 16px;
+          }
+        }
+        div:nth-of-type(2n) {
+          padding-top: 8px;
+        }
+        div:first-of-type {
+          height: 100px;
+          float: left;
+        }
+        column-count: 2;
+      }
+    }
+
+    p {
+      position: relative;
+      @media screen and (max-width: 400px) {
+        .largeScreenSpan {
+          display: none !important;
+        }
+      }
+
+      @media screen and (min-width: 400px) {
+        span:not(.largeScreenSpan) {
+          position: absolute;
+          right: 0px;
+        }
+      }
+    }
   }
 }

@@ -29,7 +29,7 @@ export class HomePage {
 	version: string;
 	error: string;
 	wijk: string;
-	
+
 	updates: any;
 	pages: Array<{
 		title: string,
@@ -37,19 +37,19 @@ export class HomePage {
 		class: string,
 		icon: string
 	}>;
-	
+
 	login: {
 		username: '',
 		password: ''
 	};
-	
+
 	clickedTwice = false;
 	clickedOnce = false;
 	staging = false;
-	
+
 	readablePageList: any;
 	openedPage: any;
-	
+
 	y: Number;
 
 	constructor(

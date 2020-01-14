@@ -1,18 +1,4 @@
 page-search {
-  .fab {
-    height: 48px;
-    width: 48px;
-    background: #2196f3;
-    padding: 11px;
-    color: white;
-    right: 0px;
-    padding-top: 0px !important;
-    top: 15px;
-    position: absolute;
-    border-radius: 50% !important;
-    padding-left: 12px !important;
-  }
-
   table {
     div {
       h3 {
@@ -56,5 +42,25 @@ page-search {
   td.b {
     padding-right: 8px;
     font-weight: bold;
+  }
+
+  .peopleList {
+    ion-item {
+      h2 {
+        @media screen and (max-width: 440px) {
+          font-size: 2.2rem;
+          padding-top: 4px;
+        }
+        @media screen and (min-width: 440px) {
+          font-size: 2.8rem;
+          padding-top: 0px;
+          span {
+            //   wil ik dit?
+            border-left: 1.5px solid rgba(0, 0, 0, 0.15);
+            padding-left: 14px;
+          }
+        }
+      }
+    }
   }
 }

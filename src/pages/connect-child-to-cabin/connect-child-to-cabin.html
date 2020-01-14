@@ -18,28 +18,26 @@
 		</div>
 
 		<div *ngIf='!(hutNr && hutNr.length === 3) && history && history.length > 0 && (!loading || isUndoing)'>
-			<ion-list>
+			<ion-list class='peopleList'>
 				<ion-list-header>
 					Wijzigingsgeschiedenis
 				</ion-list-header>
 
 				<div *ngFor="let h of history; let i = index">
-					<ion-item [ngClass]="giveAccent&&!i?'accent':''">
+					<ion-item [ngClass]="giveAccent&&!i?'accent':''"
+						class='{{"item item-block item-md " + getWijk((h.hutnr||[0])[0])}}'>
 						<ion-label>
-							<ion-icon name='person' style='position: fixed;font-size:2.5em;top:28px;left: 20px;'
-								[ngStyle]='{"color": h.wijk}'></ion-icon>
-							<div style='position:relative; left: 60px;' *ngIf="!h.removal">
+							<div *ngIf="!h.removal">
 								<h2>{{h.name}}</h2>
 								<h3>Polsbandje: {{h.wristband}}</h3>
-								<p>Oud hutnummer: {{((h.oldNr||[])[0])||"-"}}</p>
-								<p>Nieuw hutnummer: {{h.hutnr}}</p>
 							</div>
-							<div style='position:relative; left: 60px;' *ngIf="h.removal">
+							<div *ngIf="h.removal">
 								<h2>{{h.name}}</h2>
-								<h3><b>Verwijderd uit hut</b></h3>
-								<h3>Polsbandje: {{h.wristband}}</h3>
-								<p>Oud hutnummer: {{((h.oldNr||[])[0])||"-"}}</p>
-								<p>Nieuw hutnummer: -</p>
+								<h3><i>Verwijderd uit hut</i></h3>
+							</div>
+							<div>
+								<p>Oud<span class='largeScreenSpan'> hutje</span>: {{((h.oldNr||[])[0])||"-"}}</p>
+								<p>Nieuw<span class='largeScreenSpan'> hutje</span>: {{h.removal?"-":h.hutnr}}</p>
 							</div>
 							<ion-button size="small" class='undoButton' id='{{i}}'
 								(click)='tempHutNr=h.oldNr;isUndoing=true;selectedChild = h.ticket;reallyAddChildNow();undo(i);'>
@@ -72,7 +70,8 @@
 					Nog geen kindertjes in dit hutje :(</p>
 			</div>
 			<div *ngFor="let child of hutTickets">
-				<button ion-button full class="modern customColoured" [ngStyle]='{"background": getBg(child.meta.hutnr)}'
+				<button ion-button full class="modern customColoured"
+					[ngStyle]='{"background": getBg(child.meta.hutnr)}'
 					(click)="removeChild = child; showRemoveModal();">
 					{{ child.meta.WooCommerceEventsAttendeeName[0] }}
 					{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
@@ -96,7 +95,7 @@
 		<div id='modalBottom'>
 			<span class="close" (click)="closeAddModal();">&times;</span>
 			<h1>Kind toevoegen</h1>
-			<p>Zoek een kind en voeg het toe aan hutje {{nieuwHutje}}.</p>
+			<p>Zoek een kind en voeg het toe aan hutje {{hutNr}}.</p>
 			<ion-item *ngIf="isTue">
 				<ion-label>Automatisch aanwezig melden</ion-label>
 				<ion-toggle [(ngModel)]="autoPresence"></ion-toggle>

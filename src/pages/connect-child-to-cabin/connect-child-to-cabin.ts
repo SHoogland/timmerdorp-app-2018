@@ -167,11 +167,11 @@ export class ConnectChildToCabinPage {
 		});
 	}
 
-	getBg(hutnr){
+	getBg(hutnr) {
 		let res = '#000';
 		let a = (hutnr + "")[0];
-		
-		switch(a){
+
+		switch (a) {
 			case '0':
 				res = '#ffc800';
 				break;
@@ -512,5 +512,20 @@ export class ConnectChildToCabinPage {
 
 	goHome() {
 		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+	}
+
+
+	getWijk(hutNr) {
+		if (hutNr[0] == '0') {
+			return 'Geel';
+		} else if (hutNr[0] == '1') {
+			return 'Rood';
+		} else if (hutNr[0] == '2') {
+			return 'Blauw';
+		} else if (hutNr[0] == '3') {
+			return 'Groen';
+		} else {
+			return '';
+		}
 	}
 }

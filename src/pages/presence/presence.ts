@@ -335,7 +335,7 @@ export class PresencePage {
 		}, 1000);
 	}
 
-	alert(){
+	alert() {
 		alert("Om fouten te voorkomen is het niet mogelijk aanwezigheid te veranderen voor andere dagen. Vragen of toch een wijziging aanvragen? Zoek Stan van wijk blauw/Stephan van wijk geel");
 	}
 
@@ -345,5 +345,19 @@ export class PresencePage {
 
 	goHome() {
 		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+	}
+
+	getWijk(hutNr) {
+		if (hutNr[0] == '0') {
+			return 'Geel';
+		} else if (hutNr[0] == '1') {
+			return 'Rood';
+		} else if (hutNr[0] == '2') {
+			return 'Blauw';
+		} else if (hutNr[0] == '3') {
+			return 'Groen';
+		} else {
+			return '';
+		}
 	}
 }

@@ -11,10 +11,11 @@
 	<div class='content'>
 		<div class="container">
 			<div class="bracelet-number">
-				<h1>Zoek kind:</h1>
+				<h1>Kinderen Zoeken</h1>
 				<span class="search-on">Zoek op naam, armbandnummer of hutnummer</span>
 				<ion-item>
-					<ion-input type="text" [(ngModel)]="searchTerm" (ngModelChange)="search($event)"></ion-input>
+					<ion-input clearInput type="text" [(ngModel)]="searchTerm" (ngModelChange)="search($event)">
+					</ion-input>
 				</ion-item>
 			</div>
 		</div>
@@ -37,21 +38,23 @@
 		</div>
 
 		<div *ngIf='!tickets.length && history && history.length > 0 && !(searchTerm||"").length'>
-			<ion-list>
+			<ion-list class='peopleList'>
 				<ion-list-header>
 					Zoekgeschiedenis
 				</ion-list-header>
 
-				<ion-item *ngFor="let h of history">
+				<ion-item *ngFor="let h of history" (click)='searchTerm=""+h.wristband;searchThis()'
+					class='{{"item item-block item-md " + getWijk((h.hutnr||[0])[0])}}'>
 					<ion-label>
-						<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
-							[ngStyle]='{"color": h.wijk}'></ion-icon>
-						<div style='position:relative; left: 80px;'>
-							<h2>{{h.name}}</h2>
-							<h3>{{h.wristband}}</h3>
-							<p>Hutje: {{h.hutnr}}</p>
+						<div>
+							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{h.wristband}}</span>
+							</h3>
+							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutnr}}</span></h3>
 						</div>
-						<ion-button size="small" class='fab' (click)='searchTerm=""+h.wristband;searchThis()'>
+						<div>
+							<h2><span>{{h.name}}</span></h2>
+						</div>
+						<ion-button size="small" class='fab'>
 							<ion-icon name='search'></ion-icon>
 						</ion-button>
 					</ion-label>
@@ -59,22 +62,25 @@
 			</ion-list>
 		</div>
 
-		<ion-list *ngIf='tickets.length'>
+		<ion-list class='peopleList' *ngIf='tickets.length'>
 			<ion-list-header>
 				Zoekresultaten
 			</ion-list-header>
-
-			<ion-item *ngFor="let child of tickets">
+			<ion-item *ngFor="let child of tickets" (click)='showModal(child)'
+				class='{{"item item-block item-md " + getWijk(((child.meta||{}).hutnr||[0])[0])}}'>
 				<ion-label>
-					<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
-						[ngStyle]='{"color": getColor(child.meta.hutnr)}'></ion-icon>
-					<div style='position:relative; left: 80px;'>
-						<h2>{{child.meta.WooCommerceEventsAttendeeName[0]}}
-							{{child.meta.WooCommerceEventsAttendeeLastName[0]}}</h2>
-						<h3>{{child.meta.wristband}}</h3>
-						<p>Hutje: {{child.meta.hutnr}}</p>
+					<div>
+						<div>
+							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{child.meta.wristband}}</span>
+							</h3>
+							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{child.meta.hutnr}}</span></h3>
+						</div>
+						<div>
+							<h2><span>{{child.meta.WooCommerceEventsAttendeeName[0]}}
+									{{child.meta.WooCommerceEventsAttendeeLastName[0]}}</span></h2>
+						</div>
 					</div>
-					<ion-button size="small" class='fab' (click)='showModal(child)'>
+					<ion-button size="small" class='fab'>
 						<ion-icon name='information-circle'></ion-icon>
 					</ion-button>
 				</ion-label>
@@ -109,9 +115,9 @@
 				</div>
 			</table>
 		</div>
-		<button ion-button full (click)="closeModal();" class="bg-green correction">Ok</button>
+		<button ion-button full (click)="closeModal();" class="correction">Oké</button>
 		<button ion-button full (click)="scanChild(modal.child.meta.WooCommerceEventsTicketID[0])"
-			class="bg-yellow correction">Scan</button>
-		<button ion-button full (click)="goHome()" class="bg-red correction">Terug naar homepagina</button>
+			class="correction">Scan</button>
+		<button ion-button full (click)="goHome()" class="correction">Terug naar homepagina</button>
 	</div>
 </div>

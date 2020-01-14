@@ -182,7 +182,6 @@ export class SearchPage {
 			this.storage.get('searchChildHistory').then((val) => {
 				this.history = val || [];
 				this.filterHistory();
-				console.log(this.history);
 			}, (error) => {
 				this.history = [];
 			}),
@@ -333,7 +332,7 @@ export class SearchPage {
 				res = 'black';
 		}
 		return res;
-	} 
+	}
 
 	closeModal() {
 		this.modal.showModal = false;

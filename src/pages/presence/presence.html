@@ -12,7 +12,8 @@
 		<div class="container">
 			<div class="bracelet-number">
 				<h1>Aanwezigheid</h1>
-				<h3>Aanwezigheid registreren voor <u style='color: green;' (click)='alert()'>{{getDayName(day).toLowerCase()}}</u></h3>
+				<h3>Aanwezigheid registreren voor <u style='color: green;'
+						(click)='alert()'>{{getDayName(day).toLowerCase()}}</u></h3>
 				<ion-input id='numberInput' #nrInput type="tel" placeholder="Zoek op polsbandnummer" maxlength="3"
 					[(ngModel)]="number" (ngModelChange)="getChild($event)"></ion-input>
 				<button (click)='togglePresence()' id='sendButton' ion-button type="submit"
@@ -73,25 +74,24 @@
 		</div>
 
 		<div *ngIf='!(tickets[0]||{}).meta && history && history.length > 0 && !loading'>
-			<ion-list>
+			<ion-list class='peopleList'>
 				<ion-list-header>
 					Zoekgeschiedenis
 				</ion-list-header>
-
-				<ion-item *ngFor="let h of history">
+				<ion-item *ngFor="let h of history" class='{{"item item-block item-md " + getWijk((h.hutnr||[0])[0])}}'
+					(click)='number=""+h.wristband;getChild()'>
 					<ion-label>
-						<ion-icon name='person' style='position: fixed;font-size:3.5em;left: 35px;'
-							[ngStyle]='{"color": h.wijk}'></ion-icon>
-						<div style='position:relative; left: 80px;'>
-							<h2>{{h.name}}</h2>
-							<h3>{{h.wristband}}</h3>
-							<p>Hutnummer: {{h.hutnr}}</p>
+						<div>
+							<h3>B<span class='largeScreenSpan'>andje</span>: <span>{{h.wristband}}</span></h3>
+							<h3>H<span class='largeScreenSpan'>utje</span>: <span>{{h.hutnr}}</span></h3>
 						</div>
-						<ion-button size="small" class='fab' (click)='number=""+h.wristband;getChild()'>
+						<div>
+							<h2><span>{{h.name}}</span></h2>
+						</div>
+						<ion-button size="small" class='fab'>
 							<ion-icon name='search'></ion-icon>
 						</ion-button>
 					</ion-label>
-
 				</ion-item>
 			</ion-list>
 		</div>
