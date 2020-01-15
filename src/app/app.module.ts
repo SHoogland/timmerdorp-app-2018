@@ -38,7 +38,7 @@ import { FilesPage } from '../pages/files/files';
 	],
 	imports: [
 		BrowserModule,
-		IonicModule.forRoot(MyApp),
+		IonicModule.forRoot(MyApp, { mode: "md" }),
 		IonicStorageModule.forRoot(),
 		HttpClientModule
 	],
@@ -64,6 +64,6 @@ import { FilesPage } from '../pages/files/files';
 		BarcodeScanner,
 		{ provide: ErrorHandler, useClass: IonicErrorHandler }
 	],
-	schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

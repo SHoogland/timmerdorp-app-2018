@@ -70,13 +70,29 @@ page-home {
     margin-top: 0px !important;
   }
 
+  #homeButtons {
+    @media screen and (min-height: 880px) {
+      top: calc(100vh - 7 * 80px);
+    }
+    position: absolute;
+    top: 320px;
+    width: 100%;
+  }
+
   ion-header {
-    min-height: 320px;
+    min-height: 400px;
+    position: absolute;
     height: calc(100vh - 6 * 80px);
     z-index: 10;
     background-position: center;
     background-size: cover;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/imgs/header_bg.JPG);
+    transition-duration: 400ms;
+    &.fullscreen {
+      background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(../assets/imgs/header_bg.JPG);
+    }
+    &:not(.fullscreen) {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/imgs/header_bg.JPG);
+    }
   }
 
   .nav-logo {
@@ -94,10 +110,93 @@ page-home {
 
   #ptitle {
     font-family: ProductSans !important;
-    bottom: 10px !important;
+    bottom: 90px !important;
     top: unset !important;
     width: calc(100% - 30px);
     left: 15px !important;
     font-size: 48px !important;
+  }
+
+  button ion-icon {
+    margin-right: 12px;
+    position: relative;
+  }
+
+  button.halfWidth {
+    margin-left: 0 !important;
+  }
+
+  .bg-white {
+    color: #333;
+    background: #eaeaea;
+    &:hover,
+    &:active {
+      background: #ccc !important;
+    }
+  }
+
+  .homeInfoCard {
+    .button-inner span {
+      top: -26px;
+      position: relative;
+    }
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.55);
+    color: white !important;
+    &.hidden {
+      background: rgba(0, 0, 0, 0) !important;
+    }
+    &:hover,
+    &:active {
+      &.hidden {
+        background: rgba(0, 0, 0, 0) !important;
+      }
+      &:not(.hidden) {
+        background: rgba(0, 0, 0, 0.8) !important;
+      }
+    }
+    ion-icon {
+      font-size: 4rem;
+      top: -10px;
+      left: -8px;
+    }
+  }
+
+  .weather {
+    h2,
+    .weatherMsg {
+      overflow-x: hidden;
+      width: calc(100% - 52px);
+    }
+    h2 {
+      position: absolute;
+      top: 26px;
+      left: 70px;
+      font-size: 16px;
+    }
+    div.weatherMsg {
+      position: absolute;
+      top: 31px;
+      left: 70px;
+      font-size: 70%;
+    }
+
+    #data {
+      position: relative;
+      top: -71px;
+      margin-left: -54px;
+    }
+  }
+
+  ion-icon.data {
+    left: -20px !important;
+  }
+
+  .blueIcon {
+    // color: $blue;
+  }
+
+  .yellowIcon {
+    // color: $yellow;
   }
 }

@@ -11,16 +11,20 @@ import { LoginPage } from '../login/login';
 	templateUrl: 'wijk.html'
 })
 export class WijkPage {
-	wijk: string;
-	wijkstats: object;
 	showSelection: boolean;
-	endpoint: string;
-	staging: boolean;
-	notLoggedIn: boolean;
-	error: string;
+
 	statistieken: object;
-	loading: boolean;
+	wijkstats: object;
+
+	endpoint: string;
+	error: string;
+	wijk: string;
+
+	notLoggedIn: boolean;
 	loginError: boolean;
+	loading: boolean;
+	staging: boolean;
+
 	login: {
 		username: string;
 		password: string;
@@ -115,7 +119,7 @@ export class WijkPage {
 		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 	}
 
-goHome(){
+	goHome() {
 		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 	}
 

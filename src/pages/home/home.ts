@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
+import * as WPAPI from 'wpapi';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
@@ -24,19 +25,21 @@ declare let cordova: any;
 })
 export class HomePage {
 	modalShown: boolean;
+	showPhoto: boolean;
 	android: boolean;
 
+	childrenCount: Number;
+	wijkCount: Number;
+
+	wijkChoice: string;
+	endpoint: string;
 	version: string;
 	error: string;
 	wijk: string;
 
 	updates: any;
-	pages: Array<{
-		title: string,
-		component: any,
-		class: string,
-		icon: string
-	}>;
+	wijken: any;
+	pages: any;
 
 	login: {
 		username: '',
@@ -49,6 +52,8 @@ export class HomePage {
 
 	readablePageList: any;
 	openedPage: any;
+
+	weather: any;
 
 	y: Number;
 
@@ -74,9 +79,12 @@ export class HomePage {
 	}
 
 	init() {
+		this.showPhoto = false;
 		this.updates = [];
 		this.readablePageList = {
 			"scan-ticket": "ticketscanner",
+			"weather": "weather",
+			"children": WijkPage,
 			"connect-child-to-cabin": ConnectChildToCabinPage,
 			"search": SearchPage,
 			"presence": PresencePage,
@@ -88,7 +96,40 @@ export class HomePage {
 			"files": FilesPage
 		}
 
+		this.login = {
+			username: "",
+			password: ""
+		};
+
+		this.storage.get('username').then((val) => {
+			this.login.username = val;
+		}, (error) => {
+			this.login.username = '';
+		});
+		this.storage.get('password').then((val) => {
+			this.login.password = val;
+		}, (error) => {
+			this.login.password = '';
+		});
+
+		this.childrenCount = 0;
+
 		this.modalShown = false;
+
+		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+
+		this.storage.get('staging').then((val) => {
+			this.staging = val;
+			if (val) {
+				this.endpoint = 'https://staging.timmerdorp.com/wp-json';
+			} else {
+				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+			}
+		}, (error) => {
+			this.staging = false;
+			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+		});
+
 
 		if (this.platform.is("android")) this.android = true;
 
@@ -100,9 +141,39 @@ export class HomePage {
 		}
 
 		this.storage.get('wijk').then((val) => {
-			this.wijk = val;
+			this.wijk = val || "blue";
+			this.wijken = {
+				blue: "blauw",
+				red: "rood",
+				green: "groen",
+				yellow: "geel"
+			}
+
+			var wp = this.getWpApi('stats');
+			wp.handler().then((result) => {
+				console.log(result);
+				if (result.code === 200) {
+					console.log(result.quarters[this.wijk]);
+				}
+			});
+
+			console.log(this.wijk);
 
 			this.pages = [
+				{
+					title: '-',
+					component: "weather",
+					class: 'bg-white halfWidth homeInfoCard weather',
+					icon: "partly-sunny",
+					weather: true
+				},
+				{
+					title: '-',
+					component: "children",
+					class: 'bg-white halfWidth homeInfoCard weather',
+					icon: "calculator",
+					data: true
+				},
 				{
 					title: 'Zoek kind',
 					component: "search",
@@ -137,33 +208,74 @@ export class HomePage {
 					title: 'Wijkoverzicht ' + this.getWijkName(this.wijk),
 					component: "wijk",
 					class: 'small bg-' + (this.wijk || 'blue'),
-					icon: "analytics"
+					icon: "analytics",
+					small: true
 				},
 				{
 					title: 'Programma',
 					component: "schedule",
 					class: 'bg-blue small',
-					icon: "calendar"
+					icon: "calendar",
+					small: true
 				},
 				{
 					title: 'Foto\'s en Bijlagen',
 					component: "files",
 					class: 'bg-blue small',
-					icon: "images"
+					icon: "images",
+					small: true
 				},
 				{
 					title: 'App info',
 					component: "app-info",
 					class: 'bg-blue small',
-					icon: "settings"
+					icon: "settings",
+					small: true
 				},
 				{
 					title: 'Log uit',
 					component: "login",
 					class: 'bg-darkred small',
-					icon: "log-out"
+					icon: "log-out",
+					small: true
 				}
 			];
+		});
+
+
+		this.httpClient.get("http://api.openweathermap.org/data/2.5/forecast?q=Heiloo,NL&APPID=e98a229cdc17ffdc226168c33aefa0c1").subscribe((data: any) => {
+			let weatherMessage = "Geen regen vandaag!";
+			let totalRain = 0;
+			let skipped = 0;
+			let weatherIcon = "sunny";
+			for (let i = 0; i < 2 + skipped; i++) {
+				let w = data.list[i]; //weather data for a three-hour period
+				let td = 1000 * w.dt - +new Date(); //time diff between now and w
+				if (td < 30 * 60 * 1000) {
+					skipped++;
+					continue;
+				}
+				if (!w.rain) continue;
+				totalRain += w.rain["3h"] || w.rain[Object.keys(w.rain)[0]];
+			}
+
+			let rainPerHour = totalRain / 6;
+			console.log(totalRain, rainPerHour);
+			if (rainPerHour > 0) {
+				if (rainPerHour > .5) {
+					weatherMessage = "Veel regen vandaag";
+				} else {
+					weatherMessage = "Lichte buien vandaag";
+				}
+				weatherIcon = "rainy";
+			}
+
+			this.weather = {
+				temp: Math.round((data.list[0].main.temp - 273.15) * 10) / 10,
+				msg: weatherMessage,
+				icon: weatherIcon
+			}
+			console.log(data, this.weather);
 		});
 	}
 
@@ -179,14 +291,12 @@ export class HomePage {
 	ionViewDidLoad() {
 		this.init();
 		let self = this;
-		this.httpClient.get("https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json")
-			.subscribe((data: any) => {
-				self.updates = data.updates;
-				self.updates.sort(function (a, b) {
-					return b.date - a.date;
-				});
-
+		this.httpClient.get("https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json").subscribe((data: any) => {
+			self.updates = data.updates;
+			self.updates.sort(function (a, b) {
+				return b.date - a.date;
 			});
+		});
 		this.storage.get('staging').then((val) => {
 			this.staging = val;
 		}, (error) => {
@@ -225,6 +335,8 @@ export class HomePage {
 			this.openedPage.component = this.readablePageList[this.openedPage.component];
 			if (this.openedPage.component == 'ticketscanner') {
 				this.scanCode();
+			} else if (this.openedPage.component == 'weather') {
+				window.open("https://buienradar.nl/weer/heiloo/nl/2754516");
 			} else {
 				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 			}
@@ -285,5 +397,17 @@ export class HomePage {
 
 	goHome() {
 		return;
+	}
+
+	getWpApi(route) {
+		var wp = new WPAPI({
+			endpoint: this.endpoint,
+			username: this.login.username,
+			password: this.login.password
+		});
+
+		wp.handler = wp.registerRoute('tickets', route, {});
+
+		return wp;
 	}
 }

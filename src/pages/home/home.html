@@ -1,18 +1,34 @@
 <ion-content class='homeContent' padding>
-	<ion-header>
-		<h1 id="ptitle">Timmerdorp<br>{{y}}</h1>
-		<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+	<ion-header [ngClass]='showPhoto?"fullscreen":""' (click)='showPhoto = !showPhoto'>
+		<h1 *ngIf='!showPhoto' id="ptitle">Timmerdorp<br>{{y}}</h1>
+		<img *ngIf='!showPhoto' (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
 	</ion-header>
 
-	<button ion-button full *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="p.class" class='homeButton'>
-		<div style='text-align:left;'>
-			<ion-icon slot='start' name='{{p.icon||""}}' style='margin-right:12px;position:relative;'></ion-icon>
-			<span *ngIf="p.class.split('small').length==1" style='font-size:18px'>
-				{{p.title}}
-			</span>
-		</div>
-	</button>
-
+	<div id='homeButtons'>
+		<button ion-button full *ngFor="let p of pages" (click)="openPage(p)"
+			[ngClass]="p.class + (!showPhoto || (!p.weather && !p.data)?'':' hidden')" class='homeButton'>
+			<div style='text-align:left;' *ngIf='!showPhoto || (!p.weather && !p.data)'>
+				<ion-icon slot='start' name='{{p.weather && weather?weather.icon:(p.icon||"")}}'
+					[ngClass]="(p.weather && weather)?(weather.icon!='sunny'?'blueIcon ':'yellowIcon '):' ' + (p.data?'data':'')">
+				</ion-icon>
+				<div *ngIf="p.weather">
+					<h2>Het is {{(weather||{}).temp}}&deg;C</h2>
+					<div class='weatherMsg'>
+						<p>{{(weather||{}).msg}}</p>
+					</div>
+				</div>
+				<div *ngIf="p.data" id='data'>
+					<h2>{{childrenCount}} kind{{childrenCount!=1?"eren":""}} aanwezig</h2>
+					<div class='weatherMsg'>
+						<p>{{wijkCount||0}} in wijk {{wijken[wijk]}}</p>
+					</div>
+				</div>
+				<span *ngIf="!p.small && !p.weather && !p.data" style='font-size:18px'>
+					{{p.title}}
+				</span>
+			</div>
+		</button>
+	</div>
 	<span>{{error}}</span>
 
 </ion-content>
