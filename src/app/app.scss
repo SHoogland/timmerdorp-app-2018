@@ -679,7 +679,9 @@ button {
 .infoCard {
   position: relative;
   border-radius: 8px;
-  width: 280px;
+  min-width: 300px;
+  max-width: calc(100% - 24px);
+  width: 400px;
   .inhoud {
     border-radius: 8px;
     padding-top: 20px;
