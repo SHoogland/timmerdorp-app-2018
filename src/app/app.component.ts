@@ -84,7 +84,7 @@ export class MyApp {
 						});
 					}
 				}
-				
+
 				this.preCheckLogin();
 			});
 		});

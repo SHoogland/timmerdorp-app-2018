@@ -14,6 +14,7 @@ declare let cordova: any;
 export class ConnectChildToCabinPage {
 	searchError: string;
 	searchTerm: string;
+	errorHelp: string;
 	endpoint: string;
 	hutNr: string;
 	error: string;
@@ -33,7 +34,6 @@ export class ConnectChildToCabinPage {
 	undoingIsDone: boolean;
 	autoPresence: boolean;
 	notLoggedIn: boolean;
-	loginError: boolean;
 	giveAccent: boolean;
 	isUndoing: boolean;
 	searched: boolean;
@@ -91,7 +91,6 @@ export class ConnectChildToCabinPage {
 
 		this.undoingIsDone = false;
 		this.notLoggedIn = false;
-		this.loginError = false;
 		this.giveAccent = false;
 		this.isUndoing = false;
 		this.searched = false;
@@ -99,6 +98,7 @@ export class ConnectChildToCabinPage {
 
 		this.searchError = '';
 		this.error = '';
+		this.errorHelp = '';
 
 		this.warningModal = {
 			show: false
@@ -228,8 +228,12 @@ export class ConnectChildToCabinPage {
 
 	searchHut() {
 		console.log('searching: ' + this.hutNr);
-		this.loginError = false;
-		this.notLoggedIn = false;
+		if (+this.hutNr >= 400) {
+			this.error = 'Foutmelding';
+			this.errorHelp = 'Hutnummer moet tussen 0-399 zijn.';
+			this.cd.detectChanges();
+			return;
+		}
 		this.loading = true;
 		this.error = '';
 		this.cd.detectChanges();
@@ -244,7 +248,8 @@ export class ConnectChildToCabinPage {
 				self.searched = true;
 			} else {
 				if (result.message == 'access denied') {
-					this.notLoggedIn = true;
+					this.error = 'Niet ingelogd';
+					this.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
 				} else {
 					self.error = result.message;
 					self.loading = false;
@@ -252,7 +257,8 @@ export class ConnectChildToCabinPage {
 			}
 		}).catch((error) => {
 			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				this.loginError = true;
+				this.error = 'Inloggegevens onjuist';
+				this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
 			} else {
 				self.error = error.message;
 			}

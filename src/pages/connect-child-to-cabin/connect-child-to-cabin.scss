@@ -5,11 +5,14 @@ page-connect-child-to-cabin {
       margin-top: -8px;
     }
   }
-
   #hutHeader {
     padding-bottom: 0px;
     margin-bottom: 0px;
     margin-top: 8px;
+  }
+
+  .bracelet-number {
+    padding-top: 0px;
   }
 
   .undoButton {
@@ -76,5 +79,22 @@ page-connect-child-to-cabin {
         }
       }
     }
+  }
+
+  .hutNr {
+    &.Geel {
+      background: darken($yellow, 5%);
+    }
+    &.Groen {
+      background: darken($green, 8%);
+    }
+    &.Blauw {
+      background: $blue;
+    }
+    &.Rood {
+      background: $red;
+    }
+    color: white;
+    padding: 0px 6px;
   }
 }

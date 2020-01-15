@@ -73,7 +73,57 @@ page-search {
     margin-top: 0px;
   }
 
-  .user-info {
-    padding: 0 !important;
+  .modal-content {
+    &.Rood {
+      button:hover {
+        background: darken($red, 18%) !important;
+      }
+      button:nth-of-type(2n + 1) {
+        background: darken($red, 12.5%);
+      }
+      button:nth-of-type(2n) {
+        background: $red;
+      }
+      a {
+        color: $red;
+      }
+      #modalTop {
+        background: $red !important;
+      }
+    }
+    &.Groen {
+      button:hover {
+        background: darken($green, 18%) !important;
+      }
+      button:nth-of-type(2n + 1) {
+        background: darken($green, 12.5%);
+      }
+      button:nth-of-type(2n) {
+        background: $green;
+      }
+      a {
+        color: $green;
+      }
+      #modalTop {
+        background: $green !important;
+      }
+    }
+    &.Geel {
+      button:hover {
+        background: darken($yellow, 18%) !important;
+      }
+      button:nth-of-type(2n + 1) {
+        background: darken($yellow, 4%);
+      }
+      button:nth-of-type(2n) {
+        background: $yellow;
+      }
+      a {
+        color: $yellow;
+      }
+      #modalTop {
+        background: $yellow !important;
+      }
+    }
   }
 }

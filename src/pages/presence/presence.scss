@@ -27,6 +27,10 @@ page-presence {
     background: #e82525;
   }
 
+  #modalBottom p {
+    margin-bottom: -16px;
+  }
+
   .peopleList {
     ion-item {
       .input-wrapper ion-label {
@@ -38,6 +42,10 @@ page-presence {
           margin-top: 5px;
         }
       }
+    }
+    ion-label div {
+      top: 6px !important;
+      position: relative;
     }
   }
 }

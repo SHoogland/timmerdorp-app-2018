@@ -14,23 +14,25 @@ import { LoginPage } from '../login/login';
 	templateUrl: 'change-wristband.html'
 })
 export class ChangeWristbandPage {
-	ticket: any;
-	oldNr: string;
 	inputField: any;
-	newNr: string;
+	history: any;
+	ticket: any;
+
+	errorHelp: string;
 	endpoint: string;
-	loading: boolean;
-	notLoggedIn: boolean;
-	loginError: boolean;
+	oldNr: string;
+	newNr: string;
 	error: string;
+
 	searched: boolean;
 	loading2: boolean;
-	history: any;
+	loading: boolean;
+
 	login: {
 		username: string,
 		password: string
 	};
-	@ViewChild('secondInput') secondInput: ElementRef;
+	// @ViewChild('secondInput') secondInput: ElementRef;
 
 	constructor(
 		public navCtrl: NavController,
@@ -45,15 +47,12 @@ export class ChangeWristbandPage {
 
 	searchTicket() {
 		let self = this;
-
 		this.ticket = {};
 		if (this.oldNr.length < 3) {
 			this.cd.detectChanges();
 			console.log("Cancelling search. Reason: term too short");
 			return false;
 		}
-		this.loginError = false;
-		this.notLoggedIn = false;
 		this.error = '';
 		this.ticket = {};
 		this.searched = false;
@@ -67,7 +66,8 @@ export class ChangeWristbandPage {
 				return a.meta.wristband[0] == self.oldNr;
 			});
 			if (!t.length) {
-				self.error = 'Geen tickets gevonden :('
+				self.error = 'Geen resultaten'
+				self.errorHelp = 'Je kunt alleen zoeken op (het oude) polsbandnummer.';
 				self.loading = false;
 				return;
 			}
@@ -93,8 +93,8 @@ export class ChangeWristbandPage {
 				}, 250);
 			} else {
 				if (result.message == 'access denied') {
-					this.notLoggedIn = true;
-					self.loading = false;
+					this.error = 'Niet ingelogd';
+					this.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
 				} else {
 					self.error = result.message;
 					self.loading = false;
@@ -102,7 +102,8 @@ export class ChangeWristbandPage {
 			}
 		}).catch((error) => {
 			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				this.loginError = true;
+				this.error = 'Inloggegevens onjuist';
+				this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
 			} else {
 				self.error = error.message;
 			}
@@ -157,8 +158,6 @@ export class ChangeWristbandPage {
 		this.oldNr = "";
 		this.newNr = "";
 		this.loading2 = false;
-		this.loginError = false;
-		this.notLoggedIn = false;
 		Promise.all([
 			this.storage.get('editHistory').then((val) => {
 				this.history = val || [];

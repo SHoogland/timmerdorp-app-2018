@@ -21,13 +21,12 @@ export class SearchPage {
 	tickets: any;
 	history: any;
 
-	notLoggedIn: boolean;
-	loginError: boolean;
 	loading: boolean;
 
 	searchTerm: string;
 	endpoint: string;
 	error: string;
+	errorHelp: string;
 
 	modal: {
 		showModal: boolean;
@@ -73,11 +72,10 @@ export class SearchPage {
 
 		this.timeOut = setTimeout;
 
-		this.notLoggedIn = false;
-		this.loginError = false;
 		this.loading = false;
 
 		this.error = '';
+		this.errorHelp = '';
 
 		this.tableCategories = [
 			{
@@ -109,7 +107,8 @@ export class SearchPage {
 					},
 					{
 						title: "E-mailadres",
-						name: "WooCommerceEventsPurchaserEmail"
+						name: "WooCommerceEventsPurchaserEmail",
+						mail: true
 					}
 				]
 			},
@@ -256,8 +255,6 @@ export class SearchPage {
 			console.log("Cancelling search. Reason: term too short");
 			return false;
 		}
-		this.loginError = false;
-		this.notLoggedIn = false;
 		self.error = '';
 		self.loading = true;
 		console.log('searching: ' + this.searchTerm);
@@ -265,8 +262,8 @@ export class SearchPage {
 		wp.handler().param('search', this.searchTerm).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
-				if (!isNaN(+self.searchTerm)) {
-					result.tickets.sort(function (a, b) { //if the search term is a number
+				if (!isNaN(+self.searchTerm)) { //if the search term is a number
+					result.tickets.sort(function (a, b) {
 						if ((a.meta.wristband || [])[0] == self.searchTerm) {
 							return -1;
 						}
@@ -276,11 +273,13 @@ export class SearchPage {
 				self.tickets = result.tickets;
 				if (self.tickets.length === 0) {
 					self.error = 'Geen resultaten';
+					self.errorHelp = 'Je kunt zoeken op hutnummer, polsbandje of voor- of achternaam.';
 				}
 				self.loading = false;
 			} else {
 				if (result.message == 'access denied') {
-					this.notLoggedIn = true;
+					this.error = 'Niet ingelogd';
+					this.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
 				} else {
 					self.error = result.message;
 					self.loading = false;
@@ -288,7 +287,8 @@ export class SearchPage {
 			}
 		}).catch((error) => {
 			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				this.loginError = true;
+				this.error = 'Inloggegevens onjuist';
+				this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
 			} else {
 				self.error = error.message;
 			}

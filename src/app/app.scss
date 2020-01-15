@@ -410,13 +410,6 @@ input.text-input {
 .modalInput {
   background: #fff !important;
 }
-ion-item,
-.item-md,
-.item-ios {
-  &:not(.modalInput) {
-    background: #fafafa !important;
-  }
-}
 
 .content-md {
   color: #202124;
@@ -426,11 +419,9 @@ ion-item,
 /* Modal Content/Box */
 .modal-content {
   position: relative;
-  // top: 160px;
   background-color: $white;
   margin: 20px auto;
   padding: 20px;
-  text-align: center;
 
   h1 {
     margin-top: 45px;
@@ -451,7 +442,7 @@ ion-item,
   ion-item:not(.modalInput),
   .item-md:not(.modalInput),
   .item-ios:not(.modalInput) {
-    background: rgba(0, 0, 0, 0) !important;
+    background: white !important;
   }
 
   button {
@@ -467,6 +458,15 @@ ion-item,
     &.activated:not(.item-cover) {
       background: $bluehover !important;
     }
+  }
+}
+
+button.halfWidth {
+  width: 50%;
+  margin-top: 0px !important;
+  display: inline-block;
+  &:nth-of-type(2n + 1) {
+    margin-left: -4px;
   }
 }
 
@@ -490,6 +490,7 @@ button.modern {
 }
 
 #modalBottom {
+  text-align: center;
   padding: 16px;
   z-index: 200;
   position: relative;
@@ -651,7 +652,7 @@ button {
         background: $green;
       }
       .item-inner {
-        border-left: 6px solid blue;
+        border-left: 6px solid $green;
       }
     }
 
@@ -708,4 +709,51 @@ button {
 .errorMsg {
   color: red;
   font-weight: bold;
+}
+
+.errorCard {
+  padding: 0 !important;
+  min-width: 280px;
+  max-width: 360px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  background: #b00020 !important;
+  .content {
+    position: relative;
+  }
+  h1 {
+    margin-top: 0px;
+  }
+  * {
+    color: white !important;
+    font-weight: normal;
+  }
+  ion-icon {
+    align-self: left;
+    font-size: 6.8rem;
+    position: absolute;
+    left: 20px;
+    top: 12px;
+    height: 12px;
+  }
+  #errorHeader {
+    position: relative;
+    left: 80px;
+    width: calc(100% - 80px);
+    text-align: left;
+    top: 8px;
+    font-size: 2.3rem;
+  }
+  #errorHelp {
+    font-size: 14px;
+    left: 80px;
+    position: relative;
+    width: calc(100% - 90px);
+    text-align: left;
+    margin-top: -12px;
+  }
+  a {
+    text-decoration: underline;
+  }
 }

@@ -25,17 +25,15 @@
 				</button>
 			</div>
 		</div>
+		<div class="user-info errorCard">
+			<div class="content" *ngIf='error'>
+				<ion-icon name='warning'></ion-icon>
+				<h1 id='errorHeader' [innerHTML]='error'></h1>
+				<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
+			</div>
+		</div>
 		<div class="user-info">
-			<span *ngIf="error" class='errorMsg'>
-				{{error}}<br>
-			</span>
-			<span *ngIf="loginError" class='errorMsg'>
-				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
-			</span>
-			<span *ngIf="notLoggedIn" class='errorMsg'>
-				Je moet eerst <a (click)='toLogin()'>inloggen</a>!
-			</span>
-			<div style='height: 40px;'>
+			<div style='height: 20px;'>
 				<div *ngIf="loading&&!notLoggedIn">
 					<ion-spinner color='primary'></ion-spinner>
 				</div>

@@ -48,27 +48,26 @@
 			</ion-list>
 		</div>
 
-		<div class="bracelet-number conditional" [ngClass]='hutNr && hutNr.length === 3 ? "shown":""'>
-			<h1 id='hutHeader'>Kinderen in hut {{hutNr}}</h1>
-			<div class="user-info">
-				<span *ngIf="!loginError&&!notLoggedIn" class='errorMsg'>
-					{{error}}
-				</span>
-				<span *ngIf="loginError" class='errorMsg'>
-					Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
-				</span>
-				<span *ngIf="notLoggedIn" class='errorMsg'>
-					Je moet eerst <a (click)='toLogin()'>inloggen</a>!
-				</span>
-				<div style='height: 20px;'>
-					<div *ngIf="loading&&!notLoggedIn">
-						<ion-spinner color='primary'></ion-spinner>
-					</div>
-				</div>
-				<p style='color: red;font-weight:bold;'
-					*ngIf="searched && hutTickets && !hutTickets.length && !notLoggedIn && hutNr && hutNr.length === 3">
-					Nog geen kindertjes in dit hutje :(</p>
+		<div class="user-info errorCard">
+			<div class="content" *ngIf='error&&hutNr'>
+				<ion-icon name='warning'></ion-icon>
+				<h1 id='errorHeader' [innerHTML]='error'></h1>
+				<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
 			</div>
+		</div>
+		<div class="user-info">
+			<div style='height: 20px;'>
+				<div *ngIf="loading&&!notLoggedIn">
+					<ion-spinner color='primary'></ion-spinner>
+				</div>
+			</div>
+		</div>
+		<div class="bracelet-number conditional"
+			[ngClass]='hutNr && hutNr.length === 3 && !error && searched? "shown":""'>
+			<h1 id='hutHeader' style='margin-bottom: 20px;'>Kinderen in hut {{hutNr}}</h1>
+			<p style='color: red;font-weight:bold;'
+				*ngIf="searched && hutTickets && !hutTickets.length && !notLoggedIn && hutNr && hutNr.length === 3">
+				Nog geen kindertjes in dit hutje :(</p>
 			<div *ngFor="let child of hutTickets">
 				<button ion-button full class="modern customColoured"
 					[ngStyle]='{"background": getBg(child.meta.hutnr)}'
@@ -111,7 +110,7 @@
 				{{searchError}}
 			</p>
 
-			<div style='height: 40px; margin-top: 10px'>
+			<div style='height: 40px;'>
 				<ion-spinner *ngIf='loading&&!notLoggedIn' color='primary'></ion-spinner>
 			</div>
 		</div>
@@ -121,17 +120,7 @@
 				{{ child.meta.WooCommerceEventsAttendeeName[0] }}
 				{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
 					'-' }})&nbsp;{{(child.meta.hutnr||[])[0]?"&mdash;&nbsp;":''}}
-				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '0'"
-					style="background-color:yellow;padding: 0px 6px">hutje:&nbsp;
-					{{ child.meta.hutnr}}</span>
-				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '1'"
-					style="background-color:red;color:white;padding: 0px 6px">hutje:&nbsp;
-					{{ child.meta.hutnr }}</span>
-				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '2'"
-					style="background-color:blue;color:white;padding: 0px 6px">hutje:&nbsp;
-					{{ child.meta.hutnr }}</span>
-				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0][0] === '3'"
-					style="background-color:green;color:white;padding: 0px 6px">hutje:&nbsp;
+				<span *ngIf="child.meta.hutnr" [ngClass]='"hutNr " + getWijk(child.meta.hutnr[0])'>hutje:&nbsp;
 					{{ child.meta.hutnr}}</span>
 			</button>
 		</div>
@@ -160,7 +149,7 @@
 		<div id='modalTop' class='warnModal'>
 		</div>
 		<div id='modalBottom'>
-			<span class="close" (click)="closeModal();">&times;</span>
+			<span class="close" (click)="closeWarningModal();">&times;</span>
 			<h1>Waarschuwing</h1>
 			<p *ngIf="selectedChild">{{ selectedChild.meta.WooCommerceEventsAttendeeName[0] }} heeft al een hutje!
 				Weet

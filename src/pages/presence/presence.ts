@@ -13,12 +13,11 @@ declare let cordova: any;
 })
 export class PresencePage {
 	error: string;
+	errorHelp: string;
 	endpoint: string;
 	loading: boolean;
 	greenBtn: boolean;
 	day: string;
-	loginError: boolean;
-	notLoggedIn: boolean;
 	login: {
 		username: string,
 		password: string
@@ -71,8 +70,6 @@ export class PresencePage {
 		}
 		this.modalShown = false;
 		this.greenBtn = false;
-		this.loginError = false;
-		this.notLoggedIn = false;
 
 		this.login = {
 			username: '',
@@ -157,8 +154,6 @@ export class PresencePage {
 
 	getChild() {
 		this.error = '';
-		this.loginError = false;
-		this.notLoggedIn = false;
 		let self = this;
 		if (this.number.length === 3) {
 			this.loading = true;
@@ -167,9 +162,9 @@ export class PresencePage {
 				console.log(result);
 				if (result.code === 200) {
 					self.error = '';
-
 					if (result.tickets.length === 0) {
 						self.error = 'Geen resultaten';
+						self.errorHelp = 'Tip: Je kunt alleen zoeken op polsbandnummer.';
 						self.loading = false;
 						return;
 					}
@@ -194,7 +189,8 @@ export class PresencePage {
 					self.loading = false;
 				} else {
 					if (result.message == 'access denied') {
-						this.notLoggedIn = true;
+						this.error = 'Niet ingelogd';
+						this.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
 					} else {
 						self.error = result.message;
 						self.loading = false;
@@ -202,7 +198,8 @@ export class PresencePage {
 				}
 			}).catch((error) => {
 				if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-					this.loginError = true;
+					this.error = 'Inloggegevens onjuist';
+					this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
 				} else {
 					self.error = error.message;
 				}

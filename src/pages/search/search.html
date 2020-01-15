@@ -20,16 +20,14 @@
 			</div>
 		</div>
 
+		<div class="user-info errorCard">
+			<div class="content" *ngIf='error&&searchTerm'>
+				<ion-icon name='warning'></ion-icon>
+				<h1 id='errorHeader' [innerHTML]='error'></h1>
+				<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
+			</div>
+		</div>
 		<div class="user-info">
-			<span *ngIf="!loginError&&!notLoggedIn&&searchTerm" class='errorMsg'>
-				{{error}}
-			</span>
-			<span *ngIf="loginError" class='errorMsg'>
-				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
-			</span>
-			<span *ngIf="notLoggedIn" class='errorMsg'>
-				Je moet eerst <a (click)='toLogin()'>inloggen</a>!
-			</span>
 			<div style='height: 20px;'>
 				<div *ngIf="loading&&!notLoggedIn">
 					<ion-spinner color='primary'></ion-spinner>
@@ -91,8 +89,8 @@
 
 <div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
 	class="modal conditional">
-	<div class="modal-content" *ngIf="modal.child">
-		<div id='modalTop' class='bg-red'>
+	<div class="{{'modal-content ' + getWijk((modal.child.meta.hutnr||[])[0])}}" *ngIf="modal.child">
+		<div id='modalTop'>
 		</div>
 		<div id='modalBottom'>
 			<span class="close" (click)="closeModal();">&times;</span>
@@ -103,7 +101,7 @@
 					<h3>{{c.name}}</h3>
 					<tr *ngFor="let i of c.items">
 						<td>{{i.title}}:</td>
-						<td *ngIf="!i.tel&&i.title!=='Wijk'&&c.name!='Aanwezigheid'">
+						<td *ngIf="!i.tel&&i.title!=='Wijk'&&c.name!='Aanwezigheid'&&!i.mail">
 							{{(modal.child.meta[i.name]||[])[0]}}</td>
 						<td *ngIf="c.name==='Aanwezigheid'">
 							{{(modal.child.meta["present_" + i.day]||[])[0] === '1'?"Aanwezig":"Afwezig"}}</td>
@@ -111,13 +109,15 @@
 						<td *ngIf='i.tel'><a
 								href="tel: {{filterPhoneNr(modal.child.meta[i.name])}}">{{(modal.child.meta[i.name]||[])[0]}}</a>
 						</td>
+						<td *ngIf='i.mail'><a
+								href="mailto:{{modal.child.meta[i.name]}}">{{(modal.child.meta[i.name]||[])[0]}}</a>
+						</td>
 					</tr>
 				</div>
 			</table>
 		</div>
-		<button ion-button full (click)="closeModal();" class="correction">Oké</button>
-		<button ion-button full (click)="scanChild(modal.child.meta.WooCommerceEventsTicketID[0])"
-			class="correction">Scan</button>
-		<button ion-button full (click)="goHome()" class="correction">Terug naar homepagina</button>
+		<button ion-button full (click)="closeModal();">Oké</button>
+		<button ion-button full (click)="scanChild(modal.child.meta.WooCommerceEventsTicketID[0])">Scan</button>
+		<button ion-button full (click)="goHome()">Terug naar homepagina</button>
 	</div>
 </div>
