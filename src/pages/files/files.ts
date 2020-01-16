@@ -15,7 +15,7 @@ export class FilesPage {
 	albums: any;
 	loading: boolean;
 	files: any;
-	photoYear: Number;
+	photoYear: number;
 	allAlbums: any;
 	constructor(
 		public navCtrl: NavController,

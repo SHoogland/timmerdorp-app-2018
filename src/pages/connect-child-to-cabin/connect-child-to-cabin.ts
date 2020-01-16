@@ -522,6 +522,7 @@ export class ConnectChildToCabinPage {
 
 
 	getWijk(hutNr) {
+		if (!hutNr) return '';
 		if (hutNr[0] == '0') {
 			return 'Geel';
 		} else if (hutNr[0] == '1') {

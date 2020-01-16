@@ -10,10 +10,10 @@
 	</ion-header>
 	<div class='content'>
 		<div class="user-info">
-			<h1 id='hutHeader'>Hutnummer</h1>
+			<h1 id='hutHeader'>Beheer hutjes</h1>
 			<ion-item>
-				<ion-input #nrInput type="tel" placeholder="123" [(ngModel)]="hutNr" (ngModelChange)="search($event)"
-					maxlength="3"></ion-input>
+				<ion-input #nrInput type="tel" placeholder="Hutnummer" [(ngModel)]="hutNr"
+					(ngModelChange)="search($event)" maxlength="3"></ion-input>
 			</ion-item>
 		</div>
 
@@ -119,9 +119,11 @@
 			<button ion-button full (click)="addChildToHut(child);" class="bg-grey modern">
 				{{ child.meta.WooCommerceEventsAttendeeName[0] }}
 				{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
-					'-' }})&nbsp;{{(child.meta.hutnr||[])[0]?"&mdash;&nbsp;":''}}
-				<span *ngIf="child.meta.hutnr" [ngClass]='"hutNr " + getWijk(child.meta.hutnr[0])'>hutje:&nbsp;
+					'-' }})&nbsp;&mdash;&nbsp;
+				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0]"
+					[ngClass]='"hutNr " + getWijk(child.meta.hutnr[0])'>hutje:&nbsp;
 					{{ child.meta.hutnr}}</span>
+				<span *ngIf="!(child.meta.hutnr && child.meta.hutnr[0])">Geen hutje :(</span>
 			</button>
 		</div>
 	</div>

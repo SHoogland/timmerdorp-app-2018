@@ -46,6 +46,21 @@
 				</button>
 			</div>
 		</div>
+		<div class="user-info errorCard">
+			<div class="content" *ngIf='error'>
+				<ion-icon name='warning'></ion-icon>
+				<h1 id='errorHeader' [innerHTML]='error'></h1>
+				<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
+			</div>
+		</div>
+		<div [ngClass]="'user-info' + (loading?' loading':'')">
+			<div style='height: 20px;'>
+				<div *ngIf="loading&&!notLoggedIn" style='margin-bottom:80px;'>
+					<ion-spinner color='primary'></ion-spinner>
+				</div>
+			</div>
+		</div>
+
 		<div *ngIf='searched' class='infoCard'>
 			<div class='{{"inhoud " + getWijk(ticket.hutnr)}}'>
 				<h1>Kind #{{oldNr}}</h1>
@@ -67,11 +82,6 @@
 						<td>{{ticket.hutnr}}</td>
 					</tr>
 				</table>
-				<div style=' height: 20px;'>
-					<div *ngIf="loading2">
-						<ion-spinner color='primary'></ion-spinner>
-					</div>
-				</div>
 			</div>
 		</div>
 		<ion-list class='peopleList' *ngIf="!searched && !error && !loading && history && history.length > 0">
@@ -94,19 +104,5 @@
 			</ion-item>
 		</ion-list>
 
-		<div class="user-info errorCard">
-			<div class="content" *ngIf='error'>
-				<ion-icon name='warning'></ion-icon>
-				<h1 id='errorHeader' [innerHTML]='error'></h1>
-				<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
-			</div>
-		</div>
-		<div class="user-info">
-			<div style='height: 20px;'>
-				<div *ngIf="loading&&!notLoggedIn">
-					<ion-spinner color='primary'></ion-spinner>
-				</div>
-			</div>
-		</div>
 	</div>
 </ion-content>

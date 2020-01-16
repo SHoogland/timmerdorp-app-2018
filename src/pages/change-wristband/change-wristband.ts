@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 
@@ -25,14 +25,12 @@ export class ChangeWristbandPage {
 	error: string;
 
 	searched: boolean;
-	loading2: boolean;
 	loading: boolean;
 
 	login: {
 		username: string,
 		password: string
 	};
-	// @ViewChild('secondInput') secondInput: ElementRef;
 
 	constructor(
 		public navCtrl: NavController,
@@ -40,9 +38,6 @@ export class ChangeWristbandPage {
 		public storage: Storage,
 		public cd: ChangeDetectorRef
 	) {
-	}
-
-	init() {
 	}
 
 	searchTicket() {
@@ -56,7 +51,6 @@ export class ChangeWristbandPage {
 		this.error = '';
 		this.ticket = {};
 		this.searched = false;
-		this.loading2 = false;
 		this.loading = true;
 		console.log('searching: ' + this.oldNr);
 		var wp = this.getWpApi('search');
@@ -157,7 +151,7 @@ export class ChangeWristbandPage {
 		this.error = '';
 		this.oldNr = "";
 		this.newNr = "";
-		this.loading2 = false;
+		this.loading = false;
 		Promise.all([
 			this.storage.get('editHistory').then((val) => {
 				this.history = val || [];
@@ -187,24 +181,21 @@ export class ChangeWristbandPage {
 		]).then(() => {
 			let self = this;
 			setInterval(function () {
-				console.log(self.newNr);
+				self.newNr;
 			}, 200);
-			this.init();
 		});
 	}
 
 	saveNr() {
-		this.loading2 = true;
+		this.error = '';
+		this.loading = true;
 		let self = this;
 		var wp = this.getWpApi('add-wristband');
 		console.log(this.ticket);
 
-		wp
-			.handler()
-			.param('barcode', this.ticket.barcode)
-			.param('wristband', this.newNr)
-			.then((result) => {
-				console.log(result);
+		wp.handler().param('barcode', this.ticket.barcode).param('wristband', this.newNr).then((result) => {
+			console.log(result);
+			if (result.code === 200) {
 				let t = self.ticket;
 				let m = t.meta;
 				self.history.unshift({
@@ -214,20 +205,23 @@ export class ChangeWristbandPage {
 					hutnr: m.hutnr
 				});
 				console.log(self.history);
-
 				self.storage.set("editHistory", self.history);
-
-				if (result.code === 200) {
-					self.goHome();
+				self.goHome();
+			} else {
+				if (result.message == 'wristband already exists') {
+					self.error = 'Polsbandje bestaat al';
+					self.errorHelp = 'Ieder polsbandnummer mag maar één keer voorkomen.';
 				} else {
 					self.error = result.message;
-					self.loading2 = false;
 				}
-			}).catch((error) => {
-				console.log(error);
-				alert("foutmelding! " + error);
-				this.loading2 = false;
-			});
+				console.log(result.message);
+				self.loading = false;
+			}
+		}).catch((error) => {
+			console.log(error);
+			alert("foutmelding! " + error);
+			this.loading = false;
+		});
 	}
 
 	getWpApi(route) {
@@ -247,8 +241,7 @@ export class ChangeWristbandPage {
 	}
 
 	getWijk(hutNr) {
-		console.log(hutNr);
-		return 'Rood';
+		if (!hutNr) return '';
 		if (hutNr[0] == '0') {
 			return 'Geel';
 		} else if (hutNr[0] == '1') {

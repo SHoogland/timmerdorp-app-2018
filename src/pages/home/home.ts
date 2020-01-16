@@ -28,8 +28,9 @@ export class HomePage {
 	showPhoto: boolean;
 	android: boolean;
 
-	childrenCount: Number;
-	wijkCount: Number;
+	childrenCount: number;
+	wijkCount: number;
+	y: number;
 
 	wijkChoice: string;
 	endpoint: string;
@@ -55,7 +56,6 @@ export class HomePage {
 
 	weather: any;
 
-	y: Number;
 
 	constructor(
 		private barcodeScanner: BarcodeScanner,
@@ -153,7 +153,9 @@ export class HomePage {
 			wp.handler().then((result) => {
 				console.log(result);
 				if (result.code === 200) {
-					console.log(result.quarters[this.wijk]);
+					let prop = 'present' + ['Tue', 'Wed', 'Thu', 'Fri'][new Date().getDay() - 2];
+					this.wijkCount = result.quarters[this.wijk][prop];
+					this.childrenCount = result[prop];
 				}
 			});
 
@@ -271,7 +273,7 @@ export class HomePage {
 			}
 
 			this.weather = {
-				temp: Math.round((data.list[0].main.temp - 273.15) * 10) / 10,
+				temp: (Math.round((data.list[0].main.temp - 273.15) * 10) / 10).toFixed(1),
 				msg: weatherMessage,
 				icon: weatherIcon
 			}

@@ -35,9 +35,10 @@
 				<div *ngIf='ticket.hutNr'><b>Hutnummer: </b> {{ticket.hutNr}}</div>
 			</div>
 			<div class="bracelet-number">
-				<h1>Armband nummer:</h1>
+				<h1>Armbandnummer:</h1>
 				<ion-item>
-					<ion-input #nrInput type="tel" placeholder="123" [(ngModel)]="ticket.wristBandNr" maxlength="3">
+					<ion-input #nrInput type="tel" placeholder="Nummer op polsbandje" [(ngModel)]="ticket.wristBandNr"
+						maxlength="3">
 					</ion-input>
 				</ion-item>
 				<span *ngIf="wristBandError" class="form-error">

@@ -13,8 +13,13 @@ page-changeWristband {
     font-size: 2.4rem;
   }
 
+  .infoCard .inhoud {
+    padding-bottom: 12px;
+  }
+
   #old {
     display: inline-block;
+    width: 100%;
   }
   .user-info,
   .bracelet-number {
@@ -45,6 +50,10 @@ page-changeWristband {
     margin-top: 18px;
     width: calc(100% - 21px) !important;
     left: 15px;
+  }
+
+  .loading {
+    margin-bottom: 40px;
   }
 
   .peopleList {

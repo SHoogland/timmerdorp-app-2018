@@ -24,9 +24,10 @@ export class SearchPage {
 	loading: boolean;
 
 	searchTerm: string;
+	errorHelp: string;
 	endpoint: string;
 	error: string;
-	errorHelp: string;
+
 
 	modal: {
 		showModal: boolean;
@@ -175,8 +176,6 @@ export class SearchPage {
 	}
 
 	ionViewDidLoad() {
-		this.init();
-
 		Promise.all([
 			this.storage.get('searchChildHistory').then((val) => {
 				this.history = val || [];
@@ -204,10 +203,15 @@ export class SearchPage {
 				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 			})
 		]).then(() => {
+			let self = this;
+			setInterval(function () {
+				self.error;
+			}, 100);
 		});
 	}
 
 	getWijk(hutNr) {
+		if (!hutNr) return 'Blauw';
 		if (hutNr[0] == '0') {
 			return 'Geel';
 		} else if (hutNr[0] == '1') {

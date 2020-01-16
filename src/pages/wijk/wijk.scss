@@ -1,11 +1,51 @@
 page-wijk {
-	#spinner{
-		transition-duration: 400ms;
-		height: 20px;
-		margin-bottom:40px;
-		&.hidden{
-			height: 0px;
-			margin-bottom: 0px;
-		}
-	}
+  #spinner {
+    transition-duration: 400ms;
+    height: 20px;
+    margin-bottom: 40px;
+    &.hidden {
+      height: 0px;
+      margin-bottom: 0px;
+    }
+  }
+
+  table {
+    tr td:first-of-type {
+      font-weight: bold;
+    }
+    margin-left: 20px;
+  }
+  td {
+    text-align: left;
+    padding-right: 4px;
+  }
+
+  .halfWidth {
+    font-weight: bold;
+    font-size: 28px;
+    height: 180px;
+    margin: -2px !important;
+  }
+
+  #main {
+    text-align: center;
+    button {
+      span span {
+        font-weight: normal;
+        font-size: 20px;
+      }
+    }
+  }
+  .red,
+  .red .toolbar-background {
+    background: $red !important;
+  }
+  .yellow,
+  .yellow .toolbar-background {
+    background: $yellow !important;
+  }
+  .green,
+  .green .toolbar-background {
+    background: $green !important;
+  }
 }

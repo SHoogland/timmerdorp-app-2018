@@ -174,6 +174,12 @@ export class PresencePage {
 						}
 						return true;
 					});
+					if (result.tickets.length === 0) {
+						self.error = 'Geen resultaten';
+						self.errorHelp = 'Tip: Je kunt alleen zoeken op polsbandnummer.';
+						self.loading = false;
+						return;
+					}
 					let t = result.tickets[0];
 					let m = t.meta;
 					self.history.unshift({
@@ -345,6 +351,7 @@ export class PresencePage {
 	}
 
 	getWijk(hutNr) {
+		if (!hutNr) return '';
 		if (hutNr[0] == '0') {
 			return 'Geel';
 		} else if (hutNr[0] == '1') {
