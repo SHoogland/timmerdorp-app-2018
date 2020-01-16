@@ -243,7 +243,7 @@ export class HomePage {
 		});
 
 
-		this.httpClient.get("http://api.openweathermap.org/data/2.5/forecast?q=Heiloo,NL&APPID=e98a229cdc17ffdc226168c33aefa0c1").subscribe((data: any) => {
+		this.httpClient.get("https://api.openweathermap.org/data/2.5/forecast?q=Heiloo,NL&APPID=e98a229cdc17ffdc226168c33aefa0c1").subscribe((data: any) => {
 			let weatherMessage = "Geen regen vandaag!";
 			let totalRain = 0;
 			let skipped = 0;
