@@ -1,16 +1,31 @@
 page-app-info {
-	tr > td:first-of-type{
-		font-weight: bold;
-		padding-left: 8px;
-		width: 50%;
-	}
+  tr > td:first-of-type {
+    font-weight: bold;
+    padding-left: 8px;
+    width: 50%;
+  }
 
-	table{
-		width: 100%;
-	}
+  table {
+    width: 100%;
+  }
 
-	#title{
-		text-align: center;
-		margin: 8px 0 12px 0; 
-	}
+  #title {
+    text-align: center;
+    margin: 8px 0 12px 0;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  button {
+    ion-icon {
+      margin-right: 12px;
+      position: relative;
+      font-size: 1.8em;
+    }
+    span span {
+      font-size: 18px;
+    }
+  }
 }

@@ -1,2 +1,9 @@
 page-scan-ticket {
+  .load-spinner {
+    height: 20px;
+    text-align: center;
+    &.loading {
+      height: 80px;
+    }
+  }
 }

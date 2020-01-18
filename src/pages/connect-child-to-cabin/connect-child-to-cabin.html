@@ -20,7 +20,7 @@
 		<div *ngIf='!(hutNr && hutNr.length === 3) && history && history.length > 0 && (!loading || isUndoing)'>
 			<ion-list class='peopleList'>
 				<ion-list-header>
-					Wijzigingsgeschiedenis
+					Wijzigingsgeschiedenis ({{history.length}})
 				</ion-list-header>
 
 				<div *ngFor="let h of history; let i = index">
@@ -48,7 +48,7 @@
 			</ion-list>
 		</div>
 
-		<div class="user-info errorCard">
+		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
 			<div class="content" *ngIf='error&&hutNr'>
 				<ion-icon name='warning'></ion-icon>
 				<h1 id='errorHeader' [innerHTML]='error'></h1>
@@ -136,12 +136,12 @@
 		</div>
 		<div id='modalBottom'>
 			<span class="close" (click)="closeRemoveModal();">&times;</span>
-			<h1 style='font-size: 31px;'>Waarschuwing</h1>
+			<h1>Waarschuwing</h1>
 			<p *ngIf="removeChild">Weet je zeker dat je {{removeChild.meta.WooCommerceEventsAttendeeName[0] }}
 				wilt verwijderen?</p>
 		</div>
-		<button ion-button full (click)="removeChildFromHut(removeChild)" class="bg-green correction modern">Ja</button>
-		<button ion-button full (click)="closeRemoveModal()" class="bg-red correction modern">Nee</button>
+		<button ion-button full (click)="removeChildFromHut(removeChild)">Ja</button>
+		<button ion-button full (click)="closeRemoveModal()">Nee</button>
 	</div>
 </div>
 
@@ -153,13 +153,15 @@
 		<div id='modalBottom'>
 			<span class="close" (click)="closeWarningModal();">&times;</span>
 			<h1>Waarschuwing</h1>
-			<p *ngIf="selectedChild">{{ selectedChild.meta.WooCommerceEventsAttendeeName[0] }} heeft al een hutje!
-				Weet
-				je
-				zeker dat je
-				hem/haar wilt overplaatsen van hutje {{selectedChild.meta.hutnr}} naar hutje {{hutNr}}?</p>
+			<p *ngIf="selectedChild&&error1">{{ selectedChild.meta.WooCommerceEventsAttendeeName[0] }} heeft al een
+				hutje!
+				Weet je zeker dat je hem/haar wilt overplaatsen van hutje {{selectedChild.meta.hutnr}} naar hutje
+				{{hutNr}}?</p>
+			<p *ngIf="selectedChild&&error2">{{ selectedChild.meta.WooCommerceEventsAttendeeName[0] }} heeft nog geen
+				polsbandje! Hij/zij kan nog niet toegevoegd worden aan een hutje.</p>
 		</div>
-		<button ion-button full (click)="reallyAddChildNow()" class="bg-green correction modern">Ja</button>
-		<button ion-button full (click)="closeWarningModal()" class="bg-red correction modern">Nee</button>
+		<button ion-button full (click)="closeWarningModal()" *ngIf='error2'>Terug</button>
+		<button ion-button full (click)="reallyAddChildNow()" *ngIf='error1'>Ja</button>
+		<button ion-button full (click)="closeWarningModal()" *ngIf='error1'>Nee</button>
 	</div>
 </div>

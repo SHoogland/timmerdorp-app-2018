@@ -126,4 +126,18 @@ page-search {
       }
     }
   }
+
+  span.tinyScreen {
+    position: absolute;
+    top: 12px;
+    @media screen and (min-width: 381px) {
+      display: none;
+    }
+  }
+
+  span.notTinyScreen {
+    @media screen and (max-width: 380px) {
+      display: none;
+    }
+  }
 }

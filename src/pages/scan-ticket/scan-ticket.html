@@ -9,21 +9,15 @@
 		</ion-navbar>
 	</ion-header>
 	<div class='content'>
-		<div class="user-info">
-			<span *ngIf="!loginError&&!notLoggedIn" class='errorMsg'>
-				{{!navParams.get('barcode')?"Geen barcode gescand":(error=="no ticket found"?"Geen ticket gevonden.":error)}}
-			</span>
-			<span *ngIf="loginError" class='errorMsg'>
-				Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
-			</span>
-			<span *ngIf="notLoggedIn" class='errorMsg'>
-				Je moet eerst <a (click)='toLogin()'>inloggen</a>!
-			</span>
-			<div style='height: 20px;'>
-				<div *ngIf="loading&&!notLoggedIn">
-					<ion-spinner color='primary'></ion-spinner>
-				</div>
+		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
+			<div class="content" *ngIf='error'>
+				<ion-icon name='warning'></ion-icon>
+				<h1 id='errorHeader' [innerHTML]='error'>{{error}}</h1>
+				<h4 id='errorHelp' [innerHTML]='errorHelp'>{{errorHelp}}</h4>
 			</div>
+		</div>
+		<div [ngClass]='loading?"loading load-spinner":"load-spinner"'>
+			<ion-spinner color='primary' *ngIf='loading'></ion-spinner>
 		</div>
 
 		<div *ngIf="ticket.barcode.length > 0">
@@ -41,9 +35,6 @@
 						maxlength="3">
 					</ion-input>
 				</ion-item>
-				<span *ngIf="wristBandError" class="form-error">
-					{{ wristBandError }}
-				</span>
 			</div>
 		</div>
 	</div>

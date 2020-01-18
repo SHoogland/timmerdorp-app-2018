@@ -179,6 +179,7 @@ export class SearchPage {
 		Promise.all([
 			this.storage.get('searchChildHistory').then((val) => {
 				this.history = val || [];
+				console.log(this.history);
 				this.filterHistory();
 			}, (error) => {
 				this.history = [];
@@ -243,8 +244,8 @@ export class SearchPage {
 	filterHistory() {
 		let seenChildren = [];
 		this.history = this.history.filter(function (a) {
-			if (seenChildren.indexOf(a.wristband[0]) == -1) {
-				seenChildren.push(a.wristband[0]);
+			if (seenChildren.indexOf((a.wristband || [])[0]) == -1) {
+				seenChildren.push((a.wristband || [])[0]);
 				return true;
 			} else {
 				return false;
@@ -265,6 +266,7 @@ export class SearchPage {
 		var wp = this.getWpApi('search');
 		wp.handler().param('search', this.searchTerm).then((result) => {
 			console.log(result);
+			self.loading = false;
 			if (result.code === 200) {
 				if (!isNaN(+self.searchTerm)) { //if the search term is a number
 					result.tickets.sort(function (a, b) {
@@ -279,24 +281,22 @@ export class SearchPage {
 					self.error = 'Geen resultaten';
 					self.errorHelp = 'Je kunt zoeken op hutnummer, polsbandje of voor- of achternaam.';
 				}
-				self.loading = false;
 			} else {
 				if (result.message == 'access denied') {
-					this.error = 'Niet ingelogd';
-					this.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
+					self.error = 'Niet ingelogd';
+					self.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
 				} else {
 					self.error = result.message;
-					self.loading = false;
 				}
 			}
 		}).catch((error) => {
+			self.loading = false;
 			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				this.error = 'Inloggegevens onjuist';
-				this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
+				self.error = 'Inloggegevens onjuist';
+				self.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
 			} else {
 				self.error = error.message;
 			}
-			self.loading = false;
 		});
 	}
 
@@ -306,7 +306,8 @@ export class SearchPage {
 		let t = child;
 		let m = t.meta;
 		this.history.unshift({
-			name: m.WooCommerceEventsAttendeeName[0] + " " + m.WooCommerceEventsAttendeeLastName[0],
+			firstName: m.WooCommerceEventsAttendeeName[0],
+			surName: m.WooCommerceEventsAttendeeLastName[0],
 			wristband: m.wristband,
 			hutnr: m.hutnr,
 			wijk: this.getColor(m.hutnr)

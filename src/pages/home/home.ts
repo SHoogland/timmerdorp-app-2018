@@ -154,8 +154,8 @@ export class HomePage {
 				console.log(result);
 				if (result.code === 200) {
 					let prop = 'present' + ['Tue', 'Wed', 'Thu', 'Fri'][new Date().getDay() - 2];
-					this.wijkCount = result.quarters[this.wijk][prop];
-					this.childrenCount = result[prop];
+					this.wijkCount = result.quarters[this.wijk][prop] || 0;
+					this.childrenCount = result[prop] || 0;
 				}
 			});
 
@@ -277,6 +277,7 @@ export class HomePage {
 				msg: weatherMessage,
 				icon: weatherIcon
 			}
+
 			console.log(data, this.weather);
 		});
 	}
@@ -386,7 +387,10 @@ export class HomePage {
 
 	scanCode() {
 		if (this.platform.is('cordova')) {
-			this.barcodeScanner.scan().then((barcodeData) => {
+			this.barcodeScanner.scan({
+				resultDisplayDuration: 0,
+				showTorchButton: true
+			}).then((barcodeData) => {
 				this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });
 			}, (error) => {
 				console.log(error);

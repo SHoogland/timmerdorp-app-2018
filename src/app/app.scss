@@ -86,7 +86,7 @@ h1 {
 
 #ptitle {
   position: absolute;
-  top: 0px;
+  top: 2px;
   margin-top: 22px;
   font-size: 30px;
   width: calc(100% - 160px);
@@ -503,6 +503,7 @@ button.modern {
     color: white;
     margin-top: 15px !important;
     margin-bottom: 48px;
+    font-size: 31px;
     font-weight: normal;
   }
 }
@@ -718,6 +719,9 @@ button {
   min-width: 280px;
   max-width: 360px;
   width: 80%;
+  &.hasError {
+    min-height: 100px;
+  }
   margin-left: auto;
   margin-right: auto;
   background: #b00020 !important;

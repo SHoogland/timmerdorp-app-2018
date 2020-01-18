@@ -20,7 +20,7 @@
 			</div>
 		</div>
 
-		<div class="user-info errorCard">
+		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
 			<div class="content" *ngIf='error&&searchTerm'>
 				<ion-icon name='warning'></ion-icon>
 				<h1 id='errorHeader' [innerHTML]='error'></h1>
@@ -38,10 +38,10 @@
 		<div *ngIf='!tickets.length && history && history.length > 0 && !(searchTerm||"").length'>
 			<ion-list class='peopleList'>
 				<ion-list-header>
-					Zoekgeschiedenis
+					Zoekgeschiedenis ({{history.length}})
 				</ion-list-header>
-
-				<ion-item *ngFor="let h of history" (click)='searchTerm=""+h.wristband;searchThis()'
+				<ion-item *ngFor="let h of history"
+					(click)='searchTerm=""+(h.wristband||h.firstName||h.surName||h.hutnr);searchThis()'
 					class='{{"item item-block item-md " + getWijk((h.hutnr||[0])[0])}}'>
 					<ion-label>
 						<div>
@@ -50,7 +50,7 @@
 							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutnr}}</span></h3>
 						</div>
 						<div>
-							<h2><span>{{h.name}}</span></h2>
+							<h2><span>{{h.firstName}} {{h.surName}}</span></h2>
 						</div>
 						<ion-button size="small" class='fab'>
 							<ion-icon name='search'></ion-icon>
@@ -62,7 +62,7 @@
 
 		<ion-list class='peopleList' *ngIf='tickets.length'>
 			<ion-list-header>
-				Zoekresultaten
+				Zoekresultaten ({{tickets.length}})
 			</ion-list-header>
 			<ion-item *ngFor="let child of tickets" (click)='showModal(child)'
 				class='{{"item item-block item-md " + getWijk(((child.meta||{}).hutnr||[0])[0])}}'>
@@ -74,8 +74,11 @@
 							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{child.meta.hutnr}}</span></h3>
 						</div>
 						<div>
-							<h2><span>{{child.meta.WooCommerceEventsAttendeeName[0]}}
-									{{child.meta.WooCommerceEventsAttendeeLastName[0]}}</span></h2>
+							<h2><span class='tinyScreen'>{{child.meta.WooCommerceEventsAttendeeName[0]}}<br>
+									{{child.meta.WooCommerceEventsAttendeeLastName[0]}}</span>
+								<span class='notTinyScreen'>{{child.meta.WooCommerceEventsAttendeeName[0]}}
+									{{child.meta.WooCommerceEventsAttendeeLastName[0]}}</span>
+							</h2>
 						</div>
 					</div>
 					<ion-button size="small" class='fab'>

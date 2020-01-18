@@ -13,14 +13,12 @@ declare let cordova: any;
 })
 export class ScanTicketPage {
 	wristBandError: boolean;
-	notLoggedIn: boolean;
-	loginError: boolean;
 	loading: boolean;
 
 	oldNumber: string;
+	errorHelp: string;
 	endpoint: string;
 	error: string;
-
 
 	modal: {
 		showModal: boolean;
@@ -72,9 +70,9 @@ export class ScanTicketPage {
 			wristBandNr: '',
 			hutNr: null
 		}
-		this.loginError = false;
-		this.notLoggedIn = false;
-		this.loading = true;
+		this.error = '';
+		this.errorHelp = '';
+		this.loading = false;
 		this.modal = {
 			showModal: false
 		}
@@ -122,6 +120,7 @@ export class ScanTicketPage {
 			var wp = this.getWpApi('barcode');
 			return wp.handler().param('barcode', this.navParams.get('barcode'));
 		}).then((result) => {
+			self.loading = false;
 			if (result.code === 200) {
 				self.ticket.barcode = (result.meta.WooCommerceEventsTicketID || [])[0];
 				self.ticket.firstName = (result.meta.WooCommerceEventsAttendeeName || [])[0];
@@ -135,22 +134,30 @@ export class ScanTicketPage {
 					self.oldNumber = self.ticket.wristBandNr;
 					self.showModal();
 				}
-				self.loading = false;
 			} else {
 				if (result.message == 'access denied') {
-					this.notLoggedIn = true;
+					this.error = 'Niet ingelogd';
+					this.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
 				} else {
-					self.error = result.message;
-					self.loading = false;
+					if (result.message == 'no ticket found') {
+						self.error = 'Geen tickets gevonden';
+						self.errorHelp = 'Probeer het ticket opnieuw te scannen.';
+					} else if (result.message == 'no barcode provided') {
+						self.error = 'Geen barcode gescand';
+						self.errorHelp = 'Probeer het ticket opnieuw te scannen in direct zonlicht.';
+					} else {
+						self.error = result.message;
+					}
 				}
 			}
 		}).catch((error) => {
+			self.loading = false;
 			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				this.loginError = true;
+				this.error = 'Inloggegevens onjuist';
+				this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
 			} else {
 				self.error = error.message;
 			}
-			self.loading = false;
 		});
 	}
 
@@ -183,7 +190,13 @@ export class ScanTicketPage {
 
 					self.goHome();
 				} else {
-					self.error = result.message;
+					if (result.message == 'wristband already exists') {
+						self.error = 'Polsbandje bestaat al';
+						self.errorHelp = 'Ieder polsbandnummer mag maar één keer voorkomen.';
+					} else {
+						self.error = result.message;
+					}
+					console.log(result.message);
 					self.loading = false;
 				}
 			}).catch((error) => {

@@ -38,6 +38,8 @@ export class ConnectChildToCabinPage {
 	isUndoing: boolean;
 	searched: boolean;
 	loading: boolean;
+	error1: boolean;
+	error2: boolean;
 	isTue: boolean; //if it's tuesday, show the auto-presence toggle
 
 	addModal: {
@@ -61,6 +63,9 @@ export class ConnectChildToCabinPage {
 		public storage: Storage,
 		private cd: ChangeDetectorRef
 	) {
+		this.error1 = false;
+		this.error2 = false;
+
 		if (this.platform.is('cordova')) {
 			if (cordova.platformId === 'android') {
 				this.platform.registerBackButtonAction(() => {
@@ -318,6 +323,12 @@ export class ConnectChildToCabinPage {
 	addChildToHut(child) {
 		this.selectedChild = child;
 		if ((child.meta.hutnr || [])[0]) {
+			this.error1 = true;
+			this.error2 = false;
+			this.showWarningModal();
+		} else if (!(child.meta.wristband || [])[0]) {
+			this.error1 = false;
+			this.error2 = true;
 			this.showWarningModal();
 		} else {
 			this.reallyAddChildNow();

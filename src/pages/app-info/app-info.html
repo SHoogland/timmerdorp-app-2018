@@ -28,8 +28,8 @@
 		<p>Voor vragen over de app kun je terecht bij Stan van Baarsen uit wijk blauw of Stephan Hoogland uit wijk geel.
 		</p>
 		<button ion-button full (click)="belStan()" class="bg-green">
-			<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
-			<span style='font-size: 18px;'>
+			<ion-icon slot='start' name='call'></ion-icon>
+			<span>
 				Bel Stan
 			</span>
 		</button>
@@ -37,7 +37,7 @@
 		<h1 id='title'>Updates</h1>
 
 		<div *ngFor='let u of updates'>
-			<h3 style='text-align: center;'>Versie: {{u.version}}</h3>
+			<h3>Versie: {{u.version}}</h3>
 			<table>
 				<tr>
 					<td>Datum:</td>

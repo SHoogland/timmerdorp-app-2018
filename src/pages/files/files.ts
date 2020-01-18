@@ -11,12 +11,17 @@ import { HomePage } from '../home/home';
 	templateUrl: 'files.html'
 })
 export class FilesPage {
-	schedule: string;
-	albums: any;
 	loading: boolean;
-	files: any;
+
+	schedule: string;
+
 	photoYear: number;
+
+	albumYears: any;
 	allAlbums: any;
+	albums: any;
+	files: any;
+
 	constructor(
 		public navCtrl: NavController,
 		public httpClient: HttpClient
@@ -26,6 +31,7 @@ export class FilesPage {
 
 	init() {
 		this.photoYear = new Date().getFullYear();
+		this.albumYears = [this.photoYear];
 		let self = this;
 		this.loading = true;
 		this.httpClient
@@ -33,6 +39,13 @@ export class FilesPage {
 			.subscribe((data: any) => {
 				self.loading = false;
 				self.allAlbums = data.photosets.photoset;
+				for (let i = 0; i < self.allAlbums.length; i++) {
+					const a = self.allAlbums[i];
+					let y = new Date(a.date_create * 1000).getFullYear();
+					if (self.albumYears.indexOf(y) == -1) self.albumYears.push(y);
+					// console.log(a, a.date_create);
+				}
+				console.log(self.albumYears);
 				self.filterAlbums();
 			});
 

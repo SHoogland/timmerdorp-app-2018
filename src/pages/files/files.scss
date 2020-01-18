@@ -2,8 +2,8 @@ files {
   ion-card {
     break-inside: avoid-column;
     border-radius: 8px !important;
-	margin-top: 0px !important;
-	display: inline-grid;
+    margin-top: 0px !important;
+    display: inline-grid;
     margin-bottom: 32px !important;
   }
 
@@ -19,5 +19,28 @@ files {
 
   h1 {
     margin-bottom: 24px;
+    margin-top: 16px !important;
+    text-align: center;
+  }
+
+  #yearSelector {
+    margin-bottom: 32px;
+    ion-label {
+      color: #333;
+    }
+  }
+
+  #spinner {
+    width: 100%;
+    text-align: center;
+  }
+
+  #files {
+    column-count: 2;
+    ion-card div {
+      position: relative;
+      width: 0;
+      height: 0;
+    }
   }
 }
