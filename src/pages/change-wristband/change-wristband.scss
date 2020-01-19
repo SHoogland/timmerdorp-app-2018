@@ -29,7 +29,25 @@ page-changeWristband {
   #searchBtn2 {
     z-index: 400;
     position: relative;
-    margin-top: 0;
+  }
+
+  #old,
+  #new {
+    button {
+      margin-left: auto !important;
+      left: 0px !important;
+      margin-right: auto !important;
+    }
+  }
+
+  #new {
+    position: relative;
+    top: -3px;
+  }
+
+  h1,
+  h3 {
+    text-align: center;
   }
 
   ion-list {

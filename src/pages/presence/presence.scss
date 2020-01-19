@@ -2,7 +2,7 @@ page-presence {
   #sendButton {
     width: calc(50% - 8px);
     display: inline-block;
-    top: -5px;
+    top: -40px;
   }
 
   tr > td:first-of-type {
@@ -11,10 +11,17 @@ page-presence {
   }
 
   #numberInput {
-    padding: 0;
+    display: inline-block;
+    height: 80px;
+    margin-top: 12px;
+  }
+  ion-list.line-input {
+    * {
+      height: 100%;
+    }
     display: inline-block;
     margin-right: 12px;
-    width: calc(50% - 8px) !important;
+    width: calc(50% - 12px) !important;
   }
 
   #modalTop {

@@ -59,9 +59,9 @@ page-home {
 
   .homeButton.bg-blue:nth-of-type(2n + 1),
   body {
-    background: #1c8ae1 !important;
+    background: darken($blue, 8%) !important;
     &:hover {
-      background: $bluehover !important;
+      background: darken($blue, 12%) !important;
     }
   }
 

@@ -97,4 +97,19 @@ page-connect-child-to-cabin {
     color: white;
     padding: 0px 6px;
   }
+
+  .alternate {
+    &:nth-of-type(2n) {
+      background: darken($blue, 8%) !important;
+    }
+    &:nth-of-type(2n + 1) {
+      background: $blue !important;
+    }
+  }
+
+  ion-list.line-input {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

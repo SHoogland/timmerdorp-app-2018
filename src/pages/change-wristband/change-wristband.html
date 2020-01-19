@@ -8,21 +8,21 @@
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
-	<h1 id='title' style='text-align: center;'>Verander Polsbandnummer</h1>
+	<h1 id='title'>Verander Polsbandnummer</h1>
 	<div class='content'>
 		<div id='columns'>
 			<div id='old'>
-				<div class="bracelet-number">
-					<h3>Oud nummer</h3>
+				<h3>Oud nummer</h3>
+				<ion-list class="line-input">
 					<ion-item>
-						<ion-input #nrInput type='tel' placeholder="Huidig polsbandje" [(ngModel)]="oldNr"
-							(ngModelChange)='valueChanged()' maxlength='3'>
+						<ion-input #nrInput type='tel' class="ion-text-right" [(ngModel)]="oldNr"
+							(ngModelChange)="valueChanged()" maxlength='3'>
 						</ion-input>
 					</ion-item>
-					<span *ngIf="wristBandError" class="form-error">
-						{{ wristBandError }}
-					</span>
-				</div>
+				</ion-list>
+				<span *ngIf="wristBandError" class="form-error">
+					{{ wristBandError }}
+				</span>
 
 				<button ion-button full (click)="searchTicket()" class="bg-blue correction shown" id='searchBtn2'>
 					<ion-icon slot='start' name='search' style='margin-right:12px;position:relative;font-size:1.8em;'>
@@ -31,13 +31,15 @@
 				</button>
 			</div>
 
-			<div class="user-info" id='new' *ngIf="searched">
+			<div id='new' *ngIf="searched">
 				<h3>Nieuw nummer</h3>
-				<ion-item>
-					<ion-input #nrInput type='tel' placeholder="Nieuw polsbandje" [(ngModel)]="newNr" id='secondInput'
-						maxlength='3'>
-					</ion-input>
-				</ion-item>
+				<ion-list class="line-input">
+					<ion-item>
+						<ion-input #nrInput type='tel' class="ion-text-right" [(ngModel)]="newNr" id='secondInput'
+							maxlength='3'>
+						</ion-input>
+					</ion-item>
+				</ion-list>
 				<button ion-button full (click)="saveNr()" class="bg-blue correction shown">
 					<ion-icon slot='start' name='checkmark'
 						style='margin-right:12px;position:relative;font-size:1.8em;'>
@@ -46,8 +48,8 @@
 				</button>
 			</div>
 		</div>
-		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
-			<div class="content" *ngIf='error'>
+		<div [ngClass]="'user-info errorCard' + (error&&oldNr>0&&searchedTerm==oldNr?' hasError':'')">
+			<div class="content" *ngIf='error&&oldNr>0&&searchedTerm==oldNr'>
 				<ion-icon name='warning'></ion-icon>
 				<h1 id='errorHeader' [innerHTML]='error'></h1>
 				<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>

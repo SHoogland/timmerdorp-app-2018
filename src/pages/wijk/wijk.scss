@@ -36,6 +36,12 @@ page-wijk {
       }
     }
   }
+
+  * {
+    transition-duration: 500ms;
+    transition-property: background-color !important;
+  }
+
   .red,
   .red .toolbar-background {
     background: $red !important;
@@ -47,5 +53,48 @@ page-wijk {
   .green,
   .green .toolbar-background {
     background: $green !important;
+  }
+
+  .blue,
+  .blue .toolbar-background {
+    background: $blue !important;
+  }
+
+  .toolbar-background {
+    background: white !important;
+  }
+
+  //   ion-navbar,
+  //   ion-navbar * {
+  //     color: #333 !important;
+  //   }
+
+  h1 {
+    margin-top: 0;
+  }
+
+  #wijkHeader {
+    padding-top: 20px;
+    background: #333;
+    color: white;
+    padding-bottom: 20px;
+    margin-bottom: 0px;
+  }
+
+  .wijk-header {
+    &:not(.blue, .red, .green, .yellow) {
+      * {
+        color: #333 !important;
+      }
+    }
+
+    &.yellow,
+    &.green,
+    &.blue,
+    &.red {
+      * {
+        color: white !important;
+      }
+    }
   }
 }

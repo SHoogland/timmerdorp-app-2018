@@ -13,17 +13,11 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+@import "./theme/elements";
 
 @font-face {
   font-family: Mikado-Bold;
   src: url("../assets/fonts/Mikado-Bold.woff");
-}
-
-.input-wrapper,
-ion-list,
-.item-md,
-.item-ios {
-  background: #fafafa !important;
 }
 
 body {
@@ -40,8 +34,14 @@ button,
 
 .toolbar-background,
 .toolbar {
-  background: #0572c8 !important;
+  background: $blue !important;
   border-bottom: none !important;
+}
+
+ion-list.line-input {
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 h1 {
@@ -51,7 +51,7 @@ h1 {
 .bg-yellow {
   background: $yellow;
   &:hover {
-    background: #dfa401 !important;
+    background: darken($yellow, 8%) !important;
   }
 }
 
@@ -124,7 +124,7 @@ ion-content:not(.homeContent) > .scroll-content {
   background: $blue;
   &:hover,
   &.activated {
-    background: $bluehover !important;
+    background: darken($blue, 12%) !important;
   }
 }
 .bg-green {
@@ -135,11 +135,11 @@ ion-content:not(.homeContent) > .scroll-content {
 }
 button.bg-red:hover,
 button.bg-red.activated {
-  background: $redhover !important;
+  background: darken($red, 8%) !important;
 }
 button.bg-green:hover,
 button.bg-green.activated {
-  background: #75c935 !important;
+  background: darken($green, 8%) !important;
 }
 button.bg-grey:hover,
 button.bg-grey.activated {
@@ -189,19 +189,6 @@ button.modern > * {
   color: $mediumBlack;
 }
 
-// Form styles
-input[type="text"],
-input[type="password"],
-input[type="tel"] {
-  width: 100%;
-  height: 78px;
-  padding: 20px;
-  border: none;
-  background-color: $lightGrey;
-  -webkit-appearance: none;
-  border-radius: 0;
-}
-
 // Span elements
 .form-error {
   position: relative;
@@ -215,6 +202,7 @@ input[type="tel"] {
 }
 
 .search-on {
+  margin-bottom: 8px;
   margin-top: 10px;
 }
 
@@ -356,10 +344,6 @@ ion-spinner {
   }
 }
 
-input.text-input {
-  background: #e0e0e0 !important;
-}
-
 * {
   border-bottom-color: none !important;
 }
@@ -404,13 +388,6 @@ body {
   margin: 20px 0;
 }
 
-input.text-input {
-  background: #fff;
-}
-.modalInput {
-  background: #fff !important;
-}
-
 .content-md {
   color: #202124;
   background: #fafafa;
@@ -438,13 +415,6 @@ input.text-input {
     }
   }
 
-  .input-wrapper,
-  ion-item:not(.modalInput),
-  .item-md:not(.modalInput),
-  .item-ios:not(.modalInput) {
-    background: white !important;
-  }
-
   button {
     border-radius: 0px !important;
     margin: 0px;
@@ -452,11 +422,11 @@ input.text-input {
       background: $blue;
     }
     &:nth-of-type(2n + 1):not(.item-cover) {
-      background: #1c8ae1;
+      background: darken($blue, 8%);
     }
     &:hover:not(.item-cover),
     &.activated:not(.item-cover) {
-      background: $bluehover !important;
+      background: darken($blue, 8%) !important;
     }
   }
 }
@@ -481,11 +451,11 @@ button.modern {
     background: $blue;
   }
   &:nth-of-type(2n + 1):not(.customColoured) {
-    background: #1c8ae1;
+    background: darken($blue, 9%);
   }
   &:hover:not(.customColoured),
   &.activated:not(.customColoured) {
-    background: $bluehover !important;
+    background: darken($blue, 8%) !important;
   }
 }
 
@@ -527,11 +497,6 @@ button.modern {
   color: black;
   text-decoration: none;
   cursor: pointer;
-}
-
-.text-input-md {
-  margin: 0 !important;
-  margin-top: 20px !important;
 }
 
 ion-navbar .nav-logo {

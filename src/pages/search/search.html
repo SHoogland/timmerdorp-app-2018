@@ -12,15 +12,17 @@
 		<div class="container">
 			<div class="bracelet-number">
 				<h1>Kinderen Zoeken</h1>
-				<span class="search-on">Zoek op naam, armbandnummer of hutnummer</span>
-				<ion-item>
-					<ion-input clearInput type="text" [(ngModel)]="searchTerm" (ngModelChange)="search($event)">
-					</ion-input>
-				</ion-item>
+				<p class="search-on">Zoek op naam, armbandnummer of hutnummer</p>
+				<ion-list class="line-input">
+					<ion-item>
+						<ion-input class="ion-text-right" [(ngModel)]="searchTerm" (ngModelChange)="search($event)">
+						</ion-input>
+					</ion-item>
+				</ion-list>
 			</div>
 		</div>
 
-		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
+		<div [ngClass]="'user-info errorCard' + (error&&searchTerm?' hasError':'')">
 			<div class="content" *ngIf='error&&searchTerm'>
 				<ion-icon name='warning'></ion-icon>
 				<h1 id='errorHeader' [innerHTML]='error'></h1>
@@ -50,7 +52,11 @@
 							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutnr}}</span></h3>
 						</div>
 						<div>
-							<h2><span>{{h.firstName}} {{h.surName}}</span></h2>
+							<h2><span class='tinyScreen'>{{h.firstName}}<br>
+									{{h.surName}}</span>
+								<span class='notTinyScreen'>{{h.firstName}}
+									{{h.surName}}</span>
+							</h2>
 						</div>
 						<ion-button size="small" class='fab'>
 							<ion-icon name='search'></ion-icon>

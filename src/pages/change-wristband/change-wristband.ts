@@ -18,6 +18,7 @@ export class ChangeWristbandPage {
 	history: any;
 	ticket: any;
 
+	searchedTerm: string;
 	errorHelp: string;
 	endpoint: string;
 	oldNr: string;
@@ -52,6 +53,7 @@ export class ChangeWristbandPage {
 		this.ticket = {};
 		this.searched = false;
 		this.loading = true;
+		this.searchedTerm = this.oldNr;
 		console.log('searching: ' + this.oldNr);
 		var wp = this.getWpApi('search');
 		wp.handler().param('search', this.oldNr).then((result) => {

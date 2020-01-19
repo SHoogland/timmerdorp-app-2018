@@ -92,7 +92,7 @@ export class ConnectChildToCabinPage {
 		}
 		this.isTue = new Date().getDay() == 2;
 
-		this.autoPresence = true;
+		this.autoPresence = false;
 
 		this.undoingIsDone = false;
 		this.notLoggedIn = false;

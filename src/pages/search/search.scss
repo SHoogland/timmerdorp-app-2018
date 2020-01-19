@@ -48,7 +48,7 @@ page-search {
     ion-item {
       h2 {
         @media screen and (max-width: 440px) {
-          font-size: 2.2rem;
+          font-size: 2rem;
           padding-top: 4px;
         }
         @media screen and (min-width: 440px) {
@@ -129,7 +129,7 @@ page-search {
 
   span.tinyScreen {
     position: absolute;
-    top: 12px;
+    top: 16px;
     @media screen and (min-width: 381px) {
       display: none;
     }

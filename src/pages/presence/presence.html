@@ -14,8 +14,15 @@
 				<h1>Aanwezigheid</h1>
 				<h3>Aanwezigheid registreren voor <u style='color: green;'
 						(click)='alert()'>{{getDayName(day).toLowerCase()}}</u></h3>
-				<ion-input id='numberInput' #nrInput type="tel" placeholder="Zoek op polsbandnummer" maxlength="3"
-					[(ngModel)]="number" (ngModelChange)="getChild($event)"></ion-input>
+				<ion-list class="line-input">
+					<ion-item id='numberInput'>
+						<ion-input #nrInput type='tel' maxlength='3' class="ion-text-right" [(ngModel)]="number"
+							(ngModelChange)="getChild($event)">
+						</ion-input>
+					</ion-item>
+				</ion-list>
+				<!-- <ion-input id='numberInput' #nrInput type="tel" placeholder="Zoek op polsbandnummer" maxlength="3"
+					[(ngModel)]="number" (ngModelChange)="getChild($event)"></ion-input> -->
 				<button (click)='togglePresence()' id='sendButton' ion-button type="submit"
 					[ngClass]='greenBtn ? "bg-green" : "bg-blue"' block>
 					<ion-icon style='font-size: 1.5em;margin-right: 8px;' name="send"></ion-icon>

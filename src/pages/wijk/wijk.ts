@@ -48,7 +48,7 @@ export class WijkPage {
 		}
 
 		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-		this.wijk = 'blue';
+		this.wijk = '';
 		Promise.all([
 			this.storage.get('username').then((val) => {
 				this.login.username = val;

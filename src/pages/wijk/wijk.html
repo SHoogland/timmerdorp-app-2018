@@ -1,15 +1,15 @@
 <ion-content padding>
-	<ion-header>
+	<ion-header [ngClass]='(wijk||"") + " wijk-header"'>
 		<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
 		<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
-		<ion-navbar [ngClass]='wijk'>
+		<ion-navbar [ngClass]='(wijk||"")'>
 			<ion-title>
 				<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
 	<div *ngIf='showSelection' style='text-align: center'>
-		<h1 style='margin-top: 20px;'>Kies je wijk</h1>
+		<h1 id='wijkHeader'>Kies je wijk</h1>
 		<button ion-button class='bg-blue modern customColoured halfWidth' full
 			(click)='kiesWijk("blue")'>Blauw</button>
 		<button ion-button class='bg-red modern customColoured halfWidth' full (click)='kiesWijk("red")'>Rood</button>
@@ -60,7 +60,7 @@
 				</tr>
 			</table>
 			<br>
-			<button [ngClass]='wijk' ion-button full (click)="clearWijkSelection()">
+			<button [ngClass]='(wijk||"")' ion-button full (click)="clearWijkSelection()">
 				<ion-icon slot='start' name='create' style='margin-right:12px;position:relative;font-size:1.8em;'>
 				</ion-icon>
 				<span>

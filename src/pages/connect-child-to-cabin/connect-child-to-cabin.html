@@ -11,10 +11,18 @@
 	<div class='content'>
 		<div class="user-info">
 			<h1 id='hutHeader'>Beheer hutjes</h1>
-			<ion-item>
+			<ion-list class="line-input">
+				<p class="search-on">Vul hieronder een hutnummer in:</p>
+				<ion-item>
+					<ion-input class="ion-text-right" [(ngModel)]="hutNr" maxlength='3'
+						(ngModelChange)="search($event)">
+					</ion-input>
+				</ion-item>
+			</ion-list>
+			<!-- <ion-item>
 				<ion-input #nrInput type="tel" placeholder="Hutnummer" [(ngModel)]="hutNr"
 					(ngModelChange)="search($event)" maxlength="3"></ion-input>
-			</ion-item>
+			</ion-item> -->
 		</div>
 
 		<div *ngIf='!(hutNr && hutNr.length === 3) && history && history.length > 0 && (!loading || isUndoing)'>
@@ -68,15 +76,12 @@
 			<p style='color: red;font-weight:bold;'
 				*ngIf="searched && hutTickets && !hutTickets.length && !notLoggedIn && hutNr && hutNr.length === 3">
 				Nog geen kindertjes in dit hutje :(</p>
-			<div *ngFor="let child of hutTickets">
-				<button ion-button full class="modern customColoured"
-					[ngStyle]='{"background": getBg(child.meta.hutnr)}'
-					(click)="removeChild = child; showRemoveModal();">
-					{{ child.meta.WooCommerceEventsAttendeeName[0] }}
-					{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
+			<button *ngFor="let child of hutTickets" ion-button full class="modern alternate"
+				[ngStyle]='{"background": getBg(child.meta.hutnr)}' (click)="removeChild = child; showRemoveModal();">
+				{{ child.meta.WooCommerceEventsAttendeeName[0] }}
+				{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
 				'-' }})
-				</button>
-			</div>
+			</button>
 			<button ion-button full (click)="showAddModal()" class="bg-blue correction">
 				<ion-icon slot='start' name='add' style='margin-right:12px;position:relative;font-size:1.8em;'>
 				</ion-icon>
@@ -94,17 +99,18 @@
 		<div id='modalBottom'>
 			<span class="close" (click)="closeAddModal();">&times;</span>
 			<h1>Kind toevoegen</h1>
-			<p>Zoek een kind en voeg het toe aan hutje {{hutNr}}.</p>
-
-			<ion-item *ngIf="isTue">
+			<!-- <ion-item *ngIf="isTue">
 				<ion-label>Automatisch aanwezig melden</ion-label>
 				<ion-toggle [(ngModel)]="autoPresence"></ion-toggle>
-			</ion-item>
+			</ion-item> -->
 
-			<ion-item class='modalInput'>
-				<ion-input type="text" class='modalInput' placeholder='Nummer of naam van kind' [(ngModel)]="searchTerm"
-					(ngModelChange)="searchChild($event)"></ion-input>
-			</ion-item>
+			<p class="search-on">Zoek een kind en voeg het toe aan hutje {{hutNr}}.</p>
+			<ion-list class="line-input">
+				<ion-item>
+					<ion-input class="ion-text-right" [(ngModel)]="searchTerm" (ngModelChange)="searchChild($event)">
+					</ion-input>
+				</ion-item>
+			</ion-list>
 
 			<p style="color:red; font-weight: bold;">
 				{{searchError}}

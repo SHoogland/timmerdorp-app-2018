@@ -1,0 +1,19 @@
+.line-input {
+  margin-bottom: 0 !important;
+  ion-item {
+    --border-color: rgba(0, 0, 0, 0) !important;
+    --highlight-height: 0;
+    border: 2px solid #dedede !important;
+    box-shadow: none !important;
+    border-radius: 4px;
+    &.item-input-has-focus {
+      border: 2px solid $blue !important;
+      box-shadow: none !important;
+    }
+    ion-label {
+      color: #807e7e !important;
+      font-weight: 300;
+      font-size: 1rem !important;
+    }
+  }
+}
