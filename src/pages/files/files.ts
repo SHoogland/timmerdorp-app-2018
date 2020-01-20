@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { HttpClient } from '@angular/common/http';
 import { GlobalFunctions } from '../../providers/global';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class FilesPage {
 	constructor(
 		public navCtrl: NavController,
 		public httpClient: HttpClient,
-		public g: GlobalFunctions
+		public g: GlobalFunctions,
+		public iab: InAppBrowser
 	) {
 		this.loading = false;
 	}
@@ -70,11 +72,11 @@ export class FilesPage {
 	}
 
 	openAlbum(id) {
-		window.location.href = "https://www.flickr.com/photos/timmerdorpheiloo/albums/" + id;
+		this.iab.create("https://www.flickr.com/photos/timmerdorpheiloo/albums/" + id, "_system");
 	}
 
 	openFile(url) {
-		window.location.href = url;
+		this.iab.create(url, "_system");
 	}
 
 	ionViewDidLoad() {

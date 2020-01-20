@@ -17,13 +17,14 @@ files {
     color: white;
   }
 
-  h1 {
+  h1:not(#ptitle) {
     margin-bottom: 24px;
     margin-top: 16px !important;
     text-align: center;
   }
 
   #yearSelector {
+    background: #fafafa !important;
     margin-bottom: 32px;
     ion-label {
       color: #333;

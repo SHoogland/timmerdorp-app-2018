@@ -79,20 +79,32 @@ page-home {
     width: 100%;
   }
 
+  #overlay {
+    z-index: 20;
+    min-height: 400px;
+    width: 100%;
+    position: absolute;
+    height: calc(100vh - 6 * 80px);
+    background: rgba(0, 0, 0, 0.5);
+    &.hiddenHeader {
+      background: rgba(0, 0, 0, 0);
+    }
+  }
+
   ion-header {
+    * {
+      z-index: 25;
+    }
     min-height: 400px;
     position: absolute;
     height: calc(100vh - 6 * 80px);
     z-index: 10;
     background-position: center;
     background-size: cover;
-    transition-duration: 400ms;
     &.fullscreen {
-      background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(../assets/imgs/header_bg.JPG);
+      background-image: url(../assets/imgs/header_bg.JPG) !important;
     }
-    &:not(.fullscreen) {
-      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/imgs/header_bg.JPG);
-    }
+    background-image: url(../assets/imgs/header_bg.JPG);
   }
 
   .nav-logo {
@@ -133,6 +145,16 @@ page-home {
     &:active {
       background: #ccc !important;
     }
+  }
+
+  ion-header .hiddenHeader {
+    opacity: 0 !important;
+  }
+
+  ion-header,
+  ion-header * {
+    transition-duration: 500ms;
+    opacity: 1;
   }
 
   .homeInfoCard {

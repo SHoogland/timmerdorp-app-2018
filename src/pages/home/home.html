@@ -1,8 +1,10 @@
 <ion-content class='homeContent' padding>
 	<ion-header [ngClass]='showPhoto?"fullscreen":""' (click)='showPhoto = !showPhoto'>
-		<h1 *ngIf='!showPhoto' class='home' id="ptitle">Timmerdorp<br>{{y}}</h1>
-		<img *ngIf='!showPhoto' src="assets/imgs/logo.png" class="nav-logo">
+		<div [ngClass]='showPhoto?"hiddenHeader":""' id='overlay'></div>
+		<h1 [ngClass]='showPhoto?"hiddenHeader":""' class='home' id="ptitle">Timmerdorp<br>{{y}}</h1>
+		<img [ngClass]='showPhoto?"hiddenHeader":""' src="assets/imgs/logo.png" class="nav-logo">
 	</ion-header>
+
 
 	<div id='homeButtons'>
 		<button ion-button full *ngFor="let p of pages" (click)="openPage(p)"
