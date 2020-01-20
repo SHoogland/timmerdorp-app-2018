@@ -10,22 +10,23 @@ import { HomePage } from '../home/home';
 })
 
 export class LoginPage {
-	error: string;
 	endpoint: string;
-	loading: boolean;
+	number: string;
+	error: string;
+	name: string;
 	day: string;
+
 	login: {
 		username: string,
 		password: string
 	};
-	tickets: Array<any>;
 
-	success: boolean;
 	usernameError: boolean;
 	passwordError: boolean;
+	hideLogin: boolean;
+	success: boolean;
+	loading: boolean;
 
-	number: string;
-	name: string;
 
 	clickedOnce = false;
 	clickedTwice = false;
@@ -44,6 +45,7 @@ export class LoginPage {
 	init() {
 		this.usernameError = false;
 		this.passwordError = false;
+		this.hideLogin = true;
 		this.success = false;
 
 		this.login = {
@@ -52,10 +54,15 @@ export class LoginPage {
 		}
 		this.loading = false;
 		this.error = '';
-		this.tickets = [];
 
 		this.number = '';
 		this.name = '';
+
+		this.storage.get("notFirstUse").then((val) => {
+			this.hideLogin = !val;
+		}, (error) => {
+			this.hideLogin = true;
+		});
 
 		this.storage.get('username').then((val) => {
 			this.login.username = val;
@@ -96,6 +103,7 @@ export class LoginPage {
 		this.passwordError = false;
 		this.cd.detectChanges();
 		console.log("Determining whether login is correct by searching for random child '000'...")
+
 		//Try searching for random term: "000". If it fails, login details probably are incorrect
 		var wp = this.getWpApi('search');
 		wp.handler().param('search', "000").then((result) => {
@@ -175,6 +183,11 @@ export class LoginPage {
 		}
 		this.clickedOnce = true;
 		this.cd.detectChanges();
+	}
+
+	showLogin() {
+		this.hideLogin = false;
+		this.storage.set("notFirstUse", true);
 	}
 
 	goHome() {

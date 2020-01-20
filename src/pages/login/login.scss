@@ -1,0 +1,51 @@
+loginpage {
+  h1 {
+    text-align: center;
+    margin-top: 12px !important;
+    margin-bottom: 16px;
+  }
+
+  .line-input:nth-of-type(2n + 1) {
+    margin-bottom: 16px !important;
+  }
+
+  #statusMsg {
+    height: 20px;
+    font-size: 20px;
+    padding-left: 8px;
+    padding-top: 10px;
+    text-align: center;
+  }
+
+  .errorCard {
+    background: $blue !important;
+    ion-icon {
+      top: 24px !important;
+    }
+    &:not(#warning) #errorHeader {
+      margin-top: 0px !important;
+      margin-bottom: 6px;
+    }
+
+    &#warning #errorHeader {
+      margin-top: 4px !important;
+      margin-bottom: 5px !important;
+    }
+
+    &#warning button {
+      height: 32px;
+      margin-bottom: 8px;
+      margin-top: 8px;
+      background: rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  button {
+    &.bg-blue {
+      margin-top: 24px !important;
+    }
+    max-width: 80%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}

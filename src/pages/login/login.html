@@ -8,48 +8,76 @@
 		</ion-navbar>
 	</ion-header>
 	<div class='content'>
-		<h1 style='text-align: center; margin-top: 12px;'>Login</h1>
-		<ion-item>
-			<ion-input type="text" name="username" [(ngModel)]="login.username" placeholder="Gebruikersnaam">
-			</ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-input type="password" name="password" [(ngModel)]="login.password" placeholder="Wachtwoord">
-			</ion-input>
-		</ion-item>
-		<div style='height: 20px; font-size: 20px; padding-left: 8px; padding-top: 10px;'>
-			<div *ngIf="loading">
-				<b>Laden...</b>
-			</div>
-			<div *ngIf="success">
-				<b style='color: green'>Ingelogd!</b>
-			</div>
-			<div *ngIf="usernameError">
-				<b style='color: red'>Verkeerde gebruikersnaam</b>
-			</div>
-			<div *ngIf="passwordError">
-				<b style='color: red'>Verkeerd wachtwoord</b>
+		<div *ngIf='hideLogin'>
+			<div class="user-info errorCard hasError" id='warning'>
+				<div class="content">
+					<ion-icon name="alert"></ion-icon>
+					<h1 id='errorHeader'>Let op</h1>
+					<h4 id='errorHelp'>Deze app is alleen bedoeld voor de vrijwilligers van Timmerdorp, niet voor
+						ouders of deelnemers! Klik op OK om door te gaan...</h4>
+					<button ion-button (click)='showLogin()'>OK</button>
+				</div>
 			</div>
 		</div>
-		<button ion-button full class='bg-green' (click)='loginNow()'>
-			<ion-icon slot='start' name='log-in' style='margin-right:12px;position:relative;font-size:1.8em;'>
-			</ion-icon>
-			<span style='font-size:18px'>
-				Opslaan
-			</span>
-		</button>
-		<br><br>
-		<p>Neem contact op met Stan van Baarsen uit wijk blauw of Stephan Hoogland uit wijk geel voor het krijgen van de
-			inloggegevens.</p>
-		<button ion-button full type="submit" (click)="belStan()" class='bg-blue'>
-			<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
-			<span style='font-size: 18px;'>
-				Bel Stan
-			</span>
-		</button>
-		<div id='stagingSwitch'>
-			<button ion-button style="background: #fafafa; color: #fafafa;" full (click)='switchEnv()'>hidden</button>
-			<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
+		<div *ngIf='!hideLogin'>
+			<h1>Login</h1>
+			<ion-list class="line-input">
+				<ion-item>
+					<ion-input class="ion-text-right" placeholder='Gebruikersnaam' [(ngModel)]="login.username">
+					</ion-input>
+				</ion-item>
+			</ion-list>
+			<ion-list class="line-input">
+				<ion-item>
+					<ion-input class="ion-text-right" type='password' placeholder='Wachtwoord'
+						[(ngModel)]="login.password">
+					</ion-input>
+				</ion-item>
+			</ion-list>
+			<div id='statusMsg'>
+				<div *ngIf="loading">
+					<b>Controleren...</b>
+				</div>
+				<div *ngIf="success">
+					<b style='color: green'>Ingelogd!</b>
+				</div>
+				<div *ngIf="usernameError">
+					<b style='color: red'>Verkeerde gebruikersnaam</b>
+				</div>
+				<div *ngIf="passwordError">
+					<b style='color: red'>Verkeerd wachtwoord</b>
+				</div>
+			</div>
+			<button ion-button full class='bg-green' (click)='loginNow()'>
+				<ion-icon slot='start' name='log-in' style='margin-right:12px;position:relative;font-size:1.8em;'>
+				</ion-icon>
+				<span style='font-size:18px'>
+					Opslaan
+				</span>
+			</button>
+
+			<div class="user-info errorCard hasError">
+				<div class="content">
+					<ion-icon name="information-circle"></ion-icon>
+					<h1 id='errorHeader'>Inloggegevens</h1>
+					<h4 id='errorHelp'>Zoek Stan uit wijk blauw of Stephan uit
+						wijk geel voor het krijgen van de
+						inloggegevens.</h4>
+				</div>
+			</div>
+
+			<button ion-button full type="submit" (click)="belStan()" class='bg-blue'>
+				<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'>
+				</ion-icon>
+				<span style='font-size: 18px;'>
+					Bel Stan
+				</span>
+			</button>
+			<div id='stagingSwitch'>
+				<button ion-button style="background: #fafafa; color: #fafafa;" full
+					(click)='switchEnv()'>hidden</button>
+				<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
+			</div>
 		</div>
 	</div>
 </ion-content>
