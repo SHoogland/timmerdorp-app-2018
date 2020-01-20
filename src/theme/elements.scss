@@ -1,5 +1,8 @@
 .line-input {
   margin-bottom: 0 !important;
+  input {
+    margin: 0;
+  }
   ion-item {
     --border-color: rgba(0, 0, 0, 0) !important;
     --highlight-height: 0;

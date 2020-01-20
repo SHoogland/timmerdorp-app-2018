@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import * as WPAPI from 'wpapi';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
+import { GlobalFunctions } from '../../providers/global';
 
 declare let cordova: any;
 
@@ -14,10 +15,10 @@ declare let cordova: any;
 export class ScanTicketPage {
 	wristBandError: boolean;
 	loading: boolean;
+	staging: boolean;
 
 	oldNumber: string;
 	errorHelp: string;
-	endpoint: string;
 	error: string;
 
 	modal: {
@@ -40,7 +41,8 @@ export class ScanTicketPage {
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		public platform: Platform,
-		public storage: Storage
+		public storage: Storage,
+		public g: GlobalFunctions
 	) {
 		if (this.platform.is('cordova')) {
 			if (cordova.platformId === 'android') {
@@ -53,11 +55,11 @@ export class ScanTicketPage {
 				});
 			}
 		}
-		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
 
 	init() {
+		this.staging = false;
 		this.login = {
 			username: '',
 			password: ''
@@ -79,18 +81,6 @@ export class ScanTicketPage {
 		this.wristBandError = false;
 	}
 
-	getWpApi(route) {
-		var wp = new WPAPI({
-			endpoint: this.endpoint,
-			username: this.login.username,
-			password: this.login.password
-		});
-
-		wp.handler = wp.registerRoute('tickets', route, {});
-
-		return wp;
-	}
-
 	ionViewDidLoad() {
 		let self = this;
 
@@ -108,16 +98,12 @@ export class ScanTicketPage {
 				this.login.password = '';
 			}),
 			this.storage.get('staging').then((val) => {
-				if (val) {
-					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else {
-					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-				}
+				this.staging = !!val;
 			}, (error) => {
-				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+				this.staging = false;
 			})
 		]).then(() => {
-			var wp = this.getWpApi('barcode');
+			var wp = this.g.getWpApi(this.login, this.staging, 'barcode');
 			return wp.handler().param('barcode', this.navParams.get('barcode'));
 		}).then((result) => {
 			self.loading = false;
@@ -137,7 +123,7 @@ export class ScanTicketPage {
 			} else {
 				if (result.message == 'access denied') {
 					this.error = 'Niet ingelogd';
-					this.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
+					this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
 				} else {
 					if (result.message == 'no ticket found') {
 						self.error = 'Geen tickets gevonden';
@@ -165,7 +151,7 @@ export class ScanTicketPage {
 		let self = this;
 		self.loading = true;
 
-		var wp = this.getWpApi('add-wristband');
+		var wp = this.g.getWpApi(this.login, this.staging, 'add-wristband');
 		wp
 			.handler()
 			.param('barcode', this.navParams.get('barcode'))
@@ -180,7 +166,7 @@ export class ScanTicketPage {
 							name: t.firstName + " " + t.lastName,
 							oldNr: self.oldNumber || "onbekend",
 							newNr: t.wristBandNr,
-							wijk: self.getColor(t.hutNr)
+							wijk: self.g.getColor(t.hutNr)
 						});
 						console.log(editHis);
 
@@ -203,32 +189,6 @@ export class ScanTicketPage {
 				alert(error);
 				self.loading = false;
 			});
-	}
-
-	getColor(w) {
-		let res = '#222';
-		console.log((w + "")[0])
-		switch ((w + "")[0]) {
-			case '0':
-				res = '#ffc800';
-				break;
-			case '1':
-				res = '#f44336';
-				break;
-			case '2':
-				res = '#2196F3';
-				break;
-			case '3':
-				res = '#9ae263';
-				break;
-			default:
-				res = '#222';
-		}
-		return res;
-	}
-
-	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 	}
 
 	closeModal() {

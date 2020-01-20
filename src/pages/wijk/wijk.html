@@ -1,10 +1,10 @@
 <ion-content padding>
-	<ion-header [ngClass]='(wijk||"") + " wijk-header"'>
-		<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
-		<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+	<ion-header (click)="g.goHome()" [ngClass]='(wijk||"") + " wijk-header"'>
+		<ion-icon class='homeIcon' name="md-home"></ion-icon>
+		<h1 id="ptitle">Timmerdorp</h1>
 		<ion-navbar [ngClass]='(wijk||"")'>
 			<ion-title>
-				<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+				<img src="assets/imgs/logo.png" class="nav-logo">
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
@@ -30,13 +30,13 @@
 					{{error}}
 				</span>
 				<span *ngIf="loginError" class='errorMsg'>
-					Login-gegevens onjuist. <a (click)='toLogin()'>Aanpassen</a>
+					Login-gegevens onjuist. <a (click)='g.toLogin()'>Aanpassen</a>
 				</span>
 				<span *ngIf="notLoggedIn" class='errorMsg'>
-					Je moet eerst <a (click)='toLogin()'>inloggen</a>!
+					Je moet eerst <a (click)='g.toLogin()'>inloggen</a>!
 				</span>
 			</div>
-			<h1>Wijkoverzicht {{getName(wijk)}}</h1>
+			<h1>Wijkoverzicht {{g.getWijkName(wijk)}}</h1>
 			<table>
 				<tr>
 					<td>Totaal aantal kinderen in wijk:&nbsp;</td>
@@ -60,8 +60,8 @@
 				</tr>
 			</table>
 			<br>
-			<button [ngClass]='(wijk||"")' ion-button full (click)="clearWijkSelection()">
-				<ion-icon slot='start' name='create' style='margin-right:12px;position:relative;font-size:1.8em;'>
+			<button [ngClass]='(wijk||"")' ion-button full id='kiesWijkButton' (click)="clearWijkSelection()">
+				<ion-icon slot='start' name='create'>
 				</ion-icon>
 				<span>
 					Verander wijkkeuze

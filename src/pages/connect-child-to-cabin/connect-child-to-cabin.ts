@@ -4,6 +4,7 @@ import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
+import { GlobalFunctions } from '../../providers/global';
 
 declare let cordova: any;
 
@@ -15,7 +16,6 @@ export class ConnectChildToCabinPage {
 	searchError: string;
 	searchTerm: string;
 	errorHelp: string;
-	endpoint: string;
 	hutNr: string;
 	error: string;
 
@@ -38,6 +38,7 @@ export class ConnectChildToCabinPage {
 	isUndoing: boolean;
 	searched: boolean;
 	loading: boolean;
+	staging: boolean;
 	error1: boolean;
 	error2: boolean;
 	isTue: boolean; //if it's tuesday, show the auto-presence toggle
@@ -61,7 +62,8 @@ export class ConnectChildToCabinPage {
 		public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
+		public g: GlobalFunctions
 	) {
 		this.error1 = false;
 		this.error2 = false;
@@ -81,7 +83,6 @@ export class ConnectChildToCabinPage {
 				});
 			}
 		}
-		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
 
@@ -99,6 +100,7 @@ export class ConnectChildToCabinPage {
 		this.giveAccent = false;
 		this.isUndoing = false;
 		this.searched = false;
+		this.staging = false;
 		this.loading = false;
 
 		this.searchError = '';
@@ -127,18 +129,6 @@ export class ConnectChildToCabinPage {
 		}, 250);
 	}
 
-	getWpApi(route) {
-		var wp = new WPAPI({
-			endpoint: this.endpoint,
-			username: this.login.username,
-			password: this.login.password
-		});
-
-		wp.handler = wp.registerRoute('tickets', route, {});
-
-		return wp;
-	}
-
 	ionViewDidLoad() {
 		this.init();
 
@@ -160,13 +150,9 @@ export class ConnectChildToCabinPage {
 				this.login.password = '';
 			}),
 			this.storage.get('staging').then((val) => {
-				if (val) {
-					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else {
-					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-				}
+				this.staging = val;
 			}, (error) => {
-				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+				this.staging = false;
 			})
 		]).then(() => {
 		});
@@ -243,7 +229,7 @@ export class ConnectChildToCabinPage {
 		this.error = '';
 		this.cd.detectChanges();
 		let self = this;
-		var wp = this.getWpApi('hut');
+		var wp = this.g.getWpApi(this.login, this.staging, 'hut');
 		wp.handler().param('hutnr', this.hutNr).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
@@ -254,7 +240,7 @@ export class ConnectChildToCabinPage {
 			} else {
 				if (result.message == 'access denied') {
 					this.error = 'Niet ingelogd';
-					this.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
+					this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
 				} else {
 					self.error = result.message;
 					self.loading = false;
@@ -263,7 +249,7 @@ export class ConnectChildToCabinPage {
 		}).catch((error) => {
 			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
 				this.error = 'Inloggegevens onjuist';
-				this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
+				this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
 			} else {
 				self.error = error.message;
 			}
@@ -289,7 +275,7 @@ export class ConnectChildToCabinPage {
 		if (this.searchTerm.length < 3) return;
 		self.loading = true;
 		console.log('searching: ' + this.searchTerm);
-		var wp = this.getWpApi('search');
+		var wp = this.g.getWpApi(this.login, this.staging, 'search');
 		wp.handler().param('search', this.searchTerm).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
@@ -314,10 +300,6 @@ export class ConnectChildToCabinPage {
 			self.searchError = error.message;
 			self.loading = false;
 		});
-	}
-
-	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 	}
 
 	addChildToHut(child) {
@@ -350,7 +332,7 @@ export class ConnectChildToCabinPage {
 		this.isUndoing = false;
 		this.tempHutNr = null;
 		if (this.autoPresence && !this.isUndoing && new Date().getDay() == 2) {
-			var wp = this.getWpApi('presence');
+			var wp = this.g.getWpApi(this.login, this.staging, 'presence');
 			wp.handler().param('wristband', child.meta.wristband).param('day', "tue").param("presence", true).then((result) => {
 				console.log("kind aanwezig gemeld vandaag");
 				this.addChildPart2(child);
@@ -369,7 +351,7 @@ export class ConnectChildToCabinPage {
 
 	addChildPart2(child) {
 		let self = this;
-		var wp = this.getWpApi('hut-add');
+		var wp = this.g.getWpApi(this.login, this.staging, 'hut-add');
 		console.log(this.nieuwHutje);
 		if (!this.nieuwHutje) {
 			this.removeChildFromHut(child);
@@ -384,7 +366,7 @@ export class ConnectChildToCabinPage {
 				wristband: m.wristband,
 				oldNr: m.hutnr,
 				hutnr: self.nieuwHutje,
-				wijk: self.getColor(self.nieuwHutje),
+				wijk: self.g.getColor(self.nieuwHutje),
 				ticket: self.updateT(t)
 			});
 
@@ -416,29 +398,6 @@ export class ConnectChildToCabinPage {
 		return ticket;
 	}
 
-	getColor(w) {
-		let res = 'black';
-		console.log(w);
-		switch ((w + "")[0]) {
-			case '0':
-				res = '#ffc800';
-				break;
-			case '1':
-				res = '#f44336';
-				break;
-			case '2':
-				res = '#2196F3';
-				break;
-			case '3':
-				res = '#9ae263';
-				break;
-			default:
-				res = 'black';
-		}
-		console.log(res);
-		return res;
-	}
-
 	updateT2(t) {
 		t.meta.hutnr = [""];
 		return t;
@@ -447,7 +406,7 @@ export class ConnectChildToCabinPage {
 
 	removeChildFromHut(child) {
 		let self = this;
-		var wp = this.getWpApi('hut-remove');
+		var wp = this.g.getWpApi(this.login, this.staging, 'hut-remove');
 		this.removedChild = child;
 		wp.handler().param('hutnr', child.meta.hutnr).param('wristband', child.meta.wristband).then((result) => {
 			console.log(result);
@@ -525,25 +484,5 @@ export class ConnectChildToCabinPage {
 		setTimeout(function () {
 			document.querySelector('#warningModal').classList.remove('high');
 		}, 400);
-	}
-
-	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-	}
-
-
-	getWijk(hutNr) {
-		if (!hutNr) return '';
-		if (hutNr[0] == '0') {
-			return 'Geel';
-		} else if (hutNr[0] == '1') {
-			return 'Rood';
-		} else if (hutNr[0] == '2') {
-			return 'Blauw';
-		} else if (hutNr[0] == '3') {
-			return 'Groen';
-		} else {
-			return '';
-		}
 	}
 }

@@ -4,6 +4,7 @@ import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
+import { GlobalFunctions } from '../../providers/global';
 
 declare let cordova: any;
 
@@ -12,29 +13,33 @@ declare let cordova: any;
 	templateUrl: 'presence.html'
 })
 export class PresencePage {
-	error: string;
 	errorHelp: string;
-	endpoint: string;
-	loading: boolean;
-	greenBtn: boolean;
+	number: string;
+	error: string;
+	name: string;
 	day: string;
+
+	modalShown: boolean;
+	greenBtn: boolean;
+	loading: boolean;
+	staging: boolean;
+
 	login: {
 		username: string,
 		password: string
 	};
-	history: any;
-	modalShown: boolean;
-	tickets: Array<any>;
 
-	number: string;
-	name: string;
+	tickets: Array<any>;
+	history: any;
+
 
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
 		public cd: ChangeDetectorRef,
-		public keyboard: Keyboard
+		public keyboard: Keyboard,
+		public g: GlobalFunctions
 	) {
 		if (this.platform.is('cordova')) {
 			if (cordova.platformId === 'android') {
@@ -47,7 +52,6 @@ export class PresencePage {
 				});
 			}
 		}
-		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
 
@@ -70,6 +74,7 @@ export class PresencePage {
 		}
 		this.modalShown = false;
 		this.greenBtn = false;
+		this.staging = false;
 
 		this.login = {
 			username: '',
@@ -83,35 +88,11 @@ export class PresencePage {
 		this.name = '';
 	}
 
-	getWpApi(route) {
-		var wp = new WPAPI({
-			endpoint: this.endpoint,
-			username: this.login.username,
-			password: this.login.password
-		});
-
-		wp.handler = wp.registerRoute('tickets', route, {});
-
-		return wp;
-	}
-
 	getDayName(d) {
 		if (d == 'tue') return "Dinsdag"
 		if (d == 'wed') return "Woensdag"
 		if (d == 'thu') return "Donderdag"
 		if (d == 'fri') return "Vrijdag"
-	}
-
-	filterHistory() {
-		let seenChildren = [];
-		this.history = this.history.filter(function (a) {
-			if (seenChildren.indexOf(a.wristband[0]) == -1) {
-				seenChildren.push(a.wristband[0]);
-				return true;
-			} else {
-				return false;
-			}
-		});
 	}
 
 	ionViewDidLoad() {
@@ -120,7 +101,7 @@ export class PresencePage {
 		Promise.all([
 			this.storage.get('presHistory').then((val) => {
 				this.history = val || [];
-				this.filterHistory();
+				this.history = this.g.filterHistory(this.history);
 				console.log(this.history);
 			}, (error) => {
 				this.history = [];
@@ -136,13 +117,9 @@ export class PresencePage {
 				this.login.password = '';
 			}),
 			this.storage.get('staging').then((val) => {
-				if (val) {
-					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else {
-					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-				}
+				this.staging = val;
 			}, (error) => {
-				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+				this.staging = false;
 			})
 		]).then(() => {
 		});
@@ -157,7 +134,7 @@ export class PresencePage {
 		let self = this;
 		if (this.number.length === 3) {
 			this.loading = true;
-			var wp = this.getWpApi('search');
+			var wp = this.g.getWpApi(this.login, this.staging, 'search');
 			wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
 				console.log(result);
 				if (result.code === 200) {
@@ -183,12 +160,13 @@ export class PresencePage {
 					let t = result.tickets[0];
 					let m = t.meta;
 					self.history.unshift({
-						name: m.WooCommerceEventsAttendeeName[0] + " " + m.WooCommerceEventsAttendeeLastName[0],
+						firstName: m.WooCommerceEventsAttendeeName[0],
+						surName: m.WooCommerceEventsAttendeeLastName[0],
 						wristband: m.wristband,
 						hutnr: m.hutnr,
-						wijk: self.getColor(m.hutnr)
+						wijk: self.g.getColor(m.hutnr)
 					});
-					this.filterHistory();
+					self.history = this.g.filterHistory(this.history);
 					self.storage.set("presHistory", self.history);
 					console.log(result.tickets);
 					self.tickets = result.tickets;
@@ -196,7 +174,7 @@ export class PresencePage {
 				} else {
 					if (result.message == 'access denied') {
 						this.error = 'Niet ingelogd';
-						this.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
+						this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
 					} else {
 						self.error = result.message;
 						self.loading = false;
@@ -205,7 +183,7 @@ export class PresencePage {
 			}).catch((error) => {
 				if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
 					this.error = 'Inloggegevens onjuist';
-					this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
+					this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
 				} else {
 					self.error = error.message;
 				}
@@ -217,33 +195,6 @@ export class PresencePage {
 		}
 	}
 
-	getColor(w) {
-		let res = 'black';
-		console.log((w + "")[0])
-		switch ((w + "")[0]) {
-			case '0':
-				console.log("wat1");
-				res = '#ffc800';
-				break;
-			case '1':
-				console.log("wat2");
-				res = '#f44336';
-				break;
-			case '2':
-				console.log("wat3");
-				res = '#2196F3';
-				break;
-			case '3':
-				console.log("wat4");
-				res = '#9ae263';
-				break;
-			default:
-				console.log("wat5");
-				res = 'black';
-		}
-		return res;
-	}
-
 	makeAbsent() {
 		this.closeModal();
 		if (this.number.length < 3) return;
@@ -253,7 +204,7 @@ export class PresencePage {
 		}
 
 		let self = this;
-		var wp = this.getWpApi('presence');
+		var wp = this.g.getWpApi(this.login, this.staging, 'presence');
 		wp.handler().param('wristband', this.number).param('day', this.day).param('presence', false).then((result) => {
 			if (result.code === 200) {
 				this.markDone();
@@ -291,7 +242,7 @@ export class PresencePage {
 			this.showModal();
 			return;
 		}
-		var wp = this.getWpApi('presence');
+		var wp = this.g.getWpApi(this.login, this.staging, 'presence');
 		wp.handler().param('wristband', this.number).param('day', this.day).param('presence', pres).then((result) => {
 			if (result.code === 200) {
 				this.markDone();
@@ -328,40 +279,17 @@ export class PresencePage {
 		this.greenBtn = true;
 		let self = this;
 		document.getElementById("btnLabel").innerHTML = "Opgeslagen!";
-		(<HTMLScriptElement>document.querySelector("#numberInput > input")).focus();
+		(<HTMLScriptElement>document.querySelector("#numberInput input")).focus();
 		self.number = '';
 		setTimeout(function () {
 			self.greenBtn = false;
-			(<HTMLScriptElement>document.querySelector("#numberInput > input")).focus();
+			(<HTMLScriptElement>document.querySelector("#numberInput input")).focus();
 			document.getElementById("btnLabel").innerHTML = "Opslaan";
 			self.cd.detectChanges();
 		}, 1000);
 	}
 
 	alert() {
-		alert("Om fouten te voorkomen is het niet mogelijk aanwezigheid te veranderen voor andere dagen. Vragen of toch een wijziging aanvragen? Zoek Stan van wijk blauw/Stephan van wijk geel");
-	}
-
-	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
-	}
-
-	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-	}
-
-	getWijk(hutNr) {
-		if (!hutNr) return '';
-		if (hutNr[0] == '0') {
-			return 'Geel';
-		} else if (hutNr[0] == '1') {
-			return 'Rood';
-		} else if (hutNr[0] == '2') {
-			return 'Blauw';
-		} else if (hutNr[0] == '3') {
-			return 'Groen';
-		} else {
-			return '';
-		}
+		alert("Om fouten te voorkomen is het niet mogelijk aanwezigheid te veranderen voor andere dagen. Vragen, of alsnog een wijziging aanvragen? Zoek Stan van wijk blauw/Stephan van wijk geel");
 	}
 }

@@ -3,6 +3,7 @@ import { Platform, NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
+import { GlobalFunctions } from '../../providers/global';
 
 @Component({
 	selector: 'loginpage',
@@ -10,7 +11,6 @@ import { HomePage } from '../home/home';
 })
 
 export class LoginPage {
-	endpoint: string;
 	number: string;
 	error: string;
 	name: string;
@@ -36,9 +36,9 @@ export class LoginPage {
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
+		public g: GlobalFunctions,
 		private cd: ChangeDetectorRef
 	) {
-		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
 
@@ -78,14 +78,8 @@ export class LoginPage {
 
 		this.storage.get('staging').then((val) => {
 			this.staging = val;
-			if (val) {
-				this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-			} else {
-				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-			}
 		}, (error) => {
 			this.staging = false;
-			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		});
 	}
 
@@ -105,7 +99,7 @@ export class LoginPage {
 		console.log("Determining whether login is correct by searching for random child '000'...")
 
 		//Try searching for random term: "000". If it fails, login details probably are incorrect
-		var wp = this.getWpApi('search');
+		var wp = this.g.getWpApi(this.login, this.staging, 'search');
 		wp.handler().param('search', "000").then((result) => {
 			this.loading = false;
 			if (result.code === 200) {
@@ -113,7 +107,7 @@ export class LoginPage {
 				this.usernameError = false;
 				this.passwordError = false;
 				console.log("Succesvol ingelogd!");
-				setTimeout(() => { this.goHome() }, 800);
+				setTimeout(() => { this.g.goHome() }, 800);
 			} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
 				this.success = false;
 				this.usernameError = false;
@@ -147,18 +141,6 @@ export class LoginPage {
 		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 	}
 
-	getWpApi(route) {
-		var wp = new WPAPI({
-			endpoint: this.endpoint,
-			username: this.login.username,
-			password: this.login.password
-		});
-
-		wp.handler = wp.registerRoute('tickets', route, {});
-
-		return wp;
-	}
-
 	switchEnv() {
 		const _this = this;
 		setTimeout(function () {
@@ -169,11 +151,9 @@ export class LoginPage {
 			if (!this.staging) {
 				this.storage.set('staging', true);
 				this.staging = true;
-				this.endpoint = 'https://staging.timmerdorp.com/wp-json';
 			} else {
 				this.storage.set('staging', false);
 				this.staging = false;
-				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 			}
 			this.clickedOnce = false;
 			this.clickedTwice = false;
@@ -188,10 +168,6 @@ export class LoginPage {
 	showLogin() {
 		this.hideLogin = false;
 		this.storage.set("notFirstUse", true);
-	}
-
-	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
 	}
 
 	belStan() {

@@ -5,6 +5,7 @@ import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
+import { GlobalFunctions } from '../../providers/global';
 
 @Component({
 	selector: 'page-wijk',
@@ -16,7 +17,6 @@ export class WijkPage {
 	statistieken: object;
 	wijkstats: object;
 
-	endpoint: string;
 	error: string;
 	wijk: string;
 
@@ -32,7 +32,8 @@ export class WijkPage {
 
 	constructor(
 		public navCtrl: NavController,
-		public storage: Storage
+		public storage: Storage,
+		public g: GlobalFunctions
 	) {
 		this.showSelection = false;
 		this.init();
@@ -47,7 +48,6 @@ export class WijkPage {
 			password: ''
 		}
 
-		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.wijk = '';
 		Promise.all([
 			this.storage.get('username').then((val) => {
@@ -65,19 +65,14 @@ export class WijkPage {
 					this.showSelection = true;
 				} else {
 					this.wijk = val;
+					this.g.setStatusBar(this.wijk);
 				}
 			}),
 
 			this.storage.get('staging').then((val) => {
 				this.staging = val;
-				if (val) {
-					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else {
-					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-				}
 			}, (error) => {
 				this.staging = false;
-				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 			})
 		]).then(() => {
 			this.updateData();
@@ -87,7 +82,7 @@ export class WijkPage {
 	updateData() {
 		this.loading = true;
 		console.log(this.wijk);
-		var wp = this.getWpApi('stats');
+		var wp = this.g.getWpApi(this.login, this.staging, 'stats');
 		wp.handler().then((result) => {
 			console.log(result);
 			if (result.code === 200) {
@@ -114,17 +109,8 @@ export class WijkPage {
 		});
 	}
 
-
-	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
-	}
-
-	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-	}
-
-
 	kiesWijk(kleur) {
+		this.g.setStatusBar(kleur);
 		this.storage.set("wijk", kleur).then((val) => {
 			this.showSelection = false;
 			this.wijk = val;
@@ -133,29 +119,11 @@ export class WijkPage {
 	}
 
 	clearWijkSelection() {
+		this.g.setStatusBar("#cccccc");
 		this.wijkstats = {};
 		this.storage.set("wijk", undefined).then((val) => {
 			this.showSelection = true;
 			this.wijk = undefined;
 		});
-	}
-
-	getName(kleur) {
-		if (kleur == 'blue') return 'Blauw';
-		if (kleur == 'yellow') return 'Geel';
-		if (kleur == 'red') return 'Rood';
-		if (kleur == 'green') return 'Groen';
-	}
-
-	getWpApi(route) {
-		var wp = new WPAPI({
-			endpoint: this.endpoint,
-			username: this.login.username,
-			password: this.login.password
-		});
-
-		wp.handler = wp.registerRoute('tickets', route, {});
-
-		return wp;
 	}
 }

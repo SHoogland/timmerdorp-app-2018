@@ -20,6 +20,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { ChangeWristbandPage } from '../pages/change-wristband/change-wristband';
 import { FilesPage } from '../pages/files/files';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { GlobalFunctions } from '../providers/global';
 
 @NgModule({
 	declarations: [
@@ -61,8 +63,10 @@ import { FilesPage } from '../pages/files/files';
 		StatusBar,
 		SplashScreen,
 		HttpClient,
+		InAppBrowser,
 		BarcodeScanner,
-		{ provide: ErrorHandler, useClass: IonicErrorHandler }
+		{ provide: ErrorHandler, useClass: IonicErrorHandler },
+		GlobalFunctions
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

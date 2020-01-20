@@ -7,6 +7,7 @@ import { HomePage } from '../home/home';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { LoginPage } from '../login/login';
 import { DomSanitizer } from '@angular/platform-browser';
+import { GlobalFunctions } from '../../providers/global';
 
 declare let cordova: any;
 
@@ -21,13 +22,12 @@ export class SearchPage {
 	tickets: any;
 	history: any;
 
+	staging: boolean;
 	loading: boolean;
 
 	searchTerm: string;
 	errorHelp: string;
-	endpoint: string;
 	error: string;
-
 
 	modal: {
 		showModal: boolean;
@@ -43,7 +43,8 @@ export class SearchPage {
 		public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage,
-		public sanitizer: DomSanitizer
+		public sanitizer: DomSanitizer,
+		public g: GlobalFunctions
 	) {
 		console.log(this);
 		if (this.platform.is('cordova')) {
@@ -57,11 +58,12 @@ export class SearchPage {
 				});
 			}
 		}
-		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		this.init();
 	}
 
 	init() {
+		this.staging = false;
+
 		this.login = {
 			username: '',
 			password: ''
@@ -163,24 +165,12 @@ export class SearchPage {
 		this.tickets = [];
 	}
 
-	getWpApi(route) {
-		var wp = new WPAPI({
-			endpoint: this.endpoint,
-			username: this.login.username,
-			password: this.login.password
-		});
-
-		wp.handler = wp.registerRoute('tickets', route, {});
-
-		return wp;
-	}
-
 	ionViewDidLoad() {
 		Promise.all([
 			this.storage.get('searchChildHistory').then((val) => {
 				this.history = val || [];
 				console.log(this.history);
-				this.filterHistory();
+				this.history = this.g.filterHistory(this.history);
 			}, (error) => {
 				this.history = [];
 			}),
@@ -195,13 +185,9 @@ export class SearchPage {
 				this.login.password = '';
 			}),
 			this.storage.get('staging').then((val) => {
-				if (val) {
-					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else {
-					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-				}
+				this.staging = val;
 			}, (error) => {
-				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+				this.staging = false;
 			})
 		]).then(() => {
 			let self = this;
@@ -209,21 +195,6 @@ export class SearchPage {
 				self.error;
 			}, 100);
 		});
-	}
-
-	getWijk(hutNr) {
-		if (!hutNr) return 'Blauw';
-		if (hutNr[0] == '0') {
-			return 'Geel';
-		} else if (hutNr[0] == '1') {
-			return 'Rood';
-		} else if (hutNr[0] == '2') {
-			return 'Blauw';
-		} else if (hutNr[0] == '3') {
-			return 'Groen';
-		} else {
-			return '';
-		}
 	}
 
 	search() {
@@ -241,17 +212,6 @@ export class SearchPage {
 		return (num || [""])[0].replace(/[^0-9+]/g, '');
 	}
 
-	filterHistory() {
-		let seenChildren = [];
-		this.history = this.history.filter(function (a) {
-			if (seenChildren.indexOf((a.wristband || [])[0]) == -1) {
-				seenChildren.push((a.wristband || [])[0]);
-				return true;
-			} else {
-				return false;
-			}
-		});
-	}
 
 	searchThis() {
 		let self = this;
@@ -263,7 +223,7 @@ export class SearchPage {
 		self.error = '';
 		self.loading = true;
 		console.log('searching: ' + this.searchTerm);
-		var wp = this.getWpApi('search');
+		var wp = this.g.getWpApi(this.login, this.staging, 'search');
 		wp.handler().param('search', this.searchTerm).then((result) => {
 			console.log(result);
 			self.loading = false;
@@ -284,7 +244,7 @@ export class SearchPage {
 			} else {
 				if (result.message == 'access denied') {
 					self.error = 'Niet ingelogd';
-					self.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
+					self.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
 				} else {
 					self.error = result.message;
 				}
@@ -293,7 +253,7 @@ export class SearchPage {
 			self.loading = false;
 			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
 				self.error = 'Inloggegevens onjuist';
-				self.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
+				self.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
 			} else {
 				self.error = error.message;
 			}
@@ -310,33 +270,11 @@ export class SearchPage {
 			surName: m.WooCommerceEventsAttendeeLastName[0],
 			wristband: m.wristband,
 			hutnr: m.hutnr,
-			wijk: this.getColor(m.hutnr)
+			wijk: this.g.getColor(m.hutnr)
 		});
-		this.filterHistory();
+		this.history = this.g.filterHistory(this.history);
 		this.storage.set("searchChildHistory", this.history);
 		document.querySelector('#myModal').classList.add('high');
-	}
-
-	getColor(w) {
-		let res = 'black';
-		// console.log((w + "")[0])
-		switch ((w + "")[0]) {
-			case '0':
-				res = '#ffc800';
-				break;
-			case '1':
-				res = '#f44336';
-				break;
-			case '2':
-				res = '#2196F3';
-				break;
-			case '3':
-				res = '#9ae263';
-				break;
-			default:
-				res = 'black';
-		}
-		return res;
 	}
 
 	closeModal() {
@@ -344,10 +282,6 @@ export class SearchPage {
 		setTimeout(function () {
 			document.querySelector('#myModal').classList.remove('high');
 		}, 400);
-	}
-
-	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 	}
 
 	scanChild(barcode) {

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
+import { GlobalFunctions } from '../../providers/global';
 
 declare let cordova: any;
 
@@ -13,21 +14,26 @@ declare let cordova: any;
 	templateUrl: 'app-info.html'
 })
 export class AppInfoPage {
-	error: string;
-	staging = false;
-	wijk: string;
+	staging: boolean;
+
 	version: string;
+	error: string;
+	wijk: string;
+
 	updates: any;
 
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
-		public httpClient: HttpClient
+		public httpClient: HttpClient,
+		public g: GlobalFunctions
 	) {
 	}
 
 	init() {
+		this.staging = false;
+
 		this.storage.get('wijk').then((val) => {
 			this.wijk = val;
 		});
@@ -102,14 +108,6 @@ export class AppInfoPage {
 		return false;
 	}
 
-	getWijkName(kleur) {
-		if (kleur == 'blue') return 'Blauw';
-		if (kleur == 'yellow') return 'Geel';
-		if (kleur == 'red') return 'Rood';
-		if (kleur == 'green') return 'Groen';
-		return '';
-	}
-
 	ionViewDidLoad() {
 		this.storage.get('staging').then((val) => {
 			this.staging = val;
@@ -117,9 +115,5 @@ export class AppInfoPage {
 			this.staging = false;
 		});
 		this.init();
-	}
-
-	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate:true,animation:"ios-transition", direction: 'back' });
 	}
 }

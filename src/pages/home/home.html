@@ -1,7 +1,7 @@
 <ion-content class='homeContent' padding>
 	<ion-header [ngClass]='showPhoto?"fullscreen":""' (click)='showPhoto = !showPhoto'>
-		<h1 *ngIf='!showPhoto' id="ptitle">Timmerdorp<br>{{y}}</h1>
-		<img *ngIf='!showPhoto' (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+		<h1 *ngIf='!showPhoto' class='home' id="ptitle">Timmerdorp<br>{{y}}</h1>
+		<img *ngIf='!showPhoto' src="assets/imgs/logo.png" class="nav-logo">
 	</ion-header>
 
 	<div id='homeButtons'>

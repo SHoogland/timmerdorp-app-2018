@@ -1,10 +1,11 @@
 <ion-content padding>
-	<ion-header>
-		<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
-		<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+	<ion-header (click)='g.goHome()'>
+		<ion-icon class='homeIcon' name="md-home">
+		</ion-icon>
+		<h1 id="ptitle">Timmerdorp</h1>
 		<ion-navbar>
 			<ion-title>
-				<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+				<img src="assets/imgs/logo.png" class="nav-logo">
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
@@ -21,11 +22,11 @@
 			</tr>
 			<tr>
 				<td>Wijkkeuze:</td>
-				<td>{{getWijkName(wijk)}}</td>
+				<td>{{g.getWijkName(wijk)}}</td>
 			</tr>
 		</table>
 		<br>
-		<p>Voor vragen over de app kun je terecht bij Stan van Baarsen uit wijk blauw of Stephan Hoogland uit wijk geel.
+		<p>Voor vragen over de app kun je terecht bij Stan uit wijk blauw of Stephan uit wijk geel.
 		</p>
 		<button ion-button full (click)="belStan()" class="bg-green">
 			<ion-icon slot='start' name='call'></ion-icon>
@@ -33,34 +34,35 @@
 				Bel Stan
 			</span>
 		</button>
-		<br>
-		<h1 id='title'>Updates</h1>
+		<div id='updates' *ngIf='staging'>
+			<h1 id='title'>Updates</h1>
 
-		<div *ngFor='let u of updates'>
-			<h3>Versie: {{u.version}}</h3>
-			<table>
-				<tr>
-					<td>Datum:</td>
-					<td>{{datum(u.date)}}</td>
-				</tr>
-				<tr>
-					<td>Bijwerken verplicht:</td>
-					<td>{{u.editedPages.length > 0}}</td>
-				</tr>
-				<tr>
-					<td>Categorie wijzigingen:</td>
-					<td>{{u.changes}}</td>
-				</tr>
-				<tr>
-					<td>Nieuwste:</td>
-					<td>{{!!u.latest}}</td>
-				</tr>
-				<tr *ngIf="version && version != 'Desktop'">
-					<td>Nieuwer dan huidige versie:</td>
-					<td>{{compareVersions(u.version, version)}}</td>
-				</tr>
-			</table>
-			<br>
+			<div *ngFor='let u of updates'>
+				<h3>Versie: {{u.version}}</h3>
+				<table>
+					<tr>
+						<td>Datum:</td>
+						<td>{{datum(u.date)}}</td>
+					</tr>
+					<tr>
+						<td>Bijwerken verplicht:</td>
+						<td>{{u.editedPages.length > 0}}</td>
+					</tr>
+					<tr>
+						<td>Categorie wijzigingen:</td>
+						<td>{{u.changes}}</td>
+					</tr>
+					<tr>
+						<td>Nieuwste:</td>
+						<td>{{!!u.latest}}</td>
+					</tr>
+					<tr *ngIf="version && version != 'Desktop'">
+						<td>Nieuwer dan huidige versie:</td>
+						<td>{{compareVersions(u.version, version)}}</td>
+					</tr>
+				</table>
+				<br>
+			</div>
 		</div>
 	</div>
 </ion-content>

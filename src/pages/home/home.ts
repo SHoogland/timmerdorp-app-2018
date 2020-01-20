@@ -3,6 +3,7 @@ import { Platform, NavController } from 'ionic-angular';
 import * as WPAPI from 'wpapi';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 import { WijkPage } from '../wijk/wijk';
 import { SearchPage } from '../search/search';
@@ -16,6 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { SchedulePage } from '../schedule/schedule';
 import { ChangeWristbandPage } from '../change-wristband/change-wristband';
 import { FilesPage } from '../files/files';
+import { GlobalFunctions } from '../../providers/global';
 
 declare let cordova: any;
 
@@ -33,7 +35,6 @@ export class HomePage {
 	y: number;
 
 	wijkChoice: string;
-	endpoint: string;
 	version: string;
 	error: string;
 	wijk: string;
@@ -62,7 +63,9 @@ export class HomePage {
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
-		public httpClient: HttpClient
+		public httpClient: HttpClient,
+		private iab: InAppBrowser,
+		private g: GlobalFunctions
 	) {
 		this.y = new Date().getFullYear();
 		if (this.platform.is('cordova')) {
@@ -95,6 +98,7 @@ export class HomePage {
 			"change-wristband": ChangeWristbandPage,
 			"files": FilesPage
 		}
+		this.g.setStatusBar("#2196f3");
 
 		this.login = {
 			username: "",
@@ -116,18 +120,10 @@ export class HomePage {
 
 		this.modalShown = false;
 
-		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-
 		this.storage.get('staging').then((val) => {
 			this.staging = val;
-			if (val) {
-				this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-			} else {
-				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-			}
 		}, (error) => {
 			this.staging = false;
-			this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 		});
 
 
@@ -149,7 +145,7 @@ export class HomePage {
 				yellow: "geel"
 			}
 
-			var wp = this.getWpApi('stats');
+			var wp = this.g.getWpApi(this.login, this.staging, 'stats');
 			wp.handler().then((result) => {
 				console.log(result);
 				if (result.code === 200) {
@@ -207,7 +203,7 @@ export class HomePage {
 					icon: 'create'
 				},
 				{
-					title: 'Wijkoverzicht ' + this.getWijkName(this.wijk),
+					title: 'Wijkoverzicht ' + this.g.getWijkName(this.wijk),
 					component: "wijk",
 					class: 'small bg-' + (this.wijk || 'blue'),
 					icon: "analytics",
@@ -282,15 +278,6 @@ export class HomePage {
 		});
 	}
 
-
-	getWijkName(kleur) {
-		if (kleur == 'blue') return 'Blauw';
-		if (kleur == 'yellow') return 'Geel';
-		if (kleur == 'red') return 'Rood';
-		if (kleur == 'green') return 'Groen';
-		return '';
-	}
-
 	ionViewDidLoad() {
 		this.init();
 		let self = this;
@@ -339,7 +326,7 @@ export class HomePage {
 			if (this.openedPage.component == 'ticketscanner') {
 				this.scanCode();
 			} else if (this.openedPage.component == 'weather') {
-				window.open("https://buienradar.nl/weer/heiloo/nl/2754516");
+				this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
 			} else {
 				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 			}
@@ -389,7 +376,8 @@ export class HomePage {
 		if (this.platform.is('cordova')) {
 			this.barcodeScanner.scan({
 				resultDisplayDuration: 0,
-				showTorchButton: true
+				showTorchButton: true,
+				prompt: "Scan barcode vanaf een papieren of digitaal ticket."
 			}).then((barcodeData) => {
 				this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });
 			}, (error) => {
@@ -399,21 +387,5 @@ export class HomePage {
 		} else {
 			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 420 });
 		}
-	}
-
-	goHome() {
-		return;
-	}
-
-	getWpApi(route) {
-		var wp = new WPAPI({
-			endpoint: this.endpoint,
-			username: this.login.username,
-			password: this.login.password
-		});
-
-		wp.handler = wp.registerRoute('tickets', route, {});
-
-		return wp;
 	}
 }

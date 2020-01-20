@@ -2,11 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
+import { GlobalFunctions } from '../providers/global';
 
 declare let cordova: any;
 
@@ -18,7 +17,7 @@ export class MyApp {
 
 	rootPage: any = HomePage;
 	pages: Array<{ title: string, component: any }>;
-	endpoint: string;
+	staging: boolean;
 
 	login: {
 		username: string,
@@ -26,30 +25,31 @@ export class MyApp {
 	};
 
 	constructor(
+		private g: GlobalFunctions,
 		public platform: Platform,
-		public statusBar: StatusBar,
 		public splashScreen: SplashScreen,
 		public storage: Storage
 	) {
-		if (this.platform.is('cordova')) {
-			if (cordova.platformId === 'android') {
-				this.statusBar.backgroundColorByHexString("#045c9f");
-			} else if (cordova.platformId === 'ios') {
-				this.statusBar.backgroundColorByHexString("#0572c8");
-			}
-		}
+		this.g.setStatusBar("#0572c8");
 		this.initializeApp();
 	}
 
+
 	initializeApp() {
 		this.login = {
-			username: '',
-			password: ''
+			username: "",
+			password: ""
 		}
-		this.endpoint = 'https://shop.timmerdorp.com/wp-json';
 
 		this.platform.ready().then(() => {
 			Promise.all([
+				this.storage.get("notFirstUse").then((val) => {
+					if (!val) {
+						this.g.toLogin();
+					}
+				}, (error) => {
+					this.g.toLogin();
+				}),
 				this.storage.get('username').then((val) => {
 					this.login.username = val;
 				}, (error) => {
@@ -61,13 +61,9 @@ export class MyApp {
 					this.login.password = '';
 				}),
 				this.storage.get('staging').then((val) => {
-					if (val) {
-						this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-					} else {
-						this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-					}
+					this.staging = !!val;
 				}, (error) => {
-					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+					this.staging = false;
 				})
 			]).then(() => {
 				if (this.platform.is('cordova')) {
@@ -92,47 +88,23 @@ export class MyApp {
 
 
 	preCheckLogin() {
-		if (!this.login.username || !this.login.password) {
-			this.toLogin();
-		} else {
-			console.log("Determining whether login is correct by searching for random child '000'...")
-			var wp = this.getWpApi('search');
-			wp.handler().param('search', "000").then((result) => {
-				if (result.code === 200) {
-					console.log("Logingegevens kloppen!");
-				} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
-					this.toLogin();
-				} else {
-					console.log(result);
-				}
-			}).catch((error) => {
-				if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-					this.toLogin();
-				} else {
-					this.toLogin();
-					console.log(error);//user is offline (probably)
-				}
-			});
-		}
-	}
-
-	getWpApi(route) {
-		var wp = new WPAPI({
-			endpoint: this.endpoint,
-			username: this.login.username,
-			password: this.login.password
+		console.log("Determining whether login is correct by searching for random child '000'...")
+		var wp = this.g.getWpApi(this.login, this.staging, 'search');
+		wp.handler().param('search', "000").then((result) => {
+			if (result.code === 200) {
+				console.log("Logingegevens kloppen!");
+			} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
+				this.g.toLogin();
+			} else {
+				console.log(result);
+			}
+		}).catch((error) => {
+			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
+				this.g.toLogin();
+			} else {
+				this.g.toLogin();
+				console.log(error);//user is offline (probably)
+			}
 		});
-
-		wp.handler = wp.registerRoute('tickets', route, {});
-
-		return wp;
-	}
-
-	toLogin() {
-		this.nav.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
-	}
-
-	openPage(page) {
-		this.nav.setRoot(page.component, { animate: true, animation: "ios-transition", direction: 'forward' });
 	}
 }

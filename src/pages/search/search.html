@@ -1,10 +1,10 @@
 <ion-content>
-	<ion-header>
-		<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
-		<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+	<ion-header (click)='g.goHome()'>
+		<ion-icon class='homeIcon' name="md-home"></ion-icon>
+		<h1 id="ptitle">Timmerdorp</h1>
 		<ion-navbar>
 			<ion-title>
-				<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+				<img src="assets/imgs/logo.png" class="nav-logo">
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
@@ -44,7 +44,7 @@
 				</ion-list-header>
 				<ion-item *ngFor="let h of history"
 					(click)='searchTerm=""+(h.wristband||h.firstName||h.surName||h.hutnr);searchThis()'
-					class='{{"item item-block item-md " + getWijk((h.hutnr||[0])[0])}}'>
+					class='{{"item item-block item-md " + g.getWijk((h.hutnr||[0])[0])}}'>
 					<ion-label>
 						<div>
 							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{h.wristband}}</span>
@@ -71,7 +71,7 @@
 				Zoekresultaten ({{tickets.length}})
 			</ion-list-header>
 			<ion-item *ngFor="let child of tickets" (click)='showModal(child)'
-				class='{{"item item-block item-md " + getWijk(((child.meta||{}).hutnr||[0])[0])}}'>
+				class='{{"item item-block item-md " + g.getWijk(((child.meta||{}).hutnr||[0])[0])}}'>
 				<ion-label>
 					<div>
 						<div>
@@ -98,7 +98,7 @@
 
 <div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
 	class="modal conditional">
-	<div class="{{'modal-content ' + getWijk((modal.child.meta.hutnr||[])[0])}}" *ngIf="modal.child">
+	<div class="{{'modal-content ' + g.getWijk((modal.child.meta.hutnr||[])[0])}}" *ngIf="modal.child">
 		<div id='modalTop'>
 		</div>
 		<div id='modalBottom'>
@@ -114,7 +114,7 @@
 							{{(modal.child.meta[i.name]||[])[0]}}</td>
 						<td *ngIf="c.name==='Aanwezigheid'">
 							{{(modal.child.meta["present_" + i.day]||[])[0] === '1'?"Aanwezig":"Afwezig"}}</td>
-						<td *ngIf="i.title==='Wijk'">{{getWijk((modal.child.meta.hutnr||[])[0])}}</td>
+						<td *ngIf="i.title==='Wijk'">{{g.getWijk((modal.child.meta.hutnr||[])[0])}}</td>
 						<td *ngIf='i.tel'><a
 								href="tel: {{filterPhoneNr(modal.child.meta[i.name])}}">{{(modal.child.meta[i.name]||[])[0]}}</a>
 						</td>

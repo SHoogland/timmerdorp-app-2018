@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { HomePage } from '../home/home';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
+import { GlobalFunctions } from '../../providers/global';
 
 
 @Component({
@@ -20,12 +21,12 @@ export class ChangeWristbandPage {
 
 	searchedTerm: string;
 	errorHelp: string;
-	endpoint: string;
 	oldNr: string;
 	newNr: string;
 	error: string;
 
 	searched: boolean;
+	staging: boolean;
 	loading: boolean;
 
 	login: {
@@ -37,7 +38,8 @@ export class ChangeWristbandPage {
 		public navCtrl: NavController,
 		public httpClient: HttpClient,
 		public storage: Storage,
-		public cd: ChangeDetectorRef
+		public cd: ChangeDetectorRef,
+		public g: GlobalFunctions
 	) {
 	}
 
@@ -55,7 +57,7 @@ export class ChangeWristbandPage {
 		this.loading = true;
 		this.searchedTerm = this.oldNr;
 		console.log('searching: ' + this.oldNr);
-		var wp = this.getWpApi('search');
+		var wp = this.g.getWpApi(this.login, this.staging, 'search');
 		wp.handler().param('search', this.oldNr).then((result) => {
 			let t = result.tickets;
 			t = t.filter(function (a) {
@@ -90,7 +92,7 @@ export class ChangeWristbandPage {
 			} else {
 				if (result.message == 'access denied') {
 					this.error = 'Niet ingelogd';
-					this.errorHelp = 'Je moet eerst <a (click)="toLogin()">inloggen</a>.';
+					this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
 				} else {
 					self.error = result.message;
 					self.loading = false;
@@ -99,7 +101,7 @@ export class ChangeWristbandPage {
 		}).catch((error) => {
 			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
 				this.error = 'Inloggegevens onjuist';
-				this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
+				this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
 			} else {
 				self.error = error.message;
 			}
@@ -116,44 +118,19 @@ export class ChangeWristbandPage {
 		}
 	}
 
-	getColor(w) {
-		let res = '#222';
-		console.log((w + "")[0])
-		switch ((w + "")[0]) {
-			case '0':
-				res = '#ffc800';
-				break;
-			case '1':
-				res = '#f44336';
-				break;
-			case '2':
-				res = '#2196F3';
-				break;
-			case '3':
-				res = '#9ae263';
-				break;
-			default:
-				res = '#222';
-		}
-		return res;
-	}
-
-	toLogin() {
-		this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
-	}
-
 	ionViewDidLoad() {
 		this.login = {
 			username: '',
 			password: ''
 		}
 		this.searched = false;
-		this.ticket = {};
+		this.staging = false;
 		this.loading = false;
-		this.error = '';
+		this.loading = false;
+		this.ticket = {};
+		this.error = "";
 		this.oldNr = "";
 		this.newNr = "";
-		this.loading = false;
 		Promise.all([
 			this.storage.get('editHistory').then((val) => {
 				this.history = val || [];
@@ -172,13 +149,9 @@ export class ChangeWristbandPage {
 				this.login.password = '';
 			}),
 			this.storage.get('staging').then((val) => {
-				if (val) {
-					this.endpoint = 'https://staging.timmerdorp.com/wp-json';
-				} else {
-					this.endpoint = 'https://shop.timmerdorp.com/wp-json';
-				}
+				this.staging = val;
 			}, (error) => {
-				this.endpoint = 'https://shop.timmerdorp.com/wp-json';
+				this.staging = false;
 			})
 		]).then(() => {
 			let self = this;
@@ -192,7 +165,7 @@ export class ChangeWristbandPage {
 		this.error = '';
 		this.loading = true;
 		let self = this;
-		var wp = this.getWpApi('add-wristband');
+		var wp = this.g.getWpApi(this.login, this.staging, 'add-wristband');
 		console.log(this.ticket);
 
 		wp.handler().param('barcode', this.ticket.barcode).param('wristband', this.newNr).then((result) => {
@@ -208,7 +181,7 @@ export class ChangeWristbandPage {
 				});
 				console.log(self.history);
 				self.storage.set("editHistory", self.history);
-				self.goHome();
+				self.g.goHome();
 			} else {
 				if (result.message == 'wristband already exists') {
 					self.error = 'Polsbandje bestaat al';
@@ -224,36 +197,5 @@ export class ChangeWristbandPage {
 			alert("foutmelding! " + error);
 			this.loading = false;
 		});
-	}
-
-	getWpApi(route) {
-		var wp = new WPAPI({
-			endpoint: this.endpoint,
-			username: this.login.username,
-			password: this.login.password
-		});
-
-		wp.handler = wp.registerRoute('tickets', route, {});
-
-		return wp;
-	}
-
-	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-	}
-
-	getWijk(hutNr) {
-		if (!hutNr) return '';
-		if (hutNr[0] == '0') {
-			return 'Geel';
-		} else if (hutNr[0] == '1') {
-			return 'Rood';
-		} else if (hutNr[0] == '2') {
-			return 'Blauw';
-		} else if (hutNr[0] == '3') {
-			return 'Groen';
-		} else {
-			return '';
-		}
 	}
 }

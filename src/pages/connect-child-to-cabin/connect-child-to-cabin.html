@@ -1,10 +1,10 @@
 <ion-content padding>
-	<ion-header>
-		<ion-icon (click)="goHome()" class='homeIcon' name="md-home"></ion-icon>
-		<h1 (click)="goHome()" id="ptitle">Timmerdorp</h1>
+	<ion-header (click)='g.goHome()'>
+		<ion-icon class='homeIcon' name="md-home"></ion-icon>
+		<h1 id="ptitle">Timmerdorp</h1>
 		<ion-navbar>
 			<ion-title>
-				<img (click)="goHome()" src="assets/imgs/logo.png" class="nav-logo">
+				<img src="assets/imgs/logo.png" class="nav-logo">
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
@@ -19,10 +19,6 @@
 					</ion-input>
 				</ion-item>
 			</ion-list>
-			<!-- <ion-item>
-				<ion-input #nrInput type="tel" placeholder="Hutnummer" [(ngModel)]="hutNr"
-					(ngModelChange)="search($event)" maxlength="3"></ion-input>
-			</ion-item> -->
 		</div>
 
 		<div *ngIf='!(hutNr && hutNr.length === 3) && history && history.length > 0 && (!loading || isUndoing)'>
@@ -33,7 +29,7 @@
 
 				<div *ngFor="let h of history; let i = index">
 					<ion-item [ngClass]="giveAccent&&!i?'accent':''"
-						class='{{"item item-block item-md " + getWijk((h.hutnr||[0])[0])}}'>
+						class='{{"item item-block item-md " + g.getWijk((h.hutnr||[0])[0])}}'>
 						<ion-label>
 							<div *ngIf="!h.removal">
 								<h2>{{h.name}}</h2>
@@ -127,7 +123,7 @@
 				{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
 					'-' }})&nbsp;&mdash;&nbsp;
 				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0]"
-					[ngClass]='"hutNr " + getWijk(child.meta.hutnr[0])'>hutje:&nbsp;
+					[ngClass]='"hutNr " + g.getWijk(child.meta.hutnr[0])'>hutje:&nbsp;
 					{{ child.meta.hutnr}}</span>
 				<span *ngIf="!(child.meta.hutnr && child.meta.hutnr[0])">Geen hutje :(</span>
 			</button>

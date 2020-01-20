@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { HttpClient } from '@angular/common/http';
-
-import { HomePage } from '../home/home';
+import { GlobalFunctions } from '../../providers/global';
 
 
 @Component({
@@ -24,7 +23,8 @@ export class FilesPage {
 
 	constructor(
 		public navCtrl: NavController,
-		public httpClient: HttpClient
+		public httpClient: HttpClient,
+		public g: GlobalFunctions
 	) {
 		this.loading = false;
 	}
@@ -80,9 +80,4 @@ export class FilesPage {
 	ionViewDidLoad() {
 		this.init();
 	}
-
-	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-	}
-
 }
