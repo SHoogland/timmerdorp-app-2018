@@ -39,7 +39,7 @@
 			</div>
 		</div>
 
-		<div style='column-count: 2;'>
+		<div id='columns'>
 			<div *ngFor='let a of albums'>
 				<ion-card (click)='openAlbum(a.id)' button>
 					<img [src]="((a||{})['primary_photo_extras']||{})['url_m']" />

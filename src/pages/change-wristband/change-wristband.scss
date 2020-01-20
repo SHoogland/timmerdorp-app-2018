@@ -13,6 +13,20 @@ page-changeWristband {
     font-size: 2.4rem;
   }
 
+  #saveBtn ion-icon {
+    margin-right: 12px;
+    position: relative;
+    font-size: 1.8em;
+  }
+
+  #searchBtn2 {
+    ion-icon {
+      margin-right: 12px;
+      position: relative;
+      font-size: 1.8em;
+    }
+  }
+
   .infoCard .inhoud {
     padding-bottom: 12px;
   }
@@ -24,6 +38,13 @@ page-changeWristband {
   .user-info,
   .bracelet-number {
     padding-top: 0px !important;
+  }
+
+  .user-info > div {
+    height: 20px;
+    div {
+      margin-bottom: 80px;
+    }
   }
 
   #searchBtn2 {

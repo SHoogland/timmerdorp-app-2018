@@ -9,7 +9,7 @@
 	<div id='homeButtons'>
 		<button ion-button full *ngFor="let p of pages" (click)="openPage(p)"
 			[ngClass]="p.class + (!showPhoto || (!p.weather && !p.data)?'':' hidden')" class='homeButton'>
-			<div style='text-align:left;' *ngIf='!showPhoto || (!p.weather && !p.data)'>
+			<div class='homeBtnD' *ngIf='!showPhoto || (!p.weather && !p.data)'>
 				<ion-icon slot='start' name='{{p.weather && weather?weather.icon:(p.icon||"")}}'
 					[ngClass]="(p.weather && weather)?(weather.icon!='sunny'?'blueIcon ':'yellowIcon '):' ' + (p.data?'data':'')">
 				</ion-icon>
@@ -25,7 +25,7 @@
 						<p>{{wijkCount||0}} in wijk {{wijken[wijk]}}</p>
 					</div>
 				</div>
-				<span *ngIf="!p.small && !p.weather && !p.data" style='font-size:18px'>
+				<span *ngIf="!p.small && !p.weather && !p.data">
 					{{p.title}}
 				</span>
 			</div>
@@ -46,16 +46,14 @@
 			<p>Voor het openen van deze pagina <b>moet</b> je de nieuwste versie gebruiken, anders kunnen wij niet
 				garanderen dat het allemaal werkt.</p>
 		</div>
-		<button ion-button full (click)="belStan()" class="bg-green correction">
-			<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'></ion-icon>
-			<span style='font-size: 18px;'>
-				Bel Stan
-			</span>
+		<button ion-button full (click)="belStan()" class="bg-green correction callBtn">
+			<ion-icon slot='start' name='call'></ion-icon>
+			<span>Bel Stan</span>
 		</button>
 		<button ion-button full (click)="openStore()" class="bg-blue correction">Open {{android?"Play":"App"}}
 			Store</button>
 		<button ion-button full (click)="closeModal()" class="bg-red correction">Terug</button>
-		<button ion-button full (click)="forceOpenPage()" class='correction' style='background: black;'>Toch openen
+		<button ion-button full (click)="forceOpenPage()" class='correction blackBtn'>Toch openen
 			(pas op)</button>
 	</div>
 </div>

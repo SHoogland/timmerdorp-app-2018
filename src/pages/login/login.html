@@ -39,19 +39,19 @@
 					<b>Controleren...</b>
 				</div>
 				<div *ngIf="success">
-					<b style='color: green'>Ingelogd!</b>
+					<b class='successMsg'>Ingelogd!</b>
 				</div>
 				<div *ngIf="usernameError">
-					<b style='color: red'>Verkeerde gebruikersnaam</b>
+					<b class='errorMsg'>Verkeerde gebruikersnaam</b>
 				</div>
 				<div *ngIf="passwordError">
-					<b style='color: red'>Verkeerd wachtwoord</b>
+					<b class='errorMsg'>Verkeerd wachtwoord</b>
 				</div>
 			</div>
-			<button ion-button full class='bg-green' (click)='loginNow()'>
-				<ion-icon slot='start' name='log-in' style='margin-right:12px;position:relative;font-size:1.8em;'>
+			<button id='saveBtn' ion-button full class='bg-green' (click)='loginNow()'>
+				<ion-icon slot='start' name='md-log-in'>
 				</ion-icon>
-				<span style='font-size:18px'>
+				<span>
 					Opslaan
 				</span>
 			</button>
@@ -66,17 +66,13 @@
 				</div>
 			</div>
 
-			<button ion-button full type="submit" (click)="belStan()" class='bg-blue'>
-				<ion-icon slot='start' name='call' style='margin-right:12px;position:relative;font-size:1.8em;'>
-				</ion-icon>
-				<span style='font-size: 18px;'>
-					Bel Stan
-				</span>
+			<button ion-button full type="submit" (click)="belStan()" class='bg-blue' id='callBtn'>
+				<ion-icon slot='start' name='call'></ion-icon>
+				<span>Bel Stan</span>
 			</button>
 			<div id='stagingSwitch'>
-				<button ion-button style="background: #fafafa; color: #fafafa;" full
-					(click)='switchEnv()'>hidden</button>
-				<p *ngIf="staging" style='margin-bottom: 12px;'>staging enabled</p>
+				<button ion-button id='stagingBtn' full (click)='switchEnv()'>hidden</button>
+				<p *ngIf="staging" id='stagingMsg'>staging enabled</p>
 			</div>
 		</div>
 	</div>

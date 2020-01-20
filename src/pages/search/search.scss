@@ -69,7 +69,11 @@ page-search {
     margin-left: 18px;
   }
 
-  h1 {
+  .user-info > div {
+    height: 20px;
+  }
+
+  h1:not(#ptitle) {
     margin-top: 0px;
   }
 

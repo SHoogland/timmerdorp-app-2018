@@ -70,13 +70,20 @@ page-wijk {
     background: white !important;
   }
 
-  //   ion-navbar,
-  //   ion-navbar * {
-  //     color: #333 !important;
-  //   }
-
-  h1 {
+  h1:not(#ptitle) {
     margin-top: 0;
+  }
+
+  #table2 {
+    margin-left: 20px;
+  }
+
+  #main > .user-info {
+    border: none !important;
+  }
+
+  #wijkChoice {
+    text-align: center;
   }
 
   #wijkHeader {

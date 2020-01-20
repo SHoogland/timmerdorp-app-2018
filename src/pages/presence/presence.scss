@@ -52,6 +52,21 @@ page-presence {
     width: calc(50% - 12px) !important;
   }
 
+  #childInfo {
+    margin-top: -50px;
+    > div {
+      padding-bottom: 12px;
+    }
+  }
+
+  .user-info > div {
+    height: 20px;
+  }
+
+  #dayName {
+    color: green;
+  }
+
   #modalTop {
     background: #e82525;
   }

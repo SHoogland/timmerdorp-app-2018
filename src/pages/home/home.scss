@@ -91,6 +91,28 @@ page-home {
     }
   }
 
+  .blackBtn {
+    background: black;
+  }
+
+  .callBtn {
+    ion-icon {
+      margin-right: 12px;
+      position: relative;
+      font-size: 1.8em;
+    }
+    span {
+      font-size: 18px;
+    }
+  }
+
+  .homeBtnD {
+    text-align: left;
+    > span {
+      font-size: 18px;
+    }
+  }
+
   ion-header {
     * {
       z-index: 25;

@@ -25,8 +25,7 @@
 				</span>
 
 				<button ion-button full (click)="searchTicket()" class="bg-blue correction shown" id='searchBtn2'>
-					<ion-icon slot='start' name='search' style='margin-right:12px;position:relative;font-size:1.8em;'>
-					</ion-icon>
+					<ion-icon slot='start' name='search'></ion-icon>
 					Zoeken
 				</button>
 			</div>
@@ -40,9 +39,8 @@
 						</ion-input>
 					</ion-item>
 				</ion-list>
-				<button ion-button full (click)="saveNr()" class="bg-blue correction shown">
-					<ion-icon slot='start' name='checkmark'
-						style='margin-right:12px;position:relative;font-size:1.8em;'>
+				<button ion-button full (click)="saveNr()" id='saveBtn' class="bg-blue correction shown">
+					<ion-icon slot='start' name='checkmark'>
 					</ion-icon>
 					Opslaan
 				</button>
@@ -56,8 +54,8 @@
 			</div>
 		</div>
 		<div [ngClass]="'user-info' + (loading?' loading':'')">
-			<div style='height: 20px;'>
-				<div *ngIf="loading&&!notLoggedIn" style='margin-bottom:80px;'>
+			<div>
+				<div *ngIf="loading&&!notLoggedIn">
 					<ion-spinner color='primary'></ion-spinner>
 				</div>
 			</div>

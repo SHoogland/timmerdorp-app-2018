@@ -8,7 +8,7 @@
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
-	<div *ngIf='showSelection' style='text-align: center'>
+	<div *ngIf='showSelection' id='wijkChoice'>
 		<h1 id='wijkHeader'>Kies je wijk</h1>
 		<button ion-button class='bg-blue modern customColoured halfWidth' full
 			(click)='kiesWijk("blue")'>Blauw</button>
@@ -20,7 +20,7 @@
 	</div>
 	<div class='content'>
 		<div *ngIf='!showSelection' id='main'>
-			<div class="user-info" style='border: none!important;'>
+			<div class="user-info">
 				<div id='spinner' [ngClass]="{'hidden': !(loading&&!notLoggedIn)}">
 					<div *ngIf="loading&&!notLoggedIn">
 						<ion-spinner color='primary'></ion-spinner>
@@ -69,7 +69,7 @@
 			</button>
 			<br>
 			<h1>Algemene Statistieken</h1>
-			<table style='margin-left: 20px;'>
+			<table id='table2'>
 				<tr>
 					<td>Totaal aantal kinderen:&nbsp;</td>
 					<td>{{(statistieken||{}).count}}</td>

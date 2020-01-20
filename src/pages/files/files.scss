@@ -23,6 +23,10 @@ files {
     text-align: center;
   }
 
+  #columns {
+    column-count: 2;
+  }
+
   #yearSelector {
     background: #fafafa !important;
     margin-bottom: 32px;

@@ -1,5 +1,5 @@
 loginpage {
-  h1 {
+  h1:not(#ptitle) {
     text-align: center;
     margin-top: 12px !important;
     margin-bottom: 16px;
@@ -9,12 +9,47 @@ loginpage {
     margin-bottom: 16px !important;
   }
 
+  #callBtn {
+    ion-icon {
+      margin-right: 12px;
+      position: relative;
+      font-size: 1.8em;
+    }
+    span {
+      font-size: 18px;
+    }
+  }
+
+  #stagingMsg {
+    margin-bottom: 12px;
+  }
+
+  #stagingBtn {
+    background: #fafafa;
+    color: #fafafa;
+  }
+
   #statusMsg {
     height: 20px;
     font-size: 20px;
     padding-left: 8px;
     padding-top: 10px;
     text-align: center;
+  }
+
+  .successMsg {
+    color: green;
+  }
+
+  #saveBtn {
+    ion-icon {
+      margin-right: 12px;
+      position: relative;
+      font-size: 1.8em;
+    }
+    span {
+      font-size: 18px;
+    }
   }
 
   .errorCard {

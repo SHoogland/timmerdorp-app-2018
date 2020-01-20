@@ -7,12 +7,28 @@ page-connect-child-to-cabin {
   }
   #hutHeader {
     padding-bottom: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 20px;
     margin-top: 8px;
+  }
+
+  #addIcon {
+    margin-right: 12px;
+    position: relative;
+    font-size: 1.8em;
+  }
+
+  #spinner {
+    height: 40px;
   }
 
   .bracelet-number {
     padding-top: 0px;
+  }
+
+  .user-info {
+    > div {
+      height: 20px;
+    }
   }
 
   .undoButton {

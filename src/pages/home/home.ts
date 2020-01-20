@@ -234,7 +234,7 @@ export class HomePage {
 					title: 'Log uit',
 					component: "login",
 					class: 'bg-darkred small',
-					icon: "log-out",
+					icon: "md-log-out",
 					small: true
 				}
 			];

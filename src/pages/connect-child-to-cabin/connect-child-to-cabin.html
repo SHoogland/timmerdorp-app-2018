@@ -60,7 +60,7 @@
 			</div>
 		</div>
 		<div class="user-info">
-			<div style='height: 20px;'>
+			<div>
 				<div *ngIf="loading&&!notLoggedIn">
 					<ion-spinner color='primary'></ion-spinner>
 				</div>
@@ -68,8 +68,8 @@
 		</div>
 		<div class="bracelet-number conditional"
 			[ngClass]='hutNr && hutNr.length === 3 && !error && searched? "shown":""'>
-			<h1 id='hutHeader' style='margin-bottom: 20px;'>Kinderen in hut {{hutNr}}</h1>
-			<p style='color: red;font-weight:bold;'
+			<h1 id='hutHeader'>Kinderen in hut {{hutNr}}</h1>
+			<p class='errorMsg'
 				*ngIf="searched && hutTickets && !hutTickets.length && !notLoggedIn && hutNr && hutNr.length === 3">
 				Nog geen kindertjes in dit hutje :(</p>
 			<button *ngFor="let child of hutTickets" ion-button full class="modern alternate"
@@ -79,7 +79,7 @@
 				'-' }})
 			</button>
 			<button ion-button full (click)="showAddModal()" class="bg-blue correction">
-				<ion-icon slot='start' name='add' style='margin-right:12px;position:relative;font-size:1.8em;'>
+				<ion-icon slot='start' name='add' id='addIcon'>
 				</ion-icon>
 				Kind toevoegen
 			</button>
@@ -108,11 +108,11 @@
 				</ion-item>
 			</ion-list>
 
-			<p style="color:red; font-weight: bold;">
+			<p class='errorMsg'>
 				{{searchError}}
 			</p>
 
-			<div style='height: 40px;'>
+			<div id='spinner'>
 				<ion-spinner *ngIf='loading&&!notLoggedIn' color='primary'></ion-spinner>
 			</div>
 		</div>

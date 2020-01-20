@@ -1,5 +1,9 @@
 page-schedule {
-	div.content{
-		padding: 24px!important;
-	}
+  div.content {
+    padding: 24px !important;
+  }
+
+  .content > h1 {
+    text-align: center;
+  }
 }
