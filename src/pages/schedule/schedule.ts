@@ -1,9 +1,6 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-
+import { Component, ViewChild } from '@angular/core';
+import { NavController, Content } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-
-import { HomePage } from '../home/home';
 import { GlobalFunctions } from '../../providers/global';
 
 
@@ -12,7 +9,10 @@ import { GlobalFunctions } from '../../providers/global';
 	templateUrl: 'schedule.html'
 })
 export class SchedulePage {
+	@ViewChild(Content) content: Content;
 	schedule: string;
+	loading: boolean;
+
 	constructor(
 		public navCtrl: NavController,
 		public httpClient: HttpClient,
@@ -22,18 +22,34 @@ export class SchedulePage {
 
 	init() {
 		let self = this;
+		self.loading = true;
 
 		this.httpClient.get("https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json")
 			.subscribe((data: any) => {
+				self.loading = false;
 				self.schedule = data.schedule;
+				setTimeout(function () {
+					let id = self.getDate();
+					let el = document.getElementById(id);
+					console.log(id, el);
+					if (el) {
+						self.content.scrollTo(0, el.offsetTop, 600);
+					}
+				}, 200);
 			});
+	}
+
+	getDate() {
+		return this.g.prependZero(new Date().getMonth() + 1) + "-" + this.g.prependZero(new Date().getDate()) + "-" + new Date().getFullYear();
+	}
+
+	getTime() {
+		let pz = this.g.prependZero;
+		let time = new Date();
+		return pz(time.getHours()) + ":" + pz(time.getMinutes());
 	}
 
 	ionViewDidLoad() {
 		this.init();
-	}
-
-	goHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: 'back' });
 	}
 }

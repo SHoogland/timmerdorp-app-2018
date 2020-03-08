@@ -54,7 +54,9 @@ export class AppInfoPage {
 				u.sort(function (a, b) {
 					return b.date - a.date;
 				});
-				u[0].latest = true;
+				if (u[0]) {
+					u[0].latest = true;
+				}
 				self.updates = u;
 			});
 	}
@@ -77,23 +79,15 @@ export class AppInfoPage {
 		} else if (+today - +d2 == 24 * 60 * 60 * 1000) {
 			return "Gisteren " + this.tijdstip(d);
 		}
-		return this.prependZero(d.getDate()) + "-" + this.prependZero(d.getMonth() + 1) + '-' + d.getFullYear() + ' ' + this.tijdstip(d);
+		return this.g.prependZero(d.getDate()) + "-" + this.g.prependZero(d.getMonth() + 1) + '-' + d.getFullYear() + ' ' + this.tijdstip(d);
 	}
 
 	tijdstip(t) {
-		return "om " + this.prependZero(t.getHours()) + ":" + this.prependZero(t.getMinutes());
+		return "om " + this.g.prependZero(t.getHours()) + ":" + this.g.prependZero(t.getMinutes());
 	}
 
 	belStan() {
 		window.location.href = 'tel:0640516654'
-	}
-
-	prependZero(n) {
-		if (n < 10 && n > -10) {
-			return '0' + n;
-		} else {
-			return '' + n;
-		}
 	}
 
 	compareVersions(New, Old) {

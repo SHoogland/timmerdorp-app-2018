@@ -142,4 +142,12 @@ export class GlobalFunctions {
 		}
 		return res;
 	}
+
+	prependZero(n) {
+		if (n < 10 && n > -10) {
+			return (n < 0 ? '-' : '') + '0' + Math.abs(n);
+		} else {
+			return '' + n;
+		}
+	}
 }

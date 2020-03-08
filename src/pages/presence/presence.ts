@@ -290,6 +290,6 @@ export class PresencePage {
 	}
 
 	alert() {
-		alert("Om fouten te voorkomen is het niet mogelijk aanwezigheid te veranderen voor andere dagen. Vragen, of alsnog een wijziging aanvragen? Zoek Stan van wijk blauw/Stephan van wijk geel");
+		alert("Om fouten te voorkomen is het niet mogelijk aanwezigheid te veranderen voor andere dagen. Vragen, of alsnog een wijziging aanvragen? Zoek Stan uit wijk blauw/Stephan uit wijk geel");
 	}
 }

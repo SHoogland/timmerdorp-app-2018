@@ -60,7 +60,8 @@
 				</tr>
 			</table>
 			<br>
-			<button [ngClass]='(wijk||"")' ion-button full id='kiesWijkButton' (click)="clearWijkSelection()">
+			<button [ngClass]='(wijk||"") + " iconBtn"' ion-button full id='kiesWijkButton'
+				(click)="clearWijkSelection()">
 				<ion-icon slot='start' name='create'>
 				</ion-icon>
 				<span>

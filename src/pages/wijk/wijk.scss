@@ -1,113 +1,128 @@
 page-wijk {
-  #spinner {
-    transition-duration: 400ms;
-    height: 20px;
-    margin-bottom: 40px;
-    &.hidden {
-      height: 0px;
-      margin-bottom: 0px;
-    }
-  }
+	.content {
+		padding: 0 !important;
+	}
 
-  #kiesWijkButton {
-    margin-right: 12px;
-    position: relative;
-    font-size: 1.8em;
-  }
+	#spinner {
+		transition-duration: 400ms;
+		height: 20px;
+		margin-bottom: 40px;
+		&.hidden {
+			height: 0px;
+			margin-bottom: 0px;
+		}
+	}
 
-  table {
-    tr td:first-of-type {
-      font-weight: bold;
-    }
-    margin-left: 20px;
-  }
-  td {
-    text-align: left;
-    padding-right: 4px;
-  }
+	#kiesWijkButton {
+		margin-right: 12px;
+		position: relative;
+		font-size: 1.8em;
+	}
 
-  .halfWidth {
-    font-weight: bold;
-    font-size: 28px;
-    height: 180px;
-    margin: -2px !important;
-  }
+	table {
+		tr td:first-of-type {
+			font-weight: bold;
+		}
+		margin-left: 20px;
+	}
+	td {
+		text-align: left;
+		padding-right: 4px;
+	}
 
-  #main {
-    text-align: center;
-    button {
-      span span {
-        font-weight: normal;
-        font-size: 20px;
-      }
-    }
-  }
+	.halfWidth {
+		font-weight: bold;
+		font-size: 28px;
+		height: 180px;
+		margin: -2px !important;
+	}
 
-  * {
-    transition-duration: 500ms;
-    transition-property: background-color !important;
-  }
+	#main {
+		text-align: center;
+		button {
+			span span {
+				font-weight: normal;
+				font-size: 20px;
+			}
+		}
+	}
 
-  .red,
-  .red .toolbar-background {
-    background: $red !important;
-  }
-  .yellow,
-  .yellow .toolbar-background {
-    background: $yellow !important;
-  }
-  .green,
-  .green .toolbar-background {
-    background: $green !important;
-  }
+	* {
+		transition-duration: 500ms;
+		transition-property: background-color !important;
+	}
 
-  .blue,
-  .blue .toolbar-background {
-    background: $blue !important;
-  }
+	.red,
+	.red .toolbar-background {
+		background: $red !important;
+	}
+	.yellow,
+	.yellow .toolbar-background {
+		background: $yellow !important;
+	}
+	.green,
+	.green .toolbar-background {
+		background: $green !important;
+	}
 
-  .toolbar-background {
-    background: white !important;
-  }
+	.blue,
+	.blue .toolbar-background {
+		background: $blue !important;
+	}
 
-  h1:not(#ptitle) {
-    margin-top: 0;
-  }
+	.toolbar-background {
+		background: white !important;
+	}
 
-  #table2 {
-    margin-left: 20px;
-  }
+	h1:not(#ptitle) {
+		margin-top: 0;
+	}
 
-  #main > .user-info {
-    border: none !important;
-  }
+	#table2 {
+		margin-left: 20px;
+	}
 
-  #wijkChoice {
-    text-align: center;
-  }
+	#main > .user-info {
+		border: none !important;
+	}
 
-  #wijkHeader {
-    padding-top: 20px;
-    background: #333;
-    color: white;
-    padding-bottom: 20px;
-    margin-bottom: 0px;
-  }
+	#wijkChoice {
+		text-align: center;
+	}
 
-  .wijk-header {
-    &:not(.blue, .red, .green, .yellow) {
-      * {
-        color: #333 !important;
-      }
-    }
+	#wijkHeader {
+		padding-top: 20px;
+		background: #333;
+		color: white;
+		padding-bottom: 20px;
+		margin-bottom: 0px;
+	}
 
-    &.yellow,
-    &.green,
-    &.blue,
-    &.red {
-      * {
-        color: white !important;
-      }
-    }
-  }
+	.wijk-header {
+		&:not(.blue, .red, .green, .yellow) {
+			* {
+				color: #333 !important;
+			}
+		}
+
+		&.yellow,
+		&.green,
+		&.blue,
+		&.red {
+			* {
+				color: white !important;
+			}
+		}
+	}
+	.iconBtn {
+		border-radius: 0px !important;
+		ion-icon {
+			margin-right: 12px;
+			position: relative;
+			font-size: 1.2em;
+		}
+		span span {
+			font-size: 18px;
+		}
+	}
 }

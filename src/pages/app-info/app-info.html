@@ -36,7 +36,9 @@
 		</button>
 		<div id='updates' *ngIf='staging'>
 			<h1 id='title'>Updates</h1>
-
+			<div *ngIf='!updates || !updates.length'>
+				Geen updates gevonden!
+			</div>
 			<div *ngFor='let u of updates'>
 				<h3>Versie: {{u.version}}</h3>
 				<table>
