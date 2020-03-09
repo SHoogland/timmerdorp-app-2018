@@ -151,4 +151,11 @@ page-search {
 	.hideable::-webkit-scrollbar {
 		width: 0 !important;
 	}
+
+	.modal {
+		padding: 0 !important;
+	}
+	.modal-content {
+		margin-top: 0 !important;
+	}
 }

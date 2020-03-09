@@ -30,9 +30,6 @@ export class PresencePage {
 	tickets: Array<any>;
 	history: any;
 
-	searchTime: any;
-
-
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
@@ -56,10 +53,6 @@ export class PresencePage {
 	}
 
 	init() {
-		let self = this;
-		setInterval(function () {
-			console.log(self.searchTime);
-		}, 250);
 		switch (new Date().getDay()) {
 			case 2:
 				this.day = "tue";
@@ -140,7 +133,6 @@ export class PresencePage {
 			this.loading = true;
 			var wp = this.g.getWpApi(this.login, this.staging, 'search');
 			wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
-				this.searchTime = +new Date();
 				console.log(result);
 				if (result.code === 200) {
 					self.error = '';
@@ -299,6 +291,6 @@ export class PresencePage {
 	}
 
 	showCard() {
-		return ((+new Date() - this.searchTime) > 100);
+		return Boolean(((this.tickets || [])[0] || {}).meta);
 	}
 }
