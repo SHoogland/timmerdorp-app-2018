@@ -295,10 +295,11 @@ export class PresencePage {
 	}
 
 	showCard() {
+		return true
 		let self = this;
-		setTimeout(function () {
-			console.log(self.searchTime, (+new Date() - self.searchTime))
-		}, 100);
+		// setTimeout(function () {
+		// 	console.log(self.searchTime, (+new Date() - self.searchTime))
+		// }, 100);
 		return ((+new Date() - this.searchTime) > 100);
 	}
 }
