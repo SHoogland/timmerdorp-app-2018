@@ -42,12 +42,15 @@ export class MyApp {
 		}
 
 		this.platform.ready().then(() => {
+			let isSentToLogin = false;
 			Promise.all([
 				this.storage.get("notFirstUse").then((val) => {
 					if (!val) {
+						isSentToLogin = true;
 						this.g.toLogin();
 					}
 				}, (error) => {
+					isSentToLogin = true;
 					this.g.toLogin();
 				}),
 				this.storage.get('username').then((val) => {
@@ -80,8 +83,9 @@ export class MyApp {
 						});
 					}
 				}
-
-				this.preCheckLogin();
+				if (!isSentToLogin) {
+					this.preCheckLogin();
+				}
 			});
 		});
 	}
