@@ -56,6 +56,10 @@ export class PresencePage {
 	}
 
 	init() {
+		let self = this;
+		setInterval(function () {
+			console.log(self.searchTime);
+		}, 250);
 		switch (new Date().getDay()) {
 			case 2:
 				this.day = "tue";
@@ -86,17 +90,6 @@ export class PresencePage {
 
 		this.number = '';
 		this.name = '';
-	}
-
-	getDayName(d) {
-		if (d == 'tue') return "Dinsdag"
-		if (d == 'wed') return "Woensdag"
-		if (d == 'thu') return "Donderdag"
-		if (d == 'fri') return "Vrijdag"
-	}
-
-	ionViewDidLoad() {
-		this.init();
 
 		Promise.all([
 			this.storage.get('presHistory').then((val) => {
@@ -123,6 +116,17 @@ export class PresencePage {
 			})
 		]).then(() => {
 		});
+	}
+
+	getDayName(d) {
+		if (d == 'tue') return "Dinsdag"
+		if (d == 'wed') return "Woensdag"
+		if (d == 'thu') return "Donderdag"
+		if (d == 'fri') return "Vrijdag"
+	}
+
+	ionViewDidLoad() {
+		this.init();
 	}
 
 	hideKeyboard() {
@@ -295,11 +299,6 @@ export class PresencePage {
 	}
 
 	showCard() {
-		return true
-		let self = this;
-		// setTimeout(function () {
-		// 	console.log(self.searchTime, (+new Date() - self.searchTime))
-		// }, 100);
 		return ((+new Date() - this.searchTime) > 100);
 	}
 }
