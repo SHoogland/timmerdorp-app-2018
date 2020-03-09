@@ -37,10 +37,11 @@
 			</div>
 		</div>
 
-		<div *ngIf='!tickets.length && history && history.length > 0 && !(searchTerm||"").length'>
+		<div id='history'
+			[ngClass]='(!((tickets||[]).length) && (history||[]).length > 0 && !(searchTerm||"").length)?"shown hideable":"hideable"'>
 			<ion-list class='peopleList'>
 				<ion-list-header>
-					Zoekgeschiedenis ({{history.length}})
+					Zoekgeschiedenis ({{(history||[]).length}})
 				</ion-list-header>
 				<ion-item *ngFor="let h of history"
 					(click)='searchTerm=""+(h.wristband||h.firstName||h.surName||h.hutnr);searchThis()'
@@ -66,7 +67,7 @@
 			</ion-list>
 		</div>
 
-		<ion-list class='peopleList' *ngIf='tickets.length'>
+		<ion-list class='peopleList' [ngClass]='tickets.length?"hideable shown":"hideable"'>
 			<ion-list-header>
 				Zoekresultaten ({{tickets.length}})
 			</ion-list-header>
