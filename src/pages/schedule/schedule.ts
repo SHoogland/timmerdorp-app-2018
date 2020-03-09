@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, Content } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { GlobalFunctions } from '../../providers/global';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -11,29 +12,35 @@ import { GlobalFunctions } from '../../providers/global';
 export class SchedulePage {
 	@ViewChild(Content) content: Content;
 	schedule: string;
+	wijk: string;
 	loading: boolean;
 
 	constructor(
 		public navCtrl: NavController,
 		public httpClient: HttpClient,
-		public g: GlobalFunctions
+		public g: GlobalFunctions,
+		public storage: Storage
 	) {
 	}
 
 	init() {
-		let self = this;
-		self.loading = true;
 
+		let self = this;
+		this.storage.get("wijk").then(function (v) {
+			self.wijk = v;
+		});
+		this.loading = true;
 		this.httpClient.get("https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json")
 			.subscribe((data: any) => {
 				self.loading = false;
 				self.schedule = data.schedule;
+				console.log(self.schedule);
 				setTimeout(function () {
 					let id = self.getDate();
 					let el = document.getElementById(id);
 					console.log(id, el);
 					if (el) {
-						self.content.scrollTo(0, el.offsetTop, 600);
+						self.content.scrollTo(0, el.offsetTop - 12, 600);
 					}
 				}, 200);
 			});
