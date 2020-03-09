@@ -44,7 +44,7 @@
 				</div>
 			</div>
 		</div>
-		<div *ngIf='(tickets[0]||{}).meta' class='infoCard' id='childInfo'>
+		<div *ngIf='(tickets[0]||{}).meta' class='infoCard fadeIn {{showCard()?"shown":""}}' id='childInfo'>
 			<div class='{{"inhoud " + g.getWijk((tickets[0].meta.hutnr||[])[0])}}'>
 				<h1>Kind #{{number}}</h1>
 				<table>

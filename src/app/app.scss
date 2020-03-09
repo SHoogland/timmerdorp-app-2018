@@ -16,735 +16,743 @@
 @import "./theme/elements";
 
 @font-face {
-  font-family: Mikado-Bold;
-  src: url("../assets/fonts/Mikado-Bold.woff");
+	font-family: Mikado-Bold;
+	src: url("../assets/fonts/Mikado-Bold.woff");
 }
 
 body {
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.5px;
+	font-size: 16px;
+	line-height: 20px;
+	letter-spacing: 0.5px;
 }
 
 h1,
 button,
 .result-child {
-  font-family: Mikado-Bold;
+	font-family: Mikado-Bold;
 }
 
 .toolbar-background,
 .toolbar {
-  background: $blue !important;
-  border-bottom: none !important;
+	background: $blue !important;
+	border-bottom: none !important;
 }
 
 ion-list.line-input {
-  max-width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+	max-width: 80%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 h1 {
-  font-size: 32px;
+	font-size: 32px;
 }
 
 .bg-yellow {
-  background: $yellow;
-  &:hover {
-    background: darken($yellow, 8%) !important;
-  }
+	background: $yellow;
+	&:hover {
+		background: darken($yellow, 8%) !important;
+	}
 }
 
 .conditional {
-  opacity: 0;
-  transition: opacity linear 400ms;
-  &.modal {
-    z-index: -1;
-  }
+	opacity: 0;
+	transition: opacity linear 400ms;
+	&.modal {
+		z-index: -1;
+	}
 }
 
 .bar-button-default-md {
-  transition-duration: 250ms !important;
+	transition-duration: 250ms !important;
 }
 .bar-button-default-md:hover:not(.disable-hover),
 .bar-button-clear-md-default:hover:not(.disable-hover),
 .bar-button-md-default:hover:not(.disable-hover) {
-  color: #d3d3d3 !important;
+	color: #d3d3d3 !important;
 }
 
 .toolbar-title-md {
-  padding: 0 !important;
+	padding: 0 !important;
 }
 
 .modal.high {
-  z-index: 10;
+	z-index: 10;
 }
 
 .shown {
-  opacity: 1;
+	opacity: 1;
 }
 
 #ptitle {
-  position: absolute;
-  top: 2px;
-  margin-top: 22px;
-  font-size: 30px;
-  &:not(.home) {
-    @media only screen and (max-width: 340px) {
-      font-size: 24px !important;
-      line-height: 24px;
-      padding-top: 28px;
-    }
-    line-height: 30px;
-    padding-top: 25px;
-    top: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    height: 80px;
-  }
-  width: calc(100% - 160px);
-  z-index: 100;
-  text-align: center;
-  left: 80px;
-  color: white;
+	position: absolute;
+	top: 2px;
+	margin-top: 22px;
+	font-size: 30px;
+	&:not(.home) {
+		@media only screen and (max-width: 340px) {
+			font-size: 24px !important;
+			line-height: 24px;
+			padding-top: 28px;
+		}
+		line-height: 30px;
+		padding-top: 25px;
+		top: 0;
+		margin-top: 0;
+		margin-bottom: 0;
+		height: 80px;
+	}
+	width: calc(100% - 160px);
+	z-index: 100;
+	text-align: center;
+	left: 80px;
+	color: white;
 }
 
 span.tinyScreen {
-  position: absolute;
-  top: 16px;
-  @media screen and (min-width: 381px) {
-    display: none;
-  }
+	position: absolute;
+	top: 16px;
+	@media screen and (min-width: 381px) {
+		display: none;
+	}
 }
 
 span.notTinyScreen {
-  @media screen and (max-width: 380px) {
-    display: none;
-  }
+	@media screen and (max-width: 380px) {
+		display: none;
+	}
 }
 
 ion-header {
-  position: relative;
+	position: relative;
 }
 
 div.content {
-  padding: 10px !important;
+	padding: 10px !important;
 }
 
 .label {
-  font-size: 18px;
+	font-size: 18px;
 }
 
 ion-content:not(.homeContent) > .scroll-content {
-  margin-top: 0px !important;
-  padding: 0px !important;
+	margin-top: 0px !important;
+	padding: 0px !important;
 }
 
 .bg-blue {
-  background: $blue;
-  &:hover,
-  &.activated {
-    background: darken($blue, 12%) !important;
-  }
+	background: $blue;
+	&:hover,
+	&.activated {
+		background: darken($blue, 12%) !important;
+	}
 }
 .bg-green {
-  background: $green;
+	background: $green;
 }
 .bg-red {
-  background: $red;
+	background: $red;
 }
 button.bg-red:hover,
 button.bg-red.activated {
-  background: darken($red, 8%) !important;
+	background: darken($red, 8%) !important;
 }
 button.bg-green:hover,
 button.bg-green.activated {
-  background: darken($green, 8%) !important;
+	background: darken($green, 8%) !important;
 }
 button.bg-grey:hover,
 button.bg-grey.activated {
-  background: #ccc !important;
-  color: black !important;
+	background: #ccc !important;
+	color: black !important;
 }
 .bg-grey {
-  background: $lightGrey;
-  &:hover {
-    color: $white;
-  }
+	background: $lightGrey;
+	&:hover {
+		color: $white;
+	}
 }
 
 .bar-button-menutoggle-md ion-icon {
-  font-size: 4rem;
+	font-size: 4rem;
 }
 
 .homeIcon {
-  position: absolute;
-  z-index: 1;
-  color: white;
-  font-size: 4.3rem;
-  left: 20px;
-  top: 18px;
+	position: absolute;
+	z-index: 1;
+	color: white;
+	font-size: 4.3rem;
+	left: 20px;
+	top: 18px;
 }
 
 button {
-  transition-duration: 300ms !important;
+	transition-duration: 300ms !important;
 }
 
 .bg-black {
-  background: #000;
+	background: #000;
 }
 
 button.modern,
 button.modern *,
 button.modern > * {
-  color: white !important;
+	color: white !important;
 }
 
 .stanModal div button {
-  color: white !important;
-  margin: 0px 0 0px 0 !important;
+	color: white !important;
+	margin: 0px 0 0px 0 !important;
 }
 
 .color-mediumBlack {
-  color: $mediumBlack;
+	color: $mediumBlack;
 }
 
 // Span elements
 .form-error {
-  position: relative;
-  top: 12px;
-  color: $red;
+	position: relative;
+	top: 12px;
+	color: $red;
 }
 
 .child-row {
-  display: block;
-  padding-bottom: 10px;
+	display: block;
+	padding-bottom: 10px;
 }
 
 .search-on {
-  margin-bottom: 8px;
-  margin-top: 10px;
+	margin-bottom: 8px;
+	margin-top: 10px;
 }
 
 .toast-container {
-  // background: $darkGrey;
-  border-radius: 5px;
-  color: $darkGrey !important;
+	// background: $darkGrey;
+	border-radius: 5px;
+	color: $darkGrey !important;
 }
 
 ion-navbar {
-  height: 80px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border-bottom: 2px solid $blue;
+	height: 80px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-bottom: 2px solid $blue;
 
-  .nav-logo {
-    position: relative;
-    width: 90px;
-    height: rem(60);
-    float: right;
-    padding-right: rem(10);
-  }
-  .bar-button {
-    height: 80px;
-    width: 80px;
-    left: -10px;
-    color: $white;
-    border-radius: 0;
-    background: $blue;
-  }
+	.nav-logo {
+		position: relative;
+		width: 90px;
+		height: rem(60);
+		float: right;
+		padding-right: rem(10);
+	}
+	.bar-button {
+		height: 80px;
+		width: 80px;
+		left: -10px;
+		color: $white;
+		border-radius: 0;
+		background: $blue;
+	}
 }
 .toolbar-ios ion-title {
-  padding: 0;
+	padding: 0;
 }
 
 .toolbar {
-  min-height: 71px;
-  border-bottom: 2px solid $blue;
+	min-height: 71px;
+	border-bottom: 2px solid $blue;
 }
 
 .button-inner .ion-md-menu {
-  font-size: 4rem !important;
+	font-size: 4rem !important;
 }
 
 .menu-inner {
-  background: #fff;
-  width: 100%;
+	background: #fff;
+	width: 100%;
 }
 
 .item-inner {
-  padding-right: 8px;
-  border-bottom: 0px solid #dedede !important;
+	padding-right: 8px;
+	border-bottom: 0px solid #dedede !important;
 }
 
 ion-toolbar {
-  height: 80px;
+	height: 80px;
 
-  img {
-    display: none;
-  }
-  padding-bottom: 40px;
+	img {
+		display: none;
+	}
+	padding-bottom: 40px;
 
-  .bar-button-close {
-    height: 85px;
-    width: 80px;
-    top: -4px;
-    left: -4px;
-    color: $white;
-    border-radius: 0;
-    background: $blue;
-  }
+	.bar-button-close {
+		height: 85px;
+		width: 80px;
+		top: -4px;
+		left: -4px;
+		color: $white;
+		border-radius: 0;
+		background: $blue;
+	}
 }
 
 .nav-items {
-  text-align: center;
-  padding: 32px;
-  margin-bottom: 10px;
-  width: 100%;
-  background: $lightGrey;
+	text-align: center;
+	padding: 32px;
+	margin-bottom: 10px;
+	width: 100%;
+	background: $lightGrey;
 
-  &:first-of-type {
-    border-top: 0px;
-    margin-top: 50px;
-  }
+	&:first-of-type {
+		border-top: 0px;
+		margin-top: 50px;
+	}
 }
 
 .user-info {
-  padding-top: 20px;
-  text-align: center;
-  padding: 12px 0;
-  border-bottom: none;
+	padding-top: 20px;
+	text-align: center;
+	padding: 12px 0;
+	border-bottom: none;
 
-  h1 {
-    padding-bottom: 15px;
-  }
+	h1 {
+		padding-bottom: 15px;
+	}
 }
 
 ion-spinner {
-  width: 48px;
-  height: 48px;
+	width: 48px;
+	height: 48px;
 }
 
 .bracelet-number {
-  padding-top: 20px;
-  text-align: center;
-  padding-bottom: 20px;
+	padding-top: 20px;
+	text-align: center;
+	padding-bottom: 20px;
 
-  h1 {
-    padding-bottom: 15px;
-  }
-  .correction {
-    position: relative;
-    top: 40px;
-  }
+	h1 {
+		padding-bottom: 15px;
+	}
+	.correction {
+		position: relative;
+		top: 40px;
+	}
 }
 
 .container {
-  position: relative;
-  // height: 100%;
+	position: relative;
+	// height: 100%;
 }
 
 .item-inner {
-  box-shadow: none !important;
+	box-shadow: none !important;
 }
 
 .button-md,
 .button-ios {
-  padding: 32px;
-  margin-bottom: 20px;
-  height: 80px;
-  box-shadow: none;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.5px;
-  text-transform: none;
+	padding: 32px;
+	margin-bottom: 20px;
+	height: 80px;
+	box-shadow: none;
+	font-size: 16px;
+	line-height: 20px;
+	letter-spacing: 0.5px;
+	text-transform: none;
 
-  &:first-of-type {
-    margin-top: 20px;
-  }
+	&:first-of-type {
+		margin-top: 20px;
+	}
 }
 
 * {
-  border-bottom-color: none !important;
+	border-bottom-color: none !important;
 }
 
 .container-bottom {
-  position: sticky;
-  bottom: 0;
-  border: solid 1px green;
-  width: calc(100% - 32px);
-  .gradient {
-    border: 1px solid red;
-    height: 80px;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
-  }
-  .button-md:first-of-type,
-  .button-ios:first-of-type {
-    margin-top: 0px;
-  }
+	position: sticky;
+	bottom: 0;
+	border: solid 1px green;
+	width: calc(100% - 32px);
+	.gradient {
+		border: 1px solid red;
+		height: 80px;
+		background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
+	}
+	.button-md:first-of-type,
+	.button-ios:first-of-type {
+		margin-top: 0px;
+	}
 }
 
 html,
 body {
-  height: 100%;
+	height: 100%;
 }
 
 // Modalbox
 /* The Modal (background) */
 .modal {
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  padding: 24px;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(16, 16, 16, 0.9); /* Black w/ opacity */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	padding: 24px;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(16, 16, 16, 0.9); /* Black w/ opacity */
 }
 
 #childDataHeader {
-  margin: 20px 0;
+	margin: 20px 0;
 }
 
 .content-md {
-  color: #202124;
-  background: #fafafa;
+	color: #202124;
+	background: #fafafa;
 }
 
 /* Modal Content/Box */
 .modal-content {
-  position: relative;
-  background-color: $white;
-  margin: 20px auto;
-  padding: 20px;
+	position: relative;
+	background-color: $white;
+	margin: 20px auto;
+	padding: 20px;
 
-  h1 {
-    margin-top: 45px;
-  }
-  span {
-    line-height: 40px;
-  }
+	h1 {
+		margin-top: 45px;
+	}
+	span {
+		line-height: 40px;
+	}
 
-  padding: 0;
+	padding: 0;
 
-  ul {
-    li {
-      list-style: none;
-    }
-  }
+	ul {
+		li {
+			list-style: none;
+		}
+	}
 
-  button {
-    border-radius: 0px !important;
-    margin: 0px;
-    &:nth-of-type(2n).modal-content:not(.item-cover) {
-      background: $blue;
-    }
-    &:nth-of-type(2n + 1):not(.item-cover) {
-      background: darken($blue, 8%);
-    }
-    &:hover:not(.item-cover),
-    &.activated:not(.item-cover) {
-      background: darken($blue, 8%) !important;
-    }
-  }
+	button {
+		border-radius: 0px !important;
+		margin: 0px;
+		&:nth-of-type(2n).modal-content:not(.item-cover) {
+			background: $blue;
+		}
+		&:nth-of-type(2n + 1):not(.item-cover) {
+			background: darken($blue, 8%);
+		}
+		&:hover:not(.item-cover),
+		&.activated:not(.item-cover) {
+			background: darken($blue, 8%) !important;
+		}
+	}
 }
 
 button.halfWidth {
-  width: 50%;
-  margin-top: 0px !important;
-  display: inline-block;
-  &:nth-of-type(2n + 1) {
-    margin-left: -4px;
-  }
+	width: 50%;
+	margin-top: 0px !important;
+	display: inline-block;
+	&:nth-of-type(2n + 1) {
+		margin-left: -4px;
+	}
 }
 
 #modalTop.warnModal {
-  background: #e82525;
+	background: #e82525;
 }
 
 button.modern {
-  border-radius: 0px !important;
-  margin: 0px;
-  &:nth-of-type(2n):not(.customColoured) {
-    background: $blue;
-  }
-  &:nth-of-type(2n + 1):not(.customColoured) {
-    background: darken($blue, 9%);
-  }
-  &:hover:not(.customColoured),
-  &.activated:not(.customColoured) {
-    background: darken($blue, 8%) !important;
-  }
+	border-radius: 0px !important;
+	margin: 0px;
+	&:nth-of-type(2n):not(.customColoured) {
+		background: $blue;
+	}
+	&:nth-of-type(2n + 1):not(.customColoured) {
+		background: darken($blue, 9%);
+	}
+	&:hover:not(.customColoured),
+	&.activated:not(.customColoured) {
+		background: darken($blue, 8%) !important;
+	}
 }
 
 #modalBottom {
-  text-align: center;
-  padding: 16px;
-  z-index: 200;
-  position: relative;
-  span {
-    color: white;
-    margin-top: 12px;
-    font-size: 56px;
-  }
-  h1 {
-    color: white;
-    margin-top: 15px !important;
-    margin-bottom: 48px;
-    font-size: 31px;
-    font-weight: normal;
-  }
+	text-align: center;
+	padding: 16px;
+	z-index: 200;
+	position: relative;
+	span {
+		color: white;
+		margin-top: 12px;
+		font-size: 56px;
+	}
+	h1 {
+		color: white;
+		margin-top: 15px !important;
+		margin-bottom: 48px;
+		font-size: 31px;
+		font-weight: normal;
+	}
 }
 
 #modalTop {
-  background: #2196f3;
-  width: 100%;
-  height: 100px;
-  position: absolute;
+	background: #2196f3;
+	width: 100%;
+	height: 100px;
+	position: absolute;
 }
 
 /* The Close Button */
 .close {
-  color: $mediumBlack;
-  float: right;
-  font-size: 22px;
+	color: $mediumBlack;
+	float: right;
+	font-size: 22px;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 ion-navbar .nav-logo {
-  width: 75px !important;
+	width: 75px !important;
 }
 
 .toolbar-background.bg-darkred,
 button.bg-darkred {
-  background: #b20606 !important;
-  &:hover {
-    background: #9e0c0c !important;
-  }
+	background: #b20606 !important;
+	&:hover {
+		background: #9e0c0c !important;
+	}
 }
 
 button {
-  border-radius: 4px !important;
+	border-radius: 4px !important;
 }
 
 h1,
 button {
-  font-family: Roboto, Arial !important;
+	font-family: Roboto, Arial !important;
 }
 
 .scroll-content {
-  margin-top: 64px;
+	margin-top: 64px;
 }
 
 .peopleList {
-  padding: 20px;
+	padding: 20px;
 
-  ion-list-header {
-    ion-label {
-      text-transform: uppercase;
-      font-weight: bold;
-      font-size: 18px;
-    }
-  }
+	ion-list-header {
+		ion-label {
+			text-transform: uppercase;
+			font-weight: bold;
+			font-size: 18px;
+		}
+	}
 
-  ion-item {
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 24px;
-    border-radius: 6px;
-    padding: 0px;
-    height: 80px;
-    margin-bottom: 16px;
+	ion-item {
+		box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 24px;
+		border-radius: 6px;
+		padding: 0px;
+		height: 80px;
+		margin-bottom: 16px;
 
-    .input-wrapper ion-label {
-      div:first-of-type {
-        @media screen and (min-width: 360px) {
-          width: 80px;
-          margin-right: 16px;
-        }
-        @media screen and (max-width: 360px) {
-          width: 40px;
-          margin-right: 8px;
-        }
-        height: 80px;
-        float: left;
-      }
-      column-count: 2;
-    }
+		.input-wrapper ion-label {
+			div:first-of-type {
+				@media screen and (min-width: 360px) {
+					width: 80px;
+					margin-right: 16px;
+				}
+				@media screen and (max-width: 360px) {
+					width: 40px;
+					margin-right: 8px;
+				}
+				height: 80px;
+				float: left;
+			}
+			column-count: 2;
+		}
 
-    h3 {
-      position: relative;
-      @media screen and (max-width: 360px) {
-        .largeScreenSpan {
-          display: none;
-        }
-      }
+		h3 {
+			position: relative;
+			@media screen and (max-width: 360px) {
+				.largeScreenSpan {
+					display: none;
+				}
+			}
 
-      @media screen and (min-width: 360px) {
-        span:not(.largeScreenSpan) {
-          position: absolute;
-          right: 0px;
-        }
-      }
-    }
-    h2 {
-      @media screen and (max-width: 440px) {
-        font-size: 2.2rem;
-        padding-top: 4px;
-      }
-      @media screen and (min-width: 440px) {
-        font-size: 2.8rem;
-        padding-top: 0px;
-      }
-    }
+			@media screen and (min-width: 360px) {
+				span:not(.largeScreenSpan) {
+					position: absolute;
+					right: 0px;
+				}
+			}
+		}
+		h2 {
+			@media screen and (max-width: 440px) {
+				font-size: 2.2rem;
+				padding-top: 4px;
+			}
+			@media screen and (min-width: 440px) {
+				font-size: 2.8rem;
+				padding-top: 0px;
+			}
+		}
 
-    color: #666;
-    .item-inner {
-      border-left: 6px solid white;
-    }
+		color: #666;
+		.item-inner {
+			border-left: 6px solid white;
+		}
 
-    &.Blauw {
-      .fab {
-        background: $blue;
-      }
-      .item-inner {
-        border-left: 6px solid $blue;
-      }
-    }
-    &.Rood {
-      .fab {
-        background: $red;
-      }
-      .item-inner {
-        border-left: 6px solid $red;
-      }
-    }
-    &.Geel {
-      .fab {
-        background: $yellow;
-      }
-      .item-inner {
-        border-left: 6px solid $yellow;
-      }
-    }
-    &.Groen {
-      .fab {
-        background: $green;
-      }
-      .item-inner {
-        border-left: 6px solid $green;
-      }
-    }
+		&.Blauw {
+			.fab {
+				background: $blue;
+			}
+			.item-inner {
+				border-left: 6px solid $blue;
+			}
+		}
+		&.Rood {
+			.fab {
+				background: $red;
+			}
+			.item-inner {
+				border-left: 6px solid $red;
+			}
+		}
+		&.Geel {
+			.fab {
+				background: $yellow;
+			}
+			.item-inner {
+				border-left: 6px solid $yellow;
+			}
+		}
+		&.Groen {
+			.fab {
+				background: $green;
+			}
+			.item-inner {
+				border-left: 6px solid $green;
+			}
+		}
 
-    .item-inner {
-      padding: 12px;
-    }
+		.item-inner {
+			padding: 12px;
+		}
 
-    .fab {
-      height: 48px;
-      width: 48px;
-      background: #2196f3;
-      padding: 11px;
-      color: white;
-      right: 12px;
-      padding-top: 0px !important;
-      top: 15px;
-      position: absolute;
-      border-radius: 50% !important;
-      padding-left: 12px !important;
-    }
-  }
+		.fab {
+			height: 48px;
+			width: 48px;
+			background: #2196f3;
+			padding: 11px;
+			color: white;
+			right: 12px;
+			padding-top: 0px !important;
+			top: 15px;
+			position: absolute;
+			border-radius: 50% !important;
+			padding-left: 12px !important;
+		}
+	}
 }
 
 .infoCard {
-  position: relative;
-  border-radius: 8px;
-  min-width: 300px;
-  max-width: calc(100% - 24px);
-  width: 400px;
-  .inhoud {
-    border-radius: 8px;
-    padding-top: 20px;
-    padding-left: 16px;
-  }
+	position: relative;
+	border-radius: 8px;
+	min-width: 300px;
+	max-width: calc(100% - 24px);
+	width: 400px;
+	.inhoud {
+		border-radius: 8px;
+		padding-top: 20px;
+		padding-left: 16px;
+	}
 
-  tr td:first-of-type {
-    padding-right: 12px;
-  }
-  box-shadow: 4px 4px 24px #aaa;
-  margin: auto;
-  background: #f0f0f0;
-  .inhoud.Rood {
-    border-left: 10px solid $red;
-  }
-  .inhoud.Blauw {
-    border-left: 10px solid $blue;
-  }
-  .inhoud.Groen {
-    border-left: 10px solid $green;
-  }
-  .inhoud.Geel {
-    border-left: 10px solid $yellow;
-  }
+	tr td:first-of-type {
+		padding-right: 12px;
+	}
+	box-shadow: 4px 4px 24px #aaa;
+	margin: auto;
+	background: #f0f0f0;
+	.inhoud.Rood {
+		border-left: 10px solid $red;
+	}
+	.inhoud.Blauw {
+		border-left: 10px solid $blue;
+	}
+	.inhoud.Groen {
+		border-left: 10px solid $green;
+	}
+	.inhoud.Geel {
+		border-left: 10px solid $yellow;
+	}
 }
 
 .errorMsg {
-  color: red;
-  font-weight: bold;
+	color: red;
+	font-weight: bold;
 }
 
 .errorCard {
-  padding: 0 !important;
-  min-width: 280px;
-  max-width: 360px;
-  width: 80%;
-  &.hasError {
-    min-height: 100px;
-  }
-  margin-left: auto;
-  margin-right: auto;
-  background: #b00020 !important;
-  .content {
-    position: relative;
-  }
-  h1 {
-    margin-top: 0px;
-  }
-  * {
-    color: white !important;
-    font-weight: normal;
-  }
-  ion-icon {
-    align-self: left;
-    font-size: 6.8rem;
-    position: absolute;
-    left: 20px;
-    top: 12px;
-    height: 12px;
-  }
-  #errorHeader {
-    position: relative;
-    left: 80px;
-    width: calc(100% - 80px);
-    text-align: left;
-    top: 8px;
-    font-size: 2.3rem;
-  }
-  #errorHelp {
-    font-size: 14px;
-    left: 80px;
-    position: relative;
-    width: calc(100% - 90px);
-    text-align: left;
-    margin-top: -12px;
-  }
-  a {
-    text-decoration: underline;
-  }
+	padding: 0 !important;
+	min-width: 280px;
+	max-width: 360px;
+	width: 80%;
+	&.hasError {
+		min-height: 100px;
+	}
+	margin-left: auto;
+	margin-right: auto;
+	background: #b00020 !important;
+	.content {
+		position: relative;
+	}
+	h1 {
+		margin-top: 0px;
+	}
+	* {
+		color: white !important;
+		font-weight: normal;
+	}
+	ion-icon {
+		align-self: left;
+		font-size: 6.8rem;
+		position: absolute;
+		left: 20px;
+		top: 12px;
+		height: 12px;
+	}
+	#errorHeader {
+		position: relative;
+		left: 80px;
+		width: calc(100% - 80px);
+		text-align: left;
+		top: 8px;
+		font-size: 2.3rem;
+	}
+	#errorHelp {
+		font-size: 14px;
+		left: 80px;
+		position: relative;
+		width: calc(100% - 90px);
+		text-align: left;
+		margin-top: -12px;
+	}
+	a {
+		text-decoration: underline;
+	}
+}
+
+.fadeIn {
+	opacity: 0;
+	transition-duration: 600ms;
+	&.shown {
+		opacity: 1;
+	}
 }

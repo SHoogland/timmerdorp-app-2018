@@ -1,8 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Platform, NavController, Keyboard } from 'ionic-angular';
-import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
-import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 import { GlobalFunctions } from '../../providers/global';
 
@@ -31,6 +29,8 @@ export class PresencePage {
 
 	tickets: Array<any>;
 	history: any;
+
+	searchTime: any;
 
 
 	constructor(
@@ -136,6 +136,7 @@ export class PresencePage {
 			this.loading = true;
 			var wp = this.g.getWpApi(this.login, this.staging, 'search');
 			wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
+				this.searchTime = +new Date();
 				console.log(result);
 				if (result.code === 200) {
 					self.error = '';
@@ -291,5 +292,13 @@ export class PresencePage {
 
 	alert() {
 		alert("Om fouten te voorkomen is het niet mogelijk aanwezigheid te veranderen voor andere dagen. Vragen, of alsnog een wijziging aanvragen? Zoek Stan uit wijk blauw/Stephan uit wijk geel");
+	}
+
+	showCard() {
+		let self = this;
+		setTimeout(function () {
+			console.log(self.searchTime, (+new Date() - self.searchTime))
+		}, 100);
+		return ((+new Date() - this.searchTime) > 100);
 	}
 }
