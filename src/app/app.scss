@@ -51,7 +51,7 @@ h1 {
 .bg-yellow {
 	background: $yellow;
 	&:hover {
-		background: darken($yellow, 8%) !important;
+		background: darken($yellow, 11%) !important;
 	}
 }
 
@@ -446,7 +446,7 @@ body {
 		}
 		&:hover:not(.item-cover),
 		&.activated:not(.item-cover) {
-			background: darken($blue, 8%) !important;
+			background: darken($blue, 11%) !important;
 		}
 	}
 }
@@ -475,7 +475,7 @@ button.modern {
 	}
 	&:hover:not(.customColoured),
 	&.activated:not(.customColoured) {
-		background: darken($blue, 8%) !important;
+		background: darken($blue, 11%) !important;
 	}
 }
 
@@ -595,7 +595,7 @@ button {
 		}
 		h2 {
 			@media screen and (max-width: 440px) {
-				font-size: 2.2rem;
+				font-size: 2rem;
 				padding-top: 4px;
 			}
 			@media screen and (min-width: 440px) {

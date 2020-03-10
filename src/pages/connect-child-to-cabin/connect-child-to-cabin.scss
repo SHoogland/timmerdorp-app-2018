@@ -1,4 +1,11 @@
 page-connect-child-to-cabin {
+	.peopleList {
+		ion-item {
+			h2 {
+				overflow-x: hidden;
+			}
+		}
+	}
 	.content {
 		padding: 0 !important;
 	}
@@ -10,9 +17,21 @@ page-connect-child-to-cabin {
 		}
 	}
 	#hutHeader {
-		padding-bottom: 0px;
-		margin-bottom: 20px;
-		margin-top: 8px;
+		margin-bottom: 0px;
+		padding-top: 32px;
+		padding-bottom: 32px;
+		margin-top: 0px;
+		background: darken($blue, 14%);
+		&.Rood {
+			background: darken($red, 14%);
+		}
+		&.Groen {
+			background: darken($green, 14%);
+		}
+		&.Geel {
+			background: darken($yellow, 14%);
+		}
+		color: white;
 	}
 
 	#addIcon {
