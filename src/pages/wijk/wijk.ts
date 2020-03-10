@@ -12,18 +12,20 @@ import { GlobalFunctions } from '../../providers/global';
 	templateUrl: 'wijk.html'
 })
 export class WijkPage {
-	showSelection: boolean;
-
 	statistieken: object;
 	wijkstats: object;
 
 	error: string;
 	wijk: string;
 
+	showSelection: boolean;
 	notLoggedIn: boolean;
 	loginError: boolean;
 	loading: boolean;
 	staging: boolean;
+
+	wijkprops: any;
+	allprops: any;
 
 	login: {
 		username: string;
@@ -40,6 +42,60 @@ export class WijkPage {
 		this.notLoggedIn = false;
 		this.error = '';
 		this.loading = false;
+
+		this.wijkprops = [
+			{
+				title: "Totaal aantal kinderen in wijk",
+				prop: "count"
+			},
+			{
+				title: "Aanwezig dinsdag",
+				prop: "presentTue"
+			},
+			{
+				title: "Aanwezig woensdag",
+				prop: "presentWed"
+			},
+			{
+				title: "Aanwezig donderdag",
+				prop: "presentThu"
+			},
+			{
+				title: "Aanwezig vrijdag",
+				prop: "presentFri"
+			}
+		];
+
+		this.allprops = [
+			{
+				title: "Totaal aantal kinderen",
+				prop: "count"
+			},
+			{
+				title: "Aantal kinderen met hutnummer",
+				prop: "haveHutnr"
+			},
+			{
+				title: "Aantal kinderen met armbandje",
+				prop: "haveWristband"
+			},
+			{
+				title: "Aanwezig dinsdag",
+				prop: "presentTue"
+			},
+			{
+				title: "Aanwezig woensdag",
+				prop: "presentWed"
+			},
+			{
+				title: "Aanwezig donderdag",
+				prop: "presentThu"
+			},
+			{
+				title: "Aanwezig vrijdag",
+				prop: "presentFri"
+			}
+		]
 	}
 
 	init() {

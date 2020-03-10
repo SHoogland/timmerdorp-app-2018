@@ -19,17 +19,6 @@ page-wijk {
 		font-size: 1.8em;
 	}
 
-	table {
-		tr td:first-of-type {
-			font-weight: bold;
-		}
-		margin-left: 20px;
-	}
-	td {
-		text-align: left;
-		padding-right: 4px;
-	}
-
 	.halfWidth {
 		font-weight: bold;
 		font-size: 28px;
@@ -78,10 +67,6 @@ page-wijk {
 		margin-top: 0;
 	}
 
-	#table2 {
-		margin-left: 20px;
-	}
-
 	#main > .user-info {
 		border: none !important;
 	}
@@ -123,6 +108,25 @@ page-wijk {
 		}
 		span span {
 			font-size: 18px;
+		}
+	}
+
+	ion-item {
+		background: #fafafa !important;
+		.item-inner {
+			border-bottom: 1px solid #dedede !important;
+		}
+	}
+	@media only screen and (min-width: 330px) {
+		ion-item .item-inner {
+			padding-left: 12px;
+		}
+	}
+
+	@media only screen and (max-width: 340px) {
+		ion-item,
+		ion-item * {
+			font-size: 16px !important;
 		}
 	}
 }

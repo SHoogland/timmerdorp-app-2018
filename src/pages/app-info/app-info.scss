@@ -1,8 +1,19 @@
 page-app-info {
+	.content {
+		padding: 0 !important;
+	}
+	button {
+		border-radius: 0px !important;
+	}
 	tr > td:first-of-type {
 		font-weight: bold;
 		padding-left: 8px;
 		width: 50%;
+	}
+
+	tr,
+	p {
+		padding: 6px 12px !important;
 	}
 
 	table {

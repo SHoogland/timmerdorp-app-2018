@@ -37,28 +37,11 @@
 				</span>
 			</div>
 			<h1>Wijkoverzicht {{g.getWijkName(wijk)}}</h1>
-			<table>
-				<tr>
-					<td>Totaal aantal kinderen in wijk:&nbsp;</td>
-					<td>{{(wijkstats||{}).count||"&mdash;"}}</td>
-				</tr>
-				<tr>
-					<td>Aanwezig dinsdag:&nbsp;</td>
-					<td>{{(wijkstats||{}).presentTue||"&mdash;"}}</td>
-				</tr>
-				<tr>
-					<td>Aanwezig woensdag:&nbsp;</td>
-					<td>{{(wijkstats||{}).presentWed||"&mdash;"}}</td>
-				</tr>
-				<tr>
-					<td>Aanwezig donderdag:&nbsp;</td>
-					<td>{{(wijkstats||{}).presentThu||"&mdash;"}}</td>
-				</tr>
-				<tr>
-					<td>Aanwezig vrijdag:&nbsp;</td>
-					<td>{{(wijkstats||{}).presentFri||"&mdash;"}}</td>
-				</tr>
-			</table>
+			<ion-list>
+				<ion-item *ngFor='let p of wijkprops'>
+					<ion-label><b>{{p.title}}:</b> {{(wijkstats||{})[p.prop]||"&mdash;"}}</ion-label>
+				</ion-item>
+			</ion-list>
 			<br>
 			<button [ngClass]='(wijk||"") + " iconBtn"' ion-button full id='kiesWijkButton'
 				(click)="clearWijkSelection()">
@@ -70,36 +53,11 @@
 			</button>
 			<br>
 			<h1>Algemene Statistieken</h1>
-			<table id='table2'>
-				<tr>
-					<td>Totaal aantal kinderen:&nbsp;</td>
-					<td>{{(statistieken||{}).count}}</td>
-				</tr>
-				<tr>
-					<td>Aantal kinderen met hutnummer:&nbsp;</td>
-					<td>{{(statistieken||{}).haveHutnr}}</td>
-				</tr>
-				<tr>
-					<td>Aantal kinderen met armbandje:&nbsp;</td>
-					<td>{{(statistieken||{}).haveWristband}}</td>
-				</tr>
-				<tr>
-					<td>Aanwezig dinsdag:&nbsp;</td>
-					<td>{{(statistieken||{}).presentTue||"&mdash;"}}</td>
-				</tr>
-				<tr>
-					<td>Aanwezig woensdag:&nbsp;</td>
-					<td>{{(statistieken||{}).presentWed||"&mdash;"}}</td>
-				</tr>
-				<tr>
-					<td>Aanwezig donderdag:&nbsp;</td>
-					<td>{{(statistieken||{}).presentThu||"&mdash;"}}</td>
-				</tr>
-				<tr>
-					<td>Aanwezig vrijdag:&nbsp;</td>
-					<td>{{(statistieken||{}).presentFri||"&mdash;"}}</td>
-				</tr>
-			</table>
+			<ion-list>
+				<ion-item *ngFor='let p of allprops'>
+					<ion-label><b>{{p.title}}:</b> {{(statistieken||{})[p.prop]||"&mdash;"}}</ion-label>
+				</ion-item>
+			</ion-list>
 		</div>
 	</div>
 </ion-content>
