@@ -233,6 +233,11 @@ export class ConnectChildToCabinPage {
 		wp.handler().param('hutnr', this.hutNr).then((result) => {
 			console.log(result);
 			if (result.code === 200) {
+				result.tickets.sort(function (a, b) {
+					let nra = ((a || {}).meta || {}).wristband || Infinity;
+					let nrb = ((b || {}).meta || {}).wristband || Infinity;
+					return nra - nrb;
+				})
 				self.hutTickets = result.tickets;
 				self.loading = false;
 				self.cd.detectChanges();

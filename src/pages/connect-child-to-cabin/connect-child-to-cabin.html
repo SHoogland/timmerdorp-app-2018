@@ -72,13 +72,13 @@
 			<p class='errorMsg'
 				*ngIf="searched && hutTickets && !hutTickets.length && !notLoggedIn && hutNr && hutNr.length === 3">
 				Nog geen kindertjes in dit hutje :(</p>
-			<button *ngFor="let child of hutTickets" ion-button full class="modern alternate"
-				[ngStyle]='{"background": getBg(child.meta.hutnr)}' (click)="removeChild = child; showRemoveModal();">
+			<button *ngFor="let child of hutTickets" ion-button full [ngClass]="'modern alternate ' + g.getWijk(hutNr)"
+				(click)="removeChild = child; showRemoveModal();">
 				{{ child.meta.WooCommerceEventsAttendeeName[0] }}
 				{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
 				'-' }})
 			</button>
-			<button ion-button full (click)="showAddModal()" class="bg-blue correction">
+			<button ion-button full (click)="showAddModal()" [ngClass]="'bg-blue correction ' + g.getWijk(hutNr)">
 				<ion-icon slot='start' name='add' id='addIcon'>
 				</ion-icon>
 				Kind toevoegen
@@ -90,7 +90,7 @@
 <div [ngClass]="{'shown': addModal.show}" (click)="$event.target.id==='myModal'?closeAddModal():''" id="myModal"
 	class="modal conditional">
 	<div class="modal-content">
-		<div id='modalTop'>
+		<div id='modalTop' [ngClass]='g.getWijk(hutNr)'>
 		</div>
 		<div id='modalBottom'>
 			<span class="close" (click)="closeAddModal();">&times;</span>
@@ -117,13 +117,12 @@
 			</div>
 		</div>
 
-		<div *ngFor="let child of tickets">
-			<button ion-button full (click)="addChildToHut(child);" class="bg-grey modern">
+		<div *ngFor="let child of tickets" [ngClass]='"alternate " + g.getWijk((child.meta.hutnr||[])[0])'>
+			<button ion-button full (click)="addChildToHut(child);" class="modern">
 				{{ child.meta.WooCommerceEventsAttendeeName[0] }}
 				{{ child.meta.WooCommerceEventsAttendeeLastName[0] }} ({{ child.meta.wristband ||
 					'-' }})&nbsp;&mdash;&nbsp;
-				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0]"
-					[ngClass]='"hutNr " + g.getWijk(child.meta.hutnr[0])'>hutje:&nbsp;
+				<span *ngIf="child.meta.hutnr && child.meta.hutnr[0]">hutje:&nbsp;
 					{{ child.meta.hutnr}}</span>
 				<span *ngIf="!(child.meta.hutnr && child.meta.hutnr[0])">Geen hutje :(</span>
 			</button>

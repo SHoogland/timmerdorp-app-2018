@@ -119,11 +119,41 @@ page-connect-child-to-cabin {
 	}
 
 	.alternate {
-		&:nth-of-type(2n) {
-			background: darken($blue, 8%) !important;
-		}
 		&:nth-of-type(2n + 1) {
-			background: $blue !important;
+			&.Blauw,
+			&.Blauw > button {
+				background: darken($blue, 8%) !important;
+			}
+			&.Rood,
+			&.Rood > button {
+				background: darken($red, 8%) !important;
+			}
+			&.Groen,
+			&.Groen > button {
+				background: darken($green, 8%) !important;
+			}
+			&.Geel,
+			&.Geel > button {
+				background: darken($yellow, 8%) !important;
+			}
+		}
+		&:nth-of-type(2n) {
+			&.Blauw,
+			&.Blauw > button {
+				background: $blue !important;
+			}
+			&.Rood,
+			&.Rood > button {
+				background: $red !important;
+			}
+			&.Groen,
+			&.Groen > button {
+				background: $green !important;
+			}
+			&.Geel,
+			&.Geel > button {
+				background: $yellow !important;
+			}
 		}
 	}
 
@@ -131,5 +161,34 @@ page-connect-child-to-cabin {
 		max-width: 80%;
 		margin-left: auto;
 		margin-right: auto;
+	}
+
+	.bracelet-number .correction {
+		top: 0 !important;
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
+		border-radius: 0 !important;
+	}
+	.bracelet-number .correction,
+	#modalTop {
+		&.Blauw {
+			background: darken($blue, 16%) !important;
+		}
+
+		&.Rood {
+			background: darken($red, 14%) !important;
+		}
+
+		&.Groen {
+			background: darken($green, 14%) !important;
+		}
+
+		&.Geel {
+			background: darken($yellow, 14%) !important;
+		}
+	}
+
+	.bracelet-number {
+		padding-bottom: 0px !important;
 	}
 }
