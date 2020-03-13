@@ -1,9 +1,13 @@
 page-scan-ticket {
-  .load-spinner {
-    height: 20px;
-    text-align: center;
-    &.loading {
-      height: 80px;
-    }
-  }
+	.load-spinner {
+		height: 20px;
+		text-align: center;
+		&.loading {
+			height: 80px;
+		}
+	}
+
+	.cleanTable td:first-of-type {
+		font-weight: bold;
+	}
 }

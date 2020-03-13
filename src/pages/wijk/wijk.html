@@ -37,11 +37,12 @@
 				</span>
 			</div>
 			<h1>Wijkoverzicht {{g.getWijkName(wijk)}}</h1>
-			<ion-list>
-				<ion-item *ngFor='let p of wijkprops'>
-					<ion-label><b>{{p.title}}:</b> {{(wijkstats||{})[p.prop]||"&mdash;"}}</ion-label>
-				</ion-item>
-			</ion-list>
+			<table class='cleanTable longHeader'>
+				<tr *ngFor='let p of wijkprops'>
+					<td>{{p.title}}</td>
+					<td>{{(wijkstats||{})[p.prop]||"&mdash;"}}</td>
+				</tr>
+			</table>
 			<br>
 			<button [ngClass]='(wijk||"") + " iconBtn"' ion-button full id='kiesWijkButton'
 				(click)="clearWijkSelection()">
@@ -53,11 +54,12 @@
 			</button>
 			<br>
 			<h1>Algemene Statistieken</h1>
-			<ion-list>
-				<ion-item *ngFor='let p of allprops'>
-					<ion-label><b>{{p.title}}:</b> {{(statistieken||{})[p.prop]||"&mdash;"}}</ion-label>
-				</ion-item>
-			</ion-list>
+			<table class='cleanTable longHeader' id='allStatsTable'>
+				<tr *ngFor='let p of allprops'>
+					<td>{{p.title}}</td>
+					<td> {{(statistieken||{})[p.prop]||"&mdash;"}}</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </ion-content>

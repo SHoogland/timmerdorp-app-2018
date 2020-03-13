@@ -23,10 +23,24 @@
 		<div *ngIf="ticket.barcode.length > 0">
 			<div class="user-info">
 				<h1>Gegevens ticket</h1>
-				<b>Naam: </b>{{ticket.firstName}} {{ticket.lastName}}
-				<br><b>Ticket-barcode: </b>{{ticket.barcode}}
-				<br><b>Geboortedatum: </b> {{ticket.birthDate}}
-				<div *ngIf='ticket.hutNr'><b>Hutnummer: </b> {{ticket.hutNr}}</div>
+				<table class='cleanTable'>
+					<tr>
+						<td>Naam:</td>
+						<td>{{ticket.firstName}} {{ticket.lastName}}</td>
+					</tr>
+					<tr>
+						<td>Ticket-barcode:</td>
+						<td>{{ticket.barcode}}</td>
+					</tr>
+					<tr>
+						<td>Geboortedatum:</td>
+						<td>{{ticket.birthDate}}</td>
+					</tr>
+					<tr *ngIf='ticket.hutNr'>
+						<td>Hutnummer: </td>
+						<td>{{ticket.hutNr}}</td>
+					</tr>
+				</table>
 			</div>
 			<div class="bracelet-number">
 				<h1>Armbandnummer:</h1>
