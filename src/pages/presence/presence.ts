@@ -13,6 +13,7 @@ declare let cordova: any;
 export class PresencePage {
 	errorHelp: string;
 	number: string;
+	title: string;
 	error: string;
 	name: string;
 	day: string;
@@ -38,6 +39,7 @@ export class PresencePage {
 		public keyboard: Keyboard,
 		public g: GlobalFunctions
 	) {
+		this.title = 'Aanwezigheid';
 		if (this.platform.is('cordova')) {
 			if (cordova.platformId === 'android') {
 				this.platform.registerBackButtonAction(() => {

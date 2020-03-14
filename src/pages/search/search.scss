@@ -67,9 +67,10 @@ page-search {
 	.bracelet-number {
 		width: calc(100% - 36px);
 		margin-left: 18px;
+		padding-top: 0px !important;
 	}
 
-	.user-info > div {
+	.user-info > div:not(.content) {
 		height: 20px;
 	}
 
@@ -143,7 +144,7 @@ page-search {
 		padding-bottom: 0 !important;
 		transition-duration: 600ms;
 		&.shown {
-			height: calc(100vh - 340px);
+			height: calc(100vh - 300px);
 		}
 		overflow-y: scroll;
 	}

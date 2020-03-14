@@ -18,6 +18,7 @@ export class AppInfoPage {
 
 	version: string;
 	error: string;
+	title: string;
 	wijk: string;
 
 	updates: any;
@@ -32,6 +33,7 @@ export class AppInfoPage {
 	}
 
 	init() {
+		this.title = 'App info';
 		this.staging = false;
 
 		this.storage.get('wijk').then((val) => {

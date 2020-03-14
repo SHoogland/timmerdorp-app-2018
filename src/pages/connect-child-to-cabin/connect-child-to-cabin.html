@@ -1,7 +1,7 @@
 <ion-content padding>
 	<ion-header (click)='g.goHome()'>
 		<ion-icon class='homeIcon' name="md-home"></ion-icon>
-		<h1 id="ptitle">Timmerdorp</h1>
+		<h1 id="ptitle">{{title}}</h1>
 		<ion-navbar>
 			<ion-title>
 				<img src="assets/imgs/logo.png" class="nav-logo">
@@ -10,9 +10,8 @@
 	</ion-header>
 	<div class='content'>
 		<div class="user-info">
-			<h1>Beheer hutjes</h1>
 			<ion-list class="line-input">
-				<p class="search-on">Vul hieronder een hutnummer in:</p>
+				<h1 class='title'>Hutnummer:</h1>
 				<ion-item>
 					<ion-input class="ion-text-right" [(ngModel)]="hutNr" maxlength='3'
 						(ngModelChange)="search($event)">
@@ -94,10 +93,10 @@
 		<div id='modalBottom'>
 			<span class="close" (click)="closeAddModal();">&times;</span>
 			<h1>Kind toevoegen</h1>
-			<!-- <ion-item *ngIf="isTue">
+			<ion-item *ngIf="isTue&&allowAutoPresence">
 				<ion-label>Automatisch aanwezig melden</ion-label>
 				<ion-toggle [(ngModel)]="autoPresence"></ion-toggle>
-			</ion-item> -->
+			</ion-item>
 
 			<p class="search-on">Zoek een kind en voeg het toe aan hutje {{hutNr}}.</p>
 			<ion-list class="line-input">

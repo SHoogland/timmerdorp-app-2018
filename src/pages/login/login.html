@@ -1,6 +1,6 @@
 <ion-content padding>
 	<ion-header>
-		<h1 id="ptitle">Timmerdorp</h1>
+		<h1 id="ptitle">{{title}}</h1>
 		<ion-navbar>
 			<ion-title>
 				<img src="assets/imgs/logo.png" class="nav-logo">
@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<div *ngIf='!hideLogin'>
-			<h1>Login</h1>
+			<h1>Inloggegevens</h1>
 			<ion-list class="line-input">
 				<ion-item>
 					<ion-input class="ion-text-right" placeholder='Gebruikersnaam' [(ngModel)]="login.username">
@@ -34,20 +34,6 @@
 					</ion-input>
 				</ion-item>
 			</ion-list>
-			<div id='statusMsg'>
-				<div *ngIf="loading">
-					<b>Controleren...</b>
-				</div>
-				<div *ngIf="success">
-					<b class='successMsg'>Ingelogd!</b>
-				</div>
-				<div *ngIf="usernameError">
-					<b class='errorMsg'>Verkeerde gebruikersnaam</b>
-				</div>
-				<div *ngIf="passwordError">
-					<b class='errorMsg'>Verkeerd wachtwoord</b>
-				</div>
-			</div>
 			<button id='saveBtn' ion-button full class='bg-green' (click)='loginNow()'>
 				<ion-icon slot='start' name='md-log-in'>
 				</ion-icon>
@@ -55,13 +41,19 @@
 					Opslaan
 				</span>
 			</button>
+			<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
+				<div class="content" *ngIf='error'>
+					<ion-icon name='warning'></ion-icon>
+					<h1 id='errorHeader' [innerHTML]='error'></h1>
+					<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
+				</div>
+			</div>
 
-			<div class="user-info errorCard hasError">
+			<div class="user-info errorCard info hasError">
 				<div class="content">
 					<ion-icon name="information-circle"></ion-icon>
 					<h1 id='errorHeader'>Inloggegevens</h1>
-					<h4 id='errorHelp'>Zoek Stan uit wijk blauw of Stephan uit
-						wijk geel voor het krijgen van de
+					<h4 id='errorHelp'>Zoek Stan (wijk blauw) of Stephan (wijk geel) voor het krijgen van de
 						inloggegevens.</h4>
 				</div>
 			</div>

@@ -13,7 +13,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 export class FilesPage {
 	loading: boolean;
 
-	schedule: string;
+	title: string;
 
 	photoYear: number;
 
@@ -32,6 +32,7 @@ export class FilesPage {
 	}
 
 	init() {
+		this.title = 'Bijlagen & foto\'s';
 		this.photoYear = new Date().getFullYear();
 		this.albumYears = [this.photoYear];
 		let self = this;

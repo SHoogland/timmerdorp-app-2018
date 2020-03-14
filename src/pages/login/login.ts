@@ -11,8 +11,10 @@ import { GlobalFunctions } from '../../providers/global';
 })
 
 export class LoginPage {
+	errorHelp: string;
 	number: string;
 	error: string;
+	title: string;
 	name: string;
 	day: string;
 
@@ -21,8 +23,6 @@ export class LoginPage {
 		password: string
 	};
 
-	usernameError: boolean;
-	passwordError: boolean;
 	hideLogin: boolean;
 	success: boolean;
 	loading: boolean;
@@ -43,8 +43,7 @@ export class LoginPage {
 	}
 
 	init() {
-		this.usernameError = false;
-		this.passwordError = false;
+		this.title = 'Login';
 		this.hideLogin = true;
 		this.success = false;
 
@@ -93,8 +92,6 @@ export class LoginPage {
 	checkLogin() {
 		this.loading = true;
 		this.success = false;
-		this.usernameError = false;
-		this.passwordError = false;
 		this.cd.detectChanges();
 		console.log("Determining whether login is correct by searching for random child '000'...")
 
@@ -104,15 +101,13 @@ export class LoginPage {
 			this.loading = false;
 			if (result.code === 200) {
 				this.success = true;
-				this.usernameError = false;
-				this.passwordError = false;
+				this.error = null;
 				console.log("Succesvol ingelogd!");
 				setTimeout(() => { this.g.goHome() }, 800);
 			} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
 				this.success = false;
-				this.usernameError = false;
-				this.passwordError = true;
-				console.log("Verkeerd wachtwoord!");
+				this.error = "Inloggen mislukt";
+				this.errorHelp = "Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.";
 			} else {
 				console.log(result);
 			}
@@ -122,13 +117,13 @@ export class LoginPage {
 			this.loading = false;
 			if (error.code === 'invalid_username') {
 				this.success = false;
-				this.usernameError = true;
-				this.passwordError = false;
+				this.error = "Inloggen mislukt";
+				this.errorHelp = "Het inloggen is mislukt; je hebt niet de juiste gebruikersnaam ingevoerd.";
 				console.log("Verkeerde gebruikersnaam!");
 			} else if (error.code === 'incorrect_password') {
 				this.success = false;
-				this.usernameError = false;
-				this.passwordError = true;
+				this.error = "Inloggen mislukt";
+				this.errorHelp = "Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.";
 				console.log("Verkeerd wachtwoord!");
 			} else {
 				console.log(error);//user is offline (probably)

@@ -1,86 +1,92 @@
 loginpage {
-  h1:not(#ptitle) {
-    text-align: center;
-    margin-top: 12px !important;
-    margin-bottom: 16px;
-  }
+	h1:not(#ptitle) {
+		text-align: center;
+		margin-top: 12px !important;
+		margin-bottom: 16px;
+	}
 
-  .line-input:nth-of-type(2n + 1) {
-    margin-bottom: 16px !important;
-  }
+	.line-input:nth-of-type(2n + 1) {
+		margin-bottom: 16px !important;
+	}
 
-  #callBtn {
-    ion-icon {
-      margin-right: 12px;
-      position: relative;
-      font-size: 1.8em;
-    }
-    span {
-      font-size: 18px;
-    }
-  }
+	#callBtn {
+		ion-icon {
+			margin-right: 12px;
+			position: relative;
+			font-size: 1.8em;
+		}
+		span {
+			font-size: 18px;
+		}
+	}
 
-  #stagingMsg {
-    margin-bottom: 12px;
-  }
+	#stagingMsg {
+		margin-bottom: 12px;
+	}
 
-  #stagingBtn {
-    background: #fafafa;
-    color: #fafafa;
-  }
+	#stagingBtn {
+		background: #fafafa;
+		color: #fafafa;
+	}
 
-  #statusMsg {
-    height: 20px;
-    font-size: 20px;
-    padding-left: 8px;
-    padding-top: 10px;
-    text-align: center;
-  }
+	#statusMsg {
+		height: 20px;
+		font-size: 20px;
+		padding-left: 8px;
+		padding-top: 10px;
+		text-align: center;
+	}
 
-  .successMsg {
-    color: green;
-  }
+	.successMsg {
+		color: green;
+	}
 
-  #saveBtn {
-    ion-icon {
-      margin-right: 12px;
-      position: relative;
-      font-size: 1.8em;
-    }
-    span {
-      font-size: 18px;
-    }
-  }
+	#saveBtn {
+		margin-top: 16px;
+		ion-icon {
+			margin-right: 12px;
+			position: relative;
+			font-size: 1.8em;
+		}
+		span {
+			font-size: 18px;
+		}
+	}
 
-  .errorCard {
-    background: $blue !important;
-    ion-icon {
-      top: 24px !important;
-    }
-    &:not(#warning) #errorHeader {
-      margin-top: 0px !important;
-      margin-bottom: 6px;
-    }
+	.errorCard:not(.info) {
+		margin-bottom: 18px;
+		#errorHeader {
+			margin-top: 0px !important;
+			margin-bottom: 6px;
+		}
+	}
 
-    &#warning #errorHeader {
-      margin-top: 4px !important;
-      margin-bottom: 5px !important;
-    }
+	.errorCard.info {
+		background: $blue !important;
+		&:not(#warning) #errorHeader {
+			margin-top: 0px !important;
+			margin-bottom: 6px;
+		}
 
-    &#warning button {
-      height: 32px;
-      margin-bottom: 8px;
-      margin-top: 8px;
-      background: rgba(0, 0, 0, 0.15);
-    }
-  }
+		&#warning #errorHeader {
+			margin-top: 4px !important;
+			margin-bottom: 5px !important;
+		}
 
-  button {
-    &.bg-blue {
-      margin-top: 24px !important;
-    }
-    max-width: 80%;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
+		&#warning button {
+			height: 32px;
+			margin-bottom: 8px;
+			margin-top: 8px;
+			background: rgba(0, 0, 0, 0.15);
+		}
+	}
+
+	button {
+		&.bg-blue {
+			margin-top: 24px !important;
+		}
+		max-width: 80%;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
 }

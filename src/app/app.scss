@@ -88,9 +88,11 @@ h1 {
 	position: absolute;
 	top: 2px;
 	margin-top: 22px;
+	white-space: nowrap;
 	font-size: 30px;
+	overflow-x: hidden;
 	&:not(.home) {
-		@media only screen and (max-width: 340px) {
+		@media only screen and (max-width: 360px) {
 			font-size: 24px !important;
 			line-height: 24px;
 			padding-top: 28px;
@@ -102,10 +104,10 @@ h1 {
 		margin-bottom: 0;
 		height: 80px;
 	}
-	width: calc(100% - 160px);
+	width: calc(100% - 132px);
 	z-index: 100;
 	text-align: center;
-	left: 80px;
+	left: 66px;
 	color: white;
 }
 
@@ -316,7 +318,10 @@ ion-toolbar {
 	border-bottom: none;
 
 	h1 {
-		padding-bottom: 15px;
+		&:not(.title) {
+			padding-bottom: 15px;
+		}
+		margin-top: 8px !important;
 	}
 }
 
@@ -330,7 +335,7 @@ ion-spinner {
 	text-align: center;
 	padding-bottom: 20px;
 
-	h1 {
+	h1:not(.title) {
 		padding-bottom: 15px;
 	}
 	.correction {
@@ -348,8 +353,7 @@ ion-spinner {
 	box-shadow: none !important;
 }
 
-.button-md,
-.button-ios {
+.button {
 	padding: 32px;
 	margin-bottom: 20px;
 	height: 80px;
@@ -360,7 +364,7 @@ ion-spinner {
 	text-transform: none;
 
 	&:first-of-type {
-		margin-top: 20px;
+		margin-top: -8px;
 	}
 }
 
@@ -377,10 +381,6 @@ ion-spinner {
 		border: 1px solid red;
 		height: 80px;
 		background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
-	}
-	.button-md:first-of-type,
-	.button-ios:first-of-type {
-		margin-top: 0px;
 	}
 }
 
@@ -726,7 +726,8 @@ button {
 		position: absolute;
 		left: 20px;
 		top: 12px;
-		height: 12px;
+		height: calc(100% - 20px);
+		top: calc(50% - 3.4rem);
 	}
 	#errorHeader {
 		position: relative;

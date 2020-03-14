@@ -27,6 +27,7 @@ export class SearchPage {
 
 	searchTerm: string;
 	errorHelp: string;
+	title: string;
 	error: string;
 
 	modal: {
@@ -46,7 +47,7 @@ export class SearchPage {
 		public sanitizer: DomSanitizer,
 		public g: GlobalFunctions
 	) {
-		console.log(this);
+		this.title = 'Kinderen Zoeken'
 		if (this.platform.is('cordova')) {
 			if (cordova.platformId === 'android') {
 				this.platform.registerBackButtonAction(() => {

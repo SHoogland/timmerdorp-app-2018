@@ -27,6 +27,7 @@ export class GlobalFunctions {
 			username: '',
 			password: ''
 		}
+
 		this.stagingEndpoint = 'https://staging.timmerdorp.com/wp-json';
 		this.normalEndpoint = 'https://shop.timmerdorp.com/wp-json';
 	}

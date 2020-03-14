@@ -16,6 +16,7 @@ export class ConnectChildToCabinPage {
 	searchError: string;
 	searchTerm: string;
 	errorHelp: string;
+	title: string;
 	hutNr: string;
 	error: string;
 
@@ -31,6 +32,7 @@ export class ConnectChildToCabinPage {
 	hutTickets: Array<any>;
 	tickets: Array<any>;
 
+	allowAutoPresence: boolean;
 	undoingIsDone: boolean;
 	autoPresence: boolean;
 	notLoggedIn: boolean;
@@ -65,23 +67,18 @@ export class ConnectChildToCabinPage {
 		private cd: ChangeDetectorRef,
 		public g: GlobalFunctions
 	) {
-		this.error1 = false;
-		this.error2 = false;
-
-		if (this.platform.is('cordova')) {
-			if (cordova.platformId === 'android') {
-				this.platform.registerBackButtonAction(() => {
-					if (this.addModal.show) {
-						this.addModal.show = false;
-					} else if (this.removeModal.show) {
-						this.removeModal.show = false;
-					} else if (this.warningModal.show) {
-						this.warningModal.show = false;
-					} else {
-						this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-					}
-				});
-			}
+		if (this.platform.is('cordova') && cordova.platformId === 'android') {
+			this.platform.registerBackButtonAction(() => {
+				if (this.addModal.show) {
+					this.addModal.show = false;
+				} else if (this.removeModal.show) {
+					this.removeModal.show = false;
+				} else if (this.warningModal.show) {
+					this.warningModal.show = false;
+				} else {
+					this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+				}
+			});
 		}
 		this.init();
 	}
@@ -91,17 +88,21 @@ export class ConnectChildToCabinPage {
 			username: '',
 			password: ''
 		}
-		this.isTue = new Date().getDay() == 2;
+		this.title = 'Beheer Hutjes';
+		this.isTue = (new Date().getDay() == 2);
 
-		this.autoPresence = false;
 
+		this.allowAutoPresence = false;
 		this.undoingIsDone = false;
+		this.autoPresence = false;
 		this.notLoggedIn = false;
 		this.giveAccent = false;
 		this.isUndoing = false;
 		this.searched = false;
 		this.staging = false;
 		this.loading = false;
+		this.error1 = false;
+		this.error2 = false;
 
 		this.searchError = '';
 		this.error = '';
@@ -120,12 +121,8 @@ export class ConnectChildToCabinPage {
 		this.hutTickets = [];
 		this.tickets = [];
 
-		//ik heb oprecht geen idee waarom dit werkt,
-		//maar zonder deze drie regels hieronder werkt
-		//de 'removeModal' niet.
-		//??????
 		setInterval(function () {
-			console.log((this.removeModal || {}).show);
+			console.log((this.removeModal || {}).show); //hierdoor werkt de removeModal (ionic gedoe)
 		}, 250);
 	}
 

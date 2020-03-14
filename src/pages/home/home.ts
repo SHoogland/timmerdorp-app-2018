@@ -173,7 +173,7 @@ export class HomePage {
 					data: true
 				},
 				{
-					title: 'Zoek kind',
+					title: 'Zoek kinderen',
 					component: "search",
 					class: 'bg-blue',
 					icon: "search"
@@ -191,7 +191,7 @@ export class HomePage {
 					icon: 'qr-scanner'
 				},
 				{
-					title: 'Koppel kind aan hut',
+					title: 'Beheer hutjes',
 					component: "connect-child-to-cabin",
 					class: 'bg-blue',
 					icon: 'person-add'
@@ -233,7 +233,7 @@ export class HomePage {
 				{
 					title: 'Log uit',
 					component: "login",
-					class: 'bg-darkred small',
+					class: 'bg-red small',
 					icon: "md-log-out",
 					small: true
 				}
@@ -242,7 +242,7 @@ export class HomePage {
 
 
 		this.httpClient.get("https://api.openweathermap.org/data/2.5/forecast?q=Heiloo,NL&APPID=e98a229cdc17ffdc226168c33aefa0c1").subscribe((data: any) => {
-			let weatherMessage = "Geen regen vandaag!";
+			let weatherMessage = "Geen regen voorspeld!";
 			let totalRain = 0;
 			let skipped = 0;
 			let weatherIcon = "sunny";
@@ -261,9 +261,9 @@ export class HomePage {
 			console.log(totalRain, rainPerHour);
 			if (rainPerHour > 0) {
 				if (rainPerHour > .5) {
-					weatherMessage = "Veel regen vandaag";
+					weatherMessage = "Veel regen voorspeld";
 				} else {
-					weatherMessage = "Lichte buien vandaag";
+					weatherMessage = "Lichte buien voorspeld";
 				}
 				weatherIcon = "rainy";
 			}

@@ -11,9 +11,10 @@ import { Storage } from '@ionic/storage';
 })
 export class SchedulePage {
 	@ViewChild(Content) content: Content;
-	schedule: string;
-	wijk: string;
 	loading: boolean;
+	schedule: string;
+	title: string;
+	wijk: string;
 
 	constructor(
 		public navCtrl: NavController,
@@ -24,7 +25,7 @@ export class SchedulePage {
 	}
 
 	init() {
-
+		this.title = 'Programma';
 		let self = this;
 		this.storage.get("wijk").then(function (v) {
 			self.wijk = v;

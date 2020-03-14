@@ -1,7 +1,7 @@
 <ion-content padding>
 	<ion-header (click)='g.goHome()'>
 		<ion-icon class='homeIcon' name="md-home"></ion-icon>
-		<h1 id="ptitle">Timmerdorp</h1>
+		<h1 id="ptitle">{{title}}</h1>
 		<ion-navbar>
 			<ion-title>
 				<img src="assets/imgs/logo.png" class="nav-logo">
@@ -43,7 +43,7 @@
 				</table>
 			</div>
 			<div class="bracelet-number">
-				<h1>Armbandnummer:</h1>
+				<h1>Armbandnummer</h1>
 				<ion-list class="line-input">
 					<ion-item>
 						<ion-input #nrInput type='tel' maxlength='3' [(ngModel)]='ticket.wristBandNr'

@@ -1,92 +1,92 @@
 page-presence {
-  #sendButton {
-    width: calc(50% - 8px);
-    display: inline-block;
-    top: -40px;
-  }
+	#sendButton {
+		width: calc(50% - 8px);
+		display: inline-block;
+		top: -26px;
+	}
 
-  tr > td:first-of-type {
-    font-weight: bold;
-    padding-right: 18px;
-  }
+	tr > td:first-of-type {
+		font-weight: bold;
+		padding-right: 18px;
+	}
 
-  .peopleList {
-    ion-item {
-      h2 {
-        @media screen and (max-width: 440px) {
-          font-size: 2rem;
-          padding-top: 4px;
-        }
-        @media screen and (min-width: 440px) {
-          font-size: 2.8rem;
-          padding-top: 0px;
-          span {
-            //   wil ik dit?
-            border-left: 1.5px solid rgba(0, 0, 0, 0.15);
-            padding-left: 14px;
-          }
-        }
-      }
-    }
-  }
+	.peopleList {
+		ion-item {
+			h2 {
+				@media screen and (max-width: 440px) {
+					font-size: 2rem;
+					padding-top: 4px;
+				}
+				@media screen and (min-width: 440px) {
+					font-size: 2.8rem;
+					padding-top: 0px;
+					span {
+						//   wil ik dit?
+						border-left: 1.5px solid rgba(0, 0, 0, 0.15);
+						padding-left: 14px;
+					}
+				}
+			}
+		}
+	}
 
-  #numberInput {
-    display: inline-block;
-    height: 80px;
-    margin-top: 12px;
-  }
+	#numberInput {
+		display: inline-block;
+		height: 80px;
+		margin-top: 12px;
+	}
 
-  #sendButton {
-    ion-icon {
-      font-size: 1.5em;
-      margin-right: 8px;
-    }
-  }
+	#sendButton {
+		ion-icon {
+			font-size: 1.5em;
+			margin-right: 8px;
+		}
+	}
 
-  ion-list.line-input {
-    * {
-      height: 100%;
-    }
-    display: inline-block;
-    margin-right: 12px;
-    width: calc(50% - 12px) !important;
-  }
+	ion-list.line-input {
+		* {
+			height: 100%;
+		}
+		display: inline-block;
+		margin-right: 12px;
+		width: calc(50% - 12px) !important;
+	}
 
-  #childInfo {
-    margin-top: -50px;
-    > div {
-      padding-bottom: 12px;
-    }
-  }
+	#childInfo {
+		margin-top: -50px;
+		> div {
+			padding-bottom: 12px;
+		}
+	}
 
-  .user-info > div {
-    height: 20px;
-  }
+	.user-info > div {
+		height: 20px;
+	}
 
-  #dayName {
-    color: green;
-  }
+	#dayName {
+		color: green;
+	}
 
-  #modalTop {
-    background: #e82525;
-  }
+	#modalTop {
+		background: #e82525;
+	}
 
-  #modalBottom p {
-    margin-bottom: -16px;
-  }
+	#modalBottom p {
+		margin-bottom: -16px;
+	}
 
-  .peopleList {
-    ion-item {
-      .input-wrapper ion-label {
-        div:first-of-type {
-          margin-top: 8px;
-        }
-        @media screen and (min-width: 381px) {
-          div:nth-of-type(2n) {
-            margin-top: 8px;
-          }
-        }
-      }
-    }
-  }
+	.peopleList {
+		ion-item {
+			.input-wrapper ion-label {
+				div:first-of-type {
+					margin-top: 8px;
+				}
+				@media screen and (min-width: 381px) {
+					div:nth-of-type(2n) {
+						margin-top: 8px;
+					}
+				}
+			}
+		}
+	}
 }

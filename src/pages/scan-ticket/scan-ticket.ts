@@ -20,6 +20,7 @@ export class ScanTicketPage {
 	oldNumber: string;
 	errorHelp: string;
 	error: string;
+	title: string;
 
 	modal: {
 		showModal: boolean;
@@ -44,6 +45,7 @@ export class ScanTicketPage {
 		public storage: Storage,
 		public g: GlobalFunctions
 	) {
+		this.title = 'Scan Ticket';
 		if (this.platform.is('cordova')) {
 			if (cordova.platformId === 'android') {
 				this.platform.registerBackButtonAction(() => {

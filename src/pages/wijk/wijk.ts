@@ -15,6 +15,7 @@ export class WijkPage {
 	statistieken: object;
 	wijkstats: object;
 
+	title: string;
 	error: string;
 	wijk: string;
 
@@ -37,11 +38,12 @@ export class WijkPage {
 		public storage: Storage,
 		public g: GlobalFunctions
 	) {
-		this.showSelection = false;
+		this.title = 'Wijkoverzicht';
 		this.init();
+		this.showSelection = false;
 		this.notLoggedIn = false;
-		this.error = '';
 		this.loading = false;
+		this.error = '';
 
 		this.wijkprops = [
 			{

@@ -1,7 +1,7 @@
 <ion-content padding>
 	<ion-header (click)="g.goHome()" [ngClass]='(wijk||"") + " wijk-header"'>
 		<ion-icon class='homeIcon' name="md-home"></ion-icon>
-		<h1 id="ptitle">Timmerdorp</h1>
+		<h1 id="ptitle">{{title}}</h1>
 		<ion-navbar [ngClass]='(wijk||"")'>
 			<ion-title>
 				<img src="assets/imgs/logo.png" class="nav-logo">
@@ -9,8 +9,6 @@
 		</ion-navbar>
 	</ion-header>
 	<div class='content'>
-		<h1 id='title' [ngClass]='wijk'>Programma</h1>
-		<p *ngIf='loading'>Laden...</p>
 		<div id='schedule'>
 			<div *ngFor='let d of schedule; let i = index' id='{{d.timestamp}}' [ngClass]='(wijk||"blue")'>
 				<h3>{{d.date}}</h3>

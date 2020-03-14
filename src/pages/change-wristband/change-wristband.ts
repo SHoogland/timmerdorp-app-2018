@@ -24,6 +24,7 @@ export class ChangeWristbandPage {
 	oldNr: string;
 	newNr: string;
 	error: string;
+	title: string;
 
 	searched: boolean;
 	staging: boolean;
@@ -41,6 +42,7 @@ export class ChangeWristbandPage {
 		public cd: ChangeDetectorRef,
 		public g: GlobalFunctions
 	) {
+		this.title = 'Verander Polsbandje';
 	}
 
 	searchTicket() {
