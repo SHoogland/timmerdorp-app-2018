@@ -183,6 +183,7 @@ export class ConnectChildToCabinPage {
 		let self = this;
 		this.undoingInterval = setInterval(function () {
 			if (!self.loading) {
+				console.log(self.undoItem);
 				if (document.getElementById(self.undoItem)) {
 					document.getElementById(self.undoItem).classList.add("done");
 				}
