@@ -40,7 +40,7 @@ page-changeWristband {
 		padding-top: 0px !important;
 	}
 
-	.user-info > div {
+	.user-info > div:not(.content) {
 		height: 20px;
 		div {
 			margin-bottom: 80px;

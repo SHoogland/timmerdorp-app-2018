@@ -10,4 +10,13 @@ page-scan-ticket {
 	.cleanTable td:first-of-type {
 		font-weight: bold;
 	}
+
+	.user-info {
+		padding-top: 0px !important;
+	}
+	.errorCard {
+		.content {
+			padding: 6px !important;
+		}
+	}
 }

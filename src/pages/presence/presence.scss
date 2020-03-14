@@ -59,7 +59,7 @@ page-presence {
 		}
 	}
 
-	.user-info > div {
+	.user-info > div:not(.content) {
 		height: 20px;
 	}
 

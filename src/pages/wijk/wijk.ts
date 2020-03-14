@@ -38,7 +38,6 @@ export class WijkPage {
 		public storage: Storage,
 		public g: GlobalFunctions
 	) {
-		this.title = 'Wijkoverzicht';
 		this.init();
 		this.showSelection = false;
 		this.notLoggedIn = false;
@@ -133,6 +132,7 @@ export class WijkPage {
 				this.staging = false;
 			})
 		]).then(() => {
+			this.title = 'Wijkoverzicht ' + this.g.getWijkName(this.wijk);
 			this.updateData();
 		});
 	}
@@ -172,6 +172,7 @@ export class WijkPage {
 		this.storage.set("wijk", kleur).then((val) => {
 			this.showSelection = false;
 			this.wijk = val;
+			this.title = 'Wijkoverzicht ' + this.g.getWijkName(this.wijk);
 			this.updateData();
 		});
 	}

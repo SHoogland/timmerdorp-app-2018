@@ -725,23 +725,22 @@ button {
 		font-size: 6.8rem;
 		position: absolute;
 		left: 20px;
-		top: 12px;
 		height: calc(100% - 20px);
 		top: calc(50% - 3.4rem);
 	}
 	#errorHeader {
 		position: relative;
-		left: 80px;
-		width: calc(100% - 80px);
+		left: 90px;
+		width: calc(100% - 88px);
 		text-align: left;
 		top: 8px;
 		font-size: 2.3rem;
 	}
 	#errorHelp {
 		font-size: 14px;
-		left: 80px;
+		left: 90px;
 		position: relative;
-		width: calc(100% - 90px);
+		width: calc(100% - 100px);
 		text-align: left;
 		margin-top: -12px;
 	}

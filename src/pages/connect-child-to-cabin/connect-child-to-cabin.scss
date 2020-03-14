@@ -41,10 +41,12 @@ page-connect-child-to-cabin {
 		padding-top: 0px;
 	}
 
-	.user-info {
-		> div {
-			height: 20px;
-		}
+	.errorCard ion-icon {
+		height: 100% !important;
+	}
+
+	.user-info > div:not(.content) {
+		height: 20px;
 	}
 
 	.undoButton {

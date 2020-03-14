@@ -211,14 +211,16 @@ export class ConnectChildToCabinPage {
 			} catch (e) {
 				console.log(e);
 			}
+		} else {
+			this.error = '';
 		}
 	}
 
 	searchHut() {
 		console.log('searching: ' + this.hutNr);
-		if (+this.hutNr >= 400) {
+		if (isNaN(+this.hutNr) || +this.hutNr >= 400 || +this.hutNr < 0) {
 			this.error = 'Foutmelding';
-			this.errorHelp = 'Hutnummer moet tussen 0-399 zijn.';
+			this.errorHelp = 'Hutnummer moet tussen 0 en 399 zijn.';
 			this.cd.detectChanges();
 			return;
 		}
@@ -274,7 +276,9 @@ export class ConnectChildToCabinPage {
 		let self = this;
 		self.tickets = [];
 		self.searchError = '';
-		if (this.searchTerm.length < 3) return;
+		if (this.searchTerm.length < 3) {
+			return;
+		}
 		self.loading = true;
 		console.log('searching: ' + this.searchTerm);
 		var wp = this.g.getWpApi(this.login, this.staging, 'search');

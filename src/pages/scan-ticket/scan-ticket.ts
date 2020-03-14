@@ -45,7 +45,7 @@ export class ScanTicketPage {
 		public storage: Storage,
 		public g: GlobalFunctions
 	) {
-		this.title = 'Scan Ticket';
+		this.title = 'Gegevens Ticket';
 		if (this.platform.is('cordova')) {
 			if (cordova.platformId === 'android') {
 				this.platform.registerBackButtonAction(() => {
@@ -128,10 +128,10 @@ export class ScanTicketPage {
 					this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
 				} else {
 					if (result.message == 'no ticket found') {
-						self.error = 'Geen tickets gevonden';
+						self.error = 'Niets gevonden!';
 						self.errorHelp = 'Probeer het ticket opnieuw te scannen.';
 					} else if (result.message == 'no barcode provided') {
-						self.error = 'Geen barcode gescand';
+						self.error = 'Niets gescand!';
 						self.errorHelp = 'Probeer het ticket opnieuw te scannen in direct zonlicht.';
 					} else {
 						self.error = result.message;
