@@ -51,7 +51,6 @@ export class PresencePage {
 				});
 			}
 		}
-		this.init();
 	}
 
 	init() {
@@ -69,7 +68,9 @@ export class PresencePage {
 				this.day = 'fri';
 				break;
 			default:
-				this.day = 'fri'; //sample day
+				this.day = 'tue'
+				alert("Nog even wachten tot Timmerdorp!");
+				this.g.goHome();
 		}
 		this.modalShown = false;
 		this.greenBtn = false;

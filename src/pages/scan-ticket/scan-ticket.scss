@@ -7,6 +7,10 @@ page-scan-ticket {
 		}
 	}
 
+	div:not(.errorCard) .content {
+		padding: 0 !important;
+	}
+
 	.cleanTable td:first-of-type {
 		font-weight: bold;
 	}
@@ -14,9 +18,7 @@ page-scan-ticket {
 	.user-info {
 		padding-top: 0px !important;
 	}
-	.errorCard {
-		.content {
-			padding: 6px !important;
-		}
+	.errorCard .content {
+		padding: 6px !important;
 	}
 }

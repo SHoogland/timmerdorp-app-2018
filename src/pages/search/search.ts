@@ -203,7 +203,7 @@ export class SearchPage {
 			clearTimeout(this.typingTimer);
 			this.typingTimer = setTimeout(() => {
 				this.searchThis();
-			}, 200);
+			}, 100);
 		} catch (e) {
 			console.log(e);
 		}
@@ -217,11 +217,12 @@ export class SearchPage {
 	searchThis() {
 		let self = this;
 		self.tickets = [];
+		self.error = '';
+		self.errorHelp = '';
 		if (this.searchTerm.length < 3) {
 			console.log("Cancelling search. Reason: term too short");
 			return false;
 		}
-		self.error = '';
 		self.loading = true;
 		console.log('searching: ' + this.searchTerm);
 		var wp = this.g.getWpApi(this.login, this.staging, 'search');

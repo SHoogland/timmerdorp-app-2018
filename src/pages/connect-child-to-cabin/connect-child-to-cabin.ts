@@ -80,7 +80,6 @@ export class ConnectChildToCabinPage {
 				}
 			});
 		}
-		this.init();
 	}
 
 	init() {

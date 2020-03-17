@@ -15,7 +15,7 @@
 				<p class="search-on">(voornaam, achternaam, armbandnummer of hutnummer)</p>
 				<ion-list class="line-input">
 					<ion-item>
-						<ion-input class="ion-text-right" clearInput [(ngModel)]="searchTerm"
+						<ion-input [ngClass]="'ion-text-right' + ((searchTerm||'').length?'':' hideClear')" clearInput [(ngModel)]="searchTerm"
 							(ngModelChange)="search($event)">
 						</ion-input>
 					</ion-item>

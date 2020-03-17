@@ -1,5 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,7 +13,6 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 @import "./theme/elements";
-
 @font-face {
 	font-family: Mikado-Bold;
 	src: url("../assets/fonts/Mikado-Bold.woff");
@@ -66,6 +64,7 @@ h1 {
 .bar-button-default-md {
 	transition-duration: 250ms !important;
 }
+
 .bar-button-default-md:hover:not(.disable-hover),
 .bar-button-clear-md-default:hover:not(.disable-hover),
 .bar-button-md-default:hover:not(.disable-hover) {
@@ -137,7 +136,7 @@ div.content {
 	font-size: 18px;
 }
 
-ion-content:not(.homeContent) > .scroll-content {
+ion-content:not(.homeContent)>.scroll-content {
 	margin-top: 0px !important;
 	padding: 0px !important;
 }
@@ -149,25 +148,31 @@ ion-content:not(.homeContent) > .scroll-content {
 		background: darken($blue, 12%) !important;
 	}
 }
+
 .bg-green {
 	background: $green;
 }
+
 .bg-red {
 	background: $red;
 }
+
 button.bg-red:hover,
 button.bg-red.activated {
 	background: darken($red, 8%) !important;
 }
+
 button.bg-green:hover,
 button.bg-green.activated {
 	background: darken($green, 8%) !important;
 }
+
 button.bg-grey:hover,
 button.bg-grey.activated {
 	background: #ccc !important;
 	color: black !important;
 }
+
 .bg-grey {
 	background: $lightGrey;
 	&:hover {
@@ -198,7 +203,7 @@ button {
 
 button.modern,
 button.modern *,
-button.modern > * {
+button.modern>* {
 	color: white !important;
 }
 
@@ -239,7 +244,6 @@ ion-navbar {
 	-webkit-box-shadow: none;
 	box-shadow: none;
 	border-bottom: 2px solid $blue;
-
 	.nav-logo {
 		position: relative;
 		width: 90px;
@@ -256,6 +260,7 @@ ion-navbar {
 		background: $blue;
 	}
 }
+
 .toolbar-ios ion-title {
 	padding: 0;
 }
@@ -281,12 +286,10 @@ ion-navbar {
 
 ion-toolbar {
 	height: 80px;
-
 	img {
 		display: none;
 	}
 	padding-bottom: 40px;
-
 	.bar-button-close {
 		height: 85px;
 		width: 80px;
@@ -304,7 +307,6 @@ ion-toolbar {
 	margin-bottom: 10px;
 	width: 100%;
 	background: $lightGrey;
-
 	&:first-of-type {
 		border-top: 0px;
 		margin-top: 50px;
@@ -316,7 +318,6 @@ ion-toolbar {
 	text-align: center;
 	padding: 12px 0;
 	border-bottom: none;
-
 	h1 {
 		&:not(.title) {
 			padding-bottom: 15px;
@@ -334,7 +335,6 @@ ion-spinner {
 	padding-top: 20px;
 	text-align: center;
 	padding-bottom: 20px;
-
 	h1:not(.title) {
 		padding-bottom: 15px;
 	}
@@ -362,7 +362,6 @@ ion-spinner {
 	line-height: 20px;
 	letter-spacing: 0.5px;
 	text-transform: none;
-
 	&:first-of-type {
 		margin-top: -8px;
 	}
@@ -390,18 +389,27 @@ body {
 }
 
 // Modalbox
+
 /* The Modal (background) */
+
 .modal {
-	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
+	position: fixed;
+	/* Stay in place */
+	z-index: 1;
+	/* Sit on top */
 	left: 0;
 	top: 0;
 	padding: 24px;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0, 0, 0); /* Fallback color */
-	background-color: rgba(16, 16, 16, 0.9); /* Black w/ opacity */
+	width: 100%;
+	/* Full width */
+	height: 100%;
+	/* Full height */
+	overflow: auto;
+	/* Enable scroll if needed */
+	background-color: rgb(0, 0, 0);
+	/* Fallback color */
+	background-color: rgba(16, 16, 16, 0.9);
+	/* Black w/ opacity */
 }
 
 #childDataHeader {
@@ -413,35 +421,33 @@ body {
 	background: #fafafa;
 }
 
+
 /* Modal Content/Box */
+
 .modal-content {
 	position: relative;
 	background-color: $white;
 	margin: 20px auto;
 	padding: 20px;
-
 	h1 {
 		margin-top: 45px;
 	}
 	span {
 		line-height: 40px;
 	}
-
 	padding: 0;
-
 	ul {
 		li {
 			list-style: none;
 		}
 	}
-
 	button {
 		border-radius: 0px !important;
 		margin: 0px;
 		&:nth-of-type(2n).modal-content:not(.item-cover) {
 			background: $blue;
 		}
-		&:nth-of-type(2n + 1):not(.item-cover) {
+		&:nth-of-type(2n+1):not(.item-cover) {
 			background: darken($blue, 8%);
 		}
 		&:hover:not(.item-cover),
@@ -455,7 +461,7 @@ button.halfWidth {
 	width: 50%;
 	margin-top: 0px !important;
 	display: inline-block;
-	&:nth-of-type(2n + 1) {
+	&:nth-of-type(2n+1) {
 		margin-left: -4px;
 	}
 }
@@ -470,7 +476,7 @@ button.modern {
 	&:nth-of-type(2n):not(.customColoured) {
 		background: $blue;
 	}
-	&:nth-of-type(2n + 1):not(.customColoured) {
+	&:nth-of-type(2n+1):not(.customColoured) {
 		background: darken($blue, 9%);
 	}
 	&:hover:not(.customColoured),
@@ -505,7 +511,9 @@ button.modern {
 	position: absolute;
 }
 
+
 /* The Close Button */
+
 .close {
 	color: $mediumBlack;
 	float: right;
@@ -546,7 +554,6 @@ button {
 
 .peopleList {
 	padding: 20px;
-
 	ion-list-header {
 		ion-label {
 			text-transform: uppercase;
@@ -554,14 +561,12 @@ button {
 			font-size: 18px;
 		}
 	}
-
 	ion-item {
 		box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 24px;
 		border-radius: 6px;
 		padding: 0px;
 		height: 80px;
 		margin-bottom: 16px;
-
 		.input-wrapper ion-label {
 			div:first-of-type {
 				@media screen and (min-width: 360px) {
@@ -577,7 +582,6 @@ button {
 			}
 			column-count: 2;
 		}
-
 		h3 {
 			position: relative;
 			@media screen and (max-width: 360px) {
@@ -585,7 +589,6 @@ button {
 					display: none;
 				}
 			}
-
 			@media screen and (min-width: 360px) {
 				span:not(.largeScreenSpan) {
 					position: absolute;
@@ -603,12 +606,10 @@ button {
 				padding-top: 0px;
 			}
 		}
-
 		color: #666;
 		.item-inner {
 			border-left: 6px solid white;
 		}
-
 		&.Blauw {
 			.fab {
 				background: $blue;
@@ -641,11 +642,9 @@ button {
 				border-left: 6px solid $green;
 			}
 		}
-
 		.item-inner {
 			padding: 12px;
 		}
-
 		.fab {
 			height: 48px;
 			width: 48px;
@@ -673,7 +672,6 @@ button {
 		padding-top: 20px;
 		padding-left: 16px;
 	}
-
 	tr td:first-of-type {
 		padding-right: 12px;
 	}
@@ -776,15 +774,20 @@ button {
 	td {
 		padding: 16px 18px !important;
 	}
-
 	td:first-of-type {
 		width: 50%;
 	}
-
 	&.longHeader td:first-of-type {
 		width: 80%;
 	}
-
 	text-align: left;
 	width: 100%;
+}
+
+ion-input.hideClear {
+	.text-input-clear-icon,
+	.text-input-clear-icon:hover {
+		color: white;
+		background: white;
+	}
 }
