@@ -1,3 +1,7 @@
+os:
+  - linux
+  - osx
+
 matrix:
   include:
   - os: linux
@@ -17,15 +21,18 @@ matrix:
   - os: osx
     language: objective-c
     osx_image: xcode10.3
+
 before_install:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then yes | sdkmanager "platforms;android-27" ; fi
 - export LANG=en_US.UTF-8
 - nvm install 12
 - npm i -g ionic cordova
+
 script:
 - npm install
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ionic cordova build ios ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ionic cordova build android ; fi
+
 env:
   global:
   - JAVA_HOME=/usr/lib/jvm/java-8-oracle

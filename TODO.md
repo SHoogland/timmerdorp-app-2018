@@ -29,3 +29,9 @@
 ## Website feedback:
 - Laadtijd
 - Informatie van kinderen aanpassen is ingewikkeld (volgens veel ouders)
+
+## wip fastlane
+- https://ionic.zone/fastlane/build-your-project-with-ionic-plugin
+- https://medium.com/practo-engineering/build-distribution-automation-with-fastlane-and-travis-ci-ios-f959dff2799f
+- https://codesigning.guide/
+- https://docs.fastlane.tools/codesigning/getting-started/
