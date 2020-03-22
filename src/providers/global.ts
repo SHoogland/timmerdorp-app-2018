@@ -5,6 +5,8 @@ import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
 
+declare let cordova: any;
+
 @Injectable()
 export class GlobalFunctions {
 	stagingEndpoint: string;

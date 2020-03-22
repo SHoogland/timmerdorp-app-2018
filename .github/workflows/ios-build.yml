@@ -25,9 +25,29 @@ jobs:
           npm ci
           npm i -g ionic cordova
           cordova telemetry on
-      - name: bundle install
-        run: |
-          bundle install
       - name: ionic build ios
         run: |
-          ionic cordova build ios
+          npm run iosdist
+          cordova platform prepare
+      - name: Setup provisioning profile
+        run: ./.github/secrets/decrypt_secrets.sh
+        env:
+          IOS_PROFILE_KEY: ${{ secrets.IOS_PROFILE_KEY }}
+      - name: Build app
+        run: |
+          xcodebuild archive \
+          -workspace platforms/ios/Timmerdorp.xcworkspace \
+          -scheme Timmerdorp \
+          -configuration Release \
+          -sdk iphoneos13.2 \
+          -archivePath build/timmerdorp.xcarchive \
+          IPHONEOS_DEPLOYMENT_TARGET=9.0 \
+          PROVISIONING_PROFILE="08f2d52a-739c-4306-85f1-75648948361c" \
+          CODE_SIGN_IDENTITY="iPhone Distribution: Matise B.V. (JEY37JY7YK)" 
+      - name: Export app
+        run: |
+          xcodebuild \
+          -exportArchive \
+          -archivePath build/timmerdorp.xcarchive \
+          -exportOptionsPlist exportOptions.plist \
+          -exportPath build
