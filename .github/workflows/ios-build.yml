@@ -25,10 +25,16 @@ jobs:
           npm ci
           npm i -g ionic cordova
           cordova telemetry on
+      - name: bundle install
+        run: |
+          bundle install
+      - name: Fastlane disable codesigning
+        run: |
+          fastlane ios signing
       - name: ionic build ios
         run: |
           npm run iosdist
-          cordova prepare
+          cordova prepare ios
       - name: Setup provisioning profile
         run: ./.github/secrets/decrypt_secrets.sh
         env:
