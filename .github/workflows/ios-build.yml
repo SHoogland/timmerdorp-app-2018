@@ -12,10 +12,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
-      - name: Select Xcode
+      - name: Xcode version
         run: | 
-          sudo xcode-select -switch /Applications/Xcode_11.3.1.app
-          xcode-select --print-path
           /usr/bin/xcodebuild -version
       - name: Use Node.js 12.x
         uses: MatiseAms/setup-node@master
@@ -25,6 +23,10 @@ jobs:
         run: |
           npm ci
           npm i -g ionic cordova
+          cordova telemetry on
+      - name: bundle install
+        run: |
+          bundle install
       - name: ionic build ios
         run: |
           ionic cordova build ios
