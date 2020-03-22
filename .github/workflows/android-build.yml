@@ -1,4 +1,4 @@
-name: Build IOS
+name: Build Android
 
 on:
   push:
@@ -6,17 +6,12 @@ on:
       - develop
 
 jobs:
-  build-ios:
-    name: Build IOS
+  build-android:
+    name: Build Android
     runs-on: macos-latest
     steps:
       - name: checkout
         uses: actions/checkout@v1
-      - name: Select Xcode
-        run: | 
-          sudo xcode-select -switch /Applications/Xcode_11.3.1.app
-          xcode-select --print-path
-          /usr/bin/xcodebuild -version
       - name: Use Node.js 12.x
         uses: MatiseAms/setup-node@master
         with:
@@ -25,6 +20,6 @@ jobs:
         run: |
           npm ci
           npm i -g ionic cordova
-      - name: ionic build ios
+      - name: ionic build android
         run: |
-          ionic cordova build ios
+          ionic cordova build android
