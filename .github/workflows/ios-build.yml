@@ -8,9 +8,11 @@ on:
 jobs:
   build-ios:
     name: Build IOS
-    runs-on: macOS-latest
+    runs-on: macos-latest
     steps:
-    - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_11.3.1.app
-    - name: Dump file hierarchy
-      run: ls -R
+      - name: checkout
+        uses: actions/checkout@v1
+      - name: Select Xcode
+        run: | 
+          xcode-select -switch /Applications/Xcode_11.3.1.app
+          echo "fissa"
