@@ -62,7 +62,7 @@ jobs:
           npx appcenter distribute stores publish \
           --token "${{secrets.APP_CENTER_TOKEN}}" \
           --store "App Store Connect Users" \
-          --app "shoogland/apps" \
+          --app "shoogland/Timmerdorp" \
           --file "build/Timmerdorp.ipa" \
           --release-notes "$(git log -1 --pretty=format:%s)" \
           --debug
