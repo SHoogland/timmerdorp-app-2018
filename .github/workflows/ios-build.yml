@@ -28,7 +28,7 @@ jobs:
       - name: ionic build ios
         run: |
           npm run iosdist
-          cordova platform prepare
+          cordova prepare
       - name: Setup provisioning profile
         run: ./.github/secrets/decrypt_secrets.sh
         env:
