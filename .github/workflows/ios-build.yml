@@ -15,4 +15,5 @@ jobs:
       - name: Select Xcode
         run: | 
           sudo xcode-select -switch /Applications/Xcode_11.3.1.app
+          xcode-select --print-path
           echo "fissa"
