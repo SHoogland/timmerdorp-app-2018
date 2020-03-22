@@ -28,18 +28,18 @@ jobs:
       - name: bundle install
         run: |
           bundle install
-      - name: ionic build ios
+      - name: ionic build and prepare ios
         run: |
           npm run iosdist
           cordova prepare ios
       - name: Fastlane disable codesigning
         run: |
-          fastlane ios signing
+          bundle exec fastlane ios signing
       - name: Setup provisioning profile
         run: ./.github/secrets/decrypt_secrets.sh
         env:
           IOS_PROFILE_KEY: ${{ secrets.IOS_PROFILE_KEY }}
-      - name: Build app
+      - name: Build app with xcode
         run: |
           xcodebuild archive \
           -workspace platforms/ios/Timmerdorp.xcworkspace \
