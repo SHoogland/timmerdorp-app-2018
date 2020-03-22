@@ -17,3 +17,12 @@ jobs:
           sudo xcode-select -switch /Applications/Xcode_11.3.1.app
           xcode-select --print-path
           echo "fissa"
+      - name: Use Node.js 12.x
+        uses: MatiseAms/setup-node@master
+        with:
+          node-version: 12.x
+      - name: npm install
+        run: |
+          npm ci
+          npm i -g ionic cordova
+          ionic cordova build ios
