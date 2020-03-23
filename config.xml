@@ -2,8 +2,8 @@
 <widget
     id="nl.matise.tdorpscanner"
     version="2.0.1"
-    android-versionCode="2011"
-    ios-CFBundleVersion="2011"
+    android-versionCode="BUILDNR"
+    ios-CFBundleVersion="BUILDNR"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cdv="http://cordova.apache.org/ns/1.0">

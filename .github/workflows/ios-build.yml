@@ -3,8 +3,9 @@ name: Build IOS
 on:
   push:
     branches:
+      - staging
       - develop
-      - 'dependabot/**'
+    #   - 'dependabot/**'
 
 jobs:
   build-ios:
@@ -28,6 +29,12 @@ jobs:
       - name: bundle install
         run: |
           bundle install
+      - name: Get and set build nr
+        uses: MatiseAms/node-module-action@master
+        with:
+          args: 'scripts/get-set-buildnr.mjs'
+        env:
+          APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
       - name: ionic build and prepare ios
         run: |
           npm run iosdist
