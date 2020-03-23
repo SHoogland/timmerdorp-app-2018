@@ -12,7 +12,8 @@
 		"ios": "ionic cordova run ios -l -c -s",
 		"ionic:build": "ionic-app-scripts build",
 		"ionic:serve": "ionic-app-scripts serve",
-		"iosdist": "ionic-app-scripts build --target cordova --platform ios --prod --release"
+		"iosdist": "ionic-app-scripts build --target cordova --platform ios",
+		"iosdistbetter": "ionic-app-scripts build --target cordova --platform ios --prod --release"
 	},
 	"dependencies": {
 		"@angular/animations": "^5",
@@ -62,14 +63,16 @@
 			"cordova-plugin-whitelist": {},
 			"cordova-plugin-device": {},
 			"cordova-plugin-splashscreen": {},
-			"cordova-plugin-ionic-webview": {},
 			"cordova-plugin-ionic-keyboard": {},
 			"phonegap-plugin-barcodescanner": {
 				"ANDROID_SUPPORT_V4_VERSION": "27.+"
 			},
 			"cordova-plugin-statusbar": {},
 			"cordova-plugin-app-version": {},
-			"cordova-plugin-inappbrowser": {}
+			"cordova-plugin-inappbrowser": {},
+			"cordova-plugin-ionic-webview": {
+				"ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+			}
 		},
 		"platforms": [
 			"android",
