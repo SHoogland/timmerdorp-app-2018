@@ -30,9 +30,8 @@ jobs:
         run: |
           bundle install
       - name: Get and set build nr
-        uses: MatiseAms/node-module-action@master
-        with:
-          args: 'scripts/get-set-buildnr.mjs'
+        run: |
+          node --experimental-modules scripts/get-set-buildnr.mjs
         env:
           APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
       - name: ionic build and prepare ios
