@@ -3,8 +3,7 @@ name: Build Android
 on:
   push:
     branches:
-      - develop
-      - 'dependabot/**'
+      - staging
 
 jobs:
   build-android:
