@@ -1,4 +1,4 @@
-name: Build Android
+name: Deploy Android
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - staging
 
 jobs:
-  build-android:
-    name: Build Android
+  deploy-android:
+    name: Deploy Android
     runs-on: macos-latest
     steps:
       - name: checkout

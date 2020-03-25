@@ -46,6 +46,7 @@
 		"ionic-angular": "3.9.9",
 		"ionicons": "^4.6.3",
 		"list": "2.0.19",
+		"parse": "^2.11.0",
 		"phonegap-plugin-barcodescanner": "^8.1.0",
 		"rxjs": "^6.5.4",
 		"rxjs-compat": "^6.5.4",

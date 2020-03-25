@@ -1,4 +1,4 @@
-name: Build IOS
+name: Deploy IOS
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - staging
 
 jobs:
-  build-ios:
-    name: Build IOS
+  deploy-ios:
+    name: Deploy IOS
     runs-on: macos-latest
     steps:
       - name: checkout
