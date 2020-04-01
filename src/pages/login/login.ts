@@ -46,11 +46,6 @@ export class LoginPage {
 	init() {
 		let parse = this.g.parse;
 		let user = parse.User.current()
-		if (user){
-			user.fetch().then(()=>{
-				this.toHome()
-			})
-		}
 
 		this.title = 'Login';
 		this.hideLogin = true;
@@ -81,13 +76,13 @@ export class LoginPage {
 
 	loginNow() {
 		let parse = this.g.parse;
-		parse.User.logIn(this.login.username, this.login.password).then((e)=>{
+		parse.User.logIn(this.login.username, this.login.password).then((e) => {
 			console.log(e, 'result')
 			this.toHome()
 		}).catch(e => {
 			this.error = e.message;
 			this.cd.detectChanges();
-		})
+		});
 	}
 
 	toHome() {

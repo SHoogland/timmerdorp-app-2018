@@ -82,10 +82,14 @@ export class HomePage {
 	async init() {
 		let parse = this.g.parse
 		let user = parse.User.current()
-		user.fetch().catch(()=>{
-			console.log('fsisa')
-			this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
-		})
+		if (user) {
+			user.fetch().catch(() => {
+				console.log('fissa')
+				this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+			})
+		} else {
+			this.toLogin();
+		}
 
 		this.showPhoto = false;
 		this.updates = [];
@@ -331,7 +335,9 @@ export class HomePage {
 			if (this.openedPage.component == 'ticketscanner') {
 				this.scanCode();
 			} else if (this.openedPage.component == 'weather') {
-				this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
+				if (!this.showPhoto) {
+					this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
+				}
 			} else {
 				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 			}
@@ -359,6 +365,10 @@ export class HomePage {
 		} else {
 			this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 		}
+	}
+
+	toLogin() {
+		this.navCtrl.setRoot(LoginPage, {}, this.g.backwardsNavigationSettings);
 	}
 
 	belStan() {
