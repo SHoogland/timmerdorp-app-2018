@@ -11,11 +11,8 @@ export class GlobalFunctions {
 	stagingEndpoint: string;
 	normalEndpoint: string;
 	parse: Parse;
-	backwardsNavigationSettings: { 
-		animate: true, 
-		animation: 'ios-transition', 
-		direction: 'back' 
-	}
+	backwardsNavigationSettings: any;
+
 
 	constructor(
 		public platform: Platform,
@@ -24,6 +21,12 @@ export class GlobalFunctions {
 	) {
 		this.stagingEndpoint = 'https://staging.timmerdorp.com/wp-json';
 		this.normalEndpoint = 'https://shop.timmerdorp.com/wp-json';
+
+		this.backwardsNavigationSettings = {
+			animate: true,
+			animation: 'ios-transition',
+			direction: 'back'
+		}
 
 		// init parse
 		this.parse = Parse;
