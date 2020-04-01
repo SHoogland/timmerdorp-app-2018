@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
-import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../home/home';
@@ -22,7 +21,6 @@ export class SearchPage {
 	tickets: any;
 	history: any;
 
-	staging: boolean;
 	loading: boolean;
 
 	searchTerm: string;
@@ -34,10 +32,6 @@ export class SearchPage {
 		showModal: boolean;
 		child: any;
 	}
-	login: {
-		username: string,
-		password: string
-	};
 
 	constructor(
 		public navCtrl: NavController,
@@ -63,12 +57,6 @@ export class SearchPage {
 	}
 
 	init() {
-		this.staging = false;
-
-		this.login = {
-			username: '',
-			password: ''
-		}
 		this.modal = {
 			child: null,
 			showModal: false
@@ -174,21 +162,6 @@ export class SearchPage {
 				this.history = this.g.filterHistory(this.history);
 			}, (error) => {
 				this.history = [];
-			}),
-			this.storage.get('username').then((val) => {
-				this.login.username = val;
-			}, (error) => {
-				this.login.username = '';
-			}),
-			this.storage.get('password').then((val) => {
-				this.login.password = val;
-			}, (error) => {
-				this.login.password = '';
-			}),
-			this.storage.get('staging').then((val) => {
-				this.staging = val;
-			}, (error) => {
-				this.staging = false;
 			})
 		]).then(() => {
 			let self = this;
@@ -225,41 +198,41 @@ export class SearchPage {
 		}
 		self.loading = true;
 		console.log('searching: ' + this.searchTerm);
-		var wp = this.g.getWpApi(this.login, this.staging, 'search');
-		wp.handler().param('search', this.searchTerm).then((result) => {
-			console.log(result);
-			self.loading = false;
-			if (result.code === 200) {
-				if (!isNaN(+self.searchTerm)) { //if the search term is a number
-					result.tickets.sort(function (a, b) {
-						if ((a.meta.wristband || [])[0] == self.searchTerm) {
-							return -1;
-						}
-						return 1;
-					}); //give priority to wristbands over hut numbers
-				}
-				self.tickets = result.tickets;
-				if (self.tickets.length === 0) {
-					self.error = 'Geen resultaten';
-					self.errorHelp = 'Je kunt zoeken op hutnummer, polsbandje of voor- of achternaam.';
-				}
-			} else {
-				if (result.message == 'access denied') {
-					self.error = 'Niet ingelogd';
-					self.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
-				} else {
-					self.error = result.message;
-				}
-			}
-		}).catch((error) => {
-			self.loading = false;
-			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				self.error = 'Inloggegevens onjuist';
-				self.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
-			} else {
-				self.error = error.message;
-			}
-		});
+		// var wp = this.g.getWpApi(this.login, this.staging, 'search');
+		// wp.handler().param('search', this.searchTerm).then((result) => {
+		// 	console.log(result);
+		// 	self.loading = false;
+		// 	if (result.code === 200) {
+		// 		if (!isNaN(+self.searchTerm)) { //if the search term is a number
+		// 			result.tickets.sort(function (a, b) {
+		// 				if ((a.meta.wristband || [])[0] == self.searchTerm) {
+		// 					return -1;
+		// 				}
+		// 				return 1;
+		// 			}); //give priority to wristbands over hut numbers
+		// 		}
+		// 		self.tickets = result.tickets;
+		// 		if (self.tickets.length === 0) {
+		// 			self.error = 'Geen resultaten';
+		// 			self.errorHelp = 'Je kunt zoeken op hutnummer, polsbandje of voor- of achternaam.';
+		// 		}
+		// 	} else {
+		// 		if (result.message == 'access denied') {
+		// 			self.error = 'Niet ingelogd';
+		// 			self.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
+		// 		} else {
+		// 			self.error = result.message;
+		// 		}
+		// 	}
+		// }).catch((error) => {
+		// 	self.loading = false;
+		// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
+		// 		self.error = 'Inloggegevens onjuist';
+		// 		self.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
+		// 	} else {
+		// 		self.error = error.message;
+		// 	}
+		// });
 	}
 
 	showModal(child) {
@@ -295,10 +268,10 @@ export class SearchPage {
 			let self = this;
 			this.closeModal();
 			setTimeout(function () {
-				self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+				self.navCtrl.setRoot(HomePage, {}, self.g.backwardsNavigationSettings);
 			}, 400);
 		} else {
-			this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+			this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
 		}
 	}
 }

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Platform, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import * as WPAPI from 'wpapi';
+
 import { HomePage } from '../home/home';
-import { LoginPage } from '../login/login';
 import { GlobalFunctions } from '../../providers/global';
 
 declare let cordova: any;
@@ -15,7 +14,6 @@ declare let cordova: any;
 export class ScanTicketPage {
 	wristBandError: boolean;
 	loading: boolean;
-	staging: boolean;
 
 	oldNumber: string;
 	errorHelp: string;
@@ -25,10 +23,7 @@ export class ScanTicketPage {
 	modal: {
 		showModal: boolean;
 	}
-	login: {
-		username: string,
-		password: string
-	};
+
 	ticket: {
 		barcode: string;
 		firstName: string,
@@ -60,11 +55,6 @@ export class ScanTicketPage {
 	}
 
 	init() {
-		this.staging = false;
-		this.login = {
-			username: '',
-			password: ''
-		}
 		this.ticket = {
 			barcode: '',
 			firstName: '',
@@ -87,109 +77,94 @@ export class ScanTicketPage {
 
 		this.init();
 
-		Promise.all([
-			this.storage.get('username').then((val) => {
-				this.login.username = val;
-			}, (error) => {
-				this.login.username = '';
-			}),
-			this.storage.get('password').then((val) => {
-				this.login.password = val;
-			}, (error) => {
-				this.login.password = '';
-			}),
-			this.storage.get('staging').then((val) => {
-				this.staging = !!val;
-			}, (error) => {
-				this.staging = false;
-			})
-		]).then(() => {
-			var wp = this.g.getWpApi(this.login, this.staging, 'barcode');
-			return wp.handler().param('barcode', this.navParams.get('barcode'));
-		}).then((result) => {
-			self.loading = false;
-			if (result.code === 200) {
-				self.ticket.barcode = (result.meta.WooCommerceEventsTicketID || [])[0];
-				self.ticket.firstName = (result.meta.WooCommerceEventsAttendeeName || [])[0];
-				self.ticket.lastName = (result.meta.WooCommerceEventsAttendeeLastName || [])[0];
-				self.ticket.birthDate = (result.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'] || [])[0];
+		// Promise.all([
+		// ]).then(() => {
+		// 	var wp = this.g.getWpApi(this.login, this.staging, 'barcode');
+		// 	return wp.handler().param('barcode', this.navParams.get('barcode'));
+		// }).then((result) => {
+		// 	self.loading = false;
+		// 	if (result.code === 200) {
+		// 		self.ticket.barcode = (result.meta.WooCommerceEventsTicketID || [])[0];
+		// 		self.ticket.firstName = (result.meta.WooCommerceEventsAttendeeName || [])[0];
+		// 		self.ticket.lastName = (result.meta.WooCommerceEventsAttendeeLastName || [])[0];
+		// 		self.ticket.birthDate = (result.meta['fooevents_custom_geboortedatum_(dd-mm-jjjj)'] || [])[0];
 
-				if (result.meta.hutnr) self.ticket.hutNr = result.meta.hutnr;
+		// 		if (result.meta.hutnr) self.ticket.hutNr = result.meta.hutnr;
 
-				if (result.meta.wristband) {
-					self.ticket.wristBandNr = (result.meta.wristband || [])[0];
-					self.oldNumber = self.ticket.wristBandNr;
-					self.showModal();
-				}
-			} else {
-				if (result.message == 'access denied') {
-					this.error = 'Niet ingelogd';
-					this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
-				} else {
-					if (result.message == 'no ticket found') {
-						self.error = 'Niets gevonden!';
-						self.errorHelp = 'Probeer het ticket opnieuw te scannen.';
-					} else if (result.message == 'no barcode provided') {
-						self.error = 'Niets gescand!';
-						self.errorHelp = 'Probeer het ticket opnieuw te scannen in direct zonlicht.';
-					} else {
-						self.error = result.message;
-					}
-				}
-			}
-		}).catch((error) => {
-			self.loading = false;
-			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				this.error = 'Inloggegevens onjuist';
-				this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
-			} else {
-				self.error = error.message;
-			}
-		});
+		// 		if (result.meta.wristband) {
+		// 			self.ticket.wristBandNr = (result.meta.wristband || [])[0];
+		// 			self.oldNumber = self.ticket.wristBandNr;
+		// 			self.showModal();
+		// 		}
+		// 	} else {
+		// 		if (result.message == 'access denied') {
+		// 			this.error = 'Niet ingelogd';
+		// 			this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
+		// 		} else {
+		// 			if (result.message == 'no ticket found') {
+		// 				self.error = 'Niets gevonden!';
+		// 				self.errorHelp = 'Probeer het ticket opnieuw te scannen.';
+		// 			} else if (result.message == 'no barcode provided') {
+		// 				self.error = 'Niets gescand!';
+		// 				self.errorHelp = 'Probeer het ticket opnieuw te scannen in direct zonlicht.';
+		// 			} else {
+		// 				self.error = result.message;
+		// 			}
+		// 		}
+		// 	}
+		// }).catch((error) => {
+		// 	self.loading = false;
+		// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
+		// 		this.error = 'Inloggegevens onjuist';
+		// 		this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="toLogin()">hier</a>.';
+		// 	} else {
+		// 		self.error = error.message;
+		// 	}
+		// });
 	}
 
 	saveTicket() {
 		let self = this;
 		self.loading = true;
 
-		var wp = this.g.getWpApi(this.login, this.staging, 'add-wristband');
-		wp
-			.handler()
-			.param('barcode', this.navParams.get('barcode'))
-			.param('wristband', this.ticket.wristBandNr)
-			.then((result) => {
-				console.log(result);
-				if (result.code === 200) {
-					self.storage.get('editHistory').then((val) => {
-						let editHis = val || [];
-						let t = self.ticket;
-						editHis.unshift({
-							name: t.firstName + " " + t.lastName,
-							oldNr: self.oldNumber || "onbekend",
-							newNr: t.wristBandNr,
-							wijk: self.g.getColor(t.hutNr)
-						});
-						console.log(editHis);
+		// var wp = this.g.getWpApi(this.login, this.staging, 'add-wristband');
+		// wp
+		// 	.handler()
+		// 	.param('barcode', this.navParams.get('barcode'))
+		// 	.param('wristband', this.ticket.wristBandNr)
+		// 	.then((result) => {
+		// 		console.log(result);
+		// 		if (result.code === 200) {
+		// 			self.storage.get('editHistory').then((val) => {
+		// 				let editHis = val || [];
+		// 				let t = self.ticket;
+		// 				editHis.unshift({
+		// 					name: t.firstName + " " + t.lastName,
+		// 					oldNr: self.oldNumber || "onbekend",
+		// 					newNr: t.wristBandNr,
+		// 					wijk: self.g.getColor(t.hutNr)
+		// 				});
+		// 				console.log(editHis);
 
-						self.storage.set("editHistory", editHis);
+		// 				self.storage.set("editHistory", editHis);
 
-					});
+		// 			});
 
-					self.goHome();
-				} else {
-					if (result.message == 'wristband already exists') {
-						self.error = 'Polsbandje bestaat al';
-						self.errorHelp = 'Ieder polsbandnummer mag maar één keer voorkomen.';
-					} else {
-						self.error = result.message;
-					}
-					console.log(result.message);
-					self.loading = false;
-				}
-			}).catch((error) => {
-				alert(error);
-				self.loading = false;
-			});
+		// 			self.goHome();
+		// 		} else {
+		// 			if (result.message == 'wristband already exists') {
+		// 				self.error = 'Polsbandje bestaat al';
+		// 				self.errorHelp = 'Ieder polsbandnummer mag maar één keer voorkomen.';
+		// 			} else {
+		// 				self.error = result.message;
+		// 			}
+		// 			console.log(result.message);
+		// 			self.loading = false;
+		// 		}
+		// 	}).catch((error) => {
+		// 		alert(error);
+		// 		self.loading = false;
+		// 	});
 	}
 
 	closeModal() {
@@ -209,10 +184,10 @@ export class ScanTicketPage {
 			let self = this;
 			this.modal.showModal = false;
 			setTimeout(function () {
-				self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+				self.navCtrl.setRoot(HomePage, {}, self.g.backwardsNavigationSettings);
 			}, 200);
 		} else {
-			this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+			this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
 		}
 	}
 }

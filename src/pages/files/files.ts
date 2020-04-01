@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
 import { HttpClient } from '@angular/common/http';
-import { GlobalFunctions } from '../../providers/global';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
+import { GlobalFunctions } from '../../providers/global';
+import { HomePage } from '../home/home';
 
 @Component({
 	selector: 'files',
@@ -82,5 +82,9 @@ export class FilesPage {
 
 	ionViewDidLoad() {
 		this.init();
+	}
+
+	goHome(){
+		this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
 	}
 }

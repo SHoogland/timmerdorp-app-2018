@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Content } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-import { GlobalFunctions } from '../../providers/global';
 import { Storage } from '@ionic/storage';
 
+import { GlobalFunctions } from '../../providers/global';
+import { HomePage } from '../home/home';
 
 @Component({
 	selector: 'page-schedule',
@@ -59,5 +60,9 @@ export class SchedulePage {
 
 	ionViewDidLoad() {
 		this.init();
+	}
+
+	goHome(){
+		this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
 	}
 }

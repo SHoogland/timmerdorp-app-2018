@@ -13,8 +13,6 @@ declare let cordova: any;
 	templateUrl: 'app-info.html'
 })
 export class AppInfoPage {
-	staging: boolean;
-
 	version: string;
 	error: string;
 	title: string;
@@ -33,7 +31,6 @@ export class AppInfoPage {
 
 	init() {
 		this.title = 'App info';
-		this.staging = false;
 
 		this.storage.get('wijk').then((val) => {
 			this.wijk = val;
@@ -104,11 +101,6 @@ export class AppInfoPage {
 	}
 
 	ionViewDidLoad() {
-		this.storage.get('staging').then((val) => {
-			this.staging = val;
-		}, () => {
-			this.staging = false;
-		});
 		this.init();
 	}
 }

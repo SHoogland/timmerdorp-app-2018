@@ -1,9 +1,8 @@
-import { Injectable, Inject, forwardRef } from '@angular/core';
-import { Platform, App } from 'ionic-angular';
+import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
-import { HomePage } from '../pages/home/home';
+import Parse from 'parse';
 
 declare let cordova: any;
 
@@ -11,27 +10,25 @@ declare let cordova: any;
 export class GlobalFunctions {
 	stagingEndpoint: string;
 	normalEndpoint: string;
-	login: {
-		username: string;
-		password: string;
+	parse: Parse;
+	backwardsNavigationSettings: { 
+		animate: true, 
+		animation: 'ios-transition', 
+		direction: 'back' 
 	}
-
-	loginPage: any;
 
 	constructor(
 		public platform: Platform,
 		public storage: Storage,
-		public statusBar: StatusBar,
-		public app: App,
+		public statusBar: StatusBar
 	) {
-		this.loginPage = require('../pages/login/login').LoginPage;
-		this.login = {
-			username: '',
-			password: ''
-		}
-
 		this.stagingEndpoint = 'https://staging.timmerdorp.com/wp-json';
 		this.normalEndpoint = 'https://shop.timmerdorp.com/wp-json';
+
+		// init parse
+		this.parse = Parse;
+		this.parse.serverURL = 'https://api.timmerdorp.com/1/'
+		this.parse.initialize('knDC2JAquVJZ1jSPwARj53IhQCfpOPIDNKcgRMsD', 'xnFIbFCrE1vjzWbRVehMO4QzPpNMCIdDgORKNlRI')
 	}
 
 	setStatusBar(c) {
@@ -55,30 +52,9 @@ export class GlobalFunctions {
 		}
 	}
 
-
 	//geplukt van het internet
 	darkenColour(color, amount) {
 		return '#' + color.replace(/^#/, '').replace(/../g, color => ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
-	}
-
-	goHome() {
-		let nav = this.app.getActiveNav();
-		nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-	}
-
-	toLogin() {
-		let nav = this.app.getActiveNav();
-		nav.setRoot(this.loginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
-	}
-
-	getWpApi(login, staging, route) {
-		var wp = new WPAPI({
-			endpoint: staging ? this.stagingEndpoint : this.normalEndpoint,
-			username: login.username,
-			password: login.password
-		});
-		wp.handler = wp.registerRoute('tickets', route, {});
-		return wp;
 	}
 
 	getWijkName(kleur) {
