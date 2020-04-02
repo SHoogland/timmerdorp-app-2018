@@ -38,7 +38,7 @@ export class FilesPage {
 		let self = this;
 		this.loading = true;
 		this.httpClient
-			.get("https://api.flickr.com/services/rest?method=flickr.photosets.getList&user_id=53061083@N07&api_key=a658fee478c0fa8a0744191ca017bfd0&format=json&nojsoncallback=1&primary_photo_extras=url_m")
+			.get("https://api.timmerdorp.com/flickr?addHeader=1")
 			.subscribe((data: any) => {
 				self.loading = false;
 				self.allAlbums = data.photosets.photoset;
@@ -84,7 +84,7 @@ export class FilesPage {
 		this.init();
 	}
 
-	goHome(){
+	goHome() {
 		this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
 	}
 }
