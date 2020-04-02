@@ -35,20 +35,6 @@ export class PresencePage {
 		public g: GlobalFunctions
 	) {
 		this.title = 'Aanwezigheid';
-		if (this.platform.is('cordova')) {
-			if (cordova.platformId === 'android') {
-				this.platform.registerBackButtonAction(() => {
-					if (this.modalShown) {
-						this.modalShown = false;
-					} else {
-						this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
-					}
-				});
-			}
-		}
-	}
-
-	init() {
 		switch (new Date().getDay()) {
 			case 2:
 				this.day = "tue";
@@ -87,17 +73,24 @@ export class PresencePage {
 			})
 		]).then(() => {
 		});
-	}
 
+		if (this.platform.is('cordova')) {
+			if (cordova.platformId === 'android') {
+				this.platform.registerBackButtonAction(() => {
+					if (this.modalShown) {
+						this.modalShown = false;
+					} else {
+						this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
+					}
+				});
+			}
+		}
+	}
 	getDayName(d) {
 		if (d === 'tue') return "Dinsdag"
 		if (d === 'wed') return "Woensdag"
 		if (d === 'thu') return "Donderdag"
 		if (d === 'fri') return "Vrijdag"
-	}
-
-	ionViewDidLoad() {
-		this.init();
 	}
 
 	hideKeyboard() {

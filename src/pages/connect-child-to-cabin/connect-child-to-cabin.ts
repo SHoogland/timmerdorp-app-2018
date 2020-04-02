@@ -61,22 +61,6 @@ export class ConnectChildToCabinPage {
 		private cd: ChangeDetectorRef,
 		public g: GlobalFunctions
 	) {
-		if (this.platform.is('cordova') && cordova.platformId === 'android') {
-			this.platform.registerBackButtonAction(() => {
-				if (this.addModal.show) {
-					this.addModal.show = false;
-				} else if (this.removeModal.show) {
-					this.removeModal.show = false;
-				} else if (this.warningModal.show) {
-					this.warningModal.show = false;
-				} else {
-					this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
-				}
-			});
-		}
-	}
-
-	init() {
 		this.title = 'Beheer Hutjes';
 		this.isTue = (new Date().getDay() == 2);
 
@@ -108,7 +92,22 @@ export class ConnectChildToCabinPage {
 
 		this.hutTickets = [];
 		this.tickets = [];
+		if (this.platform.is('cordova') && cordova.platformId === 'android') {
+			this.platform.registerBackButtonAction(() => {
+				if (this.addModal.show) {
+					this.addModal.show = false;
+				} else if (this.removeModal.show) {
+					this.removeModal.show = false;
+				} else if (this.warningModal.show) {
+					this.warningModal.show = false;
+				} else {
+					this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
+				}
+			});
+		}
+	}
 
+	init() {
 		setInterval(function () {
 			console.log((this.removeModal || {}).show); //hierdoor werkt de removeModal (ionic gedoe)
 		}, 250);
@@ -463,7 +462,7 @@ export class ConnectChildToCabinPage {
 		}, 400);
 	}
 
-	goHome(){
+	goHome() {
 		this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
 	}
 }

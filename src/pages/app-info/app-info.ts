@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Storage } from '@ionic/storage';
 import { GlobalFunctions } from '../../providers/global';
+import { HomePage } from '../home/home';
 
 declare let cordova: any;
 
@@ -102,5 +103,9 @@ export class AppInfoPage {
 
 	ionViewDidLoad() {
 		this.init();
+	}
+
+	goHome() {
+		this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
 	}
 }

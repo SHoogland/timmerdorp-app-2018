@@ -172,4 +172,8 @@ export class ChangeWristbandPage {
 		// 	this.loading = false;
 		// });
 	}
+
+	goHome() {
+		this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
+	}
 }

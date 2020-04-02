@@ -41,20 +41,6 @@ export class ScanTicketPage {
 		public g: GlobalFunctions
 	) {
 		this.title = 'Gegevens Ticket';
-		if (this.platform.is('cordova')) {
-			if (cordova.platformId === 'android') {
-				this.platform.registerBackButtonAction(() => {
-					if (this.modal.showModal) {
-						this.modal.showModal = false;
-					} else {
-						this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-					}
-				});
-			}
-		}
-	}
-
-	init() {
 		this.ticket = {
 			barcode: '',
 			firstName: '',
@@ -70,12 +56,21 @@ export class ScanTicketPage {
 			showModal: false
 		}
 		this.wristBandError = false;
+		if (this.platform.is('cordova')) {
+			if (cordova.platformId === 'android') {
+				this.platform.registerBackButtonAction(() => {
+					if (this.modal.showModal) {
+						this.modal.showModal = false;
+					} else {
+						this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+					}
+				});
+			}
+		}
 	}
 
 	ionViewDidLoad() {
 		let self = this;
-
-		this.init();
 
 		// Promise.all([
 		// ]).then(() => {
