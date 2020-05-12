@@ -50,7 +50,7 @@ jobs:
           -workspace platforms/ios/Timmerdorp.xcworkspace \
           -scheme Timmerdorp \
           -configuration Release \
-          -sdk iphoneos13.2 \
+          -sdk iphoneos13.4 \
           -archivePath build/timmerdorp.xcarchive \
           IPHONEOS_DEPLOYMENT_TARGET=9.0 \
           PROVISIONING_PROFILE="08f2d52a-739c-4306-85f1-75648948361c" \
