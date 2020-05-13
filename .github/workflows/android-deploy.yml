@@ -16,13 +16,12 @@ jobs:
         uses: MatiseAms/setup-node@master
         with:
           node-version: 12.x
-      - name: npm install
-        run: |
-          npm ci
-          npm i -g @ionic/cli cordova
+      - name: npm ci
+        run: npm ci
+      - name: npm install ionic and cordova cli
+        run: npm i -g @ionic/cli cordova
       - name: Get and set build nr
-        run: |
-          node --experimental-modules scripts/get-set-buildnr.mjs
+        run: node --experimental-modules scripts/get-set-buildnr.mjs
         env:
           APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
       - name: ionic build android

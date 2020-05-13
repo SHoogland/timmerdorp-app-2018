@@ -12,24 +12,21 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
-      - name: Xcode version
-        run: | 
-          /usr/bin/xcodebuild -version
+        run: /usr/bin/xcodebuild -version
       - name: Use Node.js 12.x
         uses: MatiseAms/setup-node@master
         with:
           node-version: 12.x
-      - name: npm install
-        run: |
-          npm ci
-          npm i -g @ionic/cli cordova
-          cordova telemetry on
+      - name: npm ci
+        run: npm ci
+      - name: npm install ionic and cordova cli
+        run: npm i -g @ionic/cli cordova
+      - name: turn on cordova telemetry
+        run: cordova telemetry on
       - name: bundle install
-        run: |
-          bundle install
+        run: bundle install
       - name: Get and set build nr
-        run: |
-          node --experimental-modules scripts/get-set-buildnr.mjs
+        run: node --experimental-modules scripts/get-set-buildnr.mjs
         env:
           APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
       - name: ionic build and prepare ios
@@ -37,8 +34,7 @@ jobs:
           npm run iosdist
           cordova prepare ios
       - name: Fastlane disable codesigning
-        run: |
-          bundle exec fastlane ios signing
+        run: bundle exec fastlane ios signing
       - name: Setup provisioning profile
         run: ./.github/secrets/decrypt_secrets.sh
         env:
