@@ -19,7 +19,7 @@ jobs:
       - name: npm install
         run: |
           npm ci
-          npm i -g ionic cordova
+          npm i -g @ionic/cli cordova
       - name: Get and set build nr
         run: |
           node --experimental-modules scripts/get-set-buildnr.mjs
