@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import * as WPAPI from 'wpapi';
 
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
-import { LoginPage } from '../login/login';
 import { GlobalFunctions } from '../../providers/global';
 
 @Component({
@@ -140,31 +138,31 @@ export class WijkPage {
 	updateData() {
 		this.loading = true;
 		console.log(this.wijk);
-		var wp = this.g.getWpApi(this.login, this.staging, 'stats');
-		wp.handler().then((result) => {
-			console.log(result);
-			if (result.code === 200) {
-				this.loading = false;
-				this.statistieken = result;
-				console.log(result.quarters[this.wijk])
-				this.wijkstats = result.quarters[this.wijk];
+		// var wp = this.g.getWpApi(this.login, this.staging, 'stats');
+		// wp.handler().then((result) => {
+		// 	console.log(result);
+		// 	if (result.code === 200) {
+		// 		this.loading = false;
+		// 		this.statistieken = result;
+		// 		console.log(result.quarters[this.wijk])
+		// 		this.wijkstats = result.quarters[this.wijk];
 
-			} else {
-				if (result.message == 'access denied') {
-					this.notLoggedIn = true;
-				} else {
-					this.error = result.message;
-					this.loading = false;
-				}
-			}
-		}).catch((error) => {
-			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				this.loginError = true;
-			} else {
-				this.error = error.message;
-			}
-			this.loading = false;
-		});
+		// 	} else {
+		// 		if (result.message == 'access denied') {
+		// 			this.notLoggedIn = true;
+		// 		} else {
+		// 			this.error = result.message;
+		// 			this.loading = false;
+		// 		}
+		// 	}
+		// }).catch((error) => {
+		// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
+		// 		this.loginError = true;
+		// 	} else {
+		// 		this.error = error.message;
+		// 	}
+		// 	this.loading = false;
+		// });
 	}
 
 	kiesWijk(kleur) {
@@ -184,5 +182,9 @@ export class WijkPage {
 			this.showSelection = true;
 			this.wijk = undefined;
 		});
+	}
+
+	goHome(){
+		this.navCtrl.setRoot(HomePage, {}, this.g.backwardsNavigationSettings);
 	}
 }

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
-import * as WPAPI from 'wpapi';
-
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
@@ -81,7 +79,18 @@ export class HomePage {
 		}
 	}
 
-	init() {
+	async init() {
+		let parse = this.g.parse
+		let user = parse.User.current()
+		if (user) {
+			user.fetch().catch(() => {
+				console.log('fissa')
+				this.navCtrl.setRoot(LoginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+			})
+		} else {
+			this.toLogin();
+		}
+
 		this.showPhoto = false;
 		this.updates = [];
 		this.readablePageList = {
@@ -145,15 +154,15 @@ export class HomePage {
 				yellow: "geel"
 			}
 
-			var wp = this.g.getWpApi(this.login, this.staging, 'stats');
-			wp.handler().then((result) => {
-				console.log(result);
-				if (result.code === 200) {
-					let prop = 'present' + ['Tue', 'Wed', 'Thu', 'Fri'][new Date().getDay() - 2];
-					this.wijkCount = result.quarters[this.wijk][prop] || 0;
-					this.childrenCount = result[prop] || 0;
-				}
-			});
+			// var wp = this.g.getWpApi(this.login, this.staging, 'stats');
+			// wp.handler().then((result) => {
+			// 	console.log(result);
+			// 	if (result.code === 200) {
+			// 		let prop = 'present' + ['Tue', 'Wed', 'Thu', 'Fri'][new Date().getDay() - 2];
+			// 		this.wijkCount = result.quarters[this.wijk][prop] || 0;
+			// 		this.childrenCount = result[prop] || 0;
+			// 	}
+			// });
 
 			console.log(this.wijk);
 
@@ -326,7 +335,9 @@ export class HomePage {
 			if (this.openedPage.component == 'ticketscanner') {
 				this.scanCode();
 			} else if (this.openedPage.component == 'weather') {
-				this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
+				if (!this.showPhoto) {
+					this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
+				}
 			} else {
 				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 			}
@@ -354,6 +365,10 @@ export class HomePage {
 		} else {
 			this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 		}
+	}
+
+	toLogin() {
+		this.navCtrl.setRoot(LoginPage, {}, this.g.backwardsNavigationSettings);
 	}
 
 	belStan() {
