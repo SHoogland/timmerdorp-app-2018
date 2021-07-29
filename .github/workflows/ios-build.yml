@@ -44,8 +44,8 @@ jobs:
       - name: Build app with xcode
         run: |
           xcodebuild archive \
-          -workspace platforms/ios/Timmerdorp.xcworkspace \
-          -scheme Timmerdorp \
+          -workspace platforms/ios/Timmerdorp Heiloo.xcworkspace \
+          -scheme Timmerdorp Heiloo \
           -configuration Release \
           -sdk iphoneos \
           -archivePath build/timmerdorp.xcarchive \

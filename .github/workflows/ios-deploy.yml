@@ -43,14 +43,14 @@ jobs:
       - name: Build app with xcode
         run: |
           xcodebuild archive \
-          -workspace platforms/ios/Timmerdorp.xcworkspace \
-          -scheme Timmerdorp \
+          -workspace platforms/ios/Timmerdorp Heiloo.xcworkspace \
+          -scheme Timmerdorp Heiloo \
           -configuration Release \
           -sdk iphoneos \
           -archivePath build/timmerdorp.xcarchive \
           IPHONEOS_DEPLOYMENT_TARGET=9.0 \
-          PROVISIONING_PROFILE="08f2d52a-739c-4306-85f1-75648948361c" \
-          CODE_SIGN_IDENTITY="iPhone Distribution: Matise B.V. (JEY37JY7YK)" 
+          PROVISIONING_PROFILE="b163358d-aa07-46b0-a57a-be2b2724d55e" \
+          CODE_SIGN_IDENTITY="Apple Distribution: Stephan Hoogland (85F3ZNA6NH)" 
       - name: Export app
         run: |
           xcodebuild \

@@ -7,7 +7,7 @@
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Timmerdorp</name>
+    <name>Timmerdorp Heiloo</name>
     <description>Scan tickets with your phone.</description>
     <author email="stanvanbaarsen@hotmail.com" href="https://timmerdorp.com/">Stephan Hoogland en Stan van Baarsen</author>
     <content src="index.html" />
