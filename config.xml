@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget
-    id="nl.matise.tdorpscanner"
-    version="2.0.1"
+    id="com.shoogland.timmerdorp"
+    version="2.0.2"
     android-versionCode="BUILDNR"
     ios-CFBundleVersion="BUILDNR"
     xmlns="http://www.w3.org/ns/widgets"

@@ -5,7 +5,7 @@ gpg --quiet --batch --yes --decrypt --passphrase="$IOS_PROFILE_KEY" --output ./.
 
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 
-cp ./.github/secrets/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/08f2d52a-739c-4306-85f1-75648948361c.mobileprovision
+cp ./.github/secrets/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/b163358d-aa07-46b0-a57a-be2b2724d55e.mobileprovision
 
 security create-keychain -p "" build.keychain
 security import ./.github/secrets/Certificates.p12 -t agg -k ~/Library/Keychains/build.keychain -P "timmerdorp" -A
