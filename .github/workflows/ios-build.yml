@@ -19,45 +19,47 @@ jobs:
         uses: MatiseAms/setup-node@master
         with:
           node-version: 12.x
-      - name: npm ci
-        run: npm ci
-      - name: npm install ionic and cordova cli
-        run: npm i -g @ionic/cli cordova
-      - name: turn on cordova telemetry
-        run: cordova telemetry on
-      - name: bundle install
-        run: bundle install
-      - name: Get and set build nr
-        run: node --experimental-modules scripts/get-set-buildnr.mjs
-        env:
-          APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
-      - name: ionic build and prepare ios
-        run: |
-          npm run iosdist
-          cordova prepare ios
-      - name: Fastlane disable codesigning
-        run: bundle exec fastlane ios signing
+      # - name: npm ci
+      #   run: npm ci
+      # - name: npm install ionic and cordova cli
+      #   run: npm i -g @ionic/cli cordova
+      # - name: turn on cordova telemetry
+      #   run: cordova telemetry on
+      # - name: bundle install
+      #   run: bundle install
+      # - name: Get and set build nr
+      #   run: node --experimental-modules scripts/get-set-buildnr.mjs
+      #   env:
+      #     APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
+      # - name: ionic build and prepare ios
+      #   run: |
+      #     npm run iosdist
+      #     cordova prepare ios
+      # - name: Fastlane disable codesigning
+      #   run: bundle exec fastlane ios signing
       - name: Setup provisioning profile
-        run: ./.github/secrets/decrypt_secrets.sh
+        run: |
+          ./.github/secrets/decrypt_secrets.sh
+          security find-certificate -a ~/Library/Keychains/build.keychain
         env:
           IOS_PROFILE_KEY: ${{ secrets.IOS_PROFILE_KEY }}
-      - name: Build app with xcode
-        run: |
-          xcodebuild archive \
-          -workspace platforms/ios/Timmerdorp.xcworkspace \
-          -scheme Timmerdorp \
-          -configuration Release \
-          -sdk iphoneos \
-          -archivePath build/timmerdorp.xcarchive \
-          IPHONEOS_DEPLOYMENT_TARGET=9.0 \
-          DEVELOPMENT_TEAM=85F3ZNA6NH \
-          PROVISIONING_PROFILE_SPECIFIER=TimmerdorpHeilooProvisioningProfile \
-          PROVISIONING_PROFILE="669bb247-de28-4106-b672-e93d69e03673" \
-          CODE_SIGN_IDENTITY="Apple Distribution: Stephan Hoogland (85F3ZNA6NH)" 
-      - name: Export app
-        run: |
-          xcodebuild \
-          -exportArchive \
-          -archivePath build/timmerdorp.xcarchive \
-          -exportOptionsPlist exportOptions.plist \
-          -exportPath build
+      # - name: Build app with xcode
+      #   run: |
+      #     xcodebuild archive \
+      #     -workspace platforms/ios/Timmerdorp.xcworkspace \
+      #     -scheme Timmerdorp \
+      #     -configuration Release \
+      #     -sdk iphoneos \
+      #     -archivePath build/timmerdorp.xcarchive \
+      #     IPHONEOS_DEPLOYMENT_TARGET=9.0 \
+      #     DEVELOPMENT_TEAM=85F3ZNA6NH \
+      #     PROVISIONING_PROFILE_SPECIFIER=TimmerdorpHeilooProvisioningProfile \
+      #     PROVISIONING_PROFILE="669bb247-de28-4106-b672-e93d69e03673" \
+      #     CODE_SIGN_IDENTITY="Apple Distribution: Stephan Hoogland (85F3ZNA6NH)" 
+      # - name: Export app
+      #   run: |
+      #     xcodebuild \
+      #     -exportArchive \
+      #     -archivePath build/timmerdorp.xcarchive \
+      #     -exportOptionsPlist exportOptions.plist \
+      #     -exportPath build
