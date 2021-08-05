@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
-import * as WPAPI from 'wpapi';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
@@ -145,15 +144,15 @@ export class HomePage {
 				yellow: "geel"
 			}
 
-			var wp = this.g.getWpApi(this.login, this.staging, 'stats');
-			wp.handler().then((result) => {
-				console.log(result);
-				if (result.code === 200) {
-					let prop = 'present' + ['Tue', 'Wed', 'Thu', 'Fri'][new Date().getDay() - 2];
-					this.wijkCount = result.quarters[this.wijk][prop] || 0;
-					this.childrenCount = result[prop] || 0;
-				}
-			});
+			// var wp = this.g.getWpApi(this.login, this.staging, 'stats');
+			// wp.handler().then((result) => {
+			// 	console.log(result);
+			// 	if (result.code === 200) {
+			// 		let prop = 'present' + ['Tue', 'Wed', 'Thu', 'Fri'][new Date().getDay() - 2];
+			// 		this.wijkCount = result.quarters[this.wijk][prop] || 0;
+			// 		this.childrenCount = result[prop] || 0;
+			// 	}
+			// });
 
 			console.log(this.wijk);
 

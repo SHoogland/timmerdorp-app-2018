@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
-import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../home/home';
@@ -17,6 +16,7 @@ declare let cordova: any;
 })
 export class SearchPage {
 	tableCategories: any;
+	ticketPropertiesMap: any;
 	typingTimer: any;
 	timeOut: any;
 	tickets: any;
@@ -81,87 +81,21 @@ export class SearchPage {
 		this.error = '';
 		this.errorHelp = '';
 
+    this.ticketPropertiesMap = [];
+
 		this.tableCategories = [
 			{
 				name: "Gegevens huisarts",
-				items: [
-					{
-						title: "Naam huisarts",
-						name: "fooevents_custom_naam_huisarts"
-					},
-					{
-						title: "Tel. huisarts",
-						name: "fooevents_custom_telefoonnr_huisarts",
-						tel: true
-					}
-				]
+				props: ["naam_huisarts", "tel_huisarts"]
 			},
 			{
 				name: "Contactgegevens ouders",
-				items: [
-					{
-						title: "Tel. ouder 1",
-						name: "fooevents_custom_telefoonnr_ouders",
-						tel: true
-					},
-					{
-						title: "Tel. ouder 2",
-						name: "fooevents_custom_telefoonnr_ouders_(2)",
-						tel: true
-					},
-					{
-						title: "E-mailadres",
-						name: "WooCommerceEventsPurchaserEmail",
-						mail: true
-					}
-				]
-			},
+				props: ["tel1", "tel2"]
+      },
 			{
 				name: "Gegevens Kind",
-				items: [
-					{
-						title: "Geboortedatum",
-						name: "fooevents_custom_geboortedatum_(dd-mm-jjjj)"
-					},
-					{
-						title: "Bandje",
-						name: "wristband"
-					},
-					{
-						title: "Hutnummer",
-						name: "hutnr"
-					},
-					{
-						title: "Wijk",
-						name: ""
-					},
-					{
-						title: "Opmerkingen",
-						name: "fooevents_custom_opmerkingen,_allergien"
-					}
-				]
-			},
-			{
-				name: "Aanwezigheid",
-				items: [
-					{
-						title: "Dinsdag",
-						day: "tue"
-					},
-					{
-						title: "Woensdag",
-						day: "wed"
-					},
-					{
-						title: "Donderdag",
-						day: "thu"
-					},
-					{
-						title: "Vrijdag",
-						day: "fri"
-					},
-				]
-			}
+				props: ["nickName", "birthdate", "wristband", "hutnr", "opmerkingen"]
+      },
 		]
 		this.tickets = [];
 	}
@@ -185,11 +119,6 @@ export class SearchPage {
 			}, (error) => {
 				this.login.password = '';
 			}),
-			this.storage.get('staging').then((val) => {
-				this.staging = val;
-			}, (error) => {
-				this.staging = false;
-			})
 		]).then(() => {
 			let self = this;
 			setInterval(function () {
@@ -214,7 +143,7 @@ export class SearchPage {
 	}
 
 
-	searchThis() {
+	async searchThis() {
 		let self = this;
 		self.tickets = [];
 		self.error = '';
@@ -224,55 +153,62 @@ export class SearchPage {
 			return false;
 		}
 		self.loading = true;
+
 		console.log('searching: ' + this.searchTerm);
-		var wp = this.g.getWpApi(this.login, this.staging, 'search');
-		wp.handler().param('search', this.searchTerm).then((result) => {
-			console.log(result);
-			self.loading = false;
-			if (result.code === 200) {
-				if (!isNaN(+self.searchTerm)) { //if the search term is a number
-					result.tickets.sort(function (a, b) {
-						if ((a.meta.wristband || [])[0] == self.searchTerm) {
-							return -1;
-						}
-						return 1;
-					}); //give priority to wristbands over hut numbers
-				}
-				self.tickets = result.tickets;
-				if (self.tickets.length === 0) {
-					self.error = 'Geen resultaten';
-					self.errorHelp = 'Je kunt zoeken op hutnummer, polsbandje of voor- of achternaam.';
-				}
-			} else {
-				if (result.message == 'access denied') {
-					self.error = 'Niet ingelogd';
-					self.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
-				} else {
-					self.error = result.message;
-				}
-			}
-		}).catch((error) => {
-			self.loading = false;
-			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				self.error = 'Inloggegevens onjuist';
-				self.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
-			} else {
-				self.error = error.message;
-			}
-		});
+    let result = await this.g.apiCall('search', {searchTerm: this.searchTerm}).catch((e) => {
+      self.error = String(e)
+    })
+    self.loading = false
+    self.tickets = result.tickets
+    self.ticketPropertiesMap = result.ticketPropertiesMap
+
+
+		// var wp = this.g.getWpApi(this.login, this.staging, 'search');
+		// wp.handler().param('search', this.searchTerm).then((result) => {
+		// 	console.log(result);
+		// 	self.loading = false;
+		// 	if (result.code === 200) {
+		// 		if (!isNaN(+self.searchTerm)) { //if the search term is a number
+		// 			result.tickets.sort(function (a, b) {
+		// 				if ((a.meta.wristband || [])[0] == self.searchTerm) {
+		// 					return -1;
+		// 				}
+		// 				return 1;
+		// 			}); //give priority to wristbands over hut numbers
+		// 		}
+		// 		self.tickets = result.tickets;
+		// 		if (self.tickets.length === 0) {
+		// 			self.error = 'Geen resultaten';
+		// 			self.errorHelp = 'Je kunt zoeken op hutnummer, polsbandje of voor- of achternaam.';
+		// 		}
+		// 	} else {
+		// 		if (result.message == 'access denied') {
+		// 			self.error = 'Niet ingelogd';
+		// 			self.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
+		// 		} else {
+		// 			self.error = result.message;
+		// 		}
+		// 	}
+		// }).catch((error) => {
+		// 	self.loading = false;
+		// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
+		// 		self.error = 'Inloggegevens onjuist';
+		// 		self.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
+		// 	} else {
+		// 		self.error = error.message;
+		// 	}
+		// });
 	}
 
 	showModal(child) {
 		this.modal.child = child;
 		this.modal.showModal = true;
-		let t = child;
-		let m = t.meta;
 		this.history.unshift({
-			firstName: m.WooCommerceEventsAttendeeName[0],
-			surName: m.WooCommerceEventsAttendeeLastName[0],
-			wristband: m.wristband,
-			hutnr: m.hutnr,
-			wijk: this.g.getColor(m.hutnr)
+			firstName: child.firstName,
+			lastName: child.lastName,
+			wristband: child.wristband,
+			hutnr: child.hutnr,
+			wijk: this.g.getColor(child.hutnr)
 		});
 		this.history = this.g.filterHistory(this.history);
 		this.storage.set("searchChildHistory", this.history);

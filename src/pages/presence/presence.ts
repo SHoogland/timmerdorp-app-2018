@@ -134,61 +134,61 @@ export class PresencePage {
 		let self = this;
 		if (this.number.length === 3) {
 			this.loading = true;
-			var wp = this.g.getWpApi(this.login, this.staging, 'search');
-			wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
-				console.log(result);
-				if (result.code === 200) {
-					self.error = '';
-					if (result.tickets.length === 0) {
-						self.error = 'Geen resultaten';
-						self.errorHelp = 'Tip: Je kunt alleen zoeken op polsbandnummer.';
-						self.loading = false;
-						return;
-					}
-					result.tickets = result.tickets.filter(function (a) {
-						if ((a.meta.wristband || [])[0] !== self.number) {
-							return false;
-						}
-						return true;
-					});
-					if (result.tickets.length === 0) {
-						self.error = 'Geen resultaten';
-						self.errorHelp = 'Tip: Je kunt alleen zoeken op polsbandnummer.';
-						self.loading = false;
-						return;
-					}
-					let t = result.tickets[0];
-					let m = t.meta;
-					self.history.unshift({
-						firstName: m.WooCommerceEventsAttendeeName[0],
-						surName: m.WooCommerceEventsAttendeeLastName[0],
-						wristband: m.wristband,
-						hutnr: m.hutnr,
-						wijk: self.g.getColor(m.hutnr)
-					});
-					self.history = this.g.filterHistory(this.history);
-					self.storage.set("presHistory", self.history);
-					console.log(result.tickets);
-					self.tickets = result.tickets;
-					self.loading = false;
-				} else {
-					if (result.message == 'access denied') {
-						this.error = 'Niet ingelogd';
-						this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
-					} else {
-						self.error = result.message;
-						self.loading = false;
-					}
-				}
-			}).catch((error) => {
-				if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-					this.error = 'Inloggegevens onjuist';
-					this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
-				} else {
-					self.error = error.message;
-				}
-				self.loading = false;
-			});
+			// var wp = this.g.getWpApi(this.login, this.staging, 'search');
+			// wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
+			// 	console.log(result);
+			// 	if (result.code === 200) {
+			// 		self.error = '';
+			// 		if (result.tickets.length === 0) {
+			// 			self.error = 'Geen resultaten';
+			// 			self.errorHelp = 'Tip: Je kunt alleen zoeken op polsbandnummer.';
+			// 			self.loading = false;
+			// 			return;
+			// 		}
+			// 		result.tickets = result.tickets.filter(function (a) {
+			// 			if ((a.meta.wristband || [])[0] !== self.number) {
+			// 				return false;
+			// 			}
+			// 			return true;
+			// 		});
+			// 		if (result.tickets.length === 0) {
+			// 			self.error = 'Geen resultaten';
+			// 			self.errorHelp = 'Tip: Je kunt alleen zoeken op polsbandnummer.';
+			// 			self.loading = false;
+			// 			return;
+			// 		}
+			// 		let t = result.tickets[0];
+			// 		let m = t.meta;
+			// 		self.history.unshift({
+			// 			firstName: m.WooCommerceEventsAttendeeName[0],
+			// 			lastName: m.WooCommerceEventsAttendeeLastName[0],
+			// 			wristband: m.wristband,
+			// 			hutnr: m.hutnr,
+			// 			wijk: self.g.getColor(m.hutnr)
+			// 		});
+			// 		self.history = this.g.filterHistory(this.history);
+			// 		self.storage.set("presHistory", self.history);
+			// 		console.log(result.tickets);
+			// 		self.tickets = result.tickets;
+			// 		self.loading = false;
+			// 	} else {
+			// 		if (result.message == 'access denied') {
+			// 			this.error = 'Niet ingelogd';
+			// 			this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
+			// 		} else {
+			// 			self.error = result.message;
+			// 			self.loading = false;
+			// 		}
+			// 	}
+			// }).catch((error) => {
+			// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
+			// 		this.error = 'Inloggegevens onjuist';
+			// 		this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
+			// 	} else {
+			// 		self.error = error.message;
+			// 	}
+			// 	self.loading = false;
+			// });
 		} else {
 			this.loading = false;
 			this.tickets = [];
@@ -204,23 +204,22 @@ export class PresencePage {
 		}
 
 		let self = this;
-		var wp = this.g.getWpApi(this.login, this.staging, 'presence');
-		wp.handler().param('wristband', this.number).param('day', this.day).param('presence', false).then((result) => {
-			if (result.code === 200) {
-				this.markDone();
-				console.log("Child absence update successful for " + self.day, result)
-				this.loading = false;
-				this.error = '';
-				self.loading = false;
-			} else {
-				self.error = result.message;
-				self.loading = false;
-			}
-		}).catch((error) => {
-			self.loading = false;
-			console.log(error);
-		});
-
+		// var wp = this.g.getWpApi(this.login, this.staging, 'presence');
+		// wp.handler().param('wristband', this.number).param('day', this.day).param('presence', false).then((result) => {
+		// 	if (result.code === 200) {
+		// 		this.markDone();
+		// 		console.log("Child absence update successful for " + self.day, result)
+		// 		this.loading = false;
+		// 		this.error = '';
+		// 		self.loading = false;
+		// 	} else {
+		// 		self.error = result.message;
+		// 		self.loading = false;
+		// 	}
+		// }).catch((error) => {
+		// 	self.loading = false;
+		// 	console.log(error);
+		// });
 	}
 
 	togglePresence() {
@@ -242,22 +241,22 @@ export class PresencePage {
 			this.showModal();
 			return;
 		}
-		var wp = this.g.getWpApi(this.login, this.staging, 'presence');
-		wp.handler().param('wristband', this.number).param('day', this.day).param('presence', pres).then((result) => {
-			if (result.code === 200) {
-				this.markDone();
-				console.log("Child presence update successful for " + self.day, result)
-				this.loading = false;
-				this.error = '';
-				self.loading = false;
-			} else {
-				self.error = result.message;
-				self.loading = false;
-			}
-		}).catch((error) => {
-			self.loading = false;
-			console.log(error);
-		});
+		// var wp = this.g.getWpApi(this.login, this.staging, 'presence');
+		// wp.handler().param('wristband', this.number).param('day', this.day).param('presence', pres).then((result) => {
+		// 	if (result.code === 200) {
+		// 		this.markDone();
+		// 		console.log("Child presence update successful for " + self.day, result)
+		// 		this.loading = false;
+		// 		this.error = '';
+		// 		self.loading = false;
+		// 	} else {
+		// 		self.error = result.message;
+		// 		self.loading = false;
+		// 	}
+		// }).catch((error) => {
+		// 	self.loading = false;
+		// 	console.log(error);
+		// });
 	}
 
 	showModal() {
