@@ -48,19 +48,19 @@ export class LoginPage {
 		Parse.serverURL = 'https://api.timmerdorp.com/1/'
 		Parse.initialize('knDC2JAquVJZ1jSPwARj53IhQCfpOPIDNKcgRMsD', 'xnFIbFCrE1vjzWbRVehMO4QzPpNMCIdDgORKNlRI')
 
-		let install = new Parse.Installation();
+		// let install = new Parse.Installation();
 
-		install.save({deviceType: 'ionic'}, {
-			success: (install) => {
-				// Execute any logic that should take place after the object is saved.
-				this.result = 'New object created with objectId: ' + install.id;
-			},
-			error: (install, error) => {
-				// Execute any logic that should take place if the save fails.
-				// error is a Parse.Error with an error code and message.
-				this.result = ('Failed to create new object, with error code:' + error.message.toString());
-			}
-		});
+		// install.save({deviceType: 'ionic'}, {
+		// 	success: (install) => {
+		// 		// Execute any logic that should take place after the object is saved.
+		// 		this.result = 'New object created with objectId: ' + install.id;
+		// 	},
+		// 	error: (install, error) => {
+		// 		// Execute any logic that should take place if the save fails.
+		// 		// error is a Parse.Error with an error code and message.
+		// 		this.result = ('Failed to create new object, with error code:' + error.message.toString());
+		// 	}
+		// });
 
 		this.title = 'Login';
 		this.hideLogin = true;
@@ -108,47 +108,69 @@ export class LoginPage {
 		this.checkLogin();
 	}
 
-	checkLogin() {
+	async checkLogin() {
 		this.loading = true;
+		let self = this;
 		this.success = false;
 		this.cd.detectChanges();
-		console.log("Determining whether login is correct by searching for random child '000'...")
+
+		await Parse.User.logIn(this.login.username.toLowerCase().replace(' ', ''), this.login.password).catch(
+			error => {
+				let readableErrors = {
+					'Invalid username/password.': 'Verkeerde gebruikersnaam of wachtwoord.',
+					'password is required.': 'Om in te loggen is een wachtwoord e!',
+				}
+				// this.passwordLoginErrors.push(readableErrors[error.message] || error.message)
+				console.log(error)
+			}
+		).then(function (user) {
+			if (user) {
+				self.loading = false;
+				// self.$store.dispatch('user/login', user)
+				// console.log(user)
+				self.g.goHome();
+			}
+			// self.loginLoading = false
+		})
+
+
+		// console.log("Determining whether login is correct by searching for random child '000'...")
 
 		//Try searching for random term: '000'. If it fails, login details probably are incorrect
-		var wp = this.g.getWpApi(this.login, this.staging, 'search');
-		wp.handler().param('search', '000').then((result) => {
-			this.loading = false;
-			if (result.code === 200) {
-				this.success = true;
-				this.error = null;
-				console.log('Succesvol ingelogd!');
-				setTimeout(() => { this.g.goHome() }, 800);
-			} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
-				this.success = false;
-				this.error = 'Inloggen mislukt';
-				this.errorHelp = 'Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.';
-			} else {
-				console.log(result);
-			}
-			this.cd.detectChanges();
-		}).catch((error) => {
-			console.log(error)
-			this.loading = false;
-			if (error.code === 'invalid_username') {
-				this.success = false;
-				this.error = 'Inloggen mislukt';
-				this.errorHelp = 'Het inloggen is mislukt; je hebt niet de juiste gebruikersnaam ingevoerd.';
-				console.log('Verkeerde gebruikersnaam!');
-			} else if (error.code === 'incorrect_password') {
-				this.success = false;
-				this.error = 'Inloggen mislukt';
-				this.errorHelp = 'Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.';
-				console.log('Verkeerd wachtwoord!');
-			} else {
-				console.log(error);//user is offline (probably)
-			}
-			this.cd.detectChanges();
-		});
+		// var wp = this.g.getWpApi(this.login, this.staging, 'search');
+		// wp.handler().param('search', '000').then((result) => {
+		// 	this.loading = false;
+		// 	if (result.code === 200) {
+		// 		this.success = true;
+		// 		this.error = null;
+		// 		console.log('Succesvol ingelogd!');
+		// 		setTimeout(() => { this.g.goHome() }, 800);
+		// 	} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
+		// 		this.success = false;
+		// 		this.error = 'Inloggen mislukt';
+		// 		this.errorHelp = 'Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.';
+		// 	} else {
+		// 		console.log(result);
+		// 	}
+		// 	this.cd.detectChanges();
+		// }).catch((error) => {
+		// 	console.log(error)
+		// 	this.loading = false;
+		// 	if (error.code === 'invalid_username') {
+		// 		this.success = false;
+		// 		this.error = 'Inloggen mislukt';
+		// 		this.errorHelp = 'Het inloggen is mislukt; je hebt niet de juiste gebruikersnaam ingevoerd.';
+		// 		console.log('Verkeerde gebruikersnaam!');
+		// 	} else if (error.code === 'incorrect_password') {
+		// 		this.success = false;
+		// 		this.error = 'Inloggen mislukt';
+		// 		this.errorHelp = 'Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.';
+		// 		console.log('Verkeerd wachtwoord!');
+		// 	} else {
+		// 		console.log(error);//user is offline (probably)
+		// 	}
+		// 	this.cd.detectChanges();
+		// });
 	}
 
 	toHome() {
