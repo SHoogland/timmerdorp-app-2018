@@ -45,7 +45,7 @@
 					Zoekgeschiedenis ({{(history||[]).length}})
 				</ion-list-header>
 				<ion-item *ngFor="let h of history"
-					(click)='searchTerm=""+(h.wristband||h.firstName||h.surName||h.hutnr);searchThis()'
+					(click)='searchTerm=""+(h.wristband||h.firstName||h.lastName||h.hutnr);searchThis()'
 					class='{{"item item-block item-md " + g.getWijk((h.hutnr||[0])[0])}}'>
 					<ion-label>
 						<div>
@@ -55,9 +55,9 @@
 						</div>
 						<div>
 							<h2><span class='tinyScreen'>{{h.firstName}}<br>
-									{{h.surName}}</span>
+									{{h.lastName}}</span>
 								<span class='notTinyScreen'>{{h.firstName}}
-									{{h.surName}}</span>
+									{{h.lastName}}</span>
 							</h2>
 						</div>
 						<ion-button size="small" class='fab'>
@@ -68,24 +68,24 @@
 			</ion-list>
 		</div>
 
+
 		<ion-list class='peopleList' [ngClass]='tickets.length?"hideable shown":"hideable"'>
 			<ion-list-header>
 				Zoekresultaten ({{tickets.length}})
 			</ion-list-header>
 			<ion-item *ngFor="let child of tickets" (click)='showModal(child)'
-				class='{{"item item-block item-md " + g.getWijk(((child.meta||{}).hutnr||[0])[0])}}'>
+				class='{{"item item-block item-md " + g.getWijk(child.hutnr)}}'>
 				<ion-label>
 					<div>
 						<div>
-							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{child.meta.wristband}}</span>
+							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{child.wristband}}</span>
 							</h3>
-							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{child.meta.hutnr}}</span></h3>
+							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{child.hutnr}}</span></h3>
 						</div>
 						<div>
-							<h2><span class='tinyScreen'>{{child.meta.WooCommerceEventsAttendeeName[0]}}<br>
-									{{child.meta.WooCommerceEventsAttendeeLastName[0]}}</span>
-								<span class='notTinyScreen'>{{child.meta.WooCommerceEventsAttendeeName[0]}}
-									{{child.meta.WooCommerceEventsAttendeeLastName[0]}}</span>
+							<h2><span class='tinyScreen'>{{child.firstName}}<br>
+									{{child.lastName}}</span>
+								<span class='notTinyScreen'>{{child.firstName}} {{child.lastName}}</span>
 							</h2>
 						</div>
 					</div>
@@ -100,35 +100,53 @@
 
 <div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
 	class="modal conditional">
-	<div class="{{'modal-content ' + g.getWijk((modal.child.meta.hutnr||[])[0])}}" *ngIf="modal.child">
+	<div class="{{'modal-content ' + g.getWijk((modal.child.hutnr||'')[0])}}" *ngIf="modal.child">
 		<div id='modalTop'>
 		</div>
 		<div id='modalBottom'>
 			<span class="close" (click)="closeModal();">&times;</span>
-			<h1 id='childDataHeader'>{{(modal.child.meta.WooCommerceEventsAttendeeName||[])[0]}}
-				{{(modal.child.meta.WooCommerceEventsAttendeeLastName||[])[0]}}</h1>
+			<h1 id='childDataHeader'>{{modal.child.firstName}}
+				{{modal.child.lastName}}</h1>
 			<table>
-				<div *ngFor="let c of tableCategories">
-					<h3>{{c.name}}</h3>
-					<tr *ngFor="let i of c.items">
-						<td>{{i.title}}:</td>
-						<td *ngIf="!i.tel&&i.title!=='Wijk'&&c.name!='Aanwezigheid'&&!i.mail">
-							{{(modal.child.meta[i.name]||[])[0]}}</td>
-						<td *ngIf="c.name==='Aanwezigheid'">
-							{{(modal.child.meta["present_" + i.day]||[])[0] === '1'?"Aanwezig":"Afwezig"}}</td>
-						<td *ngIf="i.title==='Wijk'">{{g.getWijk((modal.child.meta.hutnr||[])[0])}}</td>
-						<td *ngIf='i.tel'><a
-								href="tel: {{filterPhoneNr(modal.child.meta[i.name])}}">{{(modal.child.meta[i.name]||[])[0]}}</a>
-						</td>
-						<td *ngIf='i.mail'><a
-								href="mailto:{{modal.child.meta[i.name]}}">{{(modal.child.meta[i.name]||[])[0]}}</a>
-						</td>
+				<div *ngFor="let cat of tableCategories">
+					<h3>{{cat.name}}</h3>
+					<tr *ngFor="let prop of cat.props">
+            <div *ngIf="modal.child[prop]">
+              <td><b>{{(ticketPropertiesMap[prop]||{}).label}}:</b></td>
+              <td *ngIf="prop != 'tel1' && prop != 'tel2' && prop != 'tel_huisarts' && prop != 'email' && cat.name != 'Aanwezigheid'">
+                {{modal.child[prop]}}</td>
+              <td *ngIf='prop === "tel1" || prop === "tel2" || prop === "tel_huisarts"'><a
+                  href="tel: {{filterPhoneNr(modal.child[prop])}}">{{modal.child[prop]}}</a>
+              </td>
+              <td *ngIf='prop === "email"'><a
+                  href="mailto:{{modal.child[prop]}}">{{(modal.child[prop]||[])[0]}}</a>
+              </td>
+            </div>
 					</tr>
 				</div>
+        <div>
+          <h3>Aanwezigheid</h3>
+          <tr>
+            <td><b>Dinsdag:</b></td>
+            <td>{{ modal.child['aanwezig_di'] ? 'Aanwezig' : 'Afwezig' }}</td>
+          </tr>
+          <tr>
+            <td><b>Woensdag:</b></td>
+            <td>{{ modal.child['aanwezig_wo'] ? 'Aanwezig' : 'Afwezig' }}</td>
+          </tr>
+          <tr>
+            <td><b>Donderdag:</b></td>
+            <td>{{ modal.child['aanwezig_do'] ? 'Aanwezig' : 'Afwezig' }}</td>
+          </tr>
+          <tr>
+            <td><b>Vrijdag:</b></td>
+            <td>{{ modal.child['aanwezig_vr'] ? 'Aanwezig' : 'Afwezig' }}</td>
+          </tr>
+        </div>
 			</table>
 		</div>
 		<button ion-button full (click)="closeModal();">Sluiten</button>
-		<button ion-button full (click)="scanChild(modal.child.meta.WooCommerceEventsTicketID[0])">Scannen</button>
+		<button ion-button full (click)="scanChild(modal.child.id)">Scannen</button>
 		<button ion-button full (click)="goHome()">Terug naar homepagina</button>
 	</div>
 </div>

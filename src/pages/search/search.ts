@@ -16,6 +16,7 @@ declare let cordova: any;
 })
 export class SearchPage {
 	tableCategories: any;
+	ticketPropertiesMap: any;
 	typingTimer: any;
 	timeOut: any;
 	tickets: any;
@@ -80,87 +81,21 @@ export class SearchPage {
 		this.error = '';
 		this.errorHelp = '';
 
+    this.ticketPropertiesMap = [];
+
 		this.tableCategories = [
 			{
 				name: "Gegevens huisarts",
-				items: [
-					{
-						title: "Naam huisarts",
-						name: "fooevents_custom_naam_huisarts"
-					},
-					{
-						title: "Tel. huisarts",
-						name: "fooevents_custom_telefoonnr_huisarts",
-						tel: true
-					}
-				]
+				props: ["naam_huisarts", "tel_huisarts"]
 			},
 			{
 				name: "Contactgegevens ouders",
-				items: [
-					{
-						title: "Tel. ouder 1",
-						name: "fooevents_custom_telefoonnr_ouders",
-						tel: true
-					},
-					{
-						title: "Tel. ouder 2",
-						name: "fooevents_custom_telefoonnr_ouders_(2)",
-						tel: true
-					},
-					{
-						title: "E-mailadres",
-						name: "WooCommerceEventsPurchaserEmail",
-						mail: true
-					}
-				]
-			},
+				props: ["tel1", "tel2"]
+      },
 			{
 				name: "Gegevens Kind",
-				items: [
-					{
-						title: "Geboortedatum",
-						name: "fooevents_custom_geboortedatum_(dd-mm-jjjj)"
-					},
-					{
-						title: "Bandje",
-						name: "wristband"
-					},
-					{
-						title: "Hutnummer",
-						name: "hutnr"
-					},
-					{
-						title: "Wijk",
-						name: ""
-					},
-					{
-						title: "Opmerkingen",
-						name: "fooevents_custom_opmerkingen,_allergien"
-					}
-				]
-			},
-			{
-				name: "Aanwezigheid",
-				items: [
-					{
-						title: "Dinsdag",
-						day: "tue"
-					},
-					{
-						title: "Woensdag",
-						day: "wed"
-					},
-					{
-						title: "Donderdag",
-						day: "thu"
-					},
-					{
-						title: "Vrijdag",
-						day: "fri"
-					},
-				]
-			}
+				props: ["nickName", "birthdate", "wristband", "hutnr", "opmerkingen"]
+      },
 		]
 		this.tickets = [];
 	}
@@ -184,11 +119,6 @@ export class SearchPage {
 			}, (error) => {
 				this.login.password = '';
 			}),
-			this.storage.get('staging').then((val) => {
-				this.staging = val;
-			}, (error) => {
-				this.staging = false;
-			})
 		]).then(() => {
 			let self = this;
 			setInterval(function () {
@@ -213,7 +143,7 @@ export class SearchPage {
 	}
 
 
-	searchThis() {
+	async searchThis() {
 		let self = this;
 		self.tickets = [];
 		self.error = '';
@@ -224,8 +154,15 @@ export class SearchPage {
 		}
 		self.loading = true;
 
-    this.g.apiCall('search', {searchTerm: this.searchTerm}, this.login, this.staging)
 		console.log('searching: ' + this.searchTerm);
+    let result = await this.g.apiCall('search', {searchTerm: this.searchTerm}).catch((e) => {
+      self.error = String(e)
+    })
+    self.loading = false
+    self.tickets = result.tickets
+    self.ticketPropertiesMap = result.ticketPropertiesMap
+
+
 		// var wp = this.g.getWpApi(this.login, this.staging, 'search');
 		// wp.handler().param('search', this.searchTerm).then((result) => {
 		// 	console.log(result);
@@ -266,14 +203,12 @@ export class SearchPage {
 	showModal(child) {
 		this.modal.child = child;
 		this.modal.showModal = true;
-		let t = child;
-		let m = t.meta;
 		this.history.unshift({
-			firstName: m.WooCommerceEventsAttendeeName[0],
-			surName: m.WooCommerceEventsAttendeeLastName[0],
-			wristband: m.wristband,
-			hutnr: m.hutnr,
-			wijk: this.g.getColor(m.hutnr)
+			firstName: child.firstName,
+			lastName: child.lastName,
+			wristband: child.wristband,
+			hutnr: child.hutnr,
+			wijk: this.g.getColor(child.hutnr)
 		});
 		this.history = this.g.filterHistory(this.history);
 		this.storage.set("searchChildHistory", this.history);

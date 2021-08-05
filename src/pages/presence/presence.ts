@@ -161,7 +161,7 @@ export class PresencePage {
 			// 		let m = t.meta;
 			// 		self.history.unshift({
 			// 			firstName: m.WooCommerceEventsAttendeeName[0],
-			// 			surName: m.WooCommerceEventsAttendeeLastName[0],
+			// 			lastName: m.WooCommerceEventsAttendeeLastName[0],
 			// 			wristband: m.wristband,
 			// 			hutnr: m.hutnr,
 			// 			wijk: self.g.getColor(m.hutnr)
