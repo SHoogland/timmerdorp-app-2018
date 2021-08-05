@@ -12,11 +12,15 @@ export class GlobalFunctions {
   stagingEndpoint: string;
   normalEndpoint: string;
   staging: boolean;
+  loadedStagingStatus: boolean;
   login: {
     username: string;
     password: string;
   }
 
+  serverURLs: any;
+  serverUsernames: any;
+  serverPasswords: any;
   loginPage: any;
 
   constructor(
@@ -25,13 +29,27 @@ export class GlobalFunctions {
     public statusBar: StatusBar,
     public app: App,
   ) {
-    console.log(this.staging)
+    this.serverURLs = {
+      staging: 'http://localhost:1337/1/',
+      production: 'https://api.timmerdorp.com/1/'
+    }
+
+    this.serverUsernames = {
+      staging: 'myAppId',
+      production: 'knDC2JAquVJZ1jSPwARj53IhQCfpOPIDNKcgRMsD'
+    }
+
+    this.serverPasswords = {
+      staging: 'jsKey',
+      production: 'xnFIbFCrE1vjzWbRVehMO4QzPpNMCIdDgORKNlRI'
+    }
+
     this.storage.get('staging').then((val) => {
       this.staging = val;
-      this.initParse()
+      this.loadedStagingStatus = true
     }, (error) => {
       this.staging = false;
-      this.initParse()
+      this.loadedStagingStatus = true
     })
 
     this.loginPage = require('../pages/login/login').LoginPage;
@@ -42,16 +60,6 @@ export class GlobalFunctions {
 
     // this.stagingEndpoint = 'https://staging.timmerdorp.com/wp-json';
     // this.normalEndpoint = 'https://api.timmerdorp.com/';
-  }
-
-  initParse() {
-    if (!this.staging) {
-      Parse.serverURL = 'https://api.timmerdorp.com/1/'
-      Parse.initialize('knDC2JAquVJZ1jSPwARj53IhQCfpOPIDNKcgRMsD', 'xnFIbFCrE1vjzWbRVehMO4QzPpNMCIdDgORKNlRI')
-    } else {
-      Parse.serverURL = 'http://localhost:1337/1/'
-      Parse.initialize('myAppId', 'jsKey')
-    }
   }
 
   setStatusBar(c) {
@@ -156,8 +164,22 @@ export class GlobalFunctions {
     return res;
   }
 
-  apiCall(func, data) {
-    console.log(func, data)
+  async apiCall(func, data) {
+    if (!this.loadedStagingStatus) {
+      await this.storage.get('staging').then((val) => {
+        this.staging = true
+        this.loadedStagingStatus = true
+      }, (error) => {
+        this.staging = false;
+        this.loadedStagingStatus = true
+      })
+    }
+
+    let newServerURL = this.serverURLs[this.staging ? 'staging' : 'production']
+    if (Parse.serverURL !== newServerURL) {
+      Parse.serverURL = newServerURL
+      Parse.initialize(this.serverUsernames[this.staging ? 'staging' : 'production'], this.serverPasswords[this.staging ? 'staging' : 'production'])
+    }
     return Parse.Cloud.run('app-' + func, data)
   }
 
@@ -169,69 +191,12 @@ export class GlobalFunctions {
     }
   }
 
-  async checkLogin(self) {
-    self.loading = true;
-    self.success = false;
-    if (!self.login.username || !self.login.password) {
-      self.error = 'Een gebruikersnaam en wachtwoord is vereist'
-      return
-    }
-    await Parse.User.logIn(self.login.username.toLowerCase().replace(' ', ''), self.login.password).catch(
-      error => {
-        let readableErrors = {
-          'Invalid username/password.': 'Verkeerde gebruikersnaam of wachtwoord.',
-          'password is required.': 'Om in te loggen is een wachtwoord vereist!',
-        }
-        self.error = readableErrors[error.message] || error.message
-        console.log(error)
-      }
-    ).then(function (user) {
-      if (user) {
-        self.loading = false;
-        // self.$store.dispatch('user/login', user)
-        // console.log(user)
-        self.g.goHome();
-      }
-      // self.loginLoading = false
-    })
+  async checkIfStillLoggedIn() {
+    return await this.apiCall('checkIfLoggedIn', {})
+  }
 
-
-    // console.log("Determining whether login is correct by searching for random child '000'...")
-
-    //Try searching for random term: '000'. If it fails, login details probably are incorrect
-    // var wp = this.g.getWpApi(this.login, this.staging, 'search');
-    // wp.handler().param('search', '000').then((result) => {
-    // 	this.loading = false;
-    // 	if (result.code === 200) {
-    // 		this.success = true;
-    // 		this.error = null;
-    // 		console.log('Succesvol ingelogd!');
-    // 		setTimeout(() => { this.g.goHome() }, 800);
-    // 	} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
-    // 		this.success = false;
-    // 		this.error = 'Inloggen mislukt';
-    // 		this.errorHelp = 'Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.';
-    // 	} else {
-    // 		console.log(result);
-    // 	}
-    // 	this.cd.detectChanges();
-    // }).catch((error) => {
-    // 	console.log(error)
-    // 	this.loading = false;
-    // 	if (error.code === 'invalid_username') {
-    // 		this.success = false;
-    // 		this.error = 'Inloggen mislukt';
-    // 		this.errorHelp = 'Het inloggen is mislukt; je hebt niet de juiste gebruikersnaam ingevoerd.';
-    // 		console.log('Verkeerde gebruikersnaam!');
-    // 	} else if (error.code === 'incorrect_password') {
-    // 		this.success = false;
-    // 		this.error = 'Inloggen mislukt';
-    // 		this.errorHelp = 'Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.';
-    // 		console.log('Verkeerd wachtwoord!');
-    // 	} else {
-    // 		console.log(error);//user is offline (probably)
-    // 	}
-    // 	this.cd.detectChanges();
-    // });
+  async switchEnv() {
+    this.staging = !this.staging
+    this.storage.set('staging', this.staging);
   }
 }

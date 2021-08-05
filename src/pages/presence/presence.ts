@@ -23,11 +23,6 @@ export class PresencePage {
 	loading: boolean;
 	staging: boolean;
 
-	login: {
-		username: string,
-		password: string
-	};
-
 	tickets: Array<any>;
 	history: any;
 
@@ -76,10 +71,6 @@ export class PresencePage {
 		this.greenBtn = false;
 		this.staging = false;
 
-		this.login = {
-			username: '',
-			password: ''
-		}
 		this.loading = false;
 		this.error = '';
 		this.tickets = [];
@@ -87,31 +78,13 @@ export class PresencePage {
 		this.number = '';
 		this.name = '';
 
-		Promise.all([
-			this.storage.get('presHistory').then((val) => {
-				this.history = val || [];
-				this.history = this.g.filterHistory(this.history);
-				console.log(this.history);
-			}, (error) => {
-				this.history = [];
-			}),
-			this.storage.get('username').then((val) => {
-				this.login.username = val;
-			}, (error) => {
-				this.login.username = '';
-			}),
-			this.storage.get('password').then((val) => {
-				this.login.password = val;
-			}, (error) => {
-				this.login.password = '';
-			}),
-			this.storage.get('staging').then((val) => {
-				this.staging = val;
-			}, (error) => {
-				this.staging = false;
-			})
-		]).then(() => {
-		});
+    this.storage.get('presHistory').then((val) => {
+      this.history = val || [];
+      this.history = this.g.filterHistory(this.history);
+      console.log(this.history);
+    }, (error) => {
+      this.history = [];
+    }),
 	}
 
 	getDayName(d) {

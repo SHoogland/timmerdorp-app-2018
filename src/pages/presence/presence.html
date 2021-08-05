@@ -71,9 +71,9 @@
 		<div *ngIf='!(tickets[0]||{}).meta && history && history.length > 0 && !loading'>
 			<ion-list class='peopleList'>
 				<ion-list-header>
-					Zoekgeschiedenis ({{history.length}})
+					Zoekgeschiedenis ({{(history || []).length}})
 				</ion-list-header>
-				<ion-item *ngFor="let h of history"
+				<ion-item *ngFor="let h of (history || [])"
 					class='{{"item item-block item-md " + g.getWijk((h.hutnr||[0])[0])}}'
 					(click)='number=""+h.wristband;getChild()'>
 					<ion-label>

@@ -104,11 +104,6 @@ export class AppInfoPage {
 	}
 
 	ionViewDidLoad() {
-		this.storage.get('staging').then((val) => {
-			this.staging = val;
-		}, () => {
-			this.staging = false;
-		});
 		this.init();
 	}
 }

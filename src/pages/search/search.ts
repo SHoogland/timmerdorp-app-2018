@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
 import { HomePage } from '../home/home';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
-import { LoginPage } from '../login/login';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GlobalFunctions } from '../../providers/global';
 
@@ -22,7 +20,6 @@ export class SearchPage {
 	tickets: any;
 	history: any;
 
-	staging: boolean;
 	loading: boolean;
 
 	searchTerm: string;
@@ -34,10 +31,6 @@ export class SearchPage {
 		showModal: boolean;
 		child: any;
 	}
-	login: {
-		username: string,
-		password: string
-	};
 
 	constructor(
 		public navCtrl: NavController,
@@ -63,12 +56,6 @@ export class SearchPage {
 	}
 
 	init() {
-		this.staging = false;
-
-		this.login = {
-			username: '',
-			password: ''
-		}
 		this.modal = {
 			child: null,
 			showModal: false
@@ -109,16 +96,6 @@ export class SearchPage {
 			}, (error) => {
 				this.history = [];
 			}),
-			this.storage.get('username').then((val) => {
-				this.login.username = val;
-			}, (error) => {
-				this.login.username = '';
-			}),
-			this.storage.get('password').then((val) => {
-				this.login.password = val;
-			}, (error) => {
-				this.login.password = '';
-			}),
 		]).then(() => {
 			let self = this;
 			setInterval(function () {
@@ -155,7 +132,7 @@ export class SearchPage {
 		self.loading = true;
 
 		console.log('searching: ' + this.searchTerm);
-    let result = await this.g.apiCall('search', {searchTerm: this.searchTerm}).catch((e) => {
+    let result = await this.g.apiCall('search', { searchTerm: this.searchTerm }).catch((e) => {
       self.error = String(e)
     })
     self.loading = false

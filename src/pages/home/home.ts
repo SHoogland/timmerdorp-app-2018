@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
 
+import Parse from 'parse';
+
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
@@ -42,14 +44,8 @@ export class HomePage {
 	wijken: any;
 	pages: any;
 
-	login: {
-		username: '',
-		password: ''
-	};
-
 	clickedTwice = false;
 	clickedOnce = false;
-	staging = false;
 
 	readablePageList: any;
 	openedPage: any;
@@ -80,7 +76,7 @@ export class HomePage {
 		}
 	}
 
-	init() {
+	async init() {
 		this.showPhoto = false;
 		this.updates = [];
 		this.readablePageList = {
@@ -99,32 +95,9 @@ export class HomePage {
 		}
 		this.g.setStatusBar("#2196f3");
 
-		this.login = {
-			username: "",
-			password: ""
-		};
-
-		this.storage.get('username').then((val) => {
-			this.login.username = val;
-		}, (error) => {
-			this.login.username = '';
-		});
-		this.storage.get('password').then((val) => {
-			this.login.password = val;
-		}, (error) => {
-			this.login.password = '';
-		});
-
 		this.childrenCount = 0;
 
 		this.modalShown = false;
-
-		this.storage.get('staging').then((val) => {
-			this.staging = val;
-		}, (error) => {
-			this.staging = false;
-		});
-
 
 		if (this.platform.is("android")) this.android = true;
 
@@ -275,6 +248,10 @@ export class HomePage {
 
 			console.log(data, this.weather);
 		});
+
+    if(!await this.g.checkIfStillLoggedIn()) {
+      this.g.toLogin()
+    }
 	}
 
 	ionViewDidLoad() {
@@ -286,11 +263,6 @@ export class HomePage {
 				return b.date - a.date;
 			});
 		});
-		this.storage.get('staging').then((val) => {
-			this.staging = val;
-		}, (error) => {
-			this.staging = false;
-		})
 	}
 
 	openStore() {
@@ -302,7 +274,7 @@ export class HomePage {
 		}
 	}
 
-	openPage(page) {
+	async openPage(page) {
 		this.openedPage = page;
 		console.log(this.openedPage.component);
 
@@ -321,12 +293,17 @@ export class HomePage {
 
 
 		if (!blockOpening) {
+      let ogPage = this.openedPage.component
 			this.openedPage.component = this.readablePageList[this.openedPage.component];
-			if (this.openedPage.component == 'ticketscanner') {
+			if (this.openedPage.component === 'ticketscanner') {
 				this.scanCode();
-			} else if (this.openedPage.component == 'weather') {
+			} else if (this.openedPage.component === 'weather') {
 				this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
-			} else {
+			} else if (ogPage === 'login') {
+        await Parse.User.logOut();
+				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+      } else {
+        console.log('ahnee')
 				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
 			}
 		} else {

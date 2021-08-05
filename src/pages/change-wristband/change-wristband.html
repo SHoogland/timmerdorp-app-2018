@@ -85,9 +85,9 @@
 		</div>
 		<ion-list class='peopleList' *ngIf="!searched && !error && !loading && history && history.length > 0">
 			<ion-list-header>
-				Wijzigingsgeschiedenis ({{history.length}})
+				Wijzigingsgeschiedenis ({{(history || []).length}})
 			</ion-list-header>
-			<ion-item (click)='oldNr=""+h.newNr;searched=true;searchTicket()' *ngFor="let h of history"
+			<ion-item (click)='oldNr=""+h.newNr;searched=true;searchTicket()' *ngFor="let h of (history || [])"
 				class='{{"item item-block item-md " + g.getWijk((h.hutnr||[])[0])}}'>
 				<ion-label>
 					<div>

@@ -23,10 +23,10 @@
 		<div *ngIf='!(hutNr && hutNr.length === 3) && history && history.length > 0 && (!loading || isUndoing)'>
 			<ion-list class='peopleList'>
 				<ion-list-header>
-					Wijzigingsgeschiedenis ({{history.length}})
+					Wijzigingsgeschiedenis ({{(history || []).length}})
 				</ion-list-header>
 
-				<div *ngFor="let h of history; let i = index">
+				<div *ngFor="let h of (history || []); let i = index">
 					<ion-item [ngClass]="giveAccent&&!i?'accent':''"
 						class='{{"item item-block item-md " + g.getWijk((h.hutnr||[0])[0])}}'>
 						<ion-label>

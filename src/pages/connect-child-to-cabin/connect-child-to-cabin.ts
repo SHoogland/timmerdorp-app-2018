@@ -39,7 +39,6 @@ export class ConnectChildToCabinPage {
 	isUndoing: boolean;
 	searched: boolean;
 	loading: boolean;
-	staging: boolean;
 	error1: boolean;
 	error2: boolean;
 	isTue: boolean; //if it's tuesday, show the auto-presence toggle
@@ -53,10 +52,6 @@ export class ConnectChildToCabinPage {
 	removeModal: {
 		show: boolean;
 	}
-	login: {
-		username: string,
-		password: string
-	};
 
 	constructor(
 		public navCtrl: NavController,
@@ -82,10 +77,6 @@ export class ConnectChildToCabinPage {
 	}
 
 	init() {
-		this.login = {
-			username: '',
-			password: ''
-		}
 		this.title = 'Beheer Hutjes';
 		this.isTue = (new Date().getDay() == 2);
 
@@ -134,21 +125,6 @@ export class ConnectChildToCabinPage {
 			}, (error) => {
 				this.history = [];
 			}),
-			this.storage.get('username').then((val) => {
-				this.login.username = val;
-			}, (error) => {
-				this.login.username = '';
-			}),
-			this.storage.get('password').then((val) => {
-				this.login.password = val;
-			}, (error) => {
-				this.login.password = '';
-			}),
-			this.storage.get('staging').then((val) => {
-				this.staging = val;
-			}, (error) => {
-				this.staging = false;
-			})
 		]).then(() => {
 		});
 	}

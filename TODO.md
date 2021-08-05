@@ -20,11 +20,10 @@
 ## Nog te doen in 2020 zelf:
 - Vast team opstellen van 8-10 mensen zodat ik meer overzicht en controle heb over wie de app gebruikt met welke update en zodat ik makkelijker instructies kan geven en misschien ook een vaste persoon/kraam/plaats waar kinders nieuwe polsbandjes halen (Stan)
 - Maandagavond alvast de app installeren op zo veel mogelijk apparaten; op z'n minst de wijkhoofden/-nekken
-- Je kunt nu zoeken op voornaam óf achternaam, maar het is natuurlijk wel zo handig als je op beide achter elkaar zou kunnen zoeken (e.g.: nu zoek je "stan", of "van Baarsen", maar als je "Stan van Baarsen" zoekt, vind je niks. is raar)
+- Je kunt nu zoeken op voornaam óf achternaam, maar het is natuurlijk wel zo handig als je op beide achter elkaar zou kunnen zoeken (e.g.: nu zoek je "stan", of "van Baarsen", maar als je "Stan van Baarsen" zoekt, vind je niks. is raar). gefixt in 2021
 - Hopelijk kan ik in 2020 ook zelf de database beheren vanaf mijn laptop en het liefst ook de Play Store
-- De login-check is er nu uit gecomment, maar moet er zeker weer in in de production versie
-- Meer reserve polsbandjes kopen (725 in totaal misschien?) want kinderen raken die dingen bizar snel kwijt.
-- Een kraampje opstellen met een bord met: "Nieuw polsbandje nodig? Gegevens wijzigen? Kom hier!" oid. Als je deze "kraam" naast de dranghekken zet, hoef je in de rij binnen de dranghekken alleen nog maar aanwezigheid te melden. Betere doorstroom, dus.
+- De login-check is er nu uit gecomment, maar moet er zeker weer in in de production versie. gefixt in 2021
+- Meer reserve polsbandjes kopen (725 in totaal misschien?) want kinderen raken die dingen bizar snel kwijt
 
 ## Website feedback:
 - Laadtijd
