@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
-import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../home/home';
@@ -224,42 +223,44 @@ export class SearchPage {
 			return false;
 		}
 		self.loading = true;
+
+    this.g.apiCall('search', {searchTerm: this.searchTerm}, this.login, this.staging)
 		console.log('searching: ' + this.searchTerm);
-		var wp = this.g.getWpApi(this.login, this.staging, 'search');
-		wp.handler().param('search', this.searchTerm).then((result) => {
-			console.log(result);
-			self.loading = false;
-			if (result.code === 200) {
-				if (!isNaN(+self.searchTerm)) { //if the search term is a number
-					result.tickets.sort(function (a, b) {
-						if ((a.meta.wristband || [])[0] == self.searchTerm) {
-							return -1;
-						}
-						return 1;
-					}); //give priority to wristbands over hut numbers
-				}
-				self.tickets = result.tickets;
-				if (self.tickets.length === 0) {
-					self.error = 'Geen resultaten';
-					self.errorHelp = 'Je kunt zoeken op hutnummer, polsbandje of voor- of achternaam.';
-				}
-			} else {
-				if (result.message == 'access denied') {
-					self.error = 'Niet ingelogd';
-					self.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
-				} else {
-					self.error = result.message;
-				}
-			}
-		}).catch((error) => {
-			self.loading = false;
-			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				self.error = 'Inloggegevens onjuist';
-				self.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
-			} else {
-				self.error = error.message;
-			}
-		});
+		// var wp = this.g.getWpApi(this.login, this.staging, 'search');
+		// wp.handler().param('search', this.searchTerm).then((result) => {
+		// 	console.log(result);
+		// 	self.loading = false;
+		// 	if (result.code === 200) {
+		// 		if (!isNaN(+self.searchTerm)) { //if the search term is a number
+		// 			result.tickets.sort(function (a, b) {
+		// 				if ((a.meta.wristband || [])[0] == self.searchTerm) {
+		// 					return -1;
+		// 				}
+		// 				return 1;
+		// 			}); //give priority to wristbands over hut numbers
+		// 		}
+		// 		self.tickets = result.tickets;
+		// 		if (self.tickets.length === 0) {
+		// 			self.error = 'Geen resultaten';
+		// 			self.errorHelp = 'Je kunt zoeken op hutnummer, polsbandje of voor- of achternaam.';
+		// 		}
+		// 	} else {
+		// 		if (result.message == 'access denied') {
+		// 			self.error = 'Niet ingelogd';
+		// 			self.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
+		// 		} else {
+		// 			self.error = result.message;
+		// 		}
+		// 	}
+		// }).catch((error) => {
+		// 	self.loading = false;
+		// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
+		// 		self.error = 'Inloggegevens onjuist';
+		// 		self.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
+		// 	} else {
+		// 		self.error = error.message;
+		// 	}
+		// });
 	}
 
 	showModal(child) {

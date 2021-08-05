@@ -93,22 +93,22 @@ export class MyApp {
 
 	preCheckLogin() {
 		console.log("Determining whether login is correct by searching for random child '000'...")
-		var wp = this.g.getWpApi(this.login, this.staging, 'search');
-		wp.handler().param('search', "000").then((result) => {
-			if (result.code === 200) {
-				console.log("Logingegevens kloppen!");
-			} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
-				this.g.toLogin();
-			} else {
-				console.log(result);
-			}
-		}).catch((error) => {
-			if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-				this.g.toLogin();
-			} else {
-				this.g.toLogin();
-				console.log(error);//user is offline (probably)
-			}
-		});
+		// var wp = this.g.getWpApi(this.login, this.staging, 'search');
+		// wp.handler().param('search', "000").then((result) => {
+		// 	if (result.code === 200) {
+		// 		console.log("Logingegevens kloppen!");
+		// 	} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
+		// 		this.g.toLogin();
+		// 	} else {
+		// 		console.log(result);
+		// 	}
+		// }).catch((error) => {
+		// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
+		// 		this.g.toLogin();
+		// 	} else {
+		// 		this.g.toLogin();
+		// 		console.log(error);//user is offline (probably)
+		// 	}
+		// });
 	}
 }

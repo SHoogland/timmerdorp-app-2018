@@ -1,7 +1,6 @@
 import { Injectable, Inject, forwardRef } from '@angular/core';
 import { Platform, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import * as WPAPI from 'wpapi';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
 
@@ -30,8 +29,8 @@ export class GlobalFunctions {
 			password: ''
 		}
 
-		this.stagingEndpoint = 'https://staging.timmerdorp.com/wp-json';
-		this.normalEndpoint = 'https://shop.timmerdorp.com/wp-json';
+		// this.stagingEndpoint = 'https://staging.timmerdorp.com/wp-json';
+		// this.normalEndpoint = 'https://api.timmerdorp.com/';
 	}
 
 	setStatusBar(c) {
@@ -69,16 +68,6 @@ export class GlobalFunctions {
 	toLogin() {
 		let nav = this.app.getActiveNav();
 		nav.setRoot(this.loginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
-	}
-
-	getWpApi(login, staging, route) {
-		var wp = new WPAPI({
-			endpoint: staging ? this.stagingEndpoint : this.normalEndpoint,
-			username: login.username,
-			password: login.password
-		});
-		wp.handler = wp.registerRoute('tickets', route, {});
-		return wp;
 	}
 
 	getWijkName(kleur) {
@@ -145,6 +134,13 @@ export class GlobalFunctions {
 		}
 		return res;
 	}
+
+  apiCall(func, data, login, staging) {
+    let endpoint = staging ? this.stagingEndpoint : this.normalEndpoint
+    console.log(func, data, endpoint)
+    let user = login.username
+    let pw = login.password
+  }
 
 	prependZero(n) {
 		if (n < 10 && n > -10) {

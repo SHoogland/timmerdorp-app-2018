@@ -114,41 +114,41 @@ export class LoginPage {
 		this.cd.detectChanges();
 		console.log("Determining whether login is correct by searching for random child '000'...")
 
-		//Try searching for random term: '000'. If it fails, login details probably are incorrect
-		var wp = this.g.getWpApi(this.login, this.staging, 'search');
-		wp.handler().param('search', '000').then((result) => {
-			this.loading = false;
-			if (result.code === 200) {
-				this.success = true;
-				this.error = null;
-				console.log('Succesvol ingelogd!');
-				setTimeout(() => { this.g.goHome() }, 800);
-			} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
-				this.success = false;
-				this.error = 'Inloggen mislukt';
-				this.errorHelp = 'Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.';
-			} else {
-				console.log(result);
-			}
-			this.cd.detectChanges();
-		}).catch((error) => {
-			console.log(error)
-			this.loading = false;
-			if (error.code === 'invalid_username') {
-				this.success = false;
-				this.error = 'Inloggen mislukt';
-				this.errorHelp = 'Het inloggen is mislukt; je hebt niet de juiste gebruikersnaam ingevoerd.';
-				console.log('Verkeerde gebruikersnaam!');
-			} else if (error.code === 'incorrect_password') {
-				this.success = false;
-				this.error = 'Inloggen mislukt';
-				this.errorHelp = 'Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.';
-				console.log('Verkeerd wachtwoord!');
-			} else {
-				console.log(error);//user is offline (probably)
-			}
-			this.cd.detectChanges();
-		});
+		// //Try searching for random term: '000'. If it fails, login details probably are incorrect
+		// var wp = this.g.getWpApi(this.login, this.staging, 'search');
+		// wp.handler().param('search', '000').then((result) => {
+		// 	this.loading = false;
+		// 	if (result.code === 200) {
+		// 		this.success = true;
+		// 		this.error = null;
+		// 		console.log('Succesvol ingelogd!');
+		// 		setTimeout(() => { this.g.goHome() }, 800);
+		// 	} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
+		// 		this.success = false;
+		// 		this.error = 'Inloggen mislukt';
+		// 		this.errorHelp = 'Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.';
+		// 	} else {
+		// 		console.log(result);
+		// 	}
+		// 	this.cd.detectChanges();
+		// }).catch((error) => {
+		// 	console.log(error)
+		// 	this.loading = false;
+		// 	if (error.code === 'invalid_username') {
+		// 		this.success = false;
+		// 		this.error = 'Inloggen mislukt';
+		// 		this.errorHelp = 'Het inloggen is mislukt; je hebt niet de juiste gebruikersnaam ingevoerd.';
+		// 		console.log('Verkeerde gebruikersnaam!');
+		// 	} else if (error.code === 'incorrect_password') {
+		// 		this.success = false;
+		// 		this.error = 'Inloggen mislukt';
+		// 		this.errorHelp = 'Het inloggen is mislukt; je hebt niet het juiste wachtwoord ingevoerd.';
+		// 		console.log('Verkeerd wachtwoord!');
+		// 	} else {
+		// 		console.log(error);//user is offline (probably)
+		// 	}
+		// 	this.cd.detectChanges();
+		// });
 	}
 
 	toHome() {
