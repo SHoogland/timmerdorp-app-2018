@@ -48,19 +48,19 @@ export class LoginPage {
 		Parse.serverURL = 'https://api.timmerdorp.com/1/'
 		Parse.initialize('knDC2JAquVJZ1jSPwARj53IhQCfpOPIDNKcgRMsD', 'xnFIbFCrE1vjzWbRVehMO4QzPpNMCIdDgORKNlRI')
 
-		let install = new Parse.Installation();
+		// let install = new Parse.Installation();
 
-		install.save({deviceType: 'ionic'}, {
-			success: (install) => {
-				// Execute any logic that should take place after the object is saved.
-				this.result = 'New object created with objectId: ' + install.id;
-			},
-			error: (install, error) => {
-				// Execute any logic that should take place if the save fails.
-				// error is a Parse.Error with an error code and message.
-				this.result = ('Failed to create new object, with error code:' + error.message.toString());
-			}
-		});
+		// install.save({deviceType: 'ionic'}, {
+		// 	success: (install) => {
+		// 		// Execute any logic that should take place after the object is saved.
+		// 		this.result = 'New object created with objectId: ' + install.id;
+		// 	},
+		// 	error: (install, error) => {
+		// 		// Execute any logic that should take place if the save fails.
+		// 		// error is a Parse.Error with an error code and message.
+		// 		this.result = ('Failed to create new object, with error code:' + error.message.toString());
+		// 	}
+		// });
 
 		this.title = 'Login';
 		this.hideLogin = true;
@@ -108,13 +108,35 @@ export class LoginPage {
 		this.checkLogin();
 	}
 
-	checkLogin() {
+	async checkLogin() {
 		this.loading = true;
+		let self = this;
 		this.success = false;
 		this.cd.detectChanges();
-		console.log("Determining whether login is correct by searching for random child '000'...")
 
-		// //Try searching for random term: '000'. If it fails, login details probably are incorrect
+		await Parse.User.logIn(this.login.username.toLowerCase().replace(' ', ''), this.login.password).catch(
+			error => {
+				let readableErrors = {
+					'Invalid username/password.': 'Verkeerde gebruikersnaam of wachtwoord.',
+					'password is required.': 'Om in te loggen is een wachtwoord vereist!',
+				}
+				// this.passwordLoginErrors.push(readableErrors[error.message] || error.message)
+				console.log(error)
+			}
+		).then(function (user) {
+			if (user) {
+				self.loading = false;
+				// self.$store.dispatch('user/login', user)
+				// console.log(user)
+				self.g.goHome();
+			}
+			// self.loginLoading = false
+		})
+
+
+		// console.log("Determining whether login is correct by searching for random child '000'...")
+
+		//Try searching for random term: '000'. If it fails, login details probably are incorrect
 		// var wp = this.g.getWpApi(this.login, this.staging, 'search');
 		// wp.handler().param('search', '000').then((result) => {
 		// 	this.loading = false;
