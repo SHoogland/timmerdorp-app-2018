@@ -29,11 +29,6 @@ export class ChangeWristbandPage {
 	staging: boolean;
 	loading: boolean;
 
-	login: {
-		username: string,
-		password: string
-	};
-
 	constructor(
 		public navCtrl: NavController,
 		public httpClient: HttpClient,
@@ -120,10 +115,6 @@ export class ChangeWristbandPage {
 	}
 
 	ionViewDidLoad() {
-		this.login = {
-			username: '',
-			password: ''
-		}
 		this.searched = false;
 		this.staging = false;
 		this.loading = false;
@@ -139,21 +130,6 @@ export class ChangeWristbandPage {
 			}, (error) => {
 				this.history = [];
 			}),
-			this.storage.get('username').then((val) => {
-				this.login.username = val;
-			}, (error) => {
-				this.login.username = '';
-			}),
-			this.storage.get('password').then((val) => {
-				this.login.password = val;
-			}, (error) => {
-				this.login.password = '';
-			}),
-			this.storage.get('staging').then((val) => {
-				this.staging = val;
-			}, (error) => {
-				this.staging = false;
-			})
 		]).then(() => {
 			let self = this;
 			setInterval(function () {

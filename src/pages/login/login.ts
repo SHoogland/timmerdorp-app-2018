@@ -25,14 +25,12 @@ export class LoginPage {
 	};
 
 	hideLogin: boolean;
-	success: boolean;
 	loading: boolean;
 
 	result: string;
 
 	clickedOnce = false;
 	clickedTwice = false;
-	staging = false;
 
 	constructor(
 		public navCtrl: NavController,
@@ -45,28 +43,9 @@ export class LoginPage {
 	}
 
 	init() {
-		// let install = new Parse.Installation();
-
-		// install.save({deviceType: 'ionic'}, {
-		// 	success: (install) => {
-		// 		// Execute any logic that should take place after the object is saved.
-		// 		this.result = 'New object created with objectId: ' + install.id;
-		// 	},
-		// 	error: (install, error) => {
-		// 		// Execute any logic that should take place if the save fails.
-		// 		// error is a Parse.Error with an error code and message.
-		// 		this.result = ('Failed to create new object, with error code:' + error.message.toString());
-		// 	}
-		// });
-
 		this.title = 'Login';
 		this.hideLogin = true;
-		this.success = false;
 
-		this.login = {
-			username: '',
-			password: ''
-		}
 		this.loading = false;
 		this.error = '';
 
@@ -78,35 +57,30 @@ export class LoginPage {
 		}, () => {
 			this.hideLogin = true;
 		});
-
-		this.storage.get('username').then((val) => {
-			this.login.username = val;
-		}, () => {
-			this.login.username = '';
-		});
-
-		this.storage.get('password').then((val) => {
-			this.login.password = val;
-		}, () => {
-			this.login.password = '';
-		});
-
-		this.storage.get('staging').then((val) => {
-			this.staging = val;
-		}, () => {
-			this.staging = false;
-		});
 	}
 
-	loginNow() {
-		this.storage.set('username', this.login.username);
-		this.storage.set('password', this.login.password);
-
-		this.g.checkLogin(this);
-	}
-
-	toHome() {
-		this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: 'ios-transition', direction: 'back' });
+	async loginNow() {
+    let self = this;
+    self.loading = true;
+    if (!self.login.username || !self.login.password) {
+      self.error = 'Een gebruikersnaam en wachtwoord is vereist'
+      return
+    }
+    await Parse.User.logIn(self.login.username.toLowerCase().replace(' ', ''), self.login.password).catch(
+      error => {
+        let readableErrors = {
+          'Invalid username/password.': 'Verkeerde gebruikersnaam of wachtwoord.',
+          'password is required.': 'Om in te loggen is een wachtwoord vereist!',
+        }
+        self.error = readableErrors[error.message] || error.message
+        console.log(error)
+      }
+    ).then(function (user) {
+      if (user) {
+        self.g.goHome();
+      }
+      self.loading = false
+    })
 	}
 
 	switchEnv() {
@@ -116,18 +90,9 @@ export class LoginPage {
 			_this.clickedTwice = false;
 		}, 1000)
 		if (this.clickedTwice) {
-			if (!this.staging) {
-				this.storage.set('staging', true);
-				this.staging = true;
-        this.g.staging = true;
-			} else {
-				this.storage.set('staging', false);
-				this.staging = false;
-        this.g.staging = false;
-			}
+      this.g.switchEnv()
 			this.clickedOnce = false;
 			this.clickedTwice = false;
-      this.g.initParse();
 		}
 		if (this.clickedOnce) {
 			this.clickedTwice = true;

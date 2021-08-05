@@ -9,13 +9,13 @@
 	</ion-header>
 	<div class='content'>
 		<div *ngIf='hideLogin'>
-			<div class="user-info errorCard hasError" id='warning'>
+			<div class="user-info errorCard hasError" id='warning' style="width: 80%;">
 				<div class="content">
 					<ion-icon name="alert"></ion-icon>
 					<h1 id='errorHeader'>Let op</h1>
 					<h4 id='errorHelp'>Deze app is alleen bedoeld voor de vrijwilligers van Timmerdorp, niet voor
 						ouders of deelnemers! Klik op OK om door te gaan...</h4>
-					<button ion-button (click)='showLogin()'>OK</button>
+					<button ion-button (click)='showLogin()' style="background: darkred;height: 60px;width: 140px;margin-top: 8px;">OK</button>
 				</div>
 			</div>
 		</div>

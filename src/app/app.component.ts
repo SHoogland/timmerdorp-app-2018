@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Storage } from '@ionic/storage';
 
@@ -17,12 +16,6 @@ export class MyApp {
 
 	rootPage: any = HomePage;
 	pages: Array<{ title: string, component: any }>;
-	staging: boolean;
-
-	login: {
-		username: string,
-		password: string
-	};
 
 	constructor(
 		private g: GlobalFunctions,
@@ -35,12 +28,7 @@ export class MyApp {
 	}
 
 
-	initializeApp() {
-		this.login = {
-			username: "",
-			password: ""
-		}
-
+	async initializeApp() {
 		this.platform.ready().then(() => {
 			let isSentToLogin = false;
 			Promise.all([
@@ -53,21 +41,6 @@ export class MyApp {
 					isSentToLogin = true;
 					this.g.toLogin();
 				}),
-				this.storage.get('username').then((val) => {
-					this.login.username = val;
-				}, (error) => {
-					this.login.username = '';
-				}),
-				this.storage.get('password').then((val) => {
-					this.login.password = val;
-				}, (error) => {
-					this.login.password = '';
-				}),
-				this.storage.get('staging').then((val) => {
-					this.staging = !!val;
-				}, (error) => {
-					this.staging = false;
-				})
 			]).then(() => {
 				if (this.platform.is('cordova')) {
 					if (cordova.platformId === 'android') {
@@ -84,31 +57,11 @@ export class MyApp {
 					}
 				}
 				if (!isSentToLogin) {
-					this.preCheckLogin();
+					this.g.checkIfStillLoggedIn().then((loggedIn) => {
+            if(!loggedIn) this.g.toLogin();
+          }).catch((e) => console.log(e));
 				}
 			});
 		});
-	}
-
-
-	preCheckLogin() {
-		console.log("Determining whether login is correct by searching for random child '000'...")
-		// var wp = this.g.getWpApi(this.login, this.staging, 'search');
-		// wp.handler().param('search', "000").then((result) => {
-		// 	if (result.code === 200) {
-		// 		console.log("Logingegevens kloppen!");
-		// 	} else if (result.message === 'access denied') { // user probably didn't fill in username & password at all.
-		// 		this.g.toLogin();
-		// 	} else {
-		// 		console.log(result);
-		// 	}
-		// }).catch((error) => {
-		// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-		// 		this.g.toLogin();
-		// 	} else {
-		// 		this.g.toLogin();
-		// 		console.log(error);//user is offline (probably)
-		// 	}
-		// });
 	}
 }

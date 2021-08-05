@@ -42,9 +42,9 @@
 			[ngClass]='(!((tickets||[]).length) && (history||[]).length > 0 && !(searchTerm||"").length)?"shown hideable":"hideable"'>
 			<ion-list class='peopleList'>
 				<ion-list-header>
-					Zoekgeschiedenis ({{(history||[]).length}})
+					Zoekgeschiedenis ({{(history || []).length}})
 				</ion-list-header>
-				<ion-item *ngFor="let h of history"
+				<ion-item *ngFor="let h of (history || [])"
 					(click)='searchTerm=""+(h.wristband||h.firstName||h.lastName||h.hutnr);searchThis()'
 					class='{{"item item-block item-md " + g.getWijk((h.hutnr||[0])[0])}}'>
 					<ion-label>

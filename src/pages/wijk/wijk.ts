@@ -99,23 +99,9 @@ export class WijkPage {
 	}
 
 	init() {
-		this.login = {
-			username: '',
-			password: ''
-		}
 
 		this.wijk = '';
 		Promise.all([
-			this.storage.get('username').then((val) => {
-				this.login.username = val;
-			}, (error) => {
-				this.login.username = '';
-			}),
-			this.storage.get('password').then((val) => {
-				this.login.password = val;
-			}, (error) => {
-				this.login.password = '';
-			}),
 			this.storage.get('wijk').then((val) => {
 				if (!val) {
 					this.showSelection = true;
@@ -124,12 +110,6 @@ export class WijkPage {
 					this.g.setStatusBar(this.wijk);
 				}
 			}),
-
-			this.storage.get('staging').then((val) => {
-				this.staging = val;
-			}, (error) => {
-				this.staging = false;
-			})
 		]).then(() => {
 			this.title = 'Wijkoverzicht ' + this.g.getWijkName(this.wijk);
 			this.updateData();

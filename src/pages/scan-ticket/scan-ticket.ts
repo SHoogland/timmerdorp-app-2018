@@ -14,9 +14,8 @@ declare let cordova: any;
 export class ScanTicketPage {
 	wristBandError: boolean;
 	loading: boolean;
-	staging: boolean;
 
-	oldNumber: string;
+  oldNumber: string;
 	errorHelp: string;
 	error: string;
 	title: string;
@@ -24,10 +23,6 @@ export class ScanTicketPage {
 	modal: {
 		showModal: boolean;
 	}
-	login: {
-		username: string,
-		password: string
-	};
 	ticket: {
 		barcode: string;
 		firstName: string,
@@ -60,10 +55,6 @@ export class ScanTicketPage {
 
 	init() {
 		this.staging = false;
-		this.login = {
-			username: '',
-			password: ''
-		}
 		this.ticket = {
 			barcode: '',
 			firstName: '',
@@ -82,30 +73,11 @@ export class ScanTicketPage {
 	}
 
 	ionViewDidLoad() {
-		let self = this;
-
 		this.init();
 
-		Promise.all([
-			this.storage.get('username').then((val) => {
-				this.login.username = val;
-			}, (error) => {
-				this.login.username = '';
-			}),
-			this.storage.get('password').then((val) => {
-				this.login.password = val;
-			}, (error) => {
-				this.login.password = '';
-			}),
-			this.storage.get('staging').then((val) => {
-				this.staging = !!val;
-			}, (error) => {
-				this.staging = false;
-			})
-		]).then(() => {
-			// var wp = this.g.getWpApi(this.login, this.staging, 'barcode');
-			// return wp.handler().param('barcode', this.navParams.get('barcode'));
-		}).then((result) => {
+    // var wp = this.g.getWpApi(this.login, this.staging, 'barcode');
+    // return wp.handler().param('barcode', this.navParams.get('barcode'));
+		// }).then((result) => {
 		// 	self.loading = false;
 		// 	if (result.code === 200) {
 		// 		self.ticket.barcode = (result.meta.WooCommerceEventsTicketID || [])[0];
@@ -144,7 +116,7 @@ export class ScanTicketPage {
 		// 	} else {
 		// 		self.error = error.message;
 		// 	}
-		});
+		// });
 	}
 
 	saveTicket() {
