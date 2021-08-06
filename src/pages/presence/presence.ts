@@ -78,13 +78,13 @@ export class PresencePage {
 		this.number = '';
 		this.name = '';
 
-    this.storage.get('presHistory').then((val) => {
-      this.history = val || [];
-      this.history = this.g.filterHistory(this.history);
-      console.log(this.history);
-    }, (error) => {
-      this.history = [];
-    }),
+		this.storage.get('presHistory').then((val) => {
+		this.history = val || [];
+		this.history = this.g.filterHistory(this.history);
+		console.log(this.history);
+		}, (error) => {
+		this.history = [];
+		})
 	}
 
 	getDayName(d) {
