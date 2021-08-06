@@ -88,7 +88,6 @@ export class ConnectChildToCabinPage {
 		this.giveAccent = false;
 		this.isUndoing = false;
 		this.searched = false;
-		this.staging = false;
 		this.loading = false;
 		this.error1 = false;
 		this.error2 = false;

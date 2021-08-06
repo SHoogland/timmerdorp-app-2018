@@ -54,7 +54,6 @@ export class ScanTicketPage {
 	}
 
 	init() {
-		this.staging = false;
 		this.ticket = {
 			barcode: '',
 			firstName: '',
