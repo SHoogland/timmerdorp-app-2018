@@ -20,24 +20,24 @@
 			<ion-spinner color='primary' *ngIf='loading'></ion-spinner>
 		</div>
 
-		<div *ngIf="ticket.barcode.length > 0">
+		<div *ngIf="loadedTicket">
 			<div class="user-info">
 				<table class='cleanTable'>
 					<tr>
 						<td>Naam:</td>
-						<td>{{ticket.firstName}} {{ticket.lastName}}</td>
+						<td>{{ ticket.firstName }} {{ ticket.lastName }}</td>
 					</tr>
 					<tr>
-						<td>Ticket-barcode:</td>
-						<td>{{ticket.barcode}}</td>
+						<td>Ticket QR-code:</td>
+						<td>{{ ticket.id }}</td>
 					</tr>
 					<tr>
 						<td>Geboortedatum:</td>
-						<td>{{ticket.birthDate}}</td>
+						<td>{{ ticket.birthdate }}</td>
 					</tr>
-					<tr *ngIf='ticket.hutNr'>
+					<tr *ngIf='ticket.hutnr'>
 						<td>Hutnummer: </td>
-						<td>{{ticket.hutNr}}</td>
+						<td>{{ ticket.hutnr }}</td>
 					</tr>
 				</table>
 			</div>
@@ -45,7 +45,7 @@
 				<h1>Armbandnummer</h1>
 				<ion-list class="line-input">
 					<ion-item>
-						<ion-input #nrInput type='tel' maxlength='3' [(ngModel)]='ticket.wristBandNr'
+						<ion-input #nrInput type='tel' maxlength='3' [(ngModel)]='ticket.wristband'
 							class="ion-text-right">
 						</ion-input>
 					</ion-item>
@@ -54,8 +54,8 @@
 		</div>
 	</div>
 	<button ion-button full (click)="g.goHome()" class="bg-red correction modern">Terug</button>
-	<button *ngIf="ticket.wristBandNr.length > 2" ion-button full (click)="saveTicket()"
-		class="bg-green correction modern">Opslaan </button>
+	<button *ngIf="(ticket.wristband || '').length > 2" ion-button full (click)="saveTicket()"
+		class="bg-green correction modern">Opslaan</button>
 </ion-content>
 
 <div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"

@@ -1,7 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Platform, NavController, Keyboard } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { HomePage } from '../home/home';
 import { GlobalFunctions } from '../../providers/global';
 
 declare let cordova: any;
@@ -18,12 +17,12 @@ export class PresencePage {
 	name: string;
 	day: string;
 
+  foundTicket: boolean;
 	modalShown: boolean;
 	greenBtn: boolean;
 	loading: boolean;
-	staging: boolean;
 
-	tickets: Array<any>;
+	ticket: any;
 	history: any;
 
 	constructor(
@@ -34,46 +33,47 @@ export class PresencePage {
 		public keyboard: Keyboard,
 		public g: GlobalFunctions
 	) {
-		this.title = 'Aanwezigheid';
+    this.title = 'Aanwezigheid';
 		if (this.platform.is('cordova')) {
-			if (cordova.platformId === 'android') {
-				this.platform.registerBackButtonAction(() => {
-					if (this.modalShown) {
-						this.modalShown = false;
+      if (cordova.platformId === 'android') {
+        this.platform.registerBackButtonAction(() => {
+          if (this.modalShown) {
+            this.modalShown = false;
 					} else {
-						this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+            this.g.goHome();
 					}
 				});
 			}
 		}
+    this.foundTicket = false;
 	}
 
 	init() {
 		switch (new Date().getDay()) {
 			case 2:
-				this.day = "tue";
+				this.day = "di";
 				break;
 			case 3:
-				this.day = 'wed';
+				this.day = 'wo';
 				break;
 			case 4:
-				this.day = 'thu';
+				this.day = 'do';
 				break;
 			case 5:
-				this.day = 'fri';
+				this.day = 'vr';
 				break;
 			default:
-				this.day = 'tue'
+				this.day = 'di'
 				alert("Nog even wachten tot Timmerdorp!");
 				this.g.goHome();
 		}
+
 		this.modalShown = false;
 		this.greenBtn = false;
-		this.staging = false;
 
 		this.loading = false;
 		this.error = '';
-		this.tickets = [];
+		this.ticket = {};
 
 		this.number = '';
 		this.name = '';
@@ -84,14 +84,15 @@ export class PresencePage {
       console.log(this.history);
     }, (error) => {
       this.history = [];
-    }),
+    });
 	}
 
 	getDayName(d) {
-		if (d == 'tue') return "Dinsdag"
-		if (d == 'wed') return "Woensdag"
-		if (d == 'thu') return "Donderdag"
-		if (d == 'fri') return "Vrijdag"
+		if (d == 'di') return "Dinsdag"
+		if (d == 'wo') return "Woensdag"
+		if (d == 'do') return "Donderdag"
+		if (d == 'vr') return "Vrijdag"
+    return 'onbekend'
 	}
 
 	ionViewDidLoad() {
@@ -103,133 +104,90 @@ export class PresencePage {
 	}
 
 	getChild() {
-		this.error = '';
-		let self = this;
-		if (this.number.length === 3) {
-			this.loading = true;
-			// var wp = this.g.getWpApi(this.login, this.staging, 'search');
-			// wp.handler().param('search', this.number).param('withouthut', '').then((result) => {
-			// 	console.log(result);
-			// 	if (result.code === 200) {
-			// 		self.error = '';
-			// 		if (result.tickets.length === 0) {
-			// 			self.error = 'Geen resultaten';
-			// 			self.errorHelp = 'Tip: Je kunt alleen zoeken op polsbandnummer.';
-			// 			self.loading = false;
-			// 			return;
-			// 		}
-			// 		result.tickets = result.tickets.filter(function (a) {
-			// 			if ((a.meta.wristband || [])[0] !== self.number) {
-			// 				return false;
-			// 			}
-			// 			return true;
-			// 		});
-			// 		if (result.tickets.length === 0) {
-			// 			self.error = 'Geen resultaten';
-			// 			self.errorHelp = 'Tip: Je kunt alleen zoeken op polsbandnummer.';
-			// 			self.loading = false;
-			// 			return;
-			// 		}
-			// 		let t = result.tickets[0];
-			// 		let m = t.meta;
-			// 		self.history.unshift({
-			// 			firstName: m.WooCommerceEventsAttendeeName[0],
-			// 			lastName: m.WooCommerceEventsAttendeeLastName[0],
-			// 			wristband: m.wristband,
-			// 			hutnr: m.hutnr,
-			// 			wijk: self.g.getColor(m.hutnr)
-			// 		});
-			// 		self.history = this.g.filterHistory(this.history);
-			// 		self.storage.set("presHistory", self.history);
-			// 		console.log(result.tickets);
-			// 		self.tickets = result.tickets;
-			// 		self.loading = false;
-			// 	} else {
-			// 		if (result.message == 'access denied') {
-			// 			this.error = 'Niet ingelogd';
-			// 			this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
-			// 		} else {
-			// 			self.error = result.message;
-			// 			self.loading = false;
-			// 		}
-			// 	}
-			// }).catch((error) => {
-			// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-			// 		this.error = 'Inloggegevens onjuist';
-			// 		this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
-			// 	} else {
-			// 		self.error = error.message;
-			// 	}
-			// 	self.loading = false;
-			// });
+    this.error = '';
+    if (this.number.length === 3) {
+      this.loading = true;
+      this.foundTicket = false;
+
+      let self = this;
+      this.g.apiCall('findChildByWristband', { wristband: this.number }).then((result) => {
+        if(result.response !== 'success') {
+          self.error = result.errorMessage || result.response
+          return
+        } else {
+          self.ticket = result.ticket
+          self.foundTicket = true
+          self.loading = false
+          self.history.unshift({
+            firstName: self.ticket.firstName,
+            lastName: self.ticket.lastName,
+            wristband: self.ticket.wristband,
+            hutnr: self.ticket.hutnr,
+            wijk: self.g.getColor(self.ticket.hutnr)
+          });
+          self.history = this.g.filterHistory(this.history);
+          self.storage.set("presHistory", self.history);
+        }
+      })
 		} else {
 			this.loading = false;
-			this.tickets = [];
+			this.ticket = null;
+      this.foundTicket = false;
 		}
 	}
 
 	makeAbsent() {
-		this.closeModal();
 		if (this.number.length < 3) return;
-		if (!this.tickets[0]) {
+		if (!this.foundTicket || !this.ticket) {
+			this.error = 'Geen kind gevonden!';
+			return;
+		}
+		if (this.number.length != 3) return;
+
+    if (!this.ticket || !this.foundTicket) {
 			this.error = 'Geen kind gevonden!';
 			return;
 		}
 
-		let self = this;
-		// var wp = this.g.getWpApi(this.login, this.staging, 'presence');
-		// wp.handler().param('wristband', this.number).param('day', this.day).param('presence', false).then((result) => {
-		// 	if (result.code === 200) {
-		// 		this.markDone();
-		// 		console.log("Child absence update successful for " + self.day, result)
-		// 		this.loading = false;
-		// 		this.error = '';
-		// 		self.loading = false;
-		// 	} else {
-		// 		self.error = result.message;
-		// 		self.loading = false;
-		// 	}
-		// }).catch((error) => {
-		// 	self.loading = false;
-		// 	console.log(error);
-		// });
+    let self = this;
+
+    this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day, forcePresence: true, presence: false }).then((result) => {
+      if(!result || !(result || {}).response || result.response != "success") {
+        alert('Absent melden niet gelukt! Vraag na bij Stan of Stephan wat er mis ging...')
+      }
+      self.ticket['aanwezig_' + self.day] = result.newPresence
+      self.closeModal()
+    });
 	}
 
 	togglePresence() {
 		this.hideKeyboard();
-		if (this.number.length < 3) return;
-		if (!this.tickets[0]) {
+    this.error = ''
+    this.errorHelp = ''
+		if (this.number.length != 3) return;
+    this.loading = true;
+		if (!this.ticket || !this.foundTicket) {
 			this.error = 'Geen kind gevonden!';
 			return;
 		}
-		let self = this;
-		self.loading = true;
-		if (this.tickets[0].meta['present_' + this.day] + '' == 'undefined') {
-			this.tickets[0].meta['present_' + this.day] = [false]
-		}
-		var pres = !(this.tickets[0].meta['present_' + this.day] || [])[0];
-		console.log(pres);
-		if (!pres) {
+
+    if(this.ticket['aanwezig_' + this.day]) {
 			console.log("warning user that child is already present");
 			this.showModal();
 			return;
-		}
-		// var wp = this.g.getWpApi(this.login, this.staging, 'presence');
-		// wp.handler().param('wristband', this.number).param('day', this.day).param('presence', pres).then((result) => {
-		// 	if (result.code === 200) {
-		// 		this.markDone();
-		// 		console.log("Child presence update successful for " + self.day, result)
-		// 		this.loading = false;
-		// 		this.error = '';
-		// 		self.loading = false;
-		// 	} else {
-		// 		self.error = result.message;
-		// 		self.loading = false;
-		// 	}
-		// }).catch((error) => {
-		// 	self.loading = false;
-		// 	console.log(error);
-		// });
+    }
+
+    let self = this;
+
+    this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day }).then((result) => {
+      if(!result || !(result || {}).response || result.response != "success") {
+        self.error = (result || {}).errorTitle || 'Foutmelding!';
+        self.errorHelp = (result || {}).errorMessage || (result || {}).response;
+        self.loading = false
+      }
+      self.ticket['aanwezig_' + self.day] = result.newPresence
+      self.loading = false
+    });
 	}
 
 	showModal() {
@@ -247,7 +205,8 @@ export class PresencePage {
 
 
 	markDone() {
-		this.tickets = [];
+		this.ticket = null;
+    this.foundTicket = false;
 		this.greenBtn = true;
 		let self = this;
 		document.getElementById("btnLabel").innerHTML = "Opgeslagen!";
@@ -262,10 +221,6 @@ export class PresencePage {
 	}
 
 	alert() {
-		alert("Om fouten te voorkomen is het niet mogelijk aanwezigheid te veranderen voor andere dagen. Vragen, of alsnog een wijziging aanvragen? Zoek Stan uit wijk blauw/Stephan uit wijk geel");
-	}
-
-	showCard() {
-		return Boolean(((this.tickets || [])[0] || {}).meta);
+		alert("Om fouten te voorkomen is het niet mogelijk aanwezigheid te veranderen voor andere dagen. Vragen, of alsnog een wijziging aanvragen? Zoek Stan uit wijk blauw of Stephan uit wijk geel");
 	}
 }

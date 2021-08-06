@@ -1,7 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { HomePage } from '../home/home';
 import { GlobalFunctions } from '../../providers/global';
 
 import Parse from 'parse';
