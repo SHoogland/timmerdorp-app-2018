@@ -19,30 +19,39 @@ jobs:
         uses: MatiseAms/setup-node@master
         with:
           node-version: 12.x
-      # - name: npm ci
-      #   run: npm ci
-      # - name: npm install ionic and cordova cli
-      #   run: npm i -g @ionic/cli cordova
-      # - name: turn on cordova telemetry
-      #   run: cordova telemetry on
-      # - name: bundle install
-      #   run: bundle install
-      # - name: Get and set build nr
-      #   run: node --experimental-modules scripts/get-set-buildnr.mjs
-      #   env:
-      #     APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
-      # - name: ionic build and prepare ios
-      #   run: |
-      #     npm run iosdist
-      #     cordova prepare ios
-      # - name: Fastlane disable codesigning
-      #   run: bundle exec fastlane ios signing
-      - name: Setup provisioning profile
-        run: |
-          ./.github/secrets/decrypt_secrets.sh
-          security find-certificate -a ~/Library/Keychains/build.keychain
+      - name: npm ci
+        run: npm ci
+      - name: npm install ionic and cordova cli
+        run: npm i -g @ionic/cli cordova
+      - name: turn on cordova telemetry
+        run: cordova telemetry on
+      - name: bundle install
+        run: bundle install
+      - name: Get and set build nr
+        run: node --experimental-modules scripts/get-set-buildnr.mjs
         env:
-          IOS_PROFILE_KEY: ${{ secrets.IOS_PROFILE_KEY }}
+          APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
+      - name: ionic build and prepare ios
+        run: |
+          npm run iosdist
+          cordova prepare ios
+      - name: Fastlane disable codesigning
+        run: bundle exec fastlane ios signing
+      - uses: yukiarrr/ios-build-action@v1.4.0
+        with:
+          project-path: platforms/ios/Timmerdorp.xcodeproj
+          p12-base64: ${{ secrets.P12_BASE64 }}
+          mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
+          code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
+          team-id: ${{ secrets.TEAM_ID }}
+          workspace-path: platforms/ios/Timmerdorp.xcworkspace
+
+#       - name: Setup provisioning profile
+#         run: |
+#           ./.github/secrets/decrypt_secrets.sh
+#           security find-certificate -a ~/Library/Keychains/build.keychain
+#         env:
+#           IOS_PROFILE_KEY: ${{ secrets.IOS_PROFILE_KEY }}
       # - name: Build app with xcode
       #   run: |
       #     xcodebuild archive \
