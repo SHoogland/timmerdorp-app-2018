@@ -1,8 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { LoginPage } from '../login/login';
-import { HomePage } from '../home/home';
 import { GlobalFunctions } from '../../providers/global';
 
 declare let cordova: any;
@@ -70,7 +68,7 @@ export class ConnectChildToCabinPage {
 				} else if (this.warningModal.show) {
 					this.warningModal.show = false;
 				} else {
-					this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+          this.g.goHome();
 				}
 			});
 		}

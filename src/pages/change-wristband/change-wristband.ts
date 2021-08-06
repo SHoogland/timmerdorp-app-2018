@@ -3,9 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { HttpClient } from '@angular/common/http';
 
-import { HomePage } from '../home/home';
 import { Storage } from '@ionic/storage';
-import { LoginPage } from '../login/login';
 import { GlobalFunctions } from '../../providers/global';
 
 
@@ -26,7 +24,6 @@ export class ChangeWristbandPage {
 	title: string;
 
 	searched: boolean;
-	staging: boolean;
 	loading: boolean;
 
 	constructor(
@@ -116,7 +113,6 @@ export class ChangeWristbandPage {
 
 	ionViewDidLoad() {
 		this.searched = false;
-		this.staging = false;
 		this.loading = false;
 		this.loading = false;
 		this.ticket = {};

@@ -27,7 +27,6 @@ declare let cordova: any;
 	templateUrl: 'home.html'
 })
 export class HomePage {
-	modalShown: boolean;
 	showPhoto: boolean;
 	android: boolean;
 
@@ -63,17 +62,6 @@ export class HomePage {
 		private g: GlobalFunctions
 	) {
 		this.y = new Date().getFullYear();
-		if (this.platform.is('cordova')) {
-			if (cordova.platformId === 'android') {
-				this.platform.registerBackButtonAction(() => {
-					if (this.modalShown) {
-						this.modalShown = false;
-					} else {
-						return;
-					}
-				});
-			}
-		}
 	}
 
 	async init() {
@@ -96,8 +84,6 @@ export class HomePage {
 		this.g.setStatusBar("#2196f3");
 
 		this.childrenCount = 0;
-
-		this.modalShown = false;
 
 		if (this.platform.is("android")) this.android = true;
 
@@ -257,12 +243,6 @@ export class HomePage {
 	ionViewDidLoad() {
 		this.init();
 		let self = this;
-		this.httpClient.get("https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json").subscribe((data: any) => {
-			self.updates = data.updates;
-			self.updates.sort(function (a, b) {
-				return b.date - a.date;
-			});
-		});
 	}
 
 	openStore() {
@@ -278,49 +258,18 @@ export class HomePage {
 		this.openedPage = page;
 		console.log(this.openedPage.component);
 
-		let blockOpening = false;
-		if (this.platform.is("cordova")) {
-			for (let i = 0; i < this.updates.length; i++) {
-				if (this.compareVersions(this.updates[i].version, this.version)) {
-					console.log("found newer update: ")
-					console.log(this.updates[i]);
-					if (this.updates[i].editedPages.indexOf(this.openedPage.component) > -1) {
-						blockOpening = true;
-					}
-				}
-			}
-		}
-
-
-		if (!blockOpening) {
-      let ogPage = this.openedPage.component
-			this.openedPage.component = this.readablePageList[this.openedPage.component];
-			if (this.openedPage.component === 'ticketscanner') {
-				this.scanCode();
-			} else if (this.openedPage.component === 'weather') {
-				this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
-			} else if (ogPage === 'login') {
-        await Parse.User.logOut();
-				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
-      } else {
-        console.log('ahnee')
-				this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
-			}
-		} else {
-			this.showModal();
-		}
-	}
-
-	showModal() {
-		this.modalShown = true;
-		document.querySelector('#myModal').classList.add('high');
-	}
-
-	closeModal() {
-		this.modalShown = false;
-		setTimeout(function () {
-			document.querySelector('#myModal').classList.remove('high');
-		}, 400);
+    let ogPage = this.openedPage.component
+    this.openedPage.component = this.readablePageList[this.openedPage.component];
+    if (this.openedPage.component === 'ticketscanner') {
+      this.scanCode();
+    } else if (this.openedPage.component === 'weather') {
+      this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
+    } else if (ogPage === 'login') {
+      await Parse.User.logOut();
+      this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+    } else {
+      this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+    }
 	}
 
 	forceOpenPage() {

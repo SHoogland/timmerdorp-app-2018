@@ -45,7 +45,7 @@
 					Zoekgeschiedenis ({{(history || []).length}})
 				</ion-list-header>
 				<ion-item *ngFor="let h of (history || [])"
-					(click)='searchTerm=""+(h.wristband||h.firstName||h.lastName||h.hutnr);searchThis()'
+					(click)='searchTerm = "" + (h.firstName + " " + h.lastName || h.wristband || h.hutnr); searchThis()'
 					class='{{"item item-block item-md " + g.getWijk((h.hutnr||[0])[0])}}'>
 					<ion-label>
 						<div>
@@ -146,7 +146,7 @@
 			</table>
 		</div>
 		<button ion-button full (click)="closeModal();">Sluiten</button>
-		<button ion-button full (click)="scanChild(modal.child.id)">Scannen</button>
+		<button ion-button full (click)="scanChild(modal.child.id)">Polsbandje wijzigen</button>
 		<button ion-button full (click)="goHome()">Terug naar homepagina</button>
 	</div>
 </div>

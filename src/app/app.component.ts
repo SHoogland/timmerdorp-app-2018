@@ -51,7 +51,7 @@ export class MyApp {
 							if (preventBack.indexOf(this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()) > -1) {
 								console.log("close the modal, if opened");
 							} else {
-								self.nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+                this.g.goHome();
 							}
 						});
 					}

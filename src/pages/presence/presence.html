@@ -24,12 +24,12 @@
 					[ngClass]='greenBtn ? "bg-green" : "bg-blue"' block>
 					<ion-icon name="send"></ion-icon>
 					<span id='btnLabel'>
-						Opslaan
+						{{ loading ? 'Laden...' : 'Opslaan' }}
 					</span>
 				</button>
 			</div>
 		</div>
-		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
+		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')" style="margin-bottom: 24px;">
 			<div class="content" *ngIf='error'>
 				<ion-icon name='warning'></ion-icon>
 				<h1 id='errorHeader' [innerHTML]='error'></h1>
@@ -38,37 +38,36 @@
 		</div>
 		<div class="user-info">
 			<div>
-				<div *ngIf="loading&&!notLoggedIn">
+				<div *ngIf="loading">
 					<ion-spinner color='primary'></ion-spinner>
 				</div>
 			</div>
 		</div>
-		<div class='infoCard fadeIn {{(tickets[0]||{}).meta?"shown":""}}' id='childInfo'>
-			<div *ngIf='(tickets[0]||{}).meta' class='{{"inhoud " + g.getWijk((tickets[0].meta.hutnr||[])[0])}}'>
+		<div class='infoCard fadeIn {{ foundTicket ? "shown" : "" }}' id='childInfo'>
+			<div *ngIf='foundTicket' class='{{"inhoud " + g.getWijk( (ticket || {}).hutnr)}}'>
 				<h1>Kind #{{number}}</h1>
 				<table>
 					<tr>
 						<td>Naam: </td>
-						<td>{{(tickets[0].meta.WooCommerceEventsAttendeeName||[])[0]}}
-							{{(tickets[0].meta.WooCommerceEventsAttendeeLastName||[])[0] }}</td>
+						<td>{{ ticket.firstName }} {{ ticket.lastName }}</td>
 					</tr>
 					<tr>
 						<td>Polsbandnummer: </td>
-						<td>{{tickets[0].meta.wristband}}</td>
+						<td>{{ ticket.wristband }}</td>
 					</tr>
 					<tr>
 						<td>Hutnummer: </td>
-						<td>{{tickets[0].meta.hutnr}}</td>
+						<td>{{ ticket.hutnr }}</td>
 					</tr>
 					<tr>
-						<td>Aanwezig {{getDayName(day).toLowerCase()}}: </td>
-						<td>{{tickets[0].meta["present_" + day] && ("" + tickets[0].meta["present_" + day]).length > 0?"Ja":"Nee"}}
+						<td>Aanwezig op {{getDayName(day).toLowerCase()}}: </td>
+						<td>{{ ticket["aanwezig_" + day] ? "Ja" : "Nee" }}
 						</td>
 					</tr>
 				</table>
 			</div>
 		</div>
-		<div *ngIf='!(tickets[0]||{}).meta && history && history.length > 0 && !loading'>
+		<div *ngIf='!foundTicket && history && history.length > 0 && !loading'>
 			<ion-list class='peopleList'>
 				<ion-list-header>
 					Zoekgeschiedenis ({{(history || []).length}})
@@ -106,7 +105,7 @@
 		<div id='modalBottom'>
 			<span class="close" (click)="closeModal();">&times;</span>
 			<h1>Waarschuwing</h1>
-			<p>Dit kind is al aanwezig gemeld voor {{getDayName(day).toLowerCase()}}! Je hebt twee opties:</p>
+			<p style="margin-bottom: 0px;">Dit kind is al aanwezig gemeld voor {{getDayName(day).toLowerCase()}}! Je hebt twee opties:</p>
 		</div>
 		<button ion-button full (click)="closeModal()" class="bg-red correction">Terug</button>
 		<button ion-button full (click)="makeAbsent()" class="bg-blue correction">Afwezig

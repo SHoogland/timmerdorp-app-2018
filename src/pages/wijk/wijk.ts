@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
-import { HomePage } from '../home/home';
-import { LoginPage } from '../login/login';
 import { GlobalFunctions } from '../../providers/global';
 
 @Component({
@@ -22,15 +20,9 @@ export class WijkPage {
 	notLoggedIn: boolean;
 	loginError: boolean;
 	loading: boolean;
-	staging: boolean;
 
 	wijkprops: any;
 	allprops: any;
-
-	login: {
-		username: string;
-		password: string;
-	}
 
 	constructor(
 		public navCtrl: NavController,

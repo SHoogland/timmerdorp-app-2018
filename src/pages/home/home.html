@@ -34,26 +34,3 @@
 	<span>{{error}}</span>
 
 </ion-content>
-
-<div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
-	class="modal conditional">
-	<div class="modal-content">
-		<div id='modalTop' class='warnModal'>
-		</div>
-		<div id='modalBottom'>
-			<span class="close" (click)="closeModal();">&times;</span>
-			<h1>Waarschuwing</h1>
-			<p>Voor het openen van deze pagina <b>moet</b> je de nieuwste versie gebruiken, anders kunnen wij niet
-				garanderen dat het allemaal werkt.</p>
-		</div>
-		<button ion-button full (click)="belStan()" class="bg-green correction callBtn">
-			<ion-icon slot='start' name='call'></ion-icon>
-			<span>Bel Stan</span>
-		</button>
-		<button ion-button full (click)="openStore()" class="bg-blue correction">Open {{android?"Play":"App"}}
-			Store</button>
-		<button ion-button full (click)="closeModal()" class="bg-red correction">Terug</button>
-		<button ion-button full (click)="forceOpenPage()" class='correction blackBtn'>Toch openen
-			(pas op)</button>
-	</div>
-</div>
