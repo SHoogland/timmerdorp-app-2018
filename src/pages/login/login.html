@@ -24,13 +24,13 @@
 			<h1>Inloggegevens</h1>
 			<ion-list class="line-input">
 				<ion-item>
-					<ion-input class="ion-text-right" placeholder='Gebruikersnaam' [(ngModel)]="login.username">
+					<ion-input class="ion-text-right" placeholder='Gebruikersnaam' [(ngModel)]="(login || {}).username">
 					</ion-input>
 				</ion-item>
 			</ion-list>
 			<ion-list class="line-input">
 				<ion-item>
-					<ion-input class="ion-text-right" type='password' placeholder='Wachtwoord'
+					<ion-input class="ion-text-right" type='password' placeholder='Wachtwoord' (keydown)="pwInput($event)"
 						[(ngModel)]="login.password">
 					</ion-input>
 				</ion-item>
@@ -65,7 +65,7 @@
 			</button>
 			<div id='stagingSwitch'>
 				<button ion-button id='stagingBtn' full (click)='switchEnv()'>hidden</button>
-				<p *ngIf="staging" id='stagingMsg'>staging enabled</p>
+				<p *ngIf="g.staging" id='stagingMsg'>staging enabled</p>
 			</div>
 		</div>
 	</div>

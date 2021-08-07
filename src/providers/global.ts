@@ -154,6 +154,11 @@ export class GlobalFunctions {
   }
 
   async apiCall(func, data) {
+    await this.fixParseURL()
+    return Parse.Cloud.run('app-' + func, data)
+  }
+
+  async fixParseURL() {
     if (!this.loadedStagingStatus) {
       await this.storage.get('staging').then((val) => {
         this.staging = true
@@ -167,9 +172,8 @@ export class GlobalFunctions {
     let newServerURL = this.serverURLs[this.staging ? 'staging' : 'production']
     if (Parse.serverURL !== newServerURL) {
       Parse.serverURL = newServerURL
-      Parse.initialize(this.serverUsernames[this.staging ? 'staging' : 'production'], this.serverPasswords[this.staging ? 'staging' : 'production'])
+      await Parse.initialize(this.serverUsernames[this.staging ? 'staging' : 'production'], this.serverPasswords[this.staging ? 'staging' : 'production'])
     }
-    return Parse.Cloud.run('app-' + func, data)
   }
 
   prependZero(n) {

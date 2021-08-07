@@ -67,7 +67,7 @@ export class ScanTicketPage {
 
     let self = this;
     this.g.apiCall('findChildById', { id: this.ticket.id }).then((result) => {
-      self.loading = false
+      self.loading = false;
       if (result.response !== 'success') {
         self.error = result.errorMessage || result.response;
         return;
@@ -120,10 +120,9 @@ export class ScanTicketPage {
         });
         self.storage.set("editHistory", editHis);
 
-        console.log('porque?')
         self.g.goHome();
       });
-    })
+    });
   }
 
   closeModal() {

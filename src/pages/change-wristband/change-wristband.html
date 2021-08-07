@@ -10,7 +10,7 @@
 	</ion-header>
 	<div class='content'>
 		<div id='columns'>
-			<div id='old'>
+			<div id='old' style="overflow: hidden;">
 				<h3>Oud nummer</h3>
 				<ion-list class="line-input">
 					<ion-item>
@@ -33,7 +33,7 @@
 				<h3>Nieuw nummer</h3>
 				<ion-list class="line-input">
 					<ion-item>
-						<ion-input #nrInput type='tel' class="ion-text-right" [(ngModel)]="newNr" id='secondInput'
+						<ion-input #nrInput type='tel' class="ion-text-right" [(ngModel)]="newNr" (keydown)='newNrInput($event)' id='secondInput'
 							maxlength='3'>
 						</ion-input>
 					</ion-item>
@@ -70,13 +70,13 @@
 					</tr>
 					<tr>
 						<td><b>Ticket-barcode: </b></td>
-						<td>{{ticket.barcode}}</td>
+						<td>{{ticket.id}}</td>
 					</tr>
 					<tr>
 						<td><b>Geboortedatum: </b></td>
-						<td>{{ticket.birthDate}}</td>
+						<td>{{ticket.birthdate}}</td>
 					</tr>
-					<tr *ngIf='ticket.hutnr'>
+					<tr>
 						<td><b>Hutnummer: </b></td>
 						<td>{{ticket.hutnr}}</td>
 					</tr>

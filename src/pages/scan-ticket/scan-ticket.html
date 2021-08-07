@@ -12,8 +12,8 @@
 		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
 			<div class="content" *ngIf='error'>
 				<ion-icon name='warning'></ion-icon>
-				<h1 id='errorHeader' [innerHTML]='error'>{{error}}</h1>
-				<h4 id='errorHelp' [innerHTML]='errorHelp'>{{errorHelp}}</h4>
+				<h1 id='errorHeader' [innerHTML]='error'>{{ error }}</h1>
+				<h4 id='errorHelp' [innerHTML]='errorHelp'>{{ errorHelp }}</h4>
 			</div>
 		</div>
 		<div [ngClass]='loading?"loading load-spinner":"load-spinner"'>
