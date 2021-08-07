@@ -149,5 +149,29 @@ export class ScanTicketPage {
     } else {
       this.g.goHome();
     }
-  }
+	}
+
+	closeModal() {
+		this.modal.showModal = false;
+		setTimeout(function () {
+			document.querySelector('#myModal').classList.remove('high');
+		}, 400);
+	}
+
+	showModal() {
+		this.modal.showModal = true;
+		document.querySelector('#myModal').classList.add('high');
+	}
+
+	goHome() {
+		if (this.modal.showModal) {
+			let self = this;
+			this.modal.showModal = false;
+			setTimeout(function () {
+				self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+			}, 200);
+		} else {
+			this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+		}
+	}
 }
