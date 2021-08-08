@@ -251,7 +251,7 @@ export class ConnectChildToCabinPage {
 
 	addChildToHut(child) {
 		this.selectedChild = child;
-		if (child.hutnr) {
+		if (child.hutNr) {
 			this.alreadyHasHutError = true;
 			this.noWristbandError = false;
 			this.showWarningModal();
@@ -276,11 +276,11 @@ export class ConnectChildToCabinPage {
       if(!result || result.response !== 'success') {
         alert('daar ging iets goed mis... het hutje is waarschijnlijk niet opgeslagen')
       } else {
-        console.log(self.selectedChild.hutnr)
+        console.log(self.selectedChild.hutNr)
         self.history.unshift({
           name: self.selectedChild.firstName + ' ' + self.selectedChild.lastName,
           wristband: self.selectedChild.wristband,
-          oldNr: self.selectedChild.hutnr,
+          oldNr: self.selectedChild.hutNr,
           hutNr: self.nieuwHutje,
           wijk: self.g.getColor(self.nieuwHutje),
           ticket: self.updateT(self.selectedChild)
@@ -303,12 +303,12 @@ export class ConnectChildToCabinPage {
 
 
 	updateT(ticket) {
-		ticket.hutnr = this.nieuwHutje;
+		ticket.hutNr = this.nieuwHutje;
 		return ticket;
 	}
 
 	updateT2(ticket) {
-		ticket.hutnr = null;
+		ticket.hutNr = null;
 		return ticket;
 	}
 
@@ -324,7 +324,7 @@ export class ConnectChildToCabinPage {
         self.history.unshift({
           name: self.removedChild.firstName + ' ' + self.removedChild.lastName,
           wristband: self.removedChild.wristband,
-          oldNr: self.removedChild.hutnr,
+          oldNr: self.removedChild.hutNr,
           hutNr: self.nieuwHutje,
           wijk: self.g.getColor(self.nieuwHutje),
           ticket: self.updateT2(self.removedChild),

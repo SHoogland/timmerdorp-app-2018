@@ -74,13 +74,13 @@
 				Zoekresultaten ({{tickets.length}})
 			</ion-list-header>
 			<ion-item *ngFor="let child of tickets" (click)='showModal(child)'
-				class='{{"item item-block item-md " + g.getWijk(child.hutnr)}}'>
+				class='{{"item item-block item-md " + g.getWijk(child.hutNr)}}'>
 				<ion-label>
 					<div>
 						<div>
 							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{child.wristband}}</span>
 							</h3>
-							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{child.hutnr}}</span></h3>
+							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{child.hutNr}}</span></h3>
 						</div>
 						<div>
 							<h2><span class='tinyScreen'>{{child.firstName}}<br>
@@ -126,9 +126,9 @@
               </td>
             </div>
 					</tr>
-          <tr *ngIf="cat.name === 'Gegevens Kind' && modal.child['hutnr']">
+          <tr *ngIf="cat.name === 'Gegevens Kind' && modal.child['hutNr']">
             <td><b>Hutnummer:</b></td>
-            <td>{{ modal.child['hutnr'] }}</td>
+            <td>{{ modal.child['hutNr'] }}</td>
           </tr>
 				</div>
         <div>
