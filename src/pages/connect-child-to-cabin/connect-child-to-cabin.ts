@@ -32,14 +32,12 @@ export class ConnectChildToCabinPage {
 	allowAutoPresence: boolean;
 	undoingIsDone: boolean;
 	autoPresence: boolean;
-	notLoggedIn: boolean;
 	giveAccent: boolean;
 	isUndoing: boolean;
 	searched: boolean;
 	loading: boolean;
-	error1: boolean;
-	error2: boolean;
-	isTue: boolean; //if it's tuesday, show the auto-presence toggle
+	alreadyHasHutError: boolean;
+	noWristbandError: boolean;
 
 	addModal: {
 		show: boolean;
@@ -72,23 +70,18 @@ export class ConnectChildToCabinPage {
 				}
 			});
 		}
-	}
 
-	init() {
-		this.title = 'Beheer Hutjes';
-		this.isTue = (new Date().getDay() == 2);
-
+    this.title = 'Beheer Hutjes';
 
 		this.allowAutoPresence = false;
 		this.undoingIsDone = false;
 		this.autoPresence = false;
-		this.notLoggedIn = false;
 		this.giveAccent = false;
 		this.isUndoing = false;
 		this.searched = false;
 		this.loading = false;
-		this.error1 = false;
-		this.error2 = false;
+		this.alreadyHasHutError = false;
+		this.noWristbandError = false;
 
 		this.searchError = '';
 		this.error = '';
@@ -106,7 +99,9 @@ export class ConnectChildToCabinPage {
 
 		this.hutTickets = [];
 		this.tickets = [];
+	}
 
+	init() {
 		setInterval(function () {
 			console.log((this.removeModal || {}).show); //hierdoor werkt de removeModal (ionic gedoe)
 		}, 250);
@@ -126,9 +121,9 @@ export class ConnectChildToCabinPage {
 		});
 	}
 
-	getBg(hutnr) {
+	getBg(hutNr) {
 		let res = '#000';
-		let a = (hutnr + "")[0];
+		let a = (hutNr + "")[0];
 
 		switch (a) {
 			case '0':
@@ -200,37 +195,19 @@ export class ConnectChildToCabinPage {
 		this.error = '';
 		this.cd.detectChanges();
 		let self = this;
-		// var wp = this.g.getWpApi(this.login, this.staging, 'hut');
-		// wp.handler().param('hutnr', this.hutNr).then((result) => {
-		// 	console.log(result);
-		// 	if (result.code === 200) {
-		// 		result.tickets.sort(function (a, b) {
-		// 			let nra = ((a || {}).meta || {}).wristband || Infinity;
-		// 			let nrb = ((b || {}).meta || {}).wristband || Infinity;
-		// 			return nra - nrb;
-		// 		})
-		// 		self.hutTickets = result.tickets;
-		// 		self.loading = false;
-		// 		self.cd.detectChanges();
-		// 		self.searched = true;
-		// 	} else {
-		// 		if (result.message == 'access denied') {
-		// 			this.error = 'Niet ingelogd';
-		// 			this.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
-		// 		} else {
-		// 			self.error = result.message;
-		// 			self.loading = false;
-		// 		}
-		// 	}
-		// }).catch((error) => {
-		// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-		// 		this.error = 'Inloggegevens onjuist';
-		// 		this.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
-		// 	} else {
-		// 		self.error = error.message;
-		// 	}
-		// 	self.loading = false;
-		// });
+    this.g.apiCall('searchHut', { hutNr: this.hutNr }).then((result) => {
+      if(!result || result.response !== 'success') {
+        self.error = (result || {}).error || (result || {}).response
+        self.errorHelp = (result || {}).errorMessage || (result || {}).response
+        return;
+      }
+      self.hutTickets = result.tickets;
+      self.loading = false;
+      self.cd.detectChanges();
+      self.searched = true;
+    }, (error) => {
+      self.error = error
+    })
 	}
 
 	searchChild() {
@@ -252,43 +229,35 @@ export class ConnectChildToCabinPage {
 			return;
 		}
 		self.loading = true;
+
 		console.log('searching: ' + this.searchTerm);
-		// var wp = this.g.getWpApi(this.login, this.staging, 'search');
-		// wp.handler().param('search', this.searchTerm).then((result) => {
-		// 	console.log(result);
-		// 	if (result.code === 200) {
-		// 		if (!isNaN(+self.searchTerm)) {
-		// 			result.tickets.sort(function (a, b) { //if the search term is a number
-		// 				if ((a.meta.wristband || [])[0] == self.searchTerm) {
-		// 					return -1;
-		// 				}
-		// 				return 1;
-		// 			}); //give priority to wristbands over hut numbers
-		// 		}
-		// 		self.tickets = result.tickets;
-		// 		if (self.tickets.length === 0) {
-		// 			self.searchError = 'Geen resultaten';
-		// 		}
-		// 		self.loading = false;
-		// 	} else {
-		// 		self.searchError = result.message;
-		// 		self.loading = false;
-		// 	}
-		// }).catch((error) => {
-		// 	self.searchError = error.message;
-		// 	self.loading = false;
-		// });
+    this.g.apiCall('search', { searchTerm: this.searchTerm }).then((result) => {
+      if(!result || result.response !== 'success') {
+        self.error = (result || {}).error || (result || {}).response
+        self.errorHelp = (result || {}).errorMessage || (result || {}).response
+        return;
+      }
+      self.loading = false
+      self.tickets = result.tickets.sort(function (a) {
+        if (a.wristband == self.searchTerm) {
+          return -1;
+        }
+        return 1;
+      }); //give priority to wristbands over hut numbers
+    }).catch((e) => {
+      self.error = String(e)
+    });
 	}
 
 	addChildToHut(child) {
 		this.selectedChild = child;
-		if ((child.meta.hutnr || [])[0]) {
-			this.error1 = true;
-			this.error2 = false;
+		if (child.hutnr) {
+			this.alreadyHasHutError = true;
+			this.noWristbandError = false;
 			this.showWarningModal();
-		} else if (!(child.meta.wristband || [])[0]) {
-			this.error1 = false;
-			this.error2 = true;
+		} else if (!child.wristband) {
+			this.alreadyHasHutError = false;
+			this.noWristbandError = true;
 			this.showWarningModal();
 		} else {
 			this.reallyAddChildNow();
@@ -296,128 +265,86 @@ export class ConnectChildToCabinPage {
 	}
 
 	reallyAddChildNow() {
-		let child = this.selectedChild;
-		console.log(child);
-		let self = this;
 		this.loading = true;
-		this.nieuwHutje = this.hutNr;
-		this.tempHutNr = typeof this.tempHutNr === 'object' && this.tempHutNr !== null ? this.tempHutNr[0] : this.tempHutNr;
-		if (typeof this.tempHutNr == 'string') this.nieuwHutje = this.tempHutNr;
-		this.nieuwHutje = typeof this.nieuwHutje === 'object' ? this.nieuwHutje[0] : this.nieuwHutje;
-		this.closeWarningModal();
-		console.log(this.nieuwHutje);
-		this.closeAddModal();
 		this.isUndoing = false;
-		this.tempHutNr = null;
-		if (this.autoPresence && !this.isUndoing && new Date().getDay() == 2) {
-			// var wp = this.g.getWpApi(this.login, this.staging, 'presence');
-			// wp.handler().param('wristband', child.meta.wristband).param('day', "tue").param("presence", true).then((result) => {
-			// 	console.log("kind aanwezig gemeld vandaag");
-			// 	this.addChildPart2(child);
-			// }).catch((error) => {
-			// 	self.error = error.message;
-			// 	self.loading = false;
-			// 	console.log(error);
-			// 	console.log("at least we tried");
-			// 	this.addChildPart2(child);
-			// });
-		} else {
-			this.addChildPart2(child);
-		}
-	}
-
-
-	addChildPart2(child) {
+		this.nieuwHutje = this.hutNr;
+		this.closeWarningModal();
+		this.closeAddModal();
+		console.log(this.selectedChild);
 		let self = this;
-		// var wp = this.g.getWpApi(this.login, this.staging, 'hut-add');
-		// console.log(this.nieuwHutje);
-		if (!this.nieuwHutje) {
-			this.removeChildFromHut(child);
-			return;
-		}
-		// wp.handler().param('hutnr', this.nieuwHutje).param('wristband', child.meta.wristband).then((result) => {
-		// 	console.log(result);
-		// 	let t = self.selectedChild;
-		// 	let m = t.meta;
-		// 	self.history.unshift({
-		// 		name: m.WooCommerceEventsAttendeeName[0] + " " + m.WooCommerceEventsAttendeeLastName[0],
-		// 		wristband: m.wristband,
-		// 		oldNr: m.hutnr,
-		// 		hutnr: self.nieuwHutje,
-		// 		wijk: self.g.getColor(self.nieuwHutje),
-		// 		ticket: self.updateT(t)
-		// 	});
+    this.g.apiCall('setHutNr', { id: this.selectedChild.id, hutNr: this.hutNr }).then((result) => {
+      if(!result || result.response !== 'success') {
+        alert('daar ging iets goed mis... het hutje is waarschijnlijk niet opgeslagen')
+      } else {
+        console.log(self.selectedChild.hutnr)
+        self.history.unshift({
+          name: self.selectedChild.firstName + ' ' + self.selectedChild.lastName,
+          wristband: self.selectedChild.wristband,
+          oldNr: self.selectedChild.hutnr,
+          hutNr: self.nieuwHutje,
+          wijk: self.g.getColor(self.nieuwHutje),
+          ticket: self.updateT(self.selectedChild)
+        });
 
-		// 	self.storage.set("cabinAddHistory", self.history);
+        self.storage.set("cabinAddHistory", self.history);
 
-		// 	self.giveAccent = true;
+        self.giveAccent = true;
 
-		// 	setTimeout(function () {
-		// 		self.giveAccent = false;
-		// 	}, 1500);
-
-		// 	if (result.code === 200) {
-		// 		setTimeout(function () {
-		// 			self.search();
-		// 		}, 500);
-		// 		self.loading = false;
-		// 	} else {
-		// 		self.error = result.message;
-		// 		self.loading = false;
-		// 	}
-		// }).catch((error) => {
-		// 	self.error = error.message;
-		// 	self.loading = false;
-		// });
+        setTimeout(function () {
+          self.giveAccent = false;
+        }, 1500);
+      }
+      setTimeout(function () {
+        self.search();
+      }, 100);
+      self.loading = false;
+    });
 	}
+
 
 	updateT(ticket) {
-		ticket.meta.hutnr = ["" + this.nieuwHutje];
+		ticket.hutnr = this.nieuwHutje;
 		return ticket;
 	}
 
-	updateT2(t) {
-		t.meta.hutnr = [""];
-		return t;
+	updateT2(ticket) {
+		ticket.hutnr = null;
+		return ticket;
 	}
 
 
 	removeChildFromHut(child) {
 		let self = this;
-		// var wp = this.g.getWpApi(this.login, this.staging, 'hut-remove');
-		// this.removedChild = child;
-		// wp.handler().param('hutnr', child.meta.hutnr).param('wristband', child.meta.wristband).then((result) => {
-		// 	console.log(result);
-		// 	if (result.code === 200) {
-		// 		self.closeRemoveModal();
-		// 		let t = self.removedChild;
-		// 		let m = t.meta;
+    console.log(child)
+    this.removedChild = child;
+    this.g.apiCall('setHutNr', { id: child.id, hutNr: null, removeFromHut: true }).then((result) => {
+      if(!result || result.response !== 'success') {
+        alert('daar ging iets goed mis... het hutje is waarschijnlijk niet opgeslagen')
+      } else {
+        self.history.unshift({
+          name: self.removedChild.firstName + ' ' + self.removedChild.lastName,
+          wristband: self.removedChild.wristband,
+          oldNr: self.removedChild.hutnr,
+          hutNr: self.nieuwHutje,
+          wijk: self.g.getColor(self.nieuwHutje),
+          ticket: self.updateT2(self.removedChild),
+          removal: true
+        });
 
-		// 		let newItem = {
-		// 			name: m.WooCommerceEventsAttendeeName[0] + " " + m.WooCommerceEventsAttendeeLastName[0],
-		// 			wristband: m.wristband,
-		// 			oldNr: m.hutnr,
-		// 			ticket: self.updateT2(t),
-		// 			removal: true
-		// 		};
-		// 		self.history.unshift(newItem);
+        self.storage.set("cabinAddHistory", self.history);
 
+        self.giveAccent = true;
 
-		// 		self.storage.set("cabinAddHistory", self.history);
-
-		// 		setTimeout(function () {
-		// 			self.search();
-		// 		}, 250);
-		// 		self.loading = false;
-		// 		self.removedChild = null;
-		// 	} else {
-		// 		self.error = result.message;
-		// 		self.loading = false;
-		// 	}
-		// }).catch((error) => {
-		// 	self.error = error.message;
-		// 	self.loading = false;
-		// });
+        setTimeout(function () {
+          self.giveAccent = false;
+        }, 1500);
+      }
+      self.closeRemoveModal();
+      setTimeout(function () {
+        self.search();
+      }, 100);
+      self.loading = false;
+    });
 	}
 
 	showAddModal() {

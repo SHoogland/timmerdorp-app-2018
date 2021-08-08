@@ -12,10 +12,6 @@
 	<div class='content'>
 		<table class='cleanTable'>
 			<tr>
-				<td>Versienummer:</td>
-				<td>{{version}}</td>
-			</tr>
-			<tr>
 				<td>Staging:</td>
 				<td>{{!!staging}}</td>
 			</tr>
@@ -33,37 +29,5 @@
 				Bel Stan
 			</span>
 		</button>
-		<div id='updates' *ngIf='staging'>
-			<h1 id='title'>Updates</h1>
-			<p *ngIf='!updates || !updates.length'>
-				Geen updates gevonden!
-			</p>
-			<div *ngFor='let u of updates'>
-				<h3>Versie: {{u.version}}</h3>
-				<table class='cleanTable'>
-					<tr>
-						<td>Datum:</td>
-						<td>{{datum(u.date)}}</td>
-					</tr>
-					<tr>
-						<td>Bijwerken verplicht:</td>
-						<td>{{u.editedPages.length > 0}}</td>
-					</tr>
-					<tr>
-						<td>Categorie wijzigingen:</td>
-						<td>{{u.changes}}</td>
-					</tr>
-					<tr>
-						<td>Nieuwste:</td>
-						<td>{{!!u.latest}}</td>
-					</tr>
-					<tr *ngIf="version && version != 'Desktop'">
-						<td>Nieuwer dan huidige versie:</td>
-						<td>{{compareVersions(u.version, version)}}</td>
-					</tr>
-				</table>
-				<br>
-			</div>
-		</div>
 	</div>
 </ion-content>

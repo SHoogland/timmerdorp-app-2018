@@ -54,14 +54,14 @@
 		</div>
 		<div [ngClass]="'user-info' + (loading?' loading':'')">
 			<div>
-				<div *ngIf="loading&&!notLoggedIn">
+				<div *ngIf="loading">
 					<ion-spinner color='primary'></ion-spinner>
 				</div>
 			</div>
 		</div>
 
 		<div *ngIf='searched' class='infoCard'>
-			<div class='{{"inhoud " + g.getWijk(ticket.hutnr)}}'>
+			<div class='{{"inhoud " + g.getWijk(ticket.hutNr)}}'>
 				<h1>Kind #{{oldNr}}</h1>
 				<table>
 					<tr>
@@ -78,7 +78,7 @@
 					</tr>
 					<tr>
 						<td><b>Hutnummer: </b></td>
-						<td>{{ticket.hutnr}}</td>
+						<td>{{ticket.hutNr}}</td>
 					</tr>
 				</table>
 			</div>
@@ -88,7 +88,7 @@
 				Wijzigingsgeschiedenis ({{(history || []).length}})
 			</ion-list-header>
 			<ion-item (click)='oldNr=""+h.newNr;searched=true;searchTicket()' *ngFor="let h of (history || [])"
-				class='{{"item item-block item-md " + g.getWijk((h.hutnr||[])[0])}}'>
+				class='{{"item item-block item-md " + g.getWijk((h.hutNr||[])[0])}}'>
 				<ion-label>
 					<div>
 						<h3>Oud: <span>{{h.oldNr=='onbekend'?'-':h.oldNr}}</span></h3>

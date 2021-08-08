@@ -127,7 +127,7 @@ export class ChangeWristbandPage {
           name: self.ticket.firstName + " " + self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
-          wijk: self.g.getColor(self.ticket.hutnr)
+          wijk: self.g.getColor(self.ticket.hutNr)
         });
         self.storage.set("editHistory", editHis);
 
@@ -138,7 +138,7 @@ export class ChangeWristbandPage {
           name: self.ticket.firstName + " " + self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
-          wijk: self.g.getColor(self.ticket.hutnr)
+          wijk: self.g.getColor(self.ticket.hutNr)
         });
         self.storage.set("editHistory", editHis);
 

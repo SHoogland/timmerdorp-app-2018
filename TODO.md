@@ -14,7 +14,7 @@
 
 ## Lage prioriteit wijzigingen
 - Een permission systeem (volgens Joery en Aviva geloof ik?) Niet iedereen moet kinderen aan hutjes kunnen koppelen omdat er anders dingen fout kunnen gaan. Moet ik nog even navragen, mij staat bij dat ze een goed punt hadden maar het was een beetje omslachtig
-- Geschiedenis van hutnr aanpassingen (Twan; ze waren een kind kwijt nadat hij overgeplaatst was) (eigen schuld dikke bult, toch? misschien automatisch een back-upje draaien elk uur anders). Inmiddels toegevoegd, net als zoekgeschiedenis, change-wristband wijzigingsgeschiedenis, etc.
+- Geschiedenis van hutNr aanpassingen (Twan; ze waren een kind kwijt nadat hij overgeplaatst was) (eigen schuld dikke bult, toch? misschien automatisch een back-upje draaien elk uur anders). Inmiddels toegevoegd, net als zoekgeschiedenis, change-wristband wijzigingsgeschiedenis, etc.
 
 
 ## Nog te doen in 2020 zelf:

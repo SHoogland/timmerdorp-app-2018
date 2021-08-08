@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<div class='infoCard fadeIn {{ foundTicket ? "shown" : "" }}' id='childInfo'>
-			<div *ngIf='foundTicket' class='{{"inhoud " + g.getWijk( (ticket || {}).hutnr)}}'>
+			<div *ngIf='foundTicket' class='{{"inhoud " + g.getWijk( (ticket || {}).hutNr)}}'>
 				<h1>Kind #{{number}}</h1>
 				<table>
 					<tr>
@@ -57,7 +57,7 @@
 					</tr>
 					<tr>
 						<td>Hutnummer: </td>
-						<td>{{ ticket.hutnr }}</td>
+						<td>{{ ticket.hutNr }}</td>
 					</tr>
 					<tr>
 						<td>Aanwezig op {{getDayName(day).toLowerCase()}}: </td>
@@ -73,12 +73,12 @@
 					Zoekgeschiedenis ({{(history || []).length}})
 				</ion-list-header>
 				<ion-item *ngFor="let h of (history || [])"
-					class='{{"item item-block item-md " + g.getWijk((h.hutnr||[0])[0])}}'
+					class='{{"item item-block item-md " + g.getWijk((h.hutNr||[0])[0])}}'
 					(click)='number=""+h.wristband;getChild()'>
 					<ion-label>
 						<div>
 							<h3>B<span class='largeScreenSpan'>andje</span>: <span>{{h.wristband}}</span></h3>
-							<h3>H<span class='largeScreenSpan'>utje</span>: <span>{{h.hutnr}}</span></h3>
+							<h3>H<span class='largeScreenSpan'>utje</span>: <span>{{h.hutNr}}</span></h3>
 						</div>
 						<div>
 							<h2><span class='tinyScreen'>{{h.firstName}}<br>
