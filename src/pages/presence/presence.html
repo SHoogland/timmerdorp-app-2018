@@ -49,7 +49,7 @@
 				<table>
 					<tr>
 						<td>Naam: </td>
-						<td>{{ ticket.firstName }} {{ ticket.lastName }}</td>
+						<td>{{ (ticket.nickName || ticket.firstName) }} {{ ticket.lastName }}</td>
 					</tr>
 					<tr>
 						<td>Polsbandnummer: </td>
@@ -81,10 +81,10 @@
 							<h3>H<span class='largeScreenSpan'>utje</span>: <span>{{h.hutNr}}</span></h3>
 						</div>
 						<div>
-							<h2><span class='tinyScreen'>{{h.firstName}}<br>
-									{{h.lastName}}</span>
-								<span class='notTinyScreen'>{{h.firstName}}
-									{{h.lastName}}</span>
+							<h2><span class='tinyScreen'>{{ h.nickName || h.firstName }}<br>
+									{{ h.lastName }}</span>
+								<span class='notTinyScreen'>{{ h.nickName || h.firstName }}
+									{{ h.lastName }}</span>
 							</h2>
 						</div>
 						<ion-button size="small" class='fab'>

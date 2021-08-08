@@ -119,7 +119,7 @@ export class PresencePage {
           self.foundTicket = true
           self.loading = false
           self.history.unshift({
-            firstName: self.ticket.firstName,
+            firstName: self.ticket.nickName || self.ticket.firstName,
             lastName: self.ticket.lastName,
             wristband: self.ticket.wristband,
             hutNr: self.ticket.hutNr,

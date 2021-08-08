@@ -158,7 +158,7 @@ export class SearchPage {
     this.modal.child = child;
     this.modal.showModal = true;
     this.history.unshift({
-      firstName: child.firstName,
+      firstName: child.nickName || child.firstName,
       lastName: child.lastName,
       wristband: child.wristband,
       hutNr: child.hutNr,
