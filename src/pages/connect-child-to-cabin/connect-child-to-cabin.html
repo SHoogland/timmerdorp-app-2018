@@ -113,8 +113,8 @@
 			<button ion-button full (click)="addChildToHut(child);" class="modern">
 				{{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
         &nbsp;&mdash;&nbsp;
-				<span *ngIf="child.hutnr">hutje: {{child.hutnr }}</span>
-				<span *ngIf="!child.hutnr">Geen hutje :(</span>
+				<span *ngIf="child.hutNr">hutje: {{child.hutNr }}</span>
+				<span *ngIf="!child.hutNr">Geen hutje :(</span>
 			</button>
 		</div>
 	</div>
@@ -145,7 +145,7 @@
 			<span class="close" (click)="closeWarningModal();">&times;</span>
 			<h1>Waarschuwing</h1>
 			<p *ngIf="selectedChild && alreadyHasHutError">{{ selectedChild.firstName }} heeft al een
-				hutje! Weet je zeker dat je hem/haar wilt overplaatsen van hutje {{selectedChild.hutnr}} naar hutje
+				hutje! Weet je zeker dat je hem/haar wilt overplaatsen van hutje {{selectedChild.hutNr}} naar hutje
 				{{hutNr}}?</p>
 			<p *ngIf="selectedChild&&noWristbandError">{{ selectedChild.firstName }} heeft nog geen
 				polsbandje! Hij/zij kan nog niet toegevoegd worden aan een hutje.</p>
