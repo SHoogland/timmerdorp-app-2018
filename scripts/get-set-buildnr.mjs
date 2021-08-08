@@ -22,7 +22,7 @@ readFile(someFile, 'utf8', function(err, data) {
 			}
 		}).then((result)=>{
 			let build = 1
-			if(result.data[0].version.indexOf(versionNr) === 0){
+			if(result.data[0] && result.data[0].version.indexOf(versionNr) === 0){
 				build = parseInt(result.data[0].version.replace(versionNr,''))
 				build++
 			}
