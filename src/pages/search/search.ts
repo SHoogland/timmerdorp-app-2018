@@ -20,6 +20,7 @@ export class SearchPage {
   history: any;
 
   loading: boolean;
+  searched: boolean;
 
   searchTerm: string;
   errorHelp: string;
@@ -39,12 +40,13 @@ export class SearchPage {
     public sanitizer: DomSanitizer,
     public g: GlobalFunctions
   ) {
+    this.searched = false;
     this.title = 'Kinderen Zoeken'
     if (this.platform.is('cordova')) {
       if (cordova.platformId === 'android') {
         this.platform.registerBackButtonAction(() => {
           if (this.modal.showModal) {
-            this.modal.showModal = false;
+            this.closeModal();
           } else {
             this.g.goHome();
           }
@@ -80,7 +82,7 @@ export class SearchPage {
       },
       {
         name: "Gegevens Kind",
-        props: ["nickName", "birthdate", "wristband", "hutnr", "opmerkingen"]
+        props: ["nickName", "birthdate", "wristband", "hutNr", "opmerkingen"]
       },
     ]
     this.tickets = [];
@@ -104,6 +106,7 @@ export class SearchPage {
   }
 
   search() {
+    this.searched = false
     try {
       clearTimeout(this.typingTimer);
       this.typingTimer = setTimeout(() => {
@@ -131,49 +134,24 @@ export class SearchPage {
     self.loading = true;
 
     console.log('searching: ' + this.searchTerm);
-    let result = await this.g.apiCall('search', { searchTerm: this.searchTerm }).catch((e) => {
+    this.g.apiCall('search', { searchTerm: this.searchTerm }).then((result) => {
+      if(!result || result.response !== 'success') {
+        self.error = (result || {}).error || (result || {}).response
+        self.errorHelp = (result || {}).errorMessage || (result || {}).response
+        return;
+      }
+      self.loading = false
+      self.searched = true
+      self.tickets = result.tickets.sort(function (a) {
+        if ((a.wristband || [])[0] == self.searchTerm) {
+          return -1;
+        }
+        return 1;
+      }); //give priority to wristbands over hut numbers
+      self.ticketPropertiesMap = result.ticketPropertiesMap
+    }).catch((e) => {
       self.error = String(e)
-    })
-    self.loading = false
-    self.tickets = result.tickets
-    self.ticketPropertiesMap = result.ticketPropertiesMap
-
-
-    // var wp = this.g.getWpApi(this.login, this.staging, 'search');
-    // wp.handler().param('search', this.searchTerm).then((result) => {
-    // 	console.log(result);
-    // 	self.loading = false;
-    // 	if (result.code === 200) {
-    // 		if (!isNaN(+self.searchTerm)) { //if the search term is a number
-    // 			result.tickets.sort(function (a, b) {
-    // 				if ((a.meta.wristband || [])[0] == self.searchTerm) {
-    // 					return -1;
-    // 				}
-    // 				return 1;
-    // 			}); //give priority to wristbands over hut numbers
-    // 		}
-    // 		self.tickets = result.tickets;
-    // 		if (self.tickets.length === 0) {
-    // 			self.error = 'Geen resultaten';
-    // 			self.errorHelp = 'Je kunt zoeken op hutnummer, polsbandje of voor- of achternaam.';
-    // 		}
-    // 	} else {
-    // 		if (result.message == 'access denied') {
-    // 			self.error = 'Niet ingelogd';
-    // 			self.errorHelp = 'Je moet eerst <a (click)="g.toLogin()">inloggen</a>.';
-    // 		} else {
-    // 			self.error = result.message;
-    // 		}
-    // 	}
-    // }).catch((error) => {
-    // 	self.loading = false;
-    // 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-    // 		self.error = 'Inloggegevens onjuist';
-    // 		self.errorHelp = 'Wijzig eerst je inloggegevens <a (click)="g.toLogin()">hier</a>.';
-    // 	} else {
-    // 		self.error = error.message;
-    // 	}
-    // });
+    });
   }
 
   showModal(child) {
@@ -183,7 +161,7 @@ export class SearchPage {
       firstName: child.firstName,
       lastName: child.lastName,
       wristband: child.wristband,
-      hutnr: child.hutnr,
+      hutNr: child.hutnr,
       wijk: this.g.getColor(child.hutnr)
     });
     this.history = this.g.filterHistory(this.history);

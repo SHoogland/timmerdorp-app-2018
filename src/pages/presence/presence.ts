@@ -122,8 +122,8 @@ export class PresencePage {
             firstName: self.ticket.firstName,
             lastName: self.ticket.lastName,
             wristband: self.ticket.wristband,
-            hutnr: self.ticket.hutnr,
-            wijk: self.g.getColor(self.ticket.hutnr)
+            hutNr: self.ticket.hutNr,
+            wijk: self.g.getColor(self.ticket.hutNr)
           });
           self.history = this.g.filterHistory(this.history);
           self.storage.set("presHistory", self.history);
@@ -181,7 +181,7 @@ export class PresencePage {
 
     this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day }).then((result) => {
       if(!result || !(result || {}).response || result.response != "success") {
-        self.error = (result || {}).errorTitle || 'Foutmelding!';
+        self.error = (result || {}).error || 'Foutmelding!';
         self.errorHelp = (result || {}).errorMessage || (result || {}).response;
         self.loading = false
       }

@@ -98,13 +98,7 @@ export class GlobalFunctions {
 
   getWijk(hutNr) {
     if (!hutNr) return '';
-    if (typeof (hutNr) == 'object') {
-      if (hutNr[0]) {
-        hutNr = hutNr[0]
-      } else {
-        return;
-      }
-    }
+    hutNr = '' + hutNr;
 
     if (hutNr[0] == '0') {
       return 'Geel';
@@ -153,10 +147,15 @@ export class GlobalFunctions {
     return res;
   }
 
-  async apiCall(func, data) {
+  async apiCall(func, data?) {
+    await this.fixParseURL()
+    return Parse.Cloud.run('app-' + func, data)
+  }
+
+  async fixParseURL() {
     if (!this.loadedStagingStatus) {
       await this.storage.get('staging').then((val) => {
-        this.staging = true
+        this.staging = val;
         this.loadedStagingStatus = true
       }, (error) => {
         this.staging = false;
@@ -167,9 +166,8 @@ export class GlobalFunctions {
     let newServerURL = this.serverURLs[this.staging ? 'staging' : 'production']
     if (Parse.serverURL !== newServerURL) {
       Parse.serverURL = newServerURL
-      Parse.initialize(this.serverUsernames[this.staging ? 'staging' : 'production'], this.serverPasswords[this.staging ? 'staging' : 'production'])
+      await Parse.initialize(this.serverUsernames[this.staging ? 'staging' : 'production'], this.serverPasswords[this.staging ? 'staging' : 'production'])
     }
-    return Parse.Cloud.run('app-' + func, data)
   }
 
   prependZero(n) {
@@ -181,6 +179,7 @@ export class GlobalFunctions {
   }
 
   async checkIfStillLoggedIn() {
+    await this.fixParseURL();
     return await this.apiCall('checkIfLoggedIn', {})
   }
 

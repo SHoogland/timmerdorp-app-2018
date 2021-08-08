@@ -35,7 +35,6 @@ export class HomePage {
 	y: number;
 
 	wijkChoice: string;
-	version: string;
 	error: string;
 	wijk: string;
 
@@ -87,13 +86,6 @@ export class HomePage {
 
 		if (this.platform.is("android")) this.android = true;
 
-		let self = this;
-		if (self.platform.is("cordova")) {
-			cordova.getAppVersion(function (version) {
-				self.version = version;
-			});
-		}
-
 		this.storage.get('wijk').then((val) => {
 			this.wijk = val || "blue";
 			this.wijken = {
@@ -103,15 +95,17 @@ export class HomePage {
 				yellow: "geel"
 			}
 
-			// var wp = this.g.getWpApi(this.login, this.staging, 'stats');
-			// wp.handler().then((result) => {
-			// 	console.log(result);
-			// 	if (result.code === 200) {
-			// 		let prop = 'present' + ['Tue', 'Wed', 'Thu', 'Fri'][new Date().getDay() - 2];
-			// 		this.wijkCount = result.quarters[this.wijk][prop] || 0;
-			// 		this.childrenCount = result[prop] || 0;
-			// 	}
-			// });
+
+      this.g.apiCall('wijkStats').then((result) => {
+        if(!result || result.response !== 'success') {
+          if(!result || result.response !== 'success') {
+            return;
+          }
+        }
+        let dag = ['di', 'wo', 'do', 'vr'][new Date().getDay() - 2];
+        this.wijkCount = result.quarters[this.wijk]['aanwezig_' + dag] || 0;
+        this.childrenCount = result['aanwezig_' + dag] || 0;
+      });
 
 			console.log(this.wijk);
 
@@ -283,18 +277,6 @@ export class HomePage {
 
 	belStan() {
 		window.location.href = 'tel:0640516654'
-	}
-
-	compareVersions(New, Old) {
-		for (let i = 0; i < New.split(".").length; i++) {
-			if ((+New.split(".")[i] || -1) > (+Old.split(".")[i] || -1)) {
-				return true;
-			} else if ((+New.split(".")[i] || -1) == (+Old.split(".")[i] || -1)) {
-				continue;
-			}
-			return false;
-		}
-		return false;
 	}
 
 	scanCode() {

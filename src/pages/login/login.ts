@@ -42,6 +42,10 @@ export class LoginPage {
 	}
 
 	init() {
+    this.login = {
+      username: '',
+      password: '',
+    }
 		this.title = 'Login';
 		this.hideLogin = true;
 
@@ -65,6 +69,9 @@ export class LoginPage {
       self.error = 'Een gebruikersnaam en wachtwoord is vereist'
       return
     }
+
+    await this.g.fixParseURL();
+
     await Parse.User.logIn(self.login.username.toLowerCase().replace(' ', ''), self.login.password).catch(
       error => {
         let readableErrors = {
@@ -99,6 +106,10 @@ export class LoginPage {
 		this.clickedOnce = true;
 		this.cd.detectChanges();
 	}
+
+  pwInput(event) {
+    if(event.code === 'Enter') this.loginNow()
+  }
 
 	showLogin() {
 		this.hideLogin = false;

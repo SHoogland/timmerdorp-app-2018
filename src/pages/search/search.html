@@ -32,26 +32,26 @@
 		</div>
 		<div class="user-info">
 			<div>
-				<div *ngIf="loading&&!notLoggedIn">
+				<div *ngIf="loading">
 					<ion-spinner color='primary'></ion-spinner>
 				</div>
 			</div>
 		</div>
 
 		<div id='history'
-			[ngClass]='(!((tickets||[]).length) && (history||[]).length > 0 && !(searchTerm||"").length)?"shown hideable":"hideable"'>
+			[ngClass]='(!((tickets || []).length) && (history || []).length > 0 && !(searchTerm || "").length)?"shown hideable":"hideable"'>
 			<ion-list class='peopleList'>
 				<ion-list-header>
 					Zoekgeschiedenis ({{(history || []).length}})
 				</ion-list-header>
 				<ion-item *ngFor="let h of (history || [])"
-					(click)='searchTerm = "" + (h.firstName + " " + h.lastName || h.wristband || h.hutnr); searchThis()'
-					class='{{"item item-block item-md " + g.getWijk((h.hutnr||[0])[0])}}'>
+					(click)='searchTerm = "" + (h.firstName + " " + h.lastName || h.wristband || h.hutNr); searchThis()'
+					class='{{"item item-block item-md " + g.getWijk((h.hutNr||[0])[0])}}'>
 					<ion-label>
 						<div>
 							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{h.wristband}}</span>
 							</h3>
-							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutnr}}</span></h3>
+							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutNr}}</span></h3>
 						</div>
 						<div>
 							<h2><span class='tinyScreen'>{{h.firstName}}<br>
@@ -95,12 +95,15 @@
 				</ion-label>
 			</ion-item>
 		</ion-list>
+    <div *ngIf="(tickets || []).length === 0 && searched">
+      <b>Geen zoekresultaten! Je kunt zoeken op polsbandje-nummer, hutnummer of op voor- of achternaam.</b>
+    </div>
 	</div>
 </ion-content>
 
 <div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
 	class="modal conditional">
-	<div class="{{'modal-content ' + g.getWijk((modal.child.hutnr||'')[0])}}" *ngIf="modal.child">
+	<div class="{{'modal-content ' + g.getWijk((modal.child.hutNr||'')[0])}}" *ngIf="modal.child">
 		<div id='modalTop'>
 		</div>
 		<div id='modalBottom'>
@@ -123,6 +126,10 @@
               </td>
             </div>
 					</tr>
+          <tr *ngIf="cat.name === 'Gegevens Kind' && modal.child['hutnr']">
+            <td><b>Hutnummer:</b></td>
+            <td>{{ modal.child['hutnr'] }}</td>
+          </tr>
 				</div>
         <div>
           <h3>Aanwezigheid</h3>

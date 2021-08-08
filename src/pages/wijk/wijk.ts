@@ -17,7 +17,6 @@ export class WijkPage {
 	wijk: string;
 
 	showSelection: boolean;
-	notLoggedIn: boolean;
 	loginError: boolean;
 	loading: boolean;
 
@@ -31,7 +30,6 @@ export class WijkPage {
 	) {
 		this.init();
 		this.showSelection = false;
-		this.notLoggedIn = false;
 		this.loading = false;
 		this.error = '';
 
@@ -42,19 +40,19 @@ export class WijkPage {
 			},
 			{
 				title: "Aanwezig dinsdag",
-				prop: "presentTue"
+				prop: "aanwezig_di"
 			},
 			{
 				title: "Aanwezig woensdag",
-				prop: "presentWed"
+				prop: "aanwezig_wo"
 			},
 			{
 				title: "Aanwezig donderdag",
-				prop: "presentThu"
+				prop: "aanwezig_do"
 			},
 			{
 				title: "Aanwezig vrijdag",
-				prop: "presentFri"
+				prop: "aanwezig_vr"
 			}
 		];
 
@@ -73,19 +71,19 @@ export class WijkPage {
 			},
 			{
 				title: "Aanwezig dinsdag",
-				prop: "presentTue"
+				prop: "aanwezig_di"
 			},
 			{
 				title: "Aanwezig woensdag",
-				prop: "presentWed"
+				prop: "aanwezig_wo"
 			},
 			{
 				title: "Aanwezig donderdag",
-				prop: "presentThu"
+				prop: "aanwezig_do"
 			},
 			{
 				title: "Aanwezig vrijdag",
-				prop: "presentFri"
+				prop: "aanwezig_vr"
 			}
 		]
 	}
@@ -111,31 +109,19 @@ export class WijkPage {
 	updateData() {
 		this.loading = true;
 		console.log(this.wijk);
-		// var wp = this.g.getWpApi(this.login, this.staging, 'stats');
-		// wp.handler().then((result) => {
-		// 	console.log(result);
-		// 	if (result.code === 200) {
-		// 		this.loading = false;
-		// 		this.statistieken = result;
-		// 		console.log(result.quarters[this.wijk])
-		// 		this.wijkstats = result.quarters[this.wijk];
 
-		// 	} else {
-		// 		if (result.message == 'access denied') {
-		// 			this.notLoggedIn = true;
-		// 		} else {
-		// 			this.error = result.message;
-		// 			this.loading = false;
-		// 		}
-		// 	}
-		// }).catch((error) => {
-		// 	if (error.code === 'invalid_username' || error.code === 'incorrect_password') {
-		// 		this.loginError = true;
-		// 	} else {
-		// 		this.error = error.message;
-		// 	}
-		// 	this.loading = false;
-		// });
+    let self = this;
+    this.g.apiCall('wijkStats').then((result) => {
+      if(!result || result.response !== 'success') {
+        if(!result || result.response !== 'success') {
+          return;
+        }
+      }
+      self.wijkstats = result.quarters[this.wijk];
+      console.log(self.wijkstats)
+      self.statistieken = result;
+      self.loading = false;
+    });
 	}
 
 	kiesWijk(kleur) {

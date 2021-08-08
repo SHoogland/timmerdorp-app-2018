@@ -13,12 +13,9 @@ declare let cordova: any;
 	templateUrl: 'app-info.html'
 })
 export class AppInfoPage {
-	version: string;
 	error: string;
 	title: string;
 	wijk: string;
-
-	updates: any;
 
 	constructor(
 		public navCtrl: NavController,
@@ -35,28 +32,6 @@ export class AppInfoPage {
     this.storage.get('wijk').then((val) => {
 			this.wijk = val;
 		});
-		if (this.platform.is('cordova')) {
-			let self = this;
-			cordova.getAppVersion(function (version) {
-				self.version = version;
-			});
-		} else {
-			this.version = 'Desktop';
-		}
-
-		let self = this;
-
-		this.httpClient.get('https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json')
-			.subscribe((data: any) => {
-				let u = data.updates;
-				u.sort(function (a, b) {
-					return b.date - a.date;
-				});
-				if (u[0]) {
-					u[0].latest = true;
-				}
-				self.updates = u;
-			});
 	}
 
 	datum(date) {
@@ -86,18 +61,6 @@ export class AppInfoPage {
 
 	belStan() {
 		window.location.href = 'tel:0640516654'
-	}
-
-	compareVersions(New, Old) {
-		for (let i = 0; i < New.split('.').length; i++) {
-			if ((+New.split('.')[i] || -1) > (+Old.split('.')[i] || -1)) {
-				return true;
-			} else if ((+New.split('.')[i] || -1) == (+Old.split('.')[i] || -1)) {
-				continue;
-			}
-			return false;
-		}
-		return false;
 	}
 
 	ionViewDidLoad() {

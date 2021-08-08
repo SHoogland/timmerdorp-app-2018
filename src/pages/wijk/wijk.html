@@ -21,20 +21,11 @@
 	<div class='content'>
 		<div *ngIf='!showSelection' id='main'>
 			<div class="user-info">
-				<div id='spinner' [ngClass]="{'hidden': !(loading&&!notLoggedIn)}">
-					<div *ngIf="loading&&!notLoggedIn">
+				<div id='spinner' [ngClass]="{'hidden': !loading}">
+					<div *ngIf="loading">
 						<ion-spinner color='primary'></ion-spinner>
 					</div>
 				</div>
-				<span *ngIf="!loginError&&!notLoggedIn" class='errorMsg'>
-					{{error}}
-				</span>
-				<span *ngIf="loginError" class='errorMsg'>
-					Login-gegevens onjuist. <a (click)='g.toLogin()'>Aanpassen</a>
-				</span>
-				<span *ngIf="notLoggedIn" class='errorMsg'>
-					Je moet eerst <a (click)='g.toLogin()'>inloggen</a>!
-				</span>
 			</div>
 			<table class='cleanTable longHeader'>
 				<tr *ngFor='let p of wijkprops'>

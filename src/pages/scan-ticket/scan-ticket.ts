@@ -67,7 +67,7 @@ export class ScanTicketPage {
 
     let self = this;
     this.g.apiCall('findChildById', { id: this.ticket.id }).then((result) => {
-      self.loading = false
+      self.loading = false;
       if (result.response !== 'success') {
         self.error = result.errorMessage || result.response;
         return;
@@ -104,7 +104,7 @@ export class ScanTicketPage {
           name: self.ticket.firstName + " " + self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
-          wijk: self.g.getColor(self.ticket.hutnr)
+          wijk: self.g.getColor(self.ticket.hutNr)
         });
         self.storage.set("editHistory", editHis);
         console.log('porque?')
@@ -116,14 +116,13 @@ export class ScanTicketPage {
           name: self.ticket.firstName + " " + self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
-          wijk: self.g.getColor(self.ticket.hutnr)
+          wijk: self.g.getColor(self.ticket.hutNr)
         });
         self.storage.set("editHistory", editHis);
 
-        console.log('porque?')
         self.g.goHome();
       });
-    })
+    });
   }
 
   closeModal() {
@@ -150,29 +149,5 @@ export class ScanTicketPage {
     } else {
       this.g.goHome();
     }
-	}
-
-	closeModal() {
-		this.modal.showModal = false;
-		setTimeout(function () {
-			document.querySelector('#myModal').classList.remove('high');
-		}, 400);
-	}
-
-	showModal() {
-		this.modal.showModal = true;
-		document.querySelector('#myModal').classList.add('high');
-	}
-
-	goHome() {
-		if (this.modal.showModal) {
-			let self = this;
-			this.modal.showModal = false;
-			setTimeout(function () {
-				self.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-			}, 200);
-		} else {
-			this.navCtrl.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
-		}
 	}
 }
