@@ -52,6 +52,7 @@ export class GlobalFunctions {
   }
 
   setStatusBar(c) {
+
     if (this.platform.is('cordova')) {
       let colors = {
         blue: "#2196f3",
@@ -67,7 +68,8 @@ export class GlobalFunctions {
       if (cordova.platformId === 'android') {
         this.statusBar.backgroundColorByHexString(this.darkenColour(c, -50));
       } else if (cordova.platformId === 'ios') {
-        this.statusBar.backgroundColorByHexString(c);
+		  this.statusBar.overlaysWebView(true);
+        // this.statusBar.backgroundColorByHexString(c);
       }
     }
   }

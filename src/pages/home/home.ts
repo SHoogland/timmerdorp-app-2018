@@ -81,6 +81,7 @@ export class HomePage {
 			"files": FilesPage
 		}
 		this.g.setStatusBar("#2196f3");
+		// this.g.setStatusBar.styleDefault();
 
 		this.childrenCount = 0;
 
@@ -210,7 +211,7 @@ export class HomePage {
 			}
 
 			let rainPerHour = totalRain / 6;
-			console.log(totalRain, rainPerHour);
+			// console.log(totalRain, rainPerHour);
 			if (rainPerHour > 0) {
 				if (rainPerHour > .5) {
 					weatherMessage = "Veel regen voorspeld";
@@ -226,7 +227,7 @@ export class HomePage {
 				icon: weatherIcon
 			}
 
-			console.log(data, this.weather);
+			// console.log(data, this.weather);
 		});
 
     if(!await this.g.checkIfStillLoggedIn()) {
