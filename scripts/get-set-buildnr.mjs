@@ -15,7 +15,7 @@ readFile(someFile, 'utf8', function(err, data) {
 
 		axios({
 			method: 'get',
-			url: 'https://api.appcenter.ms/v0.1/apps/shoogland/Timmerdorp/releases?published_only=true',
+			url: 'https://api.appcenter.ms/v0.1/apps/shoogland/TimmerdorpHeilooIos/releases?published_only=true',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
 				'x-api-token': process.env.APP_CENTER_TOKEN
