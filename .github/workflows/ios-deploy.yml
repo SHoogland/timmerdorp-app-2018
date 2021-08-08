@@ -36,36 +36,20 @@ jobs:
           cordova prepare ios
       - name: Fastlane disable codesigning
         run: bundle exec fastlane ios signing
-      - name: Setup provisioning profile
-        run: ./.github/secrets/decrypt_secrets.sh
-        env:
-          IOS_PROFILE_KEY: ${{ secrets.IOS_PROFILE_KEY }}
-      - name: Build app with xcode
-        run: |
-          xcodebuild archive \
-          -workspace platforms/ios/Timmerdorp.xcworkspace \
-          -scheme Timmerdorp \
-          -configuration Release \
-          -sdk iphoneos \
-          -archivePath build/timmerdorp.xcarchive \
-          IPHONEOS_DEPLOYMENT_TARGET=9.0 \
-          DEVELOPMENT_TEAM=85F3ZNA6NH \
-          PROVISIONING_PROFILE_SPECIFIER=TimmerdorpHeilooProvisioningProfile \
-          PROVISIONING_PROFILE="669bb247-de28-4106-b672-e93d69e03673" \
-          CODE_SIGN_IDENTITY="Apple Distribution: Stephan Hoogland (85F3ZNA6NH)" 
-      - name: Export app
-        run: |
-          xcodebuild \
-          -exportArchive \
-          -archivePath build/timmerdorp.xcarchive \
-          -exportOptionsPlist exportOptions.plist \
-          -exportPath build
+      - uses: yukiarrr/ios-build-action@v1.4.0
+        with:
+          project-path: platforms/ios/Timmerdorp.xcodeproj
+          p12-base64: ${{ secrets.P12_BASE64 }}
+          mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
+          code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
+          team-id: ${{ secrets.TEAM_ID }}
+          workspace-path: platforms/ios/Timmerdorp.xcworkspace
       - name: Deploy to App Center
         run: |
           npx appcenter distribute stores publish \
           --token "${{secrets.APP_CENTER_TOKEN}}" \
           --store "App Store Connect Users" \
-          --app "shoogland/Timmerdorp" \
-          --file "build/Timmerdorp.ipa" \
+          --app "shoogland/TimmerdorpHeilooIos" \
+          --file "output.ipa" \
           --release-notes "$(git log -1 --pretty=format:%s)" \
           --debug

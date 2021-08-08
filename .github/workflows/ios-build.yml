@@ -45,30 +45,3 @@ jobs:
           code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
           team-id: ${{ secrets.TEAM_ID }}
           workspace-path: platforms/ios/Timmerdorp.xcworkspace
-
-#       - name: Setup provisioning profile
-#         run: |
-#           ./.github/secrets/decrypt_secrets.sh
-#           security find-certificate -a ~/Library/Keychains/build.keychain
-#         env:
-#           IOS_PROFILE_KEY: ${{ secrets.IOS_PROFILE_KEY }}
-      # - name: Build app with xcode
-      #   run: |
-      #     xcodebuild archive \
-      #     -workspace platforms/ios/Timmerdorp.xcworkspace \
-      #     -scheme Timmerdorp \
-      #     -configuration Release \
-      #     -sdk iphoneos \
-      #     -archivePath build/timmerdorp.xcarchive \
-      #     IPHONEOS_DEPLOYMENT_TARGET=9.0 \
-      #     DEVELOPMENT_TEAM=85F3ZNA6NH \
-      #     PROVISIONING_PROFILE_SPECIFIER=TimmerdorpHeilooProvisioningProfile \
-      #     PROVISIONING_PROFILE="669bb247-de28-4106-b672-e93d69e03673" \
-      #     CODE_SIGN_IDENTITY="Apple Distribution: Stephan Hoogland (85F3ZNA6NH)" 
-      # - name: Export app
-      #   run: |
-      #     xcodebuild \
-      #     -exportArchive \
-      #     -archivePath build/timmerdorp.xcarchive \
-      #     -exportOptionsPlist exportOptions.plist \
-      #     -exportPath build
