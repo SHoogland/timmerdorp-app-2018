@@ -128,7 +128,7 @@
 		<div id='modalBottom'>
 			<span class="close" (click)="closeRemoveModal();">&times;</span>
 			<h1>Waarschuwing</h1>
-			<p *ngIf="removeChild">Weet je zeker dat je {{removeChild.firstName }}
+			<p *ngIf="removeChild">Weet je zeker dat je {{ removeChild.nickName || removeChild.firstName }}
 				wilt verwijderen?</p>
 		</div>
 		<button ion-button full (click)="removeChildFromHut(removeChild)">Ja</button>
@@ -144,10 +144,10 @@
 		<div id='modalBottom'>
 			<span class="close" (click)="closeWarningModal();">&times;</span>
 			<h1>Waarschuwing</h1>
-			<p *ngIf="selectedChild && alreadyHasHutError">{{ selectedChild.firstName }} heeft al een
+			<p *ngIf="selectedChild && alreadyHasHutError">{{ selectedChild.nickName || selectedChild.firstName }} heeft al een
 				hutje! Weet je zeker dat je hem/haar wilt overplaatsen van hutje {{selectedChild.hutNr}} naar hutje
 				{{hutNr}}?</p>
-			<p *ngIf="selectedChild&&noWristbandError">{{ selectedChild.firstName }} heeft nog geen
+			<p *ngIf="selectedChild&&noWristbandError">{{ selectedChild.nickName || selectedChild.firstName }} heeft nog geen
 				polsbandje! Hij/zij kan nog niet toegevoegd worden aan een hutje.</p>
 		</div>
 		<button ion-button full (click)="closeWarningModal()" *ngIf='noWristbandError'>Terug</button>

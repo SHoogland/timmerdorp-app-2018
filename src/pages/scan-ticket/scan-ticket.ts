@@ -101,7 +101,7 @@ export class ScanTicketPage {
       self.storage.get('editHistory').then((val) => {
         let editHis = val || [];
         editHis.unshift({
-          name: self.ticket.firstName + " " + self.ticket.lastName,
+          name: (self.ticket.nickName || self.ticket.firstName) + " " + self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
           wijk: self.g.getColor(self.ticket.hutNr)
@@ -113,7 +113,7 @@ export class ScanTicketPage {
       }, (error) => {
         let editHis = [];
         editHis.unshift({
-          name: self.ticket.firstName + " " + self.ticket.lastName,
+          name: (self.ticket.nickName || self.ticket.firstName) + " " + self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
           wijk: self.g.getColor(self.ticket.hutNr)

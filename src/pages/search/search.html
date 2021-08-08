@@ -45,7 +45,7 @@
 					Zoekgeschiedenis ({{(history || []).length}})
 				</ion-list-header>
 				<ion-item *ngFor="let h of (history || [])"
-					(click)='searchTerm = "" + (h.firstName + " " + h.lastName || h.wristband || h.hutNr); searchThis()'
+					(click)='searchTerm = "" + ((h.nickName || h.firstName) + " " + h.lastName || h.wristband || h.hutNr); searchThis()'
 					class='{{"item item-block item-md " + g.getWijk((h.hutNr||[0])[0])}}'>
 					<ion-label>
 						<div>
@@ -54,10 +54,10 @@
 							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutNr}}</span></h3>
 						</div>
 						<div>
-							<h2><span class='tinyScreen'>{{h.firstName}}<br>
-									{{h.lastName}}</span>
-								<span class='notTinyScreen'>{{h.firstName}}
-									{{h.lastName}}</span>
+							<h2 style="height: 100px;">
+                {{ h.nickName || h.firstName }}
+                <br>
+                {{ h.lastName }}
 							</h2>
 						</div>
 						<ion-button size="small" class='fab'>
@@ -78,14 +78,15 @@
 				<ion-label>
 					<div>
 						<div>
-							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{child.wristband}}</span>
+							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{ child.wristband }}</span>
 							</h3>
-							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{child.hutNr}}</span></h3>
+							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{ child.hutNr }}</span></h3>
 						</div>
 						<div>
-							<h2><span class='tinyScreen'>{{child.firstName}}<br>
-									{{child.lastName}}</span>
-								<span class='notTinyScreen'>{{child.firstName}} {{child.lastName}}</span>
+							<h2>
+                {{ child.nickName || child.firstName }}
+                <br>
+                {{ child.lastName }}
 							</h2>
 						</div>
 					</div>
@@ -108,21 +109,21 @@
 		</div>
 		<div id='modalBottom'>
 			<span class="close" (click)="closeModal();">&times;</span>
-			<h1 id='childDataHeader'>{{modal.child.firstName}}
-				{{modal.child.lastName}}</h1>
+			<h1 id='childDataHeader'>{{ modal.child.nickName || modal.child.firstName }}
+				{{ modal.child.lastName}}</h1>
 			<table>
 				<div *ngFor="let cat of tableCategories">
-					<h3>{{cat.name}}</h3>
+					<h3>{{ cat.name }}</h3>
 					<tr *ngFor="let prop of cat.props">
             <div *ngIf="modal.child[prop]">
-              <td><b>{{(ticketPropertiesMap[prop]||{}).label}}:</b></td>
+              <td><b>{{ (ticketPropertiesMap[prop]||{}).label }}:</b></td>
               <td *ngIf="prop != 'tel1' && prop != 'tel2' && prop != 'tel_huisarts' && prop != 'email' && cat.name != 'Aanwezigheid'">
-                {{modal.child[prop]}}</td>
+                {{ modal.child[prop] }}</td>
               <td *ngIf='prop === "tel1" || prop === "tel2" || prop === "tel_huisarts"'><a
-                  href="tel: {{filterPhoneNr(modal.child[prop])}}">{{modal.child[prop]}}</a>
+                  href="tel: {{filterPhoneNr(modal.child[prop])}}">{{ modal.child[prop] }}</a>
               </td>
               <td *ngIf='prop === "email"'><a
-                  href="mailto:{{modal.child[prop]}}">{{(modal.child[prop]||[])[0]}}</a>
+                  href="mailto:{{modal.child[prop]}}">{{ (modal.child[prop]||[])[0] }}</a>
               </td>
             </div>
 					</tr>

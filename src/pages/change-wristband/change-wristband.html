@@ -61,24 +61,24 @@
 		</div>
 
 		<div *ngIf='searched' class='infoCard'>
-			<div class='{{"inhoud " + g.getWijk(ticket.hutNr)}}'>
+			<div class='{{ "inhoud " + g.getWijk(ticket.hutNr) }}'>
 				<h1>Kind #{{oldNr}}</h1>
 				<table>
 					<tr>
 						<td><b>Naam: </b></td>
-						<td>{{ticket.firstName}} {{ticket.lastName}}</td>
+						<td>{{ ticket.nickName || ticket.firstName }} {{ ticket.lastName }}</td>
 					</tr>
 					<tr>
 						<td><b>Ticket-barcode: </b></td>
-						<td>{{ticket.id}}</td>
+						<td>{{ ticket.id }}</td>
 					</tr>
 					<tr>
 						<td><b>Geboortedatum: </b></td>
-						<td>{{ticket.birthdate}}</td>
+						<td>{{ ticket.birthdate }}</td>
 					</tr>
 					<tr>
 						<td><b>Hutnummer: </b></td>
-						<td>{{ticket.hutNr}}</td>
+						<td>{{ ticket.hutNr }}</td>
 					</tr>
 				</table>
 			</div>
