@@ -81,10 +81,10 @@ page-home {
 
 	#overlay {
 		z-index: 20;
-		min-height: 400px;
+		min-height: 320px;
 		width: 100%;
 		position: absolute;
-		height: calc(100vh - 6 * 80px);
+		height: calc(100vh - 7 * 80px);
 		background: rgba(0, 0, 0, 0.5);
 		&.hiddenHeader {
 			background: rgba(0, 0, 0, 0);
@@ -184,8 +184,9 @@ page-home {
 			top: -26px;
 			position: relative;
 		}
+		transition-duration: 500ms;
 		z-index: 20;
-		background: rgba(0, 0, 0, 0.55);
+		background: rgba(0, 0, 0, 0.75);
 		color: white !important;
 		&.hidden {
 			background: rgba(0, 0, 0, 0) !important;

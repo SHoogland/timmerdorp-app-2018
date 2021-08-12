@@ -30,7 +30,7 @@
 				<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
 			</div>
 		</div>
-		<div class="user-info">
+		<div class="user-info" style="padding-top: 0px;">
 			<div>
 				<div *ngIf="loading">
 					<ion-spinner color='primary'></ion-spinner>
@@ -54,7 +54,7 @@
 							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutNr}}</span></h3>
 						</div>
 						<div>
-							<h2 style="height: 100px;">
+							<h2 style="height: 100px; padding-top: 4px;">
                 {{ h.nickName || h.firstName }}
                 <br>
                 {{ h.lastName }}
@@ -116,7 +116,7 @@
 					<h3>{{ cat.name }}</h3>
 					<tr *ngFor="let prop of cat.props">
             <div *ngIf="modal.child[prop]">
-              <td><b>{{ (ticketPropertiesMap[prop]||{}).label }}:</b></td>
+              <td><b>{{ (ticketPropertiesMap[prop]||{}).appLabel || (ticketPropertiesMap[prop]||{}).label }}:</b></td>
               <td *ngIf="prop != 'tel1' && prop != 'tel2' && prop != 'tel_huisarts' && prop != 'email' && cat.name != 'Aanwezigheid'">
                 {{ modal.child[prop] }}</td>
               <td *ngIf='prop === "tel1" || prop === "tel2" || prop === "tel_huisarts"'><a
