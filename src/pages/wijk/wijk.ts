@@ -89,7 +89,6 @@ export class WijkPage {
 	}
 
 	init() {
-
 		this.wijk = '';
 		Promise.all([
 			this.storage.get('wijk').then((val) => {

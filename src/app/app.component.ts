@@ -23,7 +23,7 @@ export class MyApp {
 		public splashScreen: SplashScreen,
 		public storage: Storage
 	) {
-		this.g.setStatusBar("#0572c8");
+		this.g.setStatusBar("#2196f3");
 		this.initializeApp();
 	}
 
@@ -44,8 +44,7 @@ export class MyApp {
 			]).then(() => {
 				if (this.platform.is('cordova')) {
 					if (cordova.platformId === 'android') {
-						let self = this;
-						document.addEventListener("backbutton", () => {
+            this.platform.registerBackButtonAction(() => {
 							console.log("TERUG KNOP ANDROID", this);
 							let preventBack = ['page-search', 'page-connect-child-to-cabin', 'page-home', 'page-presence', 'page-scan-ticket']
 							if (preventBack.indexOf(this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()) > -1) {
