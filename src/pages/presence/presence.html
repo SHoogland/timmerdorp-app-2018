@@ -16,7 +16,7 @@
 				<ion-list class="line-input">
 					<ion-item id='numberInput'>
 						<ion-input #nrInput type='tel' maxlength='3' class="ion-text-right" [(ngModel)]="number"
-							(ngModelChange)="getChild($event)">
+							(ngModelChange)="getChild($event)" (keydown)="childNumberInput($event)">
 						</ion-input>
 					</ion-item>
 				</ion-list>
@@ -24,7 +24,7 @@
 					[ngClass]='greenBtn ? "bg-green" : "bg-blue"' block>
 					<ion-icon name="send"></ion-icon>
 					<span id='btnLabel'>
-						{{ loading ? 'Laden...' : 'Opslaan' }}
+						{{ loading ? 'Laden...' : (greenBtn ? 'Opgeslagen!' : 'Opslaan') }}
 					</span>
 				</button>
 			</div>
@@ -49,7 +49,7 @@
 				<table>
 					<tr>
 						<td>Naam: </td>
-						<td>{{ ticket.firstName }} {{ ticket.lastName }}</td>
+						<td>{{ (ticket.nickName || ticket.firstName) }} {{ ticket.lastName }}</td>
 					</tr>
 					<tr>
 						<td>Polsbandnummer: </td>
@@ -67,33 +67,39 @@
 				</table>
 			</div>
 		</div>
-		<div *ngIf='!foundTicket && history && history.length > 0 && !loading'>
-			<ion-list class='peopleList'>
+
+    <div *ngIf="searched && !foundTicket">
+      <b>Geen kindjes gevonden! Probeer anders het polsbandje te achterhalen door het kind met zijn/haar naam op te zoeken via de zoekpagina.</b>
+    </div>
+
+    <ion-list class='peopleList fadeIn {{ !searched && (history || []).length && !loading && !foundTicket ? "shown" : "" }}'>
+		  <div>
 				<ion-list-header>
-					Zoekgeschiedenis ({{(history || []).length}})
+					Zoekgeschiedenis ({{ (history || []).length }})
 				</ion-list-header>
 				<ion-item *ngFor="let h of (history || [])"
 					class='{{"item item-block item-md " + g.getWijk((h.hutNr||[0])[0])}}'
-					(click)='number=""+h.wristband;getChild()'>
+					(click)='number=""+h.wristband;getChild({})'>
 					<ion-label>
-						<div>
-							<h3>B<span class='largeScreenSpan'>andje</span>: <span>{{h.wristband}}</span></h3>
-							<h3>H<span class='largeScreenSpan'>utje</span>: <span>{{h.hutNr}}</span></h3>
-						</div>
-						<div>
-							<h2><span class='tinyScreen'>{{h.firstName}}<br>
-									{{h.lastName}}</span>
-								<span class='notTinyScreen'>{{h.firstName}}
-									{{h.lastName}}</span>
-							</h2>
-						</div>
-						<ion-button size="small" class='fab'>
-							<ion-icon name='search'></ion-icon>
-						</ion-button>
+            <div>
+              <h3>B<span class="largeScreenSpan">andje</span>: <span>{{h.wristband}}</span>
+              </h3>
+              <h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutNr}}</span></h3>
+            </div>
+            <div>
+              <h2 style="height: 100px;">
+                {{ h.nickName || h.firstName }}
+                <br>
+                {{ h.lastName }}
+              </h2>
+            </div>
+            <ion-button size="small" class='fab'>
+              <ion-icon name='search'></ion-icon>
+            </ion-button>
 					</ion-label>
 				</ion-item>
-			</ion-list>
-		</div>
+      </div>
+    </ion-list>
 	</div>
 </ion-content>
 

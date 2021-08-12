@@ -28,10 +28,10 @@ page-search {
 
 	td {
 		&:first-of-type {
-			width: 40%;
+			width: 45%;
 		}
 		&:not(::first-of-type) {
-			width: 50%;
+			width: 45%;
 		}
 		text-align: left;
 		padding-left: 4px;
@@ -47,31 +47,19 @@ page-search {
 	.peopleList {
 		ion-item {
 			h2 {
-				@media screen and (max-width: 440px) {
-					font-size: 2rem;
-					padding-top: 4px;
-				}
-				@media screen and (min-width: 440px) {
-					font-size: 2.8rem;
-					padding-top: 0px;
-					span {
-						//   wil ik dit?
-						border-left: 1.5px solid rgba(0, 0, 0, 0.15);
-						padding-left: 14px;
-					}
-				}
+        font-size: 1.8rem;
 			}
 		}
 	}
+
+  .label-md {
+    margin: 8px 8px 13px 0;
+  }
 
 	.bracelet-number {
 		width: calc(100% - 36px);
 		margin-left: 18px;
 		padding-top: 0px !important;
-	}
-
-	.user-info > div:not(.content) {
-		height: 20px;
 	}
 
 	h1:not(#ptitle) {
@@ -132,6 +120,12 @@ page-search {
 		}
 	}
 
+  #childDataHeader {
+    margin-top: 0px!important;
+    min-height: 100px;
+    margin-bottom: 0px;
+  }
+
 	@media screen and (max-width: 464px) {
 		.errorCard.hasError {
 			min-height: 124px !important;
@@ -160,4 +154,8 @@ page-search {
 		margin-top: 0 !important;
 		margin-bottom: 0 !important;
 	}
+
+  #modalBottom table div:first-of-type h3 {
+    margin-top: 0px;
+  }
 }

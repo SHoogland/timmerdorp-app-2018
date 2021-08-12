@@ -69,7 +69,8 @@ export class ScanTicketPage {
     this.g.apiCall('findChildById', { id: this.ticket.id }).then((result) => {
       self.loading = false;
       if (result.response !== 'success') {
-        self.error = result.errorMessage || result.response;
+        self.error = result.error || result.response;
+        self.errorHelp = result.errorMessage || result.response;
         return;
       }
       self.ticket = result.ticket;
@@ -101,7 +102,7 @@ export class ScanTicketPage {
       self.storage.get('editHistory').then((val) => {
         let editHis = val || [];
         editHis.unshift({
-          name: self.ticket.firstName + " " + self.ticket.lastName,
+          name: (self.ticket.nickName || self.ticket.firstName) + " " + self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
           wijk: self.g.getColor(self.ticket.hutNr)
@@ -113,7 +114,7 @@ export class ScanTicketPage {
       }, (error) => {
         let editHis = [];
         editHis.unshift({
-          name: self.ticket.firstName + " " + self.ticket.lastName,
+          name: (self.ticket.nickName || self.ticket.firstName) + " " + self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
           wijk: self.g.getColor(self.ticket.hutNr)

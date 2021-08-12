@@ -13,19 +13,7 @@ page-presence {
 	.peopleList {
 		ion-item {
 			h2 {
-				@media screen and (max-width: 440px) {
-					font-size: 2rem;
-					padding-top: 4px;
-				}
-				@media screen and (min-width: 440px) {
-					font-size: 2.8rem;
-					padding-top: 0px;
-					span {
-						//   wil ik dit?
-						border-left: 1.5px solid rgba(0, 0, 0, 0.15);
-						padding-left: 14px;
-					}
-				}
+        font-size: 1.8rem;
 			}
 		}
 	}
@@ -79,7 +67,7 @@ page-presence {
 		ion-item {
 			.input-wrapper ion-label {
 				div:first-of-type {
-					margin-top: 8px;
+					margin-top: 4px;
 				}
 				@media screen and (min-width: 381px) {
 					div:nth-of-type(2n) {

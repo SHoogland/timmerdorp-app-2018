@@ -20,6 +20,7 @@ export class PresencePage {
   foundTicket: boolean;
 	modalShown: boolean;
 	greenBtn: boolean;
+	searched: boolean;
 	loading: boolean;
 
 	ticket: any;
@@ -71,6 +72,7 @@ export class PresencePage {
 		this.modalShown = false;
 		this.greenBtn = false;
 
+		this.searched = false;
 		this.loading = false;
 		this.error = '';
 		this.ticket = {};
@@ -105,21 +107,23 @@ export class PresencePage {
 
 	getChild() {
     this.error = '';
+    this.searched = false;
+    this.foundTicket = false;
     if (this.number.length === 3) {
       this.loading = true;
-      this.foundTicket = false;
 
       let self = this;
       this.g.apiCall('findChildByWristband', { wristband: this.number }).then((result) => {
+        self.loading = false;
+        self.searched = true;
         if(result.response !== 'success') {
-          self.error = result.errorMessage || result.response
+          self.error = result.errorMessage || result.response;
           return
         } else {
-          self.ticket = result.ticket
-          self.foundTicket = true
-          self.loading = false
+          self.ticket = result.ticket;
+          self.foundTicket = true;
           self.history.unshift({
-            firstName: self.ticket.firstName,
+            firstName: self.ticket.nickName || self.ticket.firstName,
             lastName: self.ticket.lastName,
             wristband: self.ticket.wristband,
             hutNr: self.ticket.hutNr,
@@ -154,8 +158,10 @@ export class PresencePage {
     this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day, forcePresence: true, presence: false }).then((result) => {
       if(!result || !(result || {}).response || result.response != "success") {
         alert('Absent melden niet gelukt! Vraag na bij Stan of Stephan wat er mis ging...')
+      } else {
+        self.ticket['aanwezig_' + self.day] = result.newPresence
+        self.markDone()
       }
-      self.ticket['aanwezig_' + self.day] = result.newPresence
       self.closeModal()
     });
 	}
@@ -172,7 +178,7 @@ export class PresencePage {
 		}
 
     if(this.ticket['aanwezig_' + this.day]) {
-			console.log("warning user that child is already present");
+			console.log('warning user that child is already present');
 			this.showModal();
 			return;
     }
@@ -180,13 +186,14 @@ export class PresencePage {
     let self = this;
 
     this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day }).then((result) => {
+      self.loading = false
       if(!result || !(result || {}).response || result.response != "success") {
         self.error = (result || {}).error || 'Foutmelding!';
         self.errorHelp = (result || {}).errorMessage || (result || {}).response;
-        self.loading = false
+      } else {
+        self.ticket['aanwezig_' + self.day] = result.newPresence
+        self.markDone()
       }
-      self.ticket['aanwezig_' + self.day] = result.newPresence
-      self.loading = false
     });
 	}
 
@@ -203,19 +210,25 @@ export class PresencePage {
 		}, 400);
 	}
 
+  childNumberInput(event) {
+    if(event.key === 'Enter') {
+      this.togglePresence();
+      return;
+    }
+  }
+
 
 	markDone() {
 		this.ticket = null;
     this.foundTicket = false;
+    this.searched = false;
 		this.greenBtn = true;
 		let self = this;
-		document.getElementById("btnLabel").innerHTML = "Opgeslagen!";
 		(<HTMLScriptElement>document.querySelector("#numberInput input")).focus();
 		self.number = '';
 		setTimeout(function () {
 			self.greenBtn = false;
 			(<HTMLScriptElement>document.querySelector("#numberInput input")).focus();
-			document.getElementById("btnLabel").innerHTML = "Opslaan";
 			self.cd.detectChanges();
 		}, 1000);
 	}

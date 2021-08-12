@@ -89,7 +89,6 @@ export class WijkPage {
 	}
 
 	init() {
-
 		this.wijk = '';
 		Promise.all([
 			this.storage.get('wijk').then((val) => {
@@ -101,7 +100,7 @@ export class WijkPage {
 				}
 			}),
 		]).then(() => {
-			this.title = 'Wijkoverzicht ' + this.g.getWijkName(this.wijk);
+			this.title = 'Wijk ' + this.g.getWijkName(this.wijk);
 			this.updateData();
 		});
 	}
@@ -129,7 +128,7 @@ export class WijkPage {
 		this.storage.set("wijk", kleur).then((val) => {
 			this.showSelection = false;
 			this.wijk = val;
-			this.title = 'Wijkoverzicht ' + this.g.getWijkName(this.wijk);
+			this.title = 'Wijk ' + this.g.getWijkName(this.wijk);
 			this.updateData();
 		});
 	}

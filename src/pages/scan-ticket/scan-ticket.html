@@ -13,7 +13,7 @@
 			<div class="content" *ngIf='error'>
 				<ion-icon name='warning'></ion-icon>
 				<h1 id='errorHeader' [innerHTML]='error'>{{ error }}</h1>
-				<h4 id='errorHelp' [innerHTML]='errorHelp'>{{ errorHelp }}</h4>
+				<h4 id='errorHelp' [innerHTML]='errorHelp' style="padding-bottom: 12px;">{{ errorHelp }}</h4>
 			</div>
 		</div>
 		<div [ngClass]='loading?"loading load-spinner":"load-spinner"'>
@@ -25,7 +25,7 @@
 				<table class='cleanTable'>
 					<tr>
 						<td>Naam:</td>
-						<td>{{ ticket.firstName }} {{ ticket.lastName }}</td>
+						<td>{{ ticket.firstName + (ticket.nickName ? ' (' + ticket.nickName + ')' : '') }} {{ ticket.lastName }}</td>
 					</tr>
 					<tr>
 						<td>Ticket QR-code:</td>
