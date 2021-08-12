@@ -578,7 +578,7 @@ button {
 					margin-right: 8px;
 				}
 				height: 80px;
-        padding-top: 6px;
+        padding-top: 4px;
 				float: left;
 			}
 			column-count: 2;
@@ -598,7 +598,7 @@ button {
 			}
 		}
 		h2 {
-				font-size: 2rem;
+				font-size: 1.8rem;
 		}
 		color: #666;
 		.item-inner {
@@ -735,6 +735,7 @@ button {
 		width: calc(100% - 100px);
 		text-align: left;
 		margin-top: -12px;
+    min-height: 50px;
 	}
 	a {
 		text-decoration: underline;

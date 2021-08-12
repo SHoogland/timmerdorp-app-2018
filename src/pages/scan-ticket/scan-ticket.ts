@@ -69,7 +69,8 @@ export class ScanTicketPage {
     this.g.apiCall('findChildById', { id: this.ticket.id }).then((result) => {
       self.loading = false;
       if (result.response !== 'success') {
-        self.error = result.errorMessage || result.response;
+        self.error = result.error || result.response;
+        self.errorHelp = result.errorMessage || result.response;
         return;
       }
       self.ticket = result.ticket;

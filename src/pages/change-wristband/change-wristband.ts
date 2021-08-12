@@ -38,7 +38,7 @@ export class ChangeWristbandPage {
 
 	searchTicket() {
 		let self = this;
-		this.ticket = {};
+		this.ticket = null;
     this.searched = false;
 		if (this.oldNr.length < 3) {
 			this.cd.detectChanges();
@@ -46,7 +46,7 @@ export class ChangeWristbandPage {
 			return false;
 		}
 		this.error = '';
-		this.ticket = {};
+		this.ticket = null;
 		this.loading = true;
 		this.searchedTerm = this.oldNr;
 		console.log('searching: ' + this.oldNr);
@@ -55,6 +55,7 @@ export class ChangeWristbandPage {
       self.loading = false;
       if (result.response !== 'success') {
         self.error = result.errorMessage || result.response;
+        self.searched = true;
         return;
       }
       self.ticket = result.ticket;
@@ -82,7 +83,7 @@ export class ChangeWristbandPage {
 		this.searched = false;
 		this.loading = false;
 		this.loading = false;
-		this.ticket = {};
+		this.ticket = null;
 		this.error = "";
 		this.oldNr = "";
 		this.newNr = "";
@@ -124,7 +125,9 @@ export class ChangeWristbandPage {
       self.storage.get('editHistory').then((val) => {
         let editHis = val || [];
         editHis.unshift({
-          name: (self.ticket.nickName || self.ticket.firstName) + " " + self.ticket.lastName,
+          nickName: self.ticket.nickName,
+          firstName: self.ticket.firstName,
+          lastName: self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
           wijk: self.g.getColor(self.ticket.hutNr)
@@ -135,7 +138,9 @@ export class ChangeWristbandPage {
       }, (error) => {
         let editHis = [];
         editHis.unshift({
-          name: (self.ticket.nickName || self.ticket.firstName) + " " + self.ticket.lastName,
+          nickName: self.ticket.nickName,
+          firstName: self.ticket.firstName,
+          lastName: self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
           wijk: self.g.getColor(self.ticket.hutNr)

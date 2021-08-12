@@ -156,7 +156,7 @@ export class HomePage {
 					icon: 'create'
 				},
 				{
-					title: 'Wijkoverzicht ' + this.g.getWijkName(this.wijk),
+					title: 'Wijk ' + this.g.getWijkName(this.wijk),
 					component: "wijk",
 					class: 'small bg-' + (this.wijk || 'blue'),
 					icon: "analytics",
@@ -230,9 +230,14 @@ export class HomePage {
 			// console.log(data, this.weather);
 		});
 
-    if(!await this.g.checkIfStillLoggedIn()) {
-      this.g.toLogin()
-    }
+    let self = this
+    this.storage.get("notFirstUse").then(async function(val) {
+      if (!!val) {
+      if(!await self.g.checkIfStillLoggedIn()) {
+          self.g.toLogin()
+        }
+      }
+    })
 	}
 
 	ionViewDidLoad() {
