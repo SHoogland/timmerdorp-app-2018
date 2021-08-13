@@ -12,9 +12,9 @@
 		<div id='schedule'>
 			<div *ngFor='let d of schedule; let i = index' id='{{d.timestamp}}' [ngClass]='(wijk||"blue")'>
 				<h3>{{d.date}}</h3>
-				<p *ngIf='getDate()==d.timestamp'><b>Het is nu: {{getTime()}}</b></p>
+				<p *ngIf='getDate() == d.timestamp'><b><u>Het is nu: {{ getTime() }}</u></b></p>
 				<ul>
-					<li *ngFor='let a of d.activities'><b>{{a.startt}}{{a.endt?"-" + a.endt:""}}</b>: <span
+					<li *ngFor='let a of d.activities'><b>{{ a.startt }}{{ a.endt ? "-" + a.endt : ""}}</b>: <span
 							[innerHTML]="a.desc"></span>
 					</li>
 				</ul>

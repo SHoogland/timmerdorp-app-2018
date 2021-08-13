@@ -1,5 +1,11 @@
 page-search {
-	table {
+	#childTable {
+    padding: 20px;
+
+    div:first-of-type h3 {
+      margin-top: 0px;
+    }
+
 		div {
 			h3 {
 				text-align: left !important;
@@ -13,6 +19,24 @@ page-search {
 				margin-top: 8px;
 			}
 		}
+
+    td {
+      &:first-of-type {
+        width: 45%;
+      }
+      &:not(:first-of-type) {
+        width: 45%;
+      }
+      text-align: left;
+      padding-left: 4px;
+      display: inline-block;
+      font-size: 13px;
+    }
+
+    td.b {
+      padding-right: 8px;
+      font-weight: bold;
+    }
 	}
 
 	tr {
@@ -24,24 +48,6 @@ page-search {
 	tr {
 		width: 100%;
 		display: block;
-	}
-
-	td {
-		&:first-of-type {
-			width: 45%;
-		}
-		&:not(::first-of-type) {
-			width: 45%;
-		}
-		text-align: left;
-		padding-left: 4px;
-		display: inline-block;
-		font-size: 13px;
-	}
-
-	td.b {
-		padding-right: 8px;
-		font-weight: bold;
 	}
 
 	.peopleList {
@@ -120,12 +126,6 @@ page-search {
 		}
 	}
 
-  #childDataHeader {
-    margin-top: 0px!important;
-    min-height: 100px;
-    margin-bottom: 0px;
-  }
-
 	@media screen and (max-width: 464px) {
 		.errorCard.hasError {
 			min-height: 124px !important;
@@ -155,7 +155,29 @@ page-search {
 		margin-bottom: 0 !important;
 	}
 
-  #modalBottom table div:first-of-type h3 {
-    margin-top: 0px;
+  #titleLayout {
+    tr {
+      height: 100px;
+
+      td {
+        height: 100px;
+        display: table-cell;
+      }
+
+      td:first-of-type {
+        padding-left: 28px;
+        font-size: 3rem;
+        color: white;
+        line-height: normal;
+      }
+
+      td:not(:first-of-type) span {
+        text-align: right;
+        position: absolute;
+        right: 24px;
+        top: calc((100px - 40px)/2);
+        margin-top: 0px;
+      }
+    }
   }
 }

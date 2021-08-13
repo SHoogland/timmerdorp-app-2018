@@ -80,12 +80,12 @@ export class GlobalFunctions {
   }
 
   goHome() {
-    let nav = this.app.getActiveNav();
+    let nav = this.app.getActiveNavs()[0];
     nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
   }
 
   toLogin() {
-    let nav = this.app.getActiveNav();
+    let nav = this.app.getActiveNavs()[0];
     nav.setRoot(this.loginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
