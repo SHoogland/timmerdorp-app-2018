@@ -135,12 +135,13 @@ export class SearchPage {
 
     console.log('searching: ' + this.searchTerm);
     this.g.apiCall('search', { searchTerm: this.searchTerm }).then((result) => {
+      self.loading = false
       if(!result || result.response !== 'success') {
         self.error = (result || {}).error || (result || {}).response
         self.errorHelp = (result || {}).errorMessage || (result || {}).response
         return;
       }
-      self.loading = false
+      if(self.searchTerm.length < 3) return
       self.searched = true
       self.tickets = result.tickets.sort(function (a) {
         if ((a.wristband || [])[0] == self.searchTerm) {
@@ -185,7 +186,7 @@ export class SearchPage {
       let self = this;
       this.closeModal();
       setTimeout(function () {
-        this.g.goHome();
+        self.g.goHome();
       }, 400);
     } else {
       this.g.goHome();

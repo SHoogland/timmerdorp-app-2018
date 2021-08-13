@@ -13,40 +13,36 @@
 			<ion-list class="line-input">
 				<h1 class='title'>Hutnummer:</h1>
 				<ion-item>
-					<ion-input class="ion-text-right" [(ngModel)]="hutNr" maxlength='3'
+					<ion-input #nrInput type='tel' class="ion-text-right" [(ngModel)]="hutNr" maxlength='3'
 						(ngModelChange)="search($event)">
 					</ion-input>
 				</ion-item>
 			</ion-list>
 		</div>
 
-		<div *ngIf='!(hutNr && hutNr.length === 3) && history && history.length > 0 && (!loading || isUndoing)'>
-			<ion-list class='peopleList'>
-				<ion-list-header>
-					Wijzigingsgeschiedenis ({{(history || []).length}})
-				</ion-list-header>
+    <ion-list *ngIf="!(hutNr && hutNr.length === 3) && history && history.length > 0 && (!loading || isUndoing)" class="peopleList">
+      <ion-list-header>
+        Wijzigingsgeschiedenis ({{history.length}})
+      </ion-list-header>
 
-				<div *ngFor="let h of (history || []); let i = index">
-					<ion-item [ngClass]="giveAccent && !i ? 'accent' : ''"
-						class='{{"item item-block item-md " + g.getWijk((h.hutNr||[0])[0])}}'>
-						<ion-label>
-							<div *ngIf="!h.removal">
-								<h2>{{h.name}}</h2>
-								<h3>Polsbandje: {{h.wristband}}</h3>
-							</div>
-							<div *ngIf="h.removal">
-								<h2>{{h.name}}</h2>
-								<h3><i>Verwijderd uit hut</i></h3>
-							</div>
-							<div>
-								<p>Oud<span class='largeScreenSpan'> hutje</span>: {{h.oldNr || "-"}}</p>
-								<p>Nieuw<span class='largeScreenSpan'> hutje</span>: {{h.removal ? "-" : h.hutNr}}</p>
-							</div>
-						</ion-label>
-					</ion-item>
-				</div>
-			</ion-list>
-		</div>
+      <div *ngFor="let h of history; let i = index">
+        <div class='{{"childItem " + g.getWijk(h.hutNr)}}'>
+          <table>
+            <tr>
+              <td style="white-space: unset;">
+                <h2>{{h.name}}</h2>
+                <h3>Polsbandje: {{h.wristband}}</h3>
+              </td>
+              <td style="padding-right: 24px;">
+                <p style="margin-bottom: 0px;">Oud<span class='largeScreenSpan'> hutje</span>: {{h.oldNr || "-"}}</p>
+                <p *ngIf="h.removal" style="margin-top: 0px;"><i>Verwijderd <span class='largeScreenSpan'>uit hutje</span></i></p>
+                <p *ngIf="!h.removal" style="margin-top: 0px;">Nieuw<span class='largeScreenSpan'> hutje</span>: {{ h.hutNr }}</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </ion-list>
 
 		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
 			<div class="content" *ngIf='error&&hutNr'>
@@ -84,9 +80,17 @@
 	<div class="modal-content">
 		<div id='modalTop' [ngClass]='g.getWijk(hutNr)'>
 		</div>
+    <table id="titleLayout">
+      <tr>
+        <td>
+          Kind Toevoegen
+        </td>
+        <td>
+    			<span (click)="closeAddModal();">&times;</span>
+        </td>
+      </tr>
+    </table>
 		<div id='modalBottom'>
-			<span class="close" (click)="closeAddModal();">&times;</span>
-			<h1>Kind toevoegen</h1>
 			<ion-item *ngIf="isTue&&allowAutoPresence">
 				<ion-label>Automatisch aanwezig melden</ion-label>
 				<ion-toggle [(ngModel)]="autoPresence"></ion-toggle>
@@ -111,10 +115,9 @@
 
 		<div *ngFor="let child of tickets" [ngClass]='"alternate " + g.getWijk(child.hutNr)'>
 			<button ion-button full (click)="addChildToHut(child);" class="modern">
-				{{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
-        &nbsp;&mdash;&nbsp;
-				<span *ngIf="child.hutNr">hutje: {{child.hutNr }}</span>
-				<span *ngIf="!child.hutNr">Geen hutje :(</span>
+				{{ child.nickName || child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
+				<span *ngIf="child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;hutje: {{child.hutNr }}</span>
+				<span *ngIf="!child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;Geen hutje :(</span>
 			</button>
 		</div>
 	</div>

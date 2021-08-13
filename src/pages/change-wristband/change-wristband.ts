@@ -13,7 +13,6 @@ import { GlobalFunctions } from '../../providers/global';
 })
 export class ChangeWristbandPage {
 	inputField: any;
-	history: any;
 	ticket: any;
 
 	searchedTerm: string;
@@ -87,19 +86,10 @@ export class ChangeWristbandPage {
 		this.error = "";
 		this.oldNr = "";
 		this.newNr = "";
-		Promise.all([
-			this.storage.get('editHistory').then((val) => {
-				this.history = val || [];
-				console.log(this.history);
-			}, (error) => {
-				this.history = [];
-			}),
-		]).then(() => {
-			let self = this;
-			setInterval(function () {
-				self.newNr;
-			}, 200);
-		});
+    let self = this;
+    setInterval(function () {
+      self.newNr;
+    }, 200);
 	}
 
 	saveNr() {
@@ -122,33 +112,7 @@ export class ChangeWristbandPage {
         return;
       }
 
-      self.storage.get('editHistory').then((val) => {
-        let editHis = val || [];
-        editHis.unshift({
-          nickName: self.ticket.nickName,
-          firstName: self.ticket.firstName,
-          lastName: self.ticket.lastName,
-          oldNr: result.oldNumber || "onbekend",
-          newNr: result.newNumber,
-          wijk: self.g.getColor(self.ticket.hutNr)
-        });
-        self.storage.set("editHistory", editHis);
-
-        self.g.goHome();
-      }, (error) => {
-        let editHis = [];
-        editHis.unshift({
-          nickName: self.ticket.nickName,
-          firstName: self.ticket.firstName,
-          lastName: self.ticket.lastName,
-          oldNr: result.oldNumber || "onbekend",
-          newNr: result.newNumber,
-          wijk: self.g.getColor(self.ticket.hutNr)
-        });
-        self.storage.set("editHistory", editHis);
-
-        self.g.goHome();
-      });
+      self.g.goHome();
     })
 	}
 

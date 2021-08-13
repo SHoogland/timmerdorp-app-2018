@@ -32,7 +32,6 @@ export class ConnectChildToCabinPage {
 	allowAutoPresence: boolean;
 	undoingIsDone: boolean;
 	autoPresence: boolean;
-	giveAccent: boolean;
 	isUndoing: boolean;
 	searched: boolean;
 	loading: boolean;
@@ -76,7 +75,6 @@ export class ConnectChildToCabinPage {
 		this.allowAutoPresence = false;
 		this.undoingIsDone = false;
 		this.autoPresence = false;
-		this.giveAccent = false;
 		this.isUndoing = false;
 		this.searched = false;
 		this.loading = false;
@@ -287,12 +285,6 @@ export class ConnectChildToCabinPage {
         });
 
         self.storage.set("cabinAddHistory", self.history);
-
-        self.giveAccent = true;
-
-        setTimeout(function () {
-          self.giveAccent = false;
-        }, 1500);
       }
       setTimeout(function () {
         self.search();
@@ -333,11 +325,6 @@ export class ConnectChildToCabinPage {
 
         self.storage.set("cabinAddHistory", self.history);
 
-        self.giveAccent = true;
-
-        setTimeout(function () {
-          self.giveAccent = false;
-        }, 1500);
       }
       self.closeRemoveModal();
       setTimeout(function () {

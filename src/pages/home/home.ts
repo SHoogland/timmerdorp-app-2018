@@ -64,6 +64,7 @@ export class HomePage {
 	}
 
 	async init() {
+		this.g.setStatusBar("#2196f3");
 		this.showPhoto = false;
 		this.updates = [];
 		this.readablePageList = {
@@ -81,7 +82,6 @@ export class HomePage {
 			"files": FilesPage
 		}
 		this.g.setStatusBar("#2196f3");
-		// this.g.setStatusBar.styleDefault();
 
 		this.childrenCount = 0;
 
@@ -226,8 +226,6 @@ export class HomePage {
 				msg: weatherMessage,
 				icon: weatherIcon
 			}
-
-			// console.log(data, this.weather);
 		});
 
     let self = this

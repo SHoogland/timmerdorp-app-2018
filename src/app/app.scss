@@ -555,13 +555,15 @@ button {
 .peopleList {
 	padding: 20px;
 	ion-list-header {
+    background: rgba(0,0,0,0);
 		ion-label {
 			text-transform: uppercase;
 			font-weight: bold;
 			font-size: 18px;
 		}
 	}
-	ion-item {
+
+	ion-item, .childItem {
 		box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 24px;
 		border-radius: 6px;
 		padding: 0px;
@@ -585,11 +587,6 @@ button {
 		}
 		h3 {
 			position: relative;
-			@media screen and (max-width: 360px) {
-				.largeScreenSpan {
-					display: none;
-				}
-			}
 			@media screen and (min-width: 360px) {
 				span:not(.largeScreenSpan) {
 					position: absolute;
@@ -608,33 +605,25 @@ button {
 			.fab {
 				background: $blue;
 			}
-			.item-inner {
-				border-left: 6px solid $blue;
-			}
+      border-left: 6px solid $blue;
 		}
 		&.Rood {
 			.fab {
 				background: $red;
 			}
-			.item-inner {
-				border-left: 6px solid $red;
-			}
+      border-left: 6px solid $red;
 		}
 		&.Geel {
 			.fab {
 				background: $yellow;
 			}
-			.item-inner {
-				border-left: 6px solid $yellow;
-			}
-		}
+      border-left: 6px solid $yellow;
+    }
 		&.Groen {
 			.fab {
 				background: $green;
 			}
-			.item-inner {
-				border-left: 6px solid $green;
-			}
+      border-left: 6px solid $green;
 		}
 		.item-inner {
 			padding: 12px;
@@ -653,6 +642,12 @@ button {
 			padding-left: 12px !important;
 		}
 	}
+}
+
+@media screen and (max-width: 360px) {
+  .largeScreenSpan {
+    display: none;
+  }
 }
 
 .infoCard {
@@ -785,4 +780,85 @@ ion-input.hideClear {
 		color: white;
 		background: white;
 	}
+}
+
+
+.childItem {
+  border-left: 6px solid $blue;
+  box-shadow: rgba(0, 0, 0, 50%) 0px 0px 24px;
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  h3, h2 {
+    margin: 0;
+    font-weight: normal;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  tr {
+    td:first-of-type {
+      white-space: nowrap;
+    }
+
+    td:nth-of-type(2n) {
+      height: 80px;
+      white-space: nowrap;
+    }
+
+    td:nth-of-type(3n) {
+      position: relative;
+      min-width: 52px;
+      width: 99%;
+    }
+
+    td {
+      padding: 0 12px;
+    }
+  }
+}
+
+#titleLayout {
+  tr {
+    height: 100px;
+
+    td {
+      height: 100px;
+      display: table-cell;
+    }
+
+    td:first-of-type {
+      padding-left: 28px;
+      padding-right: 60px;
+      font-size: 3rem;
+      color: white;
+      line-height: normal;
+    }
+
+    td:not(:first-of-type) span {
+      text-align: right;
+      position: absolute;
+      right: 24px;
+      top: calc((100px - 40px)/2);
+      margin-top: 0px;
+    }
+  }
+}
+
+
+
+.childItem {
+  &, & tbody, & tr {
+  width: 100%;
+  display: block;
+  }
 }

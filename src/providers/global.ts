@@ -64,6 +64,7 @@ export class GlobalFunctions {
         c = colors[c];
       }
 
+      this.statusBar.styleDefault();
       if (cordova.platformId === 'android') {
         this.statusBar.backgroundColorByHexString(this.darkenColour(c, -50));
       } else if (cordova.platformId === 'ios') {
