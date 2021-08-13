@@ -1,21 +1,21 @@
 <ion-content padding>
-	<ion-header (click)='g.goHome()'>
-		<ion-icon class='homeIcon' name="md-home"></ion-icon>
-		<h1 id="ptitle">{{title}}</h1>
+	<ion-header (click)="g.goHome()">
+		<ion-icon class="homeIcon" name="md-home"></ion-icon>
+		<h1 id="ptitle">{{ title }}</h1>
 		<ion-navbar>
 			<ion-title>
 				<img src="assets/imgs/logo.png" class="nav-logo">
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
-	<div class='content'>
-		<h1 id='title'>Bijlagen</h1>
-		<div id='files'>
-			<div *ngFor='let file of files'>
-				<ion-card (click)='openFile(file.url)' button>
+	<div class="content">
+		<h1 id="title">Bijlagen</h1>
+		<div id="files">
+			<div *ngFor="let file of files">
+				<ion-card (click)="openFile(file.url)" button>
 					<img src="assets/imgs/pdf.png" />
 					<div>
-						<ion-icon class='file-icon' name='document'>
+						<ion-icon class="file-icon" name="document">
 						</ion-icon>
 					</div>
 					<ion-card-header>
@@ -26,23 +26,23 @@
 		</div>
 
 		<h1>Fotoalbums {{photoYear}}</h1>
-		<ion-item id='yearSelector'>
+		<ion-item id="yearSelector" *ngIf="!loading">
 			<ion-label>Kies fotojaar...</ion-label>
-			<ion-select [(ngModel)]="photoYear" (ngModelChange)="filterAlbums()" placeholder="{{photoYear}}">
-				<ion-option *ngFor='let y of albumYears' value="{{y}}">{{y}}</ion-option>
+			<ion-select [(ngModel)]="photoYear" (ngModelChange)="filterAlbums()" placeholder="{{ photoYear }}">
+				<ion-option *ngFor="let y of albumYears" value="{{ y }}">{{ y }}</ion-option>
 			</ion-select>
 		</ion-item>
 
 		<div>
-			<div *ngIf="loading" id='spinner'>
-				<ion-spinner color='primary'></ion-spinner>
+			<div *ngIf="loading" id="spinner">
+				<ion-spinner color="primary"></ion-spinner>
 			</div>
 		</div>
 
-		<div id='columns'>
-			<div *ngFor='let a of albums'>
-				<ion-card (click)='openAlbum(a.id)' button>
-					<img [src]="((a||{})['primary_photo_extras']||{})['url_m']" />
+		<div id="columns">
+			<div *ngFor="let a of albums">
+				<ion-card (click)="openAlbum(a.id)" button>
+					<img [src]="( (a || {})['primary_photo_extras'] || {})['url_m']" />
 					<ion-card-header>
 						<h5>{{((a||{}).title||{})['_content']}}</h5>
 					</ion-card-header>

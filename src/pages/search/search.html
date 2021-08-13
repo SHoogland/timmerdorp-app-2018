@@ -1,137 +1,150 @@
 <ion-content>
-	<ion-header (click)='g.goHome()'>
-		<ion-icon class='homeIcon' name="md-home"></ion-icon>
-		<h1 id="ptitle">{{title}}</h1>
-		<ion-navbar>
-			<ion-title>
-				<img src="assets/imgs/logo.png" class="nav-logo">
-			</ion-title>
-		</ion-navbar>
-	</ion-header>
-	<div class='content'>
-		<div class="container">
-			<div class="bracelet-number">
-				<h1 class='title'>Zoekopdracht:</h1>
-				<p class="search-on">(voornaam, achternaam, armbandnummer of hutnummer)</p>
-				<ion-list class="line-input">
-					<ion-item>
-						<ion-input [ngClass]="'ion-text-right' + ((searchTerm||'').length?'':' hideClear')" clearInput [(ngModel)]="searchTerm"
-							(ngModelChange)="search($event)">
-						</ion-input>
-					</ion-item>
-				</ion-list>
-			</div>
-		</div>
+  <ion-header (click)='g.goHome()'>
+    <ion-icon class='homeIcon' name="md-home"></ion-icon>
+    <h1 id="ptitle">{{title}}</h1>
+    <ion-navbar>
+      <ion-title>
+        <img src="assets/imgs/logo.png" class="nav-logo">
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  <div class='content'>
+    <div class="container">
+      <div class="bracelet-number">
+        <h1 class='title'>Zoekopdracht:</h1>
+        <p class="search-on">(voornaam, achternaam, armbandnummer of hutnummer)</p>
+        <ion-list class="line-input">
+          <ion-item>
+            <ion-input [ngClass]="'ion-text-right' + ((searchTerm||'').length?'':' hideClear')" clearInput
+              [(ngModel)]="searchTerm" (ngModelChange)="search($event)">
+            </ion-input>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
 
-		<div [ngClass]="'user-info errorCard' + (error&&searchTerm?' hasError':'')">
-			<div class="content" *ngIf='error&&searchTerm'>
-				<ion-icon name='warning'></ion-icon>
-				<h1 id='errorHeader' [innerHTML]='error'></h1>
-				<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
-			</div>
-		</div>
-		<div class="user-info" style="padding-top: 0px;">
-			<div>
-				<div *ngIf="loading">
-					<ion-spinner color='primary'></ion-spinner>
-				</div>
-			</div>
-		</div>
+    <div [ngClass]="'user-info errorCard' + (error&&searchTerm?' hasError':'')">
+      <div class="content" *ngIf='error&&searchTerm'>
+        <ion-icon name='warning'></ion-icon>
+        <h1 id='errorHeader' [innerHTML]='error'></h1>
+        <h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
+      </div>
+    </div>
+    <div class="user-info" style="padding-top: 0px;">
+      <div>
+        <div *ngIf="loading">
+          <ion-spinner color='primary'></ion-spinner>
+        </div>
+      </div>
+    </div>
 
-		<div id='history'
-			[ngClass]='(!((tickets || []).length) && (history || []).length > 0 && !(searchTerm || "").length)?"shown hideable":"hideable"'>
-			<ion-list class='peopleList'>
-				<ion-list-header>
-					Zoekgeschiedenis ({{(history || []).length}})
-				</ion-list-header>
-				<ion-item *ngFor="let h of (history || [])"
-					(click)='searchTerm = "" + ((h.nickName || h.firstName) + " " + h.lastName || h.wristband || h.hutNr); searchThis()'
-					class='{{"item item-block item-md " + g.getWijk((h.hutNr||[0])[0])}}'>
-					<ion-label>
-						<div>
-							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{h.wristband}}</span>
-							</h3>
-							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutNr}}</span></h3>
-						</div>
-						<div>
-							<h2 style="height: 100px; padding-top: 4px;">
+    <div id='history'
+      [ngClass]='(!((tickets || []).length) && (history || []).length > 0 && !(searchTerm || "").length)?"shown hideable":"hideable"'>
+      <ion-list class='peopleList'>
+        <ion-list-header>
+          Zoekgeschiedenis ({{(history || []).length}})
+        </ion-list-header>
+        <ion-item *ngFor="let h of (history || [])"
+          (click)='searchTerm = "" + ((h.nickName || h.firstName) + " " + h.lastName || h.wristband || h.hutNr); searchThis()'
+          class='{{"item item-block item-md " + g.getWijk((h.hutNr||[0])[0])}}'>
+          <ion-label>
+            <div>
+              <h3>B<span class="largeScreenSpan">andje</span>: <span>{{h.wristband}}</span>
+              </h3>
+              <h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutNr}}</span></h3>
+            </div>
+            <div>
+              <h2 style="height: 100px; padding-top: 4px;">
                 {{ h.nickName || h.firstName }}
                 <br>
                 {{ h.lastName }}
-							</h2>
-						</div>
-						<ion-button size="small" class='fab'>
-							<ion-icon name='search'></ion-icon>
-						</ion-button>
-					</ion-label>
-				</ion-item>
-			</ion-list>
-		</div>
+              </h2>
+            </div>
+            <ion-button size="small" class='fab'>
+              <ion-icon name='search'></ion-icon>
+            </ion-button>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
 
 
-		<ion-list class='peopleList' [ngClass]='tickets.length?"hideable shown":"hideable"'>
-			<ion-list-header>
-				Zoekresultaten ({{tickets.length}})
-			</ion-list-header>
-			<ion-item *ngFor="let child of tickets" (click)='showModal(child)'
-				class='{{"item item-block item-md " + g.getWijk(child.hutNr)}}'>
-				<ion-label>
-					<div>
-						<div>
-							<h3>B<span class="largeScreenSpan">andje</span>: <span>{{ child.wristband }}</span>
-							</h3>
-							<h3>H<span class="largeScreenSpan">utje</span>: <span>{{ child.hutNr }}</span></h3>
-						</div>
-						<div>
-							<h2>
+    <ion-list class='peopleList' [ngClass]='tickets.length?"hideable shown":"hideable"'>
+      <ion-list-header>
+        Zoekresultaten ({{tickets.length}})
+      </ion-list-header>
+      <ion-item *ngFor="let child of tickets" (click)='showModal(child)'
+        class='{{"item item-block item-md " + g.getWijk(child.hutNr)}}'>
+        <ion-label>
+          <div>
+            <div>
+              <h3>B<span class="largeScreenSpan">andje</span>: <span>{{ child.wristband }}</span>
+              </h3>
+              <h3>H<span class="largeScreenSpan">utje</span>: <span>{{ child.hutNr }}</span></h3>
+            </div>
+            <div>
+              <h2>
                 {{ child.nickName || child.firstName }}
                 <br>
                 {{ child.lastName }}
-							</h2>
-						</div>
-					</div>
-					<ion-button size="small" class='fab'>
-						<ion-icon name='information-circle'></ion-icon>
-					</ion-button>
-				</ion-label>
-			</ion-item>
-		</ion-list>
+              </h2>
+            </div>
+          </div>
+          <ion-button size="small" class='fab'>
+            <ion-icon name='information-circle'></ion-icon>
+          </ion-button>
+        </ion-label>
+      </ion-item>
+    </ion-list>
     <div *ngIf="(tickets || []).length === 0 && searched">
       <b>Geen zoekresultaten! Je kunt zoeken op polsbandje-nummer, hutnummer of op voor- of achternaam.</b>
     </div>
-	</div>
+  </div>
 </ion-content>
 
 <div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
-	class="modal conditional">
-	<div class="{{'modal-content ' + g.getWijk((modal.child.hutNr||'')[0])}}" *ngIf="modal.child">
-		<div id='modalTop'>
-		</div>
-		<div id='modalBottom'>
-			<span class="close" (click)="closeModal();">&times;</span>
-			<h1 id='childDataHeader'>{{ modal.child.nickName || modal.child.firstName }}
-				{{ modal.child.lastName}}</h1>
-			<table>
-				<div *ngFor="let cat of tableCategories">
-					<h3>{{ cat.name }}</h3>
-					<tr *ngFor="let prop of cat.props">
+  class="modal conditional">
+  <div class="{{'modal-content ' + g.getWijk((modal.child.hutNr||'')[0])}}" *ngIf="modal.child">
+    <div id="modalTop">
+    </div>
+    <div id="modalBottom" style="padding: 0px;">
+      <table id="titleLayout">
+        <tr>
+          <td>
+            {{ modal.child.nickName || modal.child.firstName }} {{ modal.child.lastName}}
+          </td>
+          <td>
+            <span (click)="closeModal();">&times;</span>
+          </td>
+        </tr>
+      </table>
+      <table id="childTable">
+        <div *ngFor="let cat of tableCategories">
+          <h3>{{ cat.name }}</h3>
+          <div *ngIf="cat.name === 'Gegevens Kind'">
+            <tr>
+              <td><b>Volledige naam:</b></td>
+              <td>{{ modal.child['firstName'] + ' ' + modal.child['lastName'] }}</td>
+            </tr>
+            <tr *ngIf="modal.child['hutNr']">
+              <td><b>Hutnummer:</b></td>
+              <td>{{ modal.child['hutNr'] }}</td>
+            </tr>
+          </div>
+          <tr *ngFor="let prop of cat.props">
             <div *ngIf="modal.child[prop]">
               <td><b>{{ (ticketPropertiesMap[prop]||{}).appLabel || (ticketPropertiesMap[prop]||{}).label }}:</b></td>
-              <td *ngIf="prop != 'tel1' && prop != 'tel2' && prop != 'tel_huisarts' && prop != 'email' && cat.name != 'Aanwezigheid'">
+              <td
+                *ngIf="prop != 'tel1' && prop != 'tel2' && prop != 'tel_huisarts' && prop != 'email' && cat.name != 'Aanwezigheid'">
                 {{ modal.child[prop] }}</td>
               <td *ngIf='prop === "tel1" || prop === "tel2" || prop === "tel_huisarts"'><a
                   href="tel: {{filterPhoneNr(modal.child[prop])}}">{{ modal.child[prop] }}</a>
               </td>
-              <td *ngIf='prop === "email"'><a
-                  href="mailto:{{modal.child[prop]}}">{{ (modal.child[prop]||[])[0] }}</a>
+              <td *ngIf='prop === "email"'><a href="mailto:{{modal.child[prop]}}">{{ (modal.child[prop]||[])[0] }}</a>
               </td>
             </div>
-					</tr>
-          <tr *ngIf="cat.name === 'Gegevens Kind' && modal.child['hutNr']">
-            <td><b>Hutnummer:</b></td>
-            <td>{{ modal.child['hutNr'] }}</td>
           </tr>
-				</div>
+        </div>
         <div>
           <h3>Aanwezigheid</h3>
           <tr>
@@ -151,10 +164,10 @@
             <td>{{ modal.child['aanwezig_vr'] ? 'Aanwezig' : 'Afwezig' }}</td>
           </tr>
         </div>
-			</table>
-		</div>
-		<button ion-button full (click)="closeModal();">Sluiten</button>
-		<button ion-button full (click)="scanChild(modal.child.id)">Polsbandje wijzigen</button>
-		<button ion-button full (click)="goHome()">Terug naar homepagina</button>
-	</div>
+      </table>
+    </div>
+    <button ion-button full (click)="closeModal();">Sluiten</button>
+    <button ion-button full (click)="scanChild(modal.child.id)">Polsbandje wijzigen</button>
+    <button ion-button full (click)="goHome()">Terug naar homepagina</button>
+  </div>
 </div>

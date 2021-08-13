@@ -28,7 +28,7 @@ export class FilesPage {
 		public g: GlobalFunctions,
 		public iab: InAppBrowser
 	) {
-		this.loading = false;
+		this.loading = true;
 	}
 
 	init() {
@@ -36,7 +36,6 @@ export class FilesPage {
 		this.photoYear = new Date().getFullYear();
 		this.albumYears = [this.photoYear];
 		let self = this;
-		this.loading = true;
 		this.httpClient
 			.get("https://api.flickr.com/services/rest?method=flickr.photosets.getList&user_id=53061083@N07&api_key=a658fee478c0fa8a0744191ca017bfd0&format=json&nojsoncallback=1&primary_photo_extras=url_m")
 			.subscribe((data: any) => {

@@ -25,7 +25,7 @@
 				<table class='cleanTable'>
 					<tr>
 						<td>Naam:</td>
-						<td>{{ ticket.firstName + (ticket.nickName ? ' (' + ticket.nickName + ')' : '') }} {{ ticket.lastName }}</td>
+						<td>{{ ticket.firstName + (ticket.nickName && ticket.nickName !== ticket.firstName ? ' (' + ticket.nickName + ')' : '') }} {{ ticket.lastName }}</td>
 					</tr>
 					<tr>
 						<td>Ticket QR-code:</td>

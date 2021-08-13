@@ -82,7 +82,7 @@ export class SearchPage {
       },
       {
         name: "Gegevens Kind",
-        props: ["nickName", "birthdate", "wristband", "hutNr", "opmerkingen"]
+        props: ["birthdate", "wristband", "hutNr", "opmerkingen"]
       },
     ]
     this.tickets = [];
