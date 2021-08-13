@@ -29,6 +29,7 @@ export class MyApp {
 
 
 	async initializeApp() {
+		this.g.setStatusBar("#2196f3");
 		this.platform.ready().then(() => {
 			let isSentToLogin = false;
 			Promise.all([

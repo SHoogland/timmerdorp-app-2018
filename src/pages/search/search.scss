@@ -50,14 +50,6 @@ page-search {
 		display: block;
 	}
 
-	.peopleList {
-		ion-item {
-			h2 {
-        font-size: 1.8rem;
-			}
-		}
-	}
-
   .label-md {
     margin: 8px 8px 13px 0;
   }
@@ -109,10 +101,10 @@ page-search {
 		}
 		&.Geel {
 			button:hover {
-				background: darken($yellow, 18%) !important;
+				background: darken($yellow, 6%) !important;
 			}
 			button:nth-of-type(2n + 1) {
-				background: darken($yellow, 4%);
+				background: darken($yellow, 3%);
 			}
 			button:nth-of-type(2n) {
 				background: $yellow;
@@ -154,30 +146,4 @@ page-search {
 		margin-top: 0 !important;
 		margin-bottom: 0 !important;
 	}
-
-  #titleLayout {
-    tr {
-      height: 100px;
-
-      td {
-        height: 100px;
-        display: table-cell;
-      }
-
-      td:first-of-type {
-        padding-left: 28px;
-        font-size: 3rem;
-        color: white;
-        line-height: normal;
-      }
-
-      td:not(:first-of-type) span {
-        text-align: right;
-        position: absolute;
-        right: 24px;
-        top: calc((100px - 40px)/2);
-        margin-top: 0px;
-      }
-    }
-  }
 }

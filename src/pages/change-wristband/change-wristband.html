@@ -59,7 +59,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div *ngIf='searched && ticket' class='infoCard'>
 			<div class='{{ "inhoud " + g.getWijk(ticket.hutNr) }}'>
 				<h1>Kind #{{oldNr}}</h1>
@@ -87,30 +86,5 @@
 		<ion-list class='peopleList' *ngIf="searched && !error && !loading && !ticket">
       <b>Geen zoekresultaten gevonden! Probeer via de zoekpagina anders het huidige polsbandnummer op te zoeken, door de naam van het kind in te toetsen.</b>
     </ion-list>
-
-		<ion-list class='peopleList' *ngIf="!searched && !error && !loading && history && history.length > 0">
-			<ion-list-header>
-				Wijzigingsgeschiedenis ({{(history || []).length}})
-			</ion-list-header>
-			<ion-item (click)='oldNr = "" + h.newNr; searched=true; searchTicket()' *ngFor="let h of (history || [])"
-				class='{{ "item item-block item-md " + g.getWijk((h.hutNr || [])[0]) }}'>
-        <ion-label>
-          <div>
-						<h3>Oud: <span>{{ h.oldNr == 'onbekend' ? '-' : h.oldNr }}</span></h3>
-						<h3>Nieuw: <span>{{ h.newNr }}</span></h3>
-          </div>
-          <div>
-            <h2 style="height: 100px;">
-              {{ h.nickName || h.firstName }}
-              <br>
-              {{ h.lastName }}
-            </h2>
-          </div>
-          <ion-button size="small" class='fab'>
-            <ion-icon name='search'></ion-icon>
-          </ion-button>
-				</ion-label>
-			</ion-item>
-		</ion-list>
 	</div>
 </ion-content>

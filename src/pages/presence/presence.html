@@ -77,27 +77,30 @@
 				<ion-list-header>
 					Zoekgeschiedenis ({{ (history || []).length }})
 				</ion-list-header>
-				<ion-item *ngFor="let h of (history || [])"
-					class='{{"item item-block item-md " + g.getWijk((h.hutNr||[0])[0])}}'
-					(click)='number=""+h.wristband;getChild({})'>
-					<ion-label>
-            <div>
-              <h3>B<span class="largeScreenSpan">andje</span>: <span>{{h.wristband}}</span>
-              </h3>
-              <h3>H<span class="largeScreenSpan">utje</span>: <span>{{h.hutNr}}</span></h3>
-            </div>
-            <div>
-              <h2 style="height: 100px;">
-                {{ h.nickName || h.firstName }}
-                <br>
-                {{ h.lastName }}
-              </h2>
-            </div>
-            <ion-button size="small" class='fab'>
-              <ion-icon name='search'></ion-icon>
-            </ion-button>
-					</ion-label>
-				</ion-item>
+				<div *ngFor="let h of (history || [])"
+					class='{{ "childItem " + g.getWijk(h.hutNr) }}'
+					(click)='number = "" + h.wristband; getChild({})'>
+          <table>
+            <tr>
+              <td>
+                <h3>B<span class="largeScreenSpan" style="padding-right: 28px;">andje</span> <span>{{h.wristband}}</span></h3>
+                <h3>H<span class="largeScreenSpan" style="padding-right: 28px;">utje</span> <span>{{h.hutNr}}</span></h3>
+              </td>
+              <td>
+                <h2>
+                  {{ h.nickName || h.firstName }}
+                  <br>
+                  {{ h.lastName }}
+                </h2>
+              </td>
+              <td>
+                <ion-button size="small" class='fab'>
+                  <ion-icon name="search"></ion-icon>
+                </ion-button>
+              </td>
+            </tr>
+          </table>
+				</div>
       </div>
     </ion-list>
 	</div>
