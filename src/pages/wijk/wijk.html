@@ -1,55 +1,84 @@
 <ion-content padding>
-	<ion-header (click)="g.goHome()" [ngClass]='(wijk||"") + " wijk-header"'>
-		<ion-icon class='homeIcon' name="md-home"></ion-icon>
-		<h1 id="ptitle">{{title}}</h1>
-		<ion-navbar [ngClass]='(wijk||"")'>
-			<ion-title>
-				<img src="assets/imgs/logo.png" class="nav-logo">
-			</ion-title>
-		</ion-navbar>
-	</ion-header>
-	<div *ngIf='showSelection' id='wijkChoice'>
-		<h1 id='wijkHeader'>Kies je wijk</h1>
-		<button ion-button class='bg-blue modern customColoured halfWidth' full
-			(click)='kiesWijk("blue")'>Blauw</button>
-		<button ion-button class='bg-red modern customColoured halfWidth' full (click)='kiesWijk("red")'>Rood</button>
-		<button ion-button class='bg-green modern customColoured halfWidth' full
-			(click)='kiesWijk("green")'>Groen</button>
-		<button ion-button class='bg-yellow modern customColoured halfWidth' full
-			(click)='kiesWijk("yellow")'>Geel</button>
-	</div>
-	<div class='content'>
-		<div *ngIf='!showSelection' id='main'>
-			<div class="user-info">
-				<div id='spinner' [ngClass]="{'hidden': !loading}">
-					<div *ngIf="loading">
-						<ion-spinner color='primary'></ion-spinner>
-					</div>
-				</div>
-			</div>
-			<table class='cleanTable longHeader'>
-				<tr *ngFor='let p of wijkprops'>
-					<td>{{p.title}}</td>
-					<td>{{(wijkstats||{})[p.prop]||"&mdash;"}}</td>
-				</tr>
-			</table>
-			<br>
-			<button [ngClass]='(wijk||"") + " iconBtn"' ion-button full id='kiesWijkButton'
-				(click)="clearWijkSelection()">
-				<ion-icon slot='start' name='create'>
-				</ion-icon>
-				<span>
-					Verander wijkkeuze
-				</span>
-			</button>
-			<br>
-			<h1>Algemene Statistieken</h1>
-			<table class='cleanTable longHeader' id='allStatsTable'>
-				<tr *ngFor='let p of allprops'>
-					<td>{{p.title}}</td>
-					<td> {{(statistieken||{})[p.prop]||"&mdash;"}}</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+  <ion-header (click)="g.goHome()" [ngClass]='(wijk||"") + " wijk-header"'>
+    <ion-icon class='homeIcon' name="md-home"></ion-icon>
+    <h1 id="ptitle">{{title}}</h1>
+    <ion-navbar [ngClass]='(wijk||"")'>
+      <ion-title>
+        <img src="assets/imgs/logo.png" class="nav-logo">
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  <div *ngIf='showSelection' id='wijkChoice'>
+    <h1 id='wijkHeader'>Kies je wijk</h1>
+    <button ion-button class='bg-blue modern customColoured halfWidth' full (click)='kiesWijk("blue")'>Blauw</button>
+    <button ion-button class='bg-red modern customColoured halfWidth' full (click)='kiesWijk("red")'>Rood</button>
+    <button ion-button class='bg-green modern customColoured halfWidth' full (click)='kiesWijk("green")'>Groen</button>
+    <button ion-button class='bg-yellow modern customColoured halfWidth' full (click)='kiesWijk("yellow")'>Geel</button>
+  </div>
+  <div class='content'>
+    <div *ngIf='!showSelection' id='main'>
+      <div class="user-info">
+        <div id='spinner' [ngClass]="{'hidden': !loading}">
+          <div *ngIf="loading">
+            <ion-spinner color='primary'></ion-spinner>
+          </div>
+        </div>
+      </div>
+      <table class='cleanTable longHeader'>
+        <tr *ngFor='let p of wijkprops'>
+          <td>{{p.title}}</td>
+          <td>{{(wijkstats||{})[p.prop]||"&mdash;"}}</td>
+        </tr>
+      </table>
+      <br>
+      <button [ngClass]='(wijk||"") + " iconBtn"' ion-button full id='kiesWijkButton' (click)="clearWijkSelection()">
+        <ion-icon slot='start' name='create'>
+        </ion-icon>
+        <span>
+          Verander wijkkeuze
+        </span>
+      </button>
+      <br>
+      <h1>Algemene Statistieken</h1>
+      <table class='cleanTable longHeader' id='allStatsTable'>
+        <tr *ngFor='let p of allprops'>
+          <td>{{p.title}}</td>
+          <td> {{(statistieken||{})[p.prop]||"&mdash;"}}</td>
+        </tr>
+      </table>
+
+      <div *ngIf="admins"></div>
+      <h1>De Badmeesterbattle</h1>
+      <table class='cleanTable'>
+        <tr>
+          <td>
+            <b>Naam</b>
+          </td>
+          <td>
+            <b>Dinsdag</b>
+          </td>
+          <td>
+            <b>Woensdag</b>
+          </td>
+          <td>
+            <b>Donderdag</b>
+          </td>
+          <td>
+            <b>Vrijdag</b>
+          </td>
+          <td>
+            <b>Totaal</b>
+          </td>
+        </tr>
+        <tr *ngFor="let admin of admins; let i = index">
+          <td>{{ admin.naam }} </td>
+          <td>{{ admin.di || 0 }} </td>
+          <td>{{ admin.wo || 0 }} </td>
+          <td>{{ admin.do || 0 }} </td>
+          <td>{{ admin.vr || 0 }} </td>
+          <td>{{ admin.total || 0 }} </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </ion-content>

@@ -22,6 +22,7 @@ export class WijkPage {
 
 	wijkprops: any;
 	allprops: any;
+  admins: any;
 
 	constructor(
 		public navCtrl: NavController,
@@ -32,6 +33,7 @@ export class WijkPage {
 		this.showSelection = false;
 		this.loading = false;
 		this.error = '';
+    this.admins = [];
 
 		this.wijkprops = [
 			{
@@ -117,8 +119,11 @@ export class WijkPage {
         }
       }
       self.wijkstats = result.quarters[this.wijk];
-      console.log(self.wijkstats)
       self.statistieken = result;
+
+      self.admins = result.adminList.sort(function(a, b) {
+        return b.total - a.total
+      })
       self.loading = false;
     });
 	}
