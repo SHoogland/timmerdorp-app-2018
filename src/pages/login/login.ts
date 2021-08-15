@@ -66,7 +66,8 @@ export class LoginPage {
     let self = this;
     self.loading = true;
     if (!self.login.username || !self.login.password) {
-      self.error = 'Een gebruikersnaam en wachtwoord is vereist'
+      self.error = 'Inloggen mislukt!'
+      self.errorHelp= 'Een gebruikersnaam en wachtwoord is vereist'
       return
     }
 
