@@ -125,10 +125,10 @@ page-search {
 	}
 
 	.hideable {
-    opacity: 0;
+    display: none;
     transition-duration: 400ms;
 		&.shown {
-      opacity: 1;
+      display: block;
 		}
 	}
 
