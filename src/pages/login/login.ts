@@ -79,7 +79,8 @@ export class LoginPage {
           'Invalid username/password.': 'Verkeerde gebruikersnaam of wachtwoord.',
           'password is required.': 'Om in te loggen is een wachtwoord vereist!',
         }
-        self.error = readableErrors[error.message] || error.message
+        self.error = 'Inloggen mislukt'
+        self.errorHelp = readableErrors[error.message] || error.message
         console.log(error)
       }
     ).then(function (user) {
@@ -109,6 +110,7 @@ export class LoginPage {
 	}
 
   pwInput(event) {
+    console.log(event)
     if(event.code === 'Enter') this.loginNow()
   }
 

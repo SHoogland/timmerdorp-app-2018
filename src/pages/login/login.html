@@ -42,6 +42,9 @@
 					Inloggen
 				</span>
 			</button>
+      <div class="user-info" *ngIf="loading">
+        <ion-spinner color='primary'></ion-spinner>
+      </div>
 			<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
 				<div class="content" *ngIf='error'>
 					<ion-icon name='warning'></ion-icon>
