@@ -262,9 +262,16 @@ export class HomePage {
       this.scanCode();
     } else if (this.openedPage.component === 'weather') {
       this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
+    } else if (ogPage === 'presence') {
+      console.log('aha', new Date().getDay())
+      if(new Date().getDay() < 2 || new Date().getDay() > 5) {
+				alert("Nog even wachten tot Timmerdorp!");
+      } else {
+        this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+      }
     } else if (ogPage === 'login') {
       await Parse.User.logOut();
-      this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+      this.g.toLogin();
     } else {
       this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
     }

@@ -31,15 +31,12 @@ export class MyApp {
 	async initializeApp() {
 		this.g.setStatusBar("#2196f3");
 		this.platform.ready().then(() => {
-			let isSentToLogin = false;
 			Promise.all([
 				this.storage.get("notFirstUse").then((val) => {
 					if (!val) {
-						isSentToLogin = true;
 						this.g.toLogin();
 					}
 				}, (error) => {
-					isSentToLogin = true;
 					this.g.toLogin();
 				}),
 			]).then(() => {
@@ -55,11 +52,6 @@ export class MyApp {
 							}
 						});
 					}
-				}
-				if (!isSentToLogin) {
-					this.g.checkIfStillLoggedIn().then((loggedIn) => {
-            if(!loggedIn) this.g.toLogin();
-          }).catch((e) => console.log(e));
 				}
 			});
 		});
