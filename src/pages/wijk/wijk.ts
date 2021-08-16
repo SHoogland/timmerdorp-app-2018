@@ -123,6 +123,8 @@ export class WijkPage {
 
       self.admins = result.adminList.sort(function(a, b) {
         return b.total - a.total
+      }).filter(function(a) {
+        return a.total
       })
       self.loading = false;
     });

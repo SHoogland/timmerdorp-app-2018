@@ -111,7 +111,7 @@ export class SearchPage {
       clearTimeout(this.typingTimer);
       this.typingTimer = setTimeout(() => {
         this.searchThis();
-      }, 100);
+      }, 500);
     } catch (e) {
       console.log(e);
     }

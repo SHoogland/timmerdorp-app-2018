@@ -47,38 +47,44 @@
         </tr>
       </table>
 
-      <div *ngIf="admins"></div>
-      <h1>De Badmeesterbattle</h1>
-      <table class='cleanTable'>
-        <tr>
-          <td>
-            <b>Naam</b>
-          </td>
-          <td>
-            <b>Dinsdag</b>
-          </td>
-          <td>
-            <b>Woensdag</b>
-          </td>
-          <td>
-            <b>Donderdag</b>
-          </td>
-          <td>
-            <b>Vrijdag</b>
-          </td>
-          <td>
-            <b>Totaal</b>
-          </td>
-        </tr>
-        <tr *ngFor="let admin of admins; let i = index">
-          <td>{{ admin.naam }} </td>
-          <td>{{ admin.di || 0 }} </td>
-          <td>{{ admin.wo || 0 }} </td>
-          <td>{{ admin.do || 0 }} </td>
-          <td>{{ admin.vr || 0 }} </td>
-          <td>{{ admin.total || 0 }} </td>
-        </tr>
-      </table>
+      <div *ngIf="admins && admins.length">
+        <h1>De Badmeesterbattle</h1>
+        <p style="padding: 12px;">
+          Hieronder zie je welke Timmerdorp-topper de meeste kinderen aanwezig heeft gemeld. Doe je best, en <u>zorg dat je meer kinderen helpt dan Twan!</u>
+        </p>
+        <div style="overflow-x: scroll;">
+          <table class='cleanTable'>
+            <tr>
+              <td>
+                <b>Naam</b>
+              </td>
+              <td>
+                <b>Dinsdag</b>
+              </td>
+              <td>
+                <b>Woensdag</b>
+              </td>
+              <td>
+                <b>Donderdag</b>
+              </td>
+              <td>
+                <b>Vrijdag</b>
+              </td>
+              <td>
+                <b>Totaal</b>
+              </td>
+            </tr>
+            <tr *ngFor="let admin of admins; let i = index">
+              <td>{{ admin.naam }} </td>
+              <td>{{ admin.di || 0 }} </td>
+              <td>{{ admin.wo || 0 }} </td>
+              <td>{{ admin.do || 0 }} </td>
+              <td>{{ admin.vr || 0 }} </td>
+              <td>{{ admin.total || 0 }} </td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>
