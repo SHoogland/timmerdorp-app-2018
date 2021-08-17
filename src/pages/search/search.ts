@@ -118,7 +118,7 @@ export class SearchPage {
   }
 
   filterPhoneNr(num) {
-    return (num || [""])[0].replace(/[^0-9+]/g, '');
+    return num.replace(/[^0-9+]/g, '');
   }
 
 
