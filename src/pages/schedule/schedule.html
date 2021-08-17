@@ -9,9 +9,9 @@
 		</ion-navbar>
 	</ion-header>
 	<div class='content'>
-    <div class="user-info">
+    <div class="user-info" *ngIf="loading">
       <div id='spinner' [ngClass]="{'hidden': !loading}">
-        <div *ngIf="loading">
+        <div>
           <ion-spinner color='primary'></ion-spinner>
         </div>
       </div>
