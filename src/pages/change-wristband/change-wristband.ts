@@ -41,14 +41,12 @@ export class ChangeWristbandPage {
     this.searched = false;
 		if (this.oldNr.length < 3) {
 			this.cd.detectChanges();
-			console.log("Cancelling search. Reason: term too short");
 			return false;
 		}
 		this.error = '';
 		this.ticket = null;
 		this.loading = true;
 		this.searchedTerm = this.oldNr;
-		console.log('searching: ' + this.oldNr);
 
     this.g.apiCall('findChildByWristband', { wristband: this.searchedTerm }).then((result) => {
       self.loading = false;
@@ -63,7 +61,6 @@ export class ChangeWristbandPage {
       setTimeout(function () {
         if (document.getElementById("secondInput")) {
           let el = document.getElementById("secondInput").getElementsByTagName("input")[0];
-          console.log(el);
           el.focus();
         }
       }, 250);

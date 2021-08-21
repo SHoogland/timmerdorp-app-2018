@@ -111,7 +111,6 @@ export class ConnectChildToCabinPage {
 		Promise.all([
 			this.storage.get('cabinAddHistory').then((val) => {
 				this.history = val || [];
-				console.log(this.history);
 			}, (error) => {
 				this.history = [];
 			}),
@@ -147,7 +146,6 @@ export class ConnectChildToCabinPage {
 		let self = this;
 		this.undoingInterval = setInterval(function () {
 			if (!self.loading) {
-				console.log(self.undoItem);
 				if (document.getElementById(self.undoItem)) {
 					document.getElementById(self.undoItem).classList.add("done");
 				}
@@ -182,7 +180,6 @@ export class ConnectChildToCabinPage {
 	}
 
 	searchHut() {
-		console.log('searching: ' + this.hutNr);
 		if (isNaN(+this.hutNr) || +this.hutNr >= 400 || +this.hutNr < 0) {
 			this.error = 'Foutmelding';
 			this.errorHelp = 'Hutnummer moet tussen 0 en 399 zijn.';
@@ -228,7 +225,6 @@ export class ConnectChildToCabinPage {
 		}
 		self.loading = true;
 
-		console.log('searching: ' + this.searchTerm);
     this.g.apiCall('search', { searchTerm: this.searchTerm }).then((result) => {
       if(!result || result.response !== 'success') {
         self.error = (result || {}).error || (result || {}).response
@@ -268,13 +264,11 @@ export class ConnectChildToCabinPage {
 		this.nieuwHutje = this.hutNr;
 		this.closeWarningModal();
 		this.closeAddModal();
-		console.log(this.selectedChild);
 		let self = this;
     this.g.apiCall('setHutNr', { id: this.selectedChild.id, hutNr: this.hutNr }).then((result) => {
       if(!result || result.response !== 'success') {
         alert('daar ging iets goed mis... het hutje is waarschijnlijk niet opgeslagen')
       } else {
-        console.log(self.selectedChild.hutNr)
         self.history.unshift({
           name: (self.selectedChild.nickName || self.selectedChild.firstName) + ' ' + self.selectedChild.lastName,
           wristband: self.selectedChild.wristband,
@@ -307,7 +301,6 @@ export class ConnectChildToCabinPage {
 
 	removeChildFromHut(child) {
 		let self = this;
-    console.log(child)
     this.removedChild = child;
     this.g.apiCall('setHutNr', { id: child.id, hutNr: null, removeFromHut: true }).then((result) => {
       if(!result || result.response !== 'success') {

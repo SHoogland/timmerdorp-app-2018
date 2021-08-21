@@ -108,8 +108,6 @@ export class HomePage {
         this.childrenCount = result['aanwezig_' + dag] || 0;
       });
 
-			console.log(this.wijk);
-
 			this.pages = [
 				{
 					title: '-',
@@ -211,7 +209,6 @@ export class HomePage {
 			}
 
 			let rainPerHour = totalRain / 6;
-			// console.log(totalRain, rainPerHour);
 			if (rainPerHour > 0) {
 				if (rainPerHour > .5) {
 					weatherMessage = "Veel regen voorspeld";
@@ -254,7 +251,6 @@ export class HomePage {
 
 	async openPage(page) {
 		this.openedPage = page;
-		console.log(this.openedPage.component);
 
     let ogPage = this.openedPage.component
     this.openedPage.component = this.readablePageList[this.openedPage.component];
@@ -263,7 +259,6 @@ export class HomePage {
     } else if (this.openedPage.component === 'weather') {
       this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
     } else if (ogPage === 'presence') {
-      console.log('aha', new Date().getDay())
       if(new Date().getDay() < 2 || new Date().getDay() > 5) {
 				alert("Nog even wachten tot Timmerdorp!");
       } else {
@@ -299,11 +294,10 @@ export class HomePage {
 			}).then((barcodeData) => {
 				this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });
 			}, (error) => {
-				console.log(error);
 				this.error = error.message;
 			});
 		} else {
-			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 420 });
+			this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 'xu7BiCElBu' });
 		}
 	}
 }

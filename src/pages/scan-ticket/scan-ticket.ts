@@ -66,14 +66,26 @@ export class ScanTicketPage {
     this.loading = true;
 
     let self = this;
-    this.g.apiCall('findChildById', { id: this.ticket.id }).then((result) => {
+    this.g.apiCall('findChildById', { id: this.ticket.id }).then(async function(result) {
       self.loading = false;
       if (result.response !== 'success') {
         self.error = result.error || result.response;
         self.errorHelp = result.errorMessage || result.response;
         return;
       }
-      self.ticket = result.ticket;
+      let ticket = result.ticket;
+
+      let history = await self.storage.get('searchChildHistory')
+      history.unshift({
+        firstName: ticket.nickName || ticket.firstName,
+        lastName: ticket.lastName,
+        wristband: ticket.wristband,
+        hutNr: ticket.hutNr,
+        wijk: self.g.getColor(ticket.hutNr)
+      });
+
+      self.storage.set("searchChildHistory", self.g.filterHistory(history));
+      self.ticket = ticket;
       self.loadedTicket = true;
       if (self.ticket.wristband) self.showModal()
     });
@@ -108,7 +120,6 @@ export class ScanTicketPage {
           wijk: self.g.getColor(self.ticket.hutNr)
         });
         self.storage.set("editHistory", editHis);
-        console.log('porque?')
 
         self.g.goHome();
       }, (error) => {
@@ -129,14 +140,12 @@ export class ScanTicketPage {
   closeModal() {
     this.modal.showModal = false;
     setTimeout(function () {
-      console.log(document.querySelector('#myModal'))
       document.querySelector('#myModal').classList.remove('high');
     }, 400);
   }
 
   showModal() {
     this.modal.showModal = true;
-    console.log(document.querySelector('#myModal'))
     document.querySelector('#myModal').classList.add('high');
   }
 

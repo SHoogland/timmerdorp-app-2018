@@ -109,7 +109,6 @@ export class WijkPage {
 
 	updateData() {
 		this.loading = true;
-		console.log(this.wijk);
 
     let self = this;
     this.g.apiCall('wijkStats').then((result) => {

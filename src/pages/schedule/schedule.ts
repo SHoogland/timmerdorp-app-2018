@@ -35,11 +35,9 @@ export class SchedulePage {
 			.subscribe((data: any) => {
 				self.loading = false;
 				self.schedule = data.schedule;
-				console.log(self.schedule);
 				setTimeout(function () {
 					let id = self.getDate();
 					let el = document.getElementById(id);
-					console.log(id, el);
 					if (el) {
 						self.content.scrollTo(0, el.offsetTop - 12, 600);
 					}

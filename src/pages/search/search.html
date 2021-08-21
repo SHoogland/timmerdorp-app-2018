@@ -50,9 +50,11 @@
           <table>
             <tr>
               <td>
-                <h3>B<span class="largeScreenSpan" style="padding-right: 28px;">andje</span> <span>{{ h.wristband }}</span>
+                <h3>B<span class="largeScreenSpan" style="padding-right: 28px;">andje</span> <span>{{ h.wristband
+                    }}</span>
                 </h3>
-                <h3>H<span class="largeScreenSpan" style="padding-right: 28px;">utje</span> <span>{{h.hutNr}}</span></h3>
+                <h3>H<span class="largeScreenSpan" style="padding-right: 28px;">utje</span> <span>{{h.hutNr}}</span>
+                </h3>
               </td>
               <td>
                 <h2>
@@ -77,14 +79,15 @@
       <ion-list-header>
         Zoekresultaten ({{tickets.length}})
       </ion-list-header>
-      <div *ngFor="let child of tickets" (click)='showModal(child)'
-        class='{{"childItem " + g.getWijk(child.hutNr)}}'>
+      <div *ngFor="let child of tickets" (click)='showModal(child)' class='{{"childItem " + g.getWijk(child.hutNr)}}'>
         <table>
           <tr>
             <td>
-              <h3>B<span class="largeScreenSpan" style="padding-right: 28px;">andje</span> <span>{{child.wristband}}</span>
+              <h3>B<span class="largeScreenSpan" style="padding-right: 28px;">andje</span>
+                <span>{{child.wristband}}</span>
               </h3>
-              <h3>H<span class="largeScreenSpan" style="padding-right: 28px;">utje</span> <span>{{child.hutNr}}</span></h3>
+              <h3>H<span class="largeScreenSpan" style="padding-right: 28px;">utje</span> <span>{{child.hutNr}}</span>
+              </h3>
             </td>
             <td>
               <h2>
@@ -138,15 +141,23 @@
             </tr>
           </div>
           <tr *ngFor="let prop of cat.props">
-            <div *ngIf="modal.child[prop]">
-              <td><b>{{ (ticketPropertiesMap[prop]||{}).appLabel || (ticketPropertiesMap[prop]||{}).label }}:</b></td>
-              <td
-                *ngIf="prop != 'tel1' && prop != 'tel2' && prop != 'tel_huisarts' && prop != 'email' && cat.name != 'Aanwezigheid'">
-                {{ modal.child[prop] }}</td>
-              <td *ngIf='prop === "tel1" || prop === "tel2" || prop === "tel_huisarts"'><a
-                  href="tel: {{filterPhoneNr(modal.child[prop])}}">{{ modal.child[prop] }}</a>
+            <div *ngIf="modal.child[prop] || prop === 'opmerkingen'">
+              <td *ngIf="prop != 'parent_email'"><b>{{ (ticketPropertiesMap[prop]||{}).appLabel || (ticketPropertiesMap[prop]||{}).label }}:</b></td>
+              <td *ngIf="prop != 'tel1' && prop != 'tel2' && prop != 'tel_huisarts' && prop != 'parent_email' && cat.name != 'Aanwezigheid'">
+                {{ modal.child[prop] || '&#8212;'}}
               </td>
-              <td *ngIf='prop === "email"'><a href="mailto:{{modal.child[prop]}}">{{ (modal.child[prop]||[])[0] }}</a>
+              <td *ngIf='prop === "tel1" || prop === "tel2" || prop === "tel_huisarts"'>
+                <a href="tel: {{filterPhoneNr(modal.child[prop])}}">
+                  {{ modal.child[prop] }}
+                </a>
+              </td>
+              <td *ngIf='prop === "parent_email"'>
+                <b>E-mailadres ouder:</b>
+              </td>
+              <td *ngIf='prop === "parent_email"'>
+                <a href="mailto:{{modal.child[prop]}}">
+                  {{ modal.child[prop] }}
+                </a>
               </td>
             </div>
           </tr>

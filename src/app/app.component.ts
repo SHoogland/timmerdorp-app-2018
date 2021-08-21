@@ -43,11 +43,8 @@ export class MyApp {
 				if (this.platform.is('cordova')) {
 					if (cordova.platformId === 'android') {
             this.platform.registerBackButtonAction(() => {
-							console.log("TERUG KNOP ANDROID", this);
 							let preventBack = ['page-search', 'page-connect-child-to-cabin', 'page-home', 'page-presence', 'page-scan-ticket']
-							if (preventBack.indexOf(this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()) > -1) {
-								console.log("close the modal, if opened");
-							} else {
+							if (preventBack.indexOf(this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()) === -1) {
                 this.g.goHome();
 							}
 						});

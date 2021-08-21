@@ -81,7 +81,6 @@ export class LoginPage {
         }
         self.error = 'Inloggen mislukt'
         self.errorHelp = readableErrors[error.message] || error.message
-        console.log(error)
       }
     ).then(function (user) {
       if (user) {
@@ -110,7 +109,6 @@ export class LoginPage {
 	}
 
   pwInput(event) {
-    console.log(event)
     if(event.code === 'Enter') this.loginNow()
   }
 

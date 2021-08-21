@@ -842,11 +842,15 @@ ion-input.hideClear {
       font-size: 3rem;
       color: white;
       line-height: normal;
+      position: relative;
     }
 
     td:not(:first-of-type) span {
       text-align: right;
       position: absolute;
+      color: white;
+      font-size: 56px;
+      line-height: 40px;
       right: 24px;
       top: calc((100px - 40px)/2);
       margin-top: 0px;

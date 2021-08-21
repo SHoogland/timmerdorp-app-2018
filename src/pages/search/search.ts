@@ -78,7 +78,7 @@ export class SearchPage {
       },
       {
         name: "Contactgegevens ouders",
-        props: ["tel1", "tel2"]
+        props: ["tel1", "tel2", "parent_email"]
       },
       {
         name: "Gegevens Kind",
@@ -92,7 +92,6 @@ export class SearchPage {
     Promise.all([
       this.storage.get('searchChildHistory').then((val) => {
         this.history = val || [];
-        console.log(this.history);
         this.history = this.g.filterHistory(this.history);
       }, (error) => {
         this.history = [];
@@ -128,12 +127,10 @@ export class SearchPage {
     self.error = '';
     self.errorHelp = '';
     if (this.searchTerm.length < 3) {
-      console.log("Cancelling search. Reason: term too short");
       return false;
     }
     self.loading = true;
 
-    console.log('searching: ' + this.searchTerm);
     this.g.apiCall('search', { searchTerm: this.searchTerm }).then((result) => {
       self.loading = false
       if(!result || result.response !== 'success') {
@@ -144,7 +141,7 @@ export class SearchPage {
       if(self.searchTerm.length < 3) return
       self.searched = true
       self.tickets = result.tickets.sort(function (a) {
-        if ((a.wristband || [])[0] == self.searchTerm) {
+        if (a.wristband == self.searchTerm) {
           return -1;
         }
         return 1;
@@ -157,6 +154,7 @@ export class SearchPage {
 
   showModal(child) {
     this.modal.child = child;
+    this.g.setStatusBar(['yellow', 'red', 'blue', 'green'][(child.hutnr || "2")[0]])
     this.modal.showModal = true;
     this.history.unshift({
       firstName: child.nickName || child.firstName,
@@ -172,7 +170,9 @@ export class SearchPage {
 
   closeModal() {
     this.modal.showModal = false;
+    let self = this;
     setTimeout(function () {
+      self.g.setStatusBar('blue')
       document.querySelector('#myModal').classList.remove('high');
     }, 400);
   }

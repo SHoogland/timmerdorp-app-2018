@@ -52,23 +52,23 @@ export class GlobalFunctions {
   }
 
   setStatusBar(c) {
+    let colors = {
+      blue: "#2196f3",
+      red: "#ee0202",
+      yellow: "#fce700",
+      green: "#43a047"
+    }
+
+    if (Object.keys(colors).indexOf(c) > -1) {
+      c = colors[c];
+    }
+
     if (this.platform.is('cordova')) {
-      let colors = {
-        blue: "#2196f3",
-        red: "#ee0202",
-        yellow: "#ffc800",
-        green: "#43a047"
-      }
-
-      if (Object.keys(colors).indexOf(c) > -1) {
-        c = colors[c];
-      }
-
       this.statusBar.styleDefault();
       if (cordova.platformId === 'android') {
         this.statusBar.backgroundColorByHexString(this.darkenColour(c, -50));
       } else if (cordova.platformId === 'ios') {
-		    // this.statusBar.overlaysWebView(true);
+        // this.statusBar.overlaysWebView(true);
         this.statusBar.backgroundColorByHexString(c);
       }
     }
@@ -129,7 +129,6 @@ export class GlobalFunctions {
 
   getColor(w) {
     let res = '#222';
-    console.log((w + "")[0])
     switch ((w + "")[0]) {
       case '0':
         res = '#ffc800';
