@@ -234,7 +234,7 @@ export class HomePage {
           self.g.toLogin()
         } else {
           if (!logInStatus.admin || !logInStatus.emailConfirmed) {
-            self.navCtrl.setRoot(EmailConfirmationPage {}, { animate: true, animation: "ios-transition", direction: 'forward' })
+            self.navCtrl.setRoot(EmailConfirmationPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' })
           }
         }
       }
