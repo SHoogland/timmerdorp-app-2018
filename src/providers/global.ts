@@ -87,7 +87,7 @@ export class GlobalFunctions {
 
   toLogin() {
     let nav = this.app.getActiveNavs()[0];
-    nav.setRoot(this.loginPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+    nav.setRoot(this.loginPage, { login: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   getWijkName(kleur) {
@@ -148,9 +148,9 @@ export class GlobalFunctions {
     return res;
   }
 
-  async apiCall(func, data?) {
+  async apiCall(func, data?, notApp?) {
     await this.fixParseURL()
-    return Parse.Cloud.run('app-' + func, data)
+    return Parse.Cloud.run((notApp ? '' : 'app-') + func, data)
   }
 
   async fixParseURL() {

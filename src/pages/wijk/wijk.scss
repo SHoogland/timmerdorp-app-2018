@@ -100,16 +100,18 @@ page-wijk {
 		}
 	}
 	.iconBtn {
-		border-radius: 0px !important;
-		ion-icon {
-			margin-right: 12px;
-			position: relative;
-			font-size: 1.2em;
-		}
+    border-radius: 0px !important;
+    ion-icon {
+      font-size: 1.2em;
+    }
 		span span {
 			font-size: 18px;
 		}
 	}
+
+  span.button-inner {
+    font-size: 3rem;
+  }
 
 	ion-item {
 		background: #fafafa !important;

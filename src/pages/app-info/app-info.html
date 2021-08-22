@@ -1,33 +1,102 @@
 <ion-content padding>
-	<ion-header (click)='g.goHome()'>
-		<ion-icon class='homeIcon' name="md-home">
-		</ion-icon>
-		<h1 id="ptitle">{{title}}</h1>
-		<ion-navbar>
-			<ion-title>
-				<img src="assets/imgs/logo.png" class="nav-logo">
-			</ion-title>
-		</ion-navbar>
-	</ion-header>
-	<div class='content'>
-		<table class='cleanTable'>
-			<tr>
-				<td>Test-versie:</td>
-				<td>{{!!g.staging ? "Ja" : "Nee"}}</td>
-			</tr>
-			<tr>
-				<td>Wijkkeuze:</td>
-				<td>{{g.getWijkName(wijk)}}</td>
-			</tr>
-		</table>
-		<br>
-		<p>Voor vragen over de app kun je terecht bij Stan uit wijk blauw of Stephan uit wijk geel.
-		</p>
-		<button ion-button full (click)="belStan()" class="bg-green">
-			<ion-icon slot='start' name='call'></ion-icon>
-			<span>
-				Bel Stan
-			</span>
-		</button>
-	</div>
+  <ion-header (click)='g.goHome()'>
+    <ion-icon class='homeIcon' name="md-home">
+    </ion-icon>
+    <h1 id="ptitle">{{title}}</h1>
+    <ion-navbar>
+      <ion-title>
+        <img src="assets/imgs/logo.png" class="nav-logo">
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  <div class='content'>
+    <table class='cleanTable' id="appInfo">
+      <tr>
+        <td>Test-versie:</td>
+        <td>{{!!g.staging ? "Ja" : "Nee"}}</td>
+      </tr>
+      <tr>
+        <td>Wijkkeuze:</td>
+        <td>{{g.getWijkName(wijk)}}</td>
+      </tr>
+    </table>
+    <br>
+    <div *ngIf="!isStanOfStephan">
+      <p>Voor vragen over de app kun je terecht bij Stan uit wijk blauw of Stephan uit wijk geel.</p>
+      <button ion-button full (click)="belStan()" class="bg-green">
+        <ion-icon slot='start' name='call'></ion-icon>
+        <span>
+          Bel Stan
+        </span>
+      </button>
+    </div>
+    <div *ngIf="isStanOfStephan">
+      <h1 style="padding: 0 24px;">Potentiële nieuwe beheerders ({{ (potentialAdmins || {}).length }})</h1>
+      <p>
+        {{ addStatus }}
+      </p>
+      <div style="overflow-x: scroll;">
+        <table *ngIf="(potentialAdmins || []).length" class="cleanTable withHeader">
+          <tr>
+            <td>
+              Naam
+            </td>
+            <td>
+              E-mailadres
+            </td>
+            <td>
+              Toevoegen
+            </td>
+          </tr>
+          <tr *ngFor="let potentialAdmin of potentialAdmins">
+            <td>
+              {{ potentialAdmin.name }}
+            </td>
+            <td>
+              {{ potentialAdmin.email }}
+            </td>
+            <td (click)="addAdmin(potentialAdmin.email)">
+              <a href="#">Toevoegen</a>
+            </td>
+          </tr>
+        </table>
+        <p *ngIf="!(potentialAdmins || []).length">
+          Er zijn geen potentiële nieuwe beheerders op het moment!
+        </p>
+      </div>
+      <h1 style="padding: 0 16px;">Huidige beheerders ({{ (admins || {}).length }})</h1>
+      <p>
+        {{ removeStatus }}
+      </p>
+      <div style="overflow-x: scroll;">
+        <table *ngIf="(admins || []).length" class="cleanTable withHeader">
+          <tr>
+            <td>
+              Naam
+            </td>
+            <td>
+              E-mailadres
+            </td>
+            <td>
+              Toevoegen
+            </td>
+          </tr>
+          <tr *ngFor="let admin of admins">
+            <td>
+              {{ admin.name }}
+            </td>
+            <td>
+              {{ admin.email }}
+            </td>
+            <td (click)="removeAdmin(admin.email)">
+              <a href="#">Verwijderen</a>
+            </td>
+          </tr>
+        </table>
+        <p *ngIf="!(admins || []).length">
+          Er zijn geen beheerders op het moment (dat is raar)
+        </p>
+      </div>
+    </div>
+  </div>
 </ion-content>

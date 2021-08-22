@@ -50,28 +50,29 @@
       <div *ngIf="admins && admins.length">
         <h1>De Badmeesterbattle</h1>
         <p style="padding: 12px;">
-          Hieronder zie je welke Timmerdorp-topper de meeste kinderen aanwezig heeft gemeld. Doe je best, en <u>zorg dat je meer kinderen helpt dan Twan!</u>
+          Hieronder zie je welke Timmerdorp-topper de meeste kinderen aanwezig heeft gemeld. Doe je best, en <u>zorg dat
+            je meer kinderen helpt dan Twan!</u>
         </p>
         <div style="overflow-x: scroll;">
-          <table class='cleanTable'>
+          <table class='cleanTable withHeader'>
             <tr>
               <td>
-                <b>Naam</b>
+                Naam
               </td>
               <td>
-                <b>Dinsdag</b>
+                Dinsdag
               </td>
               <td>
-                <b>Woensdag</b>
+                Woensdag
               </td>
               <td>
-                <b>Donderdag</b>
+                Donderdag
               </td>
               <td>
-                <b>Vrijdag</b>
+                Vrijdag
               </td>
               <td>
-                <b>Totaal</b>
+                Totaal
               </td>
             </tr>
             <tr *ngFor="let admin of admins; let i = index">

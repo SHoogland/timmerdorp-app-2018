@@ -2,10 +2,10 @@
 - add-wristband: suggesties toevoegen “wil je nummer x+1 toewijzen?” als je net nummer x toegewezen hebt, want meestal zijn je nummers opeenvolgend. Klein puntje natuurlijk, maar terwijl je 400 bandjes uitdeelt verzin je nog eens iets
 - Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
 - Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
-- Weerberichtje lokaal wél ff cachen
+- Weerberichtje en wijk-stats lokaal wél ff cachen
 - Auto-focus de input in de add-child-to-hut modal
-- Admin/registreer procedure moet makkelijker kunnen. Standaard moet je niet bij login, maar bij registreren in de app landen
-- Na het registreren in de app kom je meteen in de admin tabel met je naam, maar nog niet met confirmed, dat kunnen Stephan en ik alleen
+- Gefixt: Admin/registreer procedure moet makkelijker kunnen. Standaard moet je niet bij login, maar bij registreren in de app landen
+- Gefixt: Na het registreren in de app kom je meteen in de admin tabel met je naam, maar nog niet met confirmed, dat kunnen Stephan en ik alleen
 - Hutjes plattegrond toevoegen met gps en alles
 - Ticket pdf moet louter een QR code zijn, no more user data
 - Meer statistieken/grafieken toevoegen
@@ -21,6 +21,9 @@
 - Soms staat er nog voornaam in plaats van Roepnaam, pas op, anders wordt Henrieke boos
 - Geboortedatum automatisch opslaan als dd-mm-jjjj, 1-1-2012 is nu wel goed, maar sla die aub op als 01-01-2012
 - De hele app in wijk thema? Meteen vragen bij startup
+- confirm-email link openen in app
+- De statusbar op de statistiekenpagina kleurt niet mee op iPhone...raar
+- De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
 
 # App feedback en aandachtspunten 2019 (door Stan)
 **Het belangrijkste volgens velen: de app goed vooraf testen a.u.b. Iedereen was tevreden over de functionaliteiten, maar het zou leuk zijn als alles dinsdagochtend meteen al werkte natuurlijk ;)**

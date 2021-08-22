@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
 
 import { HttpClient } from '@angular/common/http';
@@ -6,58 +6,95 @@ import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { GlobalFunctions } from '../../providers/global';
 
-declare let cordova: any;
-
 @Component({
 	selector: 'page-app-info',
 	templateUrl: 'app-info.html'
 })
 export class AppInfoPage {
+  removeStatus: string
+  addStatus: string
 	error: string;
 	title: string;
 	wijk: string;
+
+  isStanOfStephan: boolean;
+
+  admins: Array<any>;
+  potentialAdmins: Array<any>;
 
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
 		public storage: Storage,
 		public httpClient: HttpClient,
-		public g: GlobalFunctions
-	) {
+		public g: GlobalFunctions,
+		private cd: ChangeDetectorRef
+  ) {
 	}
 
-	init() {
+	async init() {
 		this.title = 'App info';
+    this.addStatus = ''
+    this.removeStatus = ''
+    this.potentialAdmins = []
+    this.admins = []
+    this.isStanOfStephan = false;
+
 
     this.storage.get('wijk').then((val) => {
-			this.wijk = val;
+      this.wijk = val;
 		});
+
+    await this.getAdmins()
 	}
 
-	datum(date) {
-		let d = new Date(date);
-		let d2 = new Date(date);
-		d2.setHours(0);
-		d2.setMinutes(0);
-		d2.setSeconds(0);
-		d2.setMilliseconds(0);
-		let today = new Date();
-		today.setHours(0);
-		today.setMinutes(0);
-		today.setSeconds(0);
-		today.setMilliseconds(0);
+  async getAdmins() {
+    let self = this;
+    this.g.apiCall('getAdmins').then(function(result) {
+      if(result.denied) {
+        return;
+      }
+      self.isStanOfStephan = true;
+      self.admins = result.admins;
+      self.potentialAdmins = result.potentialAdmins;
+    })
+  }
 
-		if (+d2 === +today) {
-			return 'Vandaag ' + this.tijdstip(d);
-		} else if (+today - +d2 == 24 * 60 * 60 * 1000) {
-			return 'Gisteren ' + this.tijdstip(d);
-		}
-		return this.g.prependZero(d.getDate()) + '-' + this.g.prependZero(d.getMonth() + 1) + '-' + d.getFullYear() + ' ' + this.tijdstip(d);
-	}
+  async addAdmin(email) {
+    this.addStatus = 'Laden...'
+    let result = await this.g.apiCall('addAdmin', { email: email })
+    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt...'
 
-	tijdstip(t) {
-		return 'om ' + this.g.prependZero(t.getHours()) + ':' + this.g.prependZero(t.getMinutes());
-	}
+    let self = this
+    setTimeout(function(){
+      self.addStatus = ''
+      self.cd.detectChanges()
+    }, 1000)
+
+    await this.getAdmins()
+  }
+
+  async removeAdmin(email) {
+    this.removeStatus = 'Laden...'
+    let result = await this.g.apiCall('removeAdmin', { email: email })
+    if(result.success) {
+      this.removeStatus = 'Gelukt!'
+    } else {
+      if(result.stanOfStephan) {
+        this.removeStatus = 'Je kan Stan of Stephan niet verwijderen natuurlijk, grapjas...'
+      } else {
+        this.removeStatus = 'Niet gelukt...'
+      }
+    }
+
+    let self = this
+    setTimeout(function(){
+      self.removeStatus = ''
+      self.cd.detectChanges()
+    }, 1000)
+
+    await this.getAdmins()
+  }
 
 	belStan() {
 		window.location.href = 'tel:0640516654'

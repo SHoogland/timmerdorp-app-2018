@@ -7,40 +7,14 @@ page-app-info {
 		border-radius: 0px !important;
 	}
 
-	tr > td:first-of-type {
-		font-weight: bold;
-	}
-
 	p {
 		padding: 6px 12px !important;
 		font-size: 16px;
 	}
 
-	table {
-		width: 100%;
-	}
-
-	#title {
-		text-align: center;
-		margin: 8px 0 12px 0;
-	}
-
-	#updates {
-		margin-top: 38px;
-	}
-
-	h3 {
-		text-align: center;
-	}
-
-	button {
-		ion-icon {
-			margin-right: 12px;
-			position: relative;
-			font-size: 1.8em;
-		}
-		span span {
-			font-size: 18px;
-		}
-	}
+  #appInfo {
+    tr > td:first-of-type {
+      font-weight: bold;
+    }
+  }
 }

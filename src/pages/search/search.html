@@ -16,7 +16,7 @@
         <ion-list class="line-input">
           <ion-item>
             <ion-input [ngClass]="'ion-text-right' + ((searchTerm||'').length?'':' hideClear')" clearInput
-              [(ngModel)]="searchTerm" (ngModelChange)="search($event)">
+              [(ngModel)]="searchTerm" (ngModelChange)="search($event)" id="searchInput">
             </ion-input>
           </ion-item>
         </ion-list>

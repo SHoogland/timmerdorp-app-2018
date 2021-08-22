@@ -18,6 +18,15 @@
 	src: url("../assets/fonts/Mikado-Bold.woff");
 }
 
+@font-face {
+	font-family: Montserrat;
+	src: url("../assets/fonts/Montserrat.woff");
+}
+
+* {
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
 body {
 	font-size: 16px;
 	line-height: 20px;
@@ -346,7 +355,9 @@ ion-spinner {
 
 .container {
 	position: relative;
-	// height: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 14px;
 }
 
 .item-inner {
@@ -758,6 +769,7 @@ button {
 
 .cleanTable {
 	font-size: 18px;
+
 	tr:nth-of-type(2n) {
 		background: #e5e5e5;
 	}
@@ -767,9 +779,18 @@ button {
 	td:first-of-type {
 		width: 50%;
 	}
+
 	&.longHeader td:first-of-type {
 		width: 80%;
 	}
+
+  &.withHeader {
+    tr:first-of-type {
+      td {
+        font-weight: bold;
+      }
+    }
+  }
 	text-align: left;
 	width: 100%;
 }
@@ -864,5 +885,41 @@ ion-input.hideClear {
   &, & tbody, & tr {
   width: 100%;
   display: block;
+  }
+}
+
+
+ion-item.item-input.item-md {
+  padding: 0;
+  .item-inner {
+    width: 100%;
+    padding-right: 0px;
+    ion-input {
+      height: 100%;
+      input {
+        height: 100%;
+        padding-left: 18px;
+        padding-right: 8px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.modal {
+  button {
+    margin-top: 0px!important;
+  }
+}
+
+button {
+  margin-top: 16px!important;
+  ion-icon {
+    position: absolute;
+    left: 28px;
+    font-size: 1.6em;
+  }
+  span {
+    font-size: 18px;
   }
 }

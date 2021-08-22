@@ -34,7 +34,7 @@ export class ScanTicketPage {
     this.modal = {
       showModal: false
     }
-    this.title = 'Gegevens Ticket';
+    this.title = 'Ticketgegevens';
     if (this.platform.is('cordova')) {
       if (cordova.platformId === 'android') {
         this.platform.registerBackButtonAction(() => {
