@@ -243,7 +243,6 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.init();
-    let self = this;
   }
 
   async openPage(page) {
