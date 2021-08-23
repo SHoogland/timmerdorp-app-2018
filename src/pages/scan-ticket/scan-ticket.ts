@@ -11,6 +11,7 @@ declare let cordova: any;
 })
 export class ScanTicketPage {
   wristBandError: boolean;
+  showSuggestion: boolean;
   loadedTicket: boolean;
   loading: boolean;
 
@@ -18,6 +19,8 @@ export class ScanTicketPage {
   errorHelp: string;
   error: string;
   title: string;
+
+  suggestionNumber: number;
 
   modal: {
     showModal: boolean;
@@ -52,13 +55,20 @@ export class ScanTicketPage {
       wristband: ''
     }
     this.loadedTicket = false;
+
   }
 
-  init() {
+  async init() {
     this.error = '';
     this.errorHelp = '';
     this.loading = false;
     this.wristBandError = false;
+
+    let d = await this.storage.get('lastWristbandAssignmentDate')
+    if(+new Date() - d < 10 * 60 * 1000) {
+      this.showSuggestion = true;
+      this.suggestionNumber = 1 + +(await this.storage.get('lastWristbandAssignmentNumber'))
+    }
   }
 
   ionViewDidLoad() {
@@ -111,6 +121,10 @@ export class ScanTicketPage {
         self.error = result.errorMessage || result.response;
         return;
       }
+
+      self.storage.set('lastWristbandAssignmentDate', +new Date());
+      self.storage.set('lastWristbandAssignmentNumber', result.newNumber);
+
       self.storage.get('editHistory').then((val) => {
         let editHis = val || [];
         editHis.unshift({

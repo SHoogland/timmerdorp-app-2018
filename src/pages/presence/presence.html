@@ -22,9 +22,8 @@
 				</ion-list>
 				<button (click)='togglePresence()' id='sendButton' ion-button type="submit"
 					[ngClass]='greenBtn ? "bg-green" : "bg-blue"' block>
-					<ion-icon name="send"></ion-icon>
 					<span id='btnLabel'>
-						{{ loading ? 'Laden...' : (greenBtn ? 'Opgeslagen!' : 'Opslaan') }}
+						{{ loading ? 'Laden...' : (greenBtn ? 'Opgeslagen!' : ((ticket || {})["aanwezig_" + day] ? 'Afwezig melden' : 'Aanwezig melden')) }}
 					</span>
 				</button>
 			</div>

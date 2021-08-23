@@ -63,6 +63,7 @@
         <p *ngIf="!(potentialAdmins || []).length">
           Er zijn geen potentiële nieuwe beheerders op het moment!
         </p>
+        <p id="adminPrompt" (click)="adminPrompt()">Handmatig een admin toevoegen a.d.h.v. een e-mailadres?</p>
       </div>
       <h1 style="padding: 0 16px;">Huidige beheerders ({{ (admins || {}).length }})</h1>
       <p>

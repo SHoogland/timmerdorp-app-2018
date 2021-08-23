@@ -88,7 +88,7 @@ export class HomePage {
 
     if (this.platform.is("android")) this.android = true;
 
-    this.storage.get('wijk').then((val) => {
+    this.storage.get('wijk').then(async (val) => {
       this.wijk = val || "blue";
       this.wijken = {
         blue: "blauw",
@@ -97,16 +97,27 @@ export class HomePage {
         yellow: "geel"
       }
 
+      let wijkStatsCache = await this.storage.get('wijkStatsCache').catch(console.log);
+      this.wijkCount = (wijkStatsCache || {}).wijkCount || 0;
+      this.childrenCount = (wijkStatsCache || {}).childrenCount || 0;
 
-      this.g.apiCall('wijkStats').then((result) => {
+      let self = this;
+      this.g.apiCall('wijkStats').then(async function(result) {
         if (!result || result.response !== 'success') {
           if (!result || result.response !== 'success') {
             return;
           }
         }
         let dag = ['di', 'wo', 'do', 'vr'][new Date().getDay() - 2];
-        this.wijkCount = result.quarters[this.wijk]['aanwezig_' + dag] || 0;
-        this.childrenCount = result['aanwezig_' + dag] || 0;
+        self.wijkCount = result.quarters[self.wijk]['aanwezig_' + dag] || 0;
+        self.childrenCount = result['aanwezig_' + dag] || 0;
+
+        let newCache = {
+          wijkCount: self.wijkCount,
+          childrenCount: self.childrenCount,
+        };
+
+        await self.storage.set('wijkStatsCache', newCache)
       });
 
       this.pages = [
@@ -192,41 +203,19 @@ export class HomePage {
       ];
     });
 
+    let weatherCacheDate = await this.storage.get('weatherCacheDate').catch(console.log)
+    let self = this;
+    if(+new Date() - weatherCacheDate < 15*60*1000) { // weer moet elk kwartier vervangen worden
+      this.processWeatherData(await this.storage.get('weatherCache'))
+    } else {
+      this.httpClient.get("https://api.openweathermap.org/data/2.5/forecast?q=Heiloo,NL&APPID=e98a229cdc17ffdc226168c33aefa0c1").subscribe(async function(data: any) {
+        await self.storage.set('weatherCache', data)
+        await self.storage.set('weatherCacheDate', +new Date())
+        self.processWeatherData(data)
+      });
+    }
 
-    this.httpClient.get("https://api.openweathermap.org/data/2.5/forecast?q=Heiloo,NL&APPID=e98a229cdc17ffdc226168c33aefa0c1").subscribe((data: any) => {
-      let weatherMessage = "Geen regen voorspeld!";
-      let totalRain = 0;
-      let skipped = 0;
-      let weatherIcon = "sunny";
-      for (let i = 0; i < 2 + skipped; i++) {
-        let w = data.list[i]; //weather data for a three-hour period
-        let td = 1000 * w.dt - +new Date(); //time diff between now and w
-        if (td < 30 * 60 * 1000) {
-          skipped++;
-          continue;
-        }
-        if (!w.rain) continue;
-        totalRain += w.rain["3h"] || w.rain[Object.keys(w.rain)[0]];
-      }
 
-      let rainPerHour = totalRain / 6;
-      if (rainPerHour > 0) {
-        if (rainPerHour > .5) {
-          weatherMessage = "Veel regen voorspeld";
-        } else {
-          weatherMessage = "Lichte buien voorspeld";
-        }
-        weatherIcon = "rainy";
-      }
-
-      this.weather = {
-        temp: (Math.round((data.list[0].main.temp - 273.15) * 10) / 10).toFixed(1),
-        msg: weatherMessage,
-        icon: weatherIcon
-      }
-    });
-
-    let self = this
     this.storage.get("notFirstUse").then(async function (val) {
       if (!!val) {
         let logInStatus = await self.g.checkIfStillLoggedIn()
@@ -239,6 +228,39 @@ export class HomePage {
         }
       }
     })
+  }
+
+  processWeatherData(data) {
+    let weatherMessage = "Geen regen voorspeld!";
+    let totalRain = 0;
+    let skipped = 0;
+    let weatherIcon = "sunny";
+    for (let i = 0; i < 2 + skipped; i++) {
+      let w = data.list[i]; //weather data for a three-hour period
+      let td = 1000 * w.dt - +new Date(); //time diff between now and w
+      if (td < 30 * 60 * 1000) {
+        skipped++;
+        continue;
+      }
+      if (!w.rain) continue;
+      totalRain += w.rain["3h"] || w.rain[Object.keys(w.rain)[0]];
+    }
+
+    let rainPerHour = totalRain / 6;
+    if (rainPerHour > 0) {
+      if (rainPerHour > .5) {
+        weatherMessage = "Veel regen voorspeld";
+      } else {
+        weatherMessage = "Lichte buien voorspeld";
+      }
+      weatherIcon = "rainy";
+    }
+
+    this.weather = {
+      temp: (Math.round((data.list[0].main.temp - 273.15) * 10) / 10).toFixed(1),
+      msg: weatherMessage,
+      icon: weatherIcon
+    }
   }
 
   ionViewDidLoad() {

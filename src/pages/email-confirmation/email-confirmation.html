@@ -43,15 +43,19 @@
           Je bent ingelogd als {{ emailadres }}.
         </p>
         <br>
-      </div>
-      <div *ngIf="!loading">
-        <button ion-button full (click)="logOut()" style="background: #07497e;">
-          <ion-icon slot='start' style="margin-right: 16px;" name='md-log-out'></ion-icon>
+        <button ion-button full (click)="checkStatus()" style="background: #07497e;">
+          <ion-icon slot='start' style="margin-right: 16px;" name='refresh'></ion-icon>
           <span>
-            Uitloggen
+            Verversen
           </span>
         </button>
       </div>
+      <button ion-button full (click)="logOut()" style="background: #07497e;">
+        <ion-icon slot='start' style="margin-right: 16px;" name='md-log-out'></ion-icon>
+        <span>
+          Uitloggen
+        </span>
+      </button>
     </div>
   </div>
 </ion-content>

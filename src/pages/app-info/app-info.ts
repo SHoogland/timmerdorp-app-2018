@@ -60,9 +60,9 @@ export class AppInfoPage {
     })
   }
 
-  async addAdmin(email) {
+  async addAdmin(email, force?) {
     this.addStatus = 'Laden...'
-    let result = await this.g.apiCall('addAdmin', { email: email })
+    let result = await this.g.apiCall('addAdmin', { email: email, force: force })
     this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt...'
 
     let self = this
@@ -94,6 +94,12 @@ export class AppInfoPage {
     }, 1000)
 
     await this.getAdmins()
+  }
+
+  adminPrompt () {
+    let email = prompt('Van welk e-mailadres zou je de gebruiker als Admin willen aanwijzen?')
+
+    this.addAdmin(email, true)
   }
 
 	belStan() {

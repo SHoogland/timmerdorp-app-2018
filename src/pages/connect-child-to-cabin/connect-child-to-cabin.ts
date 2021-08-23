@@ -17,26 +17,20 @@ export class ConnectChildToCabinPage {
 	hutNr: string;
 	error: string;
 
-	undoingInterval: any;
 	selectedChild: any;
 	removedChild: any;
 	typingTimer: any;
 	nieuwHutje: any;
 	tempHutNr: any;
-	undoItem: any;
 	history: any;
 
 	hutTickets: Array<any>;
 	tickets: Array<any>;
 
-	allowAutoPresence: boolean;
-	undoingIsDone: boolean;
-	autoPresence: boolean;
-	isUndoing: boolean;
-	searched: boolean;
-	loading: boolean;
 	alreadyHasHutError: boolean;
 	noWristbandError: boolean;
+	searched: boolean;
+	loading: boolean;
 
 	addModal: {
 		show: boolean;
@@ -72,10 +66,6 @@ export class ConnectChildToCabinPage {
 
     this.title = 'Beheer Hutjes';
 
-		this.allowAutoPresence = false;
-		this.undoingIsDone = false;
-		this.autoPresence = false;
-		this.isUndoing = false;
 		this.searched = false;
 		this.loading = false;
 		this.alreadyHasHutError = false;
@@ -139,27 +129,6 @@ export class ConnectChildToCabinPage {
 				res = '#000';
 		}
 		return res;
-	}
-
-	undo(i) {
-		this.undoItem = i + 1;
-		let self = this;
-		this.undoingInterval = setInterval(function () {
-			if (!self.loading) {
-				if (document.getElementById(self.undoItem)) {
-					document.getElementById(self.undoItem).classList.add("done");
-				}
-				self.undoingIsDone = true;
-				clearInterval(self.undoingInterval);
-
-				setTimeout(function () {
-					self.undoingIsDone = false;
-					if (document.getElementById(self.undoItem)) {
-						document.getElementById(self.undoItem).classList.remove("done");
-					}
-				}, 1500);
-			}
-		}, 200);
 	}
 
 	search() {
@@ -260,7 +229,6 @@ export class ConnectChildToCabinPage {
 
 	reallyAddChildNow() {
 		this.loading = true;
-		this.isUndoing = false;
 		this.nieuwHutje = this.hutNr;
 		this.closeWarningModal();
 		this.closeAddModal();
@@ -333,6 +301,13 @@ export class ConnectChildToCabinPage {
 		this.addModal.show = true;
 		this.searchTerm = '';
 		document.querySelector('#myModal').classList.add('high');
+
+    setTimeout(function () {
+      if (document && document.getElementById("addModalInput")) {
+        let el = document.getElementById("addModalInput").getElementsByTagName("input")[0];
+        el.focus();
+      }
+    }, 200);
 	}
 
 	closeAddModal() {
