@@ -8,19 +8,17 @@
 - De change-wristband pagina eruit halen? Hij is enigszins buggy, ik heb alleen Sjoerd hem zien gebruiken, en je kan een polsbandje ook gewoon wijzigen door een kindje te zoeken en op polsbandje wijzigen te klikken
 - Statistieken pagina refresh knop erbij
 - Statistieken pagina alle wijken in 1x zien
-- Stuur stan, niet Stephan aub, een mail zodra er een aanmelding is geweest
 - Swipe is back op iPhone
 - Aan/afwezig melden vanaf zoekpagina
 - De hele app in wijk thema? Meteen vragen bij startup
 - De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
-- Gefixt: Je moet in het admin beheer paneel ook kunnen typen, want sommigen hebben al een account (van buiten de app) dat alleen nog niet in de Admin tabel staat
-- De e-mail verification pagina in de webshop mag wel ff anders op t moment dat je van de app af komt. En het liefst ook in de app kunnen openen.
-- Mailgun Hotmail gezeik…
-- Je moet emailverified checken in check-if-admin. (en daarna mag je hem cachen in de Admin tabel zelf, mits de admin confirmed is)
+- De e-mail bevestigingspagina moet even customized worden voor enkel appgebruikers
+- In-app links moeten toegevoegd worden voor de mail aan stan (bevestigen van admins) en de mail aan nieuwe appgebruikers
+- iOS scroll overflow op homepagina uitzetten 
 
 
 ## Twijfel voor 2022
-- Lastig op te lossen (bug in cordova, misschien iets updaten dan maar?): De statusbar op de statistiekenpagina kleurt niet mee op iPhone...raar
+- De statusbar op de statistiekenpagina kleurt niet mee op iPhone...raar. Lastig op te lossen (bug in cordova, misschien iets updaten dan maar?)
 
 ## Gefixt voor 2022
 - Gefixt: “E-mailadres nog niet bevestigd” mist een refresh knop
@@ -31,9 +29,14 @@
 - Gefixt: Weerberichtje en wijk-stats op homepage lokaal wél ff cachen
 - Gefixt: Admin/registreer procedure moet makkelijker kunnen. Standaard moet je niet bij login, maar bij registreren in de app landen
 - Gefixt: Na het registreren in de app kom je meteen in de admin tabel met je naam, maar nog niet met confirmed, dat kunnen Stephan en ik alleen
+- Gefixt: Je moet in het admin beheer paneel ook kunnen typen, want sommigen hebben al een account (van buiten de app) dat alleen nog niet in de Admin tabel staat
 - Gefixt: Auto-focus de input in de add-child-to-hut modal
 - Gefixt (maar iPhone luistert niet): Zoekpagina modal status bar meekleuren (zie screenshot, statusbalk is lelijk)
 - Gefixt: “Opslaan” in aanwezigheid wordt “aanwezig”
+- Gefixt? Mailgun Hotmail gezeik…
+- Gefixt: Je moet emailverified checken in check-if-admin. (en daarna mag je hem cachen in de Admin tabel zelf, mits de admin confirmed is)
+- Gefixt: Stuur stan, niet Stephan aub, een mail zodra er een aanmelding voor een admin is geweest
+
 
 # App feedback en aandachtspunten 2019 (door Stan)
 **Het belangrijkste volgens velen: de app goed vooraf testen a.u.b. Iedereen was tevreden over de functionaliteiten, maar het zou leuk zijn als alles dinsdagochtend meteen al werkte natuurlijk ;)**
