@@ -13,15 +13,6 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 @import "./theme/elements";
-@font-face {
-	font-family: Mikado-Bold;
-	src: url("../assets/fonts/Mikado-Bold.woff");
-}
-
-@font-face {
-	font-family: Montserrat;
-	src: url("../assets/fonts/Montserrat.woff");
-}
 
 * {
   font-family: Roboto, Arial, Helvetica, sans-serif;

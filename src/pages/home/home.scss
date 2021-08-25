@@ -25,7 +25,21 @@ page-home {
 		padding: 0 !important;
 	}
 
-	button.small > span > div > ion-icon {
+  button.realWeather > .button-inner {
+    position: relative;
+    left: -13px;
+
+    h2 {
+      top: -8px;
+      left: 48px;
+    }
+    .weatherMsg {
+      top: -2px;
+      left: 48px;
+    }
+  }
+
+	button.small > span > div > i.material-icons {
 		font-size: 2em;
 		width: 100%;
 		text-align: center;
@@ -100,6 +114,8 @@ page-home {
 		text-align: left;
 		> span {
 			font-size: 18px;
+      top: -11px;
+      position: relative;
 		}
 	}
 
@@ -141,10 +157,12 @@ page-home {
 		font-size: 48px !important;
 	}
 
-	button ion-icon {
-    left: 0px;
-    font-size: 1.2em;
+	button i.material-icons {
+    left: -12px;
+    top: -4px;
+    font-size: 1.6em;
 		margin-right: 12px;
+    width: 18px;
 		position: relative;
 	}
 
@@ -192,10 +210,10 @@ page-home {
 				background: rgba(0, 0, 0, 0.8) !important;
 			}
 		}
-		ion-icon {
-			font-size: 4rem;
-			top: -10px;
-			left: -8px;
+		i.material-icons {
+			font-size: 3rem;
+			top: -6px;
+			left: 0px;
 		}
 	}
 
@@ -214,7 +232,7 @@ page-home {
 		div.weatherMsg {
 			position: absolute;
 			top: 31px;
-			left: 70px;
+			left: 78px;
 			font-size: 70%;
 		}
 
@@ -225,7 +243,7 @@ page-home {
 		}
 	}
 
-	ion-icon.data {
+	i.material-icons.data {
 		left: -20px !important;
 	}
 }

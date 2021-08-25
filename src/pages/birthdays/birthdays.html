@@ -1,0 +1,49 @@
+<ion-content padding>
+  <ion-header (click)="g.goHome()" [ngClass]='(wijk||"") + " wijk-header"'>
+    <ion-icon class='homeIcon' name="md-home"></ion-icon>
+    <h1 id="ptitle">{{title}}</h1>
+    <ion-navbar [ngClass]='(wijk||"")'>
+      <ion-title>
+        <img src="assets/imgs/logo.png" class="nav-logo">
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  <div class='content'>
+    <div class="user-info" *ngIf="loading">
+      <div id='spinner' [ngClass]="{'hidden': !loading}">
+        <div>
+          <ion-spinner color='primary'></ion-spinner>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!loading">
+      <ion-list *ngFor="let d of days; let i = index" id="{{d}}" class='peopleList'>
+        <ion-list-header>
+          {{ dates[i] + ' (' + data[d].count + ')'}}
+        </ion-list-header>
+        <div *ngIf="!data[d].kids.length"><b>Geen kinderen jarig :(</b></div>
+        <div *ngFor="let bday of data[d].kids" class='{{ "childItem " + g.getWijk(bday.hutNr) }}' (click)='zoekKind(bday)'>
+          <table>
+            <tr>
+              <td>
+                <i class="material-icons" style="font-size: 32px; position: relative; left: 8px;">cake</i>
+              </td>
+              <td>
+                <h2>
+                  {{ bday.nickName || bday.firstName }} {{ bday.lastName }} wordt {{ bday.newAge }}!
+                  <br>
+                  Hutje: {{ bday.hutNr }}
+                </h2>
+              </td>
+              <td>
+                <ion-button size="small" class='fab'>
+                  <ion-icon name="search"></ion-icon>
+                </ion-button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
