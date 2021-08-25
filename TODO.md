@@ -15,7 +15,11 @@
 - De e-mail bevestigingspagina moet even customized worden voor enkel appgebruikers
 - In-app links moeten toegevoegd worden voor de mail aan stan (bevestigen van admins) en de mail aan nieuwe appgebruikers
 - iOS scroll overflow op homepagina uitzetten 
-
+- Link in e-mail bevestigen werkt niet op prod
+- Inloggen/registreren formulier moet props krijgen voor autofill
+- Mailtje over admin aan stan werd niet verstuurd in prod
+- Verversen knoppen kan weer weg bij emailverified 
+- Addadmin adhv email gaat niet goed als er geen user gevonden kan worden. Ook niet als er wel een user gevonden wordt. “Cannot read property 'set' of undefined”
 
 ## Twijfel voor 2022
 - De statusbar op de statistiekenpagina kleurt niet mee op iPhone...raar. Lastig op te lossen (bug in cordova, misschien iets updaten dan maar?)

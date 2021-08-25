@@ -64,6 +64,11 @@ export class SearchPage {
 
     this.timeOut = setTimeout;
 
+    if(this.navParams.get('searchTerm')) {
+      this.searchTerm = this.navParams.get('searchTerm')
+      this.searchThis()
+    }
+
     this.loading = false;
 
     this.error = '';
@@ -148,6 +153,7 @@ export class SearchPage {
       }); //give priority to wristbands over hut numbers
       self.ticketPropertiesMap = result.ticketPropertiesMap
     }).catch((e) => {
+      self.loading = false
       self.error = String(e)
     });
   }

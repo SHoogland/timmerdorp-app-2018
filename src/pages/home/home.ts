@@ -16,12 +16,11 @@ import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { AppInfoPage } from '../app-info/app-info';
 import { HttpClient } from '@angular/common/http';
 import { SchedulePage } from '../schedule/schedule';
+import { BirthdaysPage } from '../birthdays/birthdays';
 import { ChangeWristbandPage } from '../change-wristband/change-wristband';
 import { FilesPage } from '../files/files';
 import { GlobalFunctions } from '../../providers/global';
 import { EmailConfirmationPage } from '../email-confirmation/email-confirmation';
-
-declare let cordova: any;
 
 @Component({
   selector: 'page-home',
@@ -32,6 +31,7 @@ export class HomePage {
   android: boolean;
 
   childrenCount: number;
+  birthdays: number;
   wijkCount: number;
   y: number;
 
@@ -42,9 +42,6 @@ export class HomePage {
   updates: any;
   wijken: any;
   pages: any;
-
-  clickedTwice = false;
-  clickedOnce = false;
 
   readablePageList: any;
   openedPage: any;
@@ -79,12 +76,15 @@ export class HomePage {
       "app-info": AppInfoPage,
       "login": LoginPage,
       "schedule": SchedulePage,
+      "birthdays": BirthdaysPage,
       "change-wristband": ChangeWristbandPage,
       "files": FilesPage
     }
     this.g.setStatusBar("#2196f3");
 
     this.childrenCount = 0;
+    this.birthdays = 0;
+    this.wijkCount = 0;
 
     if (this.platform.is("android")) this.android = true;
 
@@ -100,6 +100,7 @@ export class HomePage {
       let wijkStatsCache = await this.storage.get('wijkStatsCache').catch(console.log);
       this.wijkCount = (wijkStatsCache || {}).wijkCount || 0;
       this.childrenCount = (wijkStatsCache || {}).childrenCount || 0;
+      this.birthdays = (wijkStatsCache || {}).birthdays || 0;
 
       let self = this;
       this.g.apiCall('wijkStats').then(async function(result) {
@@ -111,10 +112,12 @@ export class HomePage {
         let dag = ['di', 'wo', 'do', 'vr'][new Date().getDay() - 2];
         self.wijkCount = result.quarters[self.wijk]['aanwezig_' + dag] || 0;
         self.childrenCount = result['aanwezig_' + dag] || 0;
+        self.birthdays = (result.birthdays[dag] || {}).count;
 
         let newCache = {
           wijkCount: self.wijkCount,
           childrenCount: self.childrenCount,
+          birthdays: (result.birthdays[dag] || {}).count
         };
 
         await self.storage.set('wijkStatsCache', newCache)
@@ -124,7 +127,7 @@ export class HomePage {
         {
           title: '-',
           component: "weather",
-          class: 'bg-white halfWidth homeInfoCard weather',
+          class: 'bg-white halfWidth homeInfoCard weather realWeather',
           icon: "partly-sunny",
           weather: true
         },
@@ -132,7 +135,7 @@ export class HomePage {
           title: '-',
           component: "children",
           class: 'bg-white halfWidth homeInfoCard weather',
-          icon: "calculator",
+          icon: "calculate",
           data: true
         },
         {
@@ -145,45 +148,52 @@ export class HomePage {
           title: 'Aanwezigheid',
           component: "presence",
           class: 'bg-blue',
-          icon: "checkmark-circle-outline"
+          icon: "how_to_reg"
         },
         {
           title: 'Scan ticket',
           component: "scan-ticket",
           class: 'bg-blue',
-          icon: 'qr-scanner'
+          icon: 'qr_code_scanner'
         },
         {
           title: 'Beheer hutjes',
           component: "connect-child-to-cabin",
           class: 'bg-blue',
-          icon: 'person-add'
+          icon: 'person_add_alt'
         },
         {
           title: 'Verander polsbandje',
           component: "change-wristband",
           class: 'bg-blue',
-          icon: 'create'
+          icon: 'change_circle'
         },
         {
           title: 'Wijk ' + this.g.getWijkName(this.wijk),
           component: "wijk",
           class: 'small bg-' + (this.wijk || 'blue'),
-          icon: "analytics",
+          icon: "insert_chart",
           small: true
         },
+        // {
+        //   title: 'Programma',
+        //   component: "schedule",
+        //   class: 'bg-blue small',
+        //   icon: "today",
+        //   small: true
+        // },
         {
-          title: 'Programma',
-          component: "schedule",
+          title: 'Verjaardagen',
+          component: "birthdays",
           class: 'bg-blue small',
-          icon: "calendar",
+          icon: "cake",
           small: true
         },
         {
           title: 'Foto\'s en Bijlagen',
           component: "files",
           class: 'bg-blue small',
-          icon: "images",
+          icon: "image",
           small: true
         },
         {
@@ -197,7 +207,7 @@ export class HomePage {
           title: 'Log uit',
           component: "login",
           class: 'bg-red small',
-          icon: "md-log-out",
+          icon: "logout",
           small: true
         }
       ];
