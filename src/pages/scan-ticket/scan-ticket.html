@@ -1,6 +1,6 @@
 <ion-content padding>
 	<ion-header (click)='g.goHome()'>
-		<ion-icon class='homeIcon' name="md-home"></ion-icon>
+		<i class="material-icons-outlined homeIcon">home</i>
 		<h1 id="ptitle">{{title}}</h1>
 		<ion-navbar>
 			<ion-title>
@@ -25,7 +25,7 @@
 				<table class='cleanTable'>
 					<tr>
 						<td>Naam:</td>
-						<td>{{ ticket.firstName + (ticket.nickName && ticket.nickName !== ticket.firstName ? ' (' + ticket.nickName + ')' : '') }} {{ ticket.lastName }}</td>
+						<td>{{ ticket.firstName + ((ticket.nickName && ticket.nickName !== ticket.firstName) ? ' (' + ticket.nickName + ')' : '') }} {{ ticket.lastName }}</td>
 					</tr>
 					<tr>
 						<td>Ticket QR-code:</td>
@@ -42,7 +42,8 @@
 				</table>
 			</div>
 			<div class="bracelet-number">
-				<h1>Armbandnummer</h1>
+        <h1>Armbandnummer</h1>
+        <p style="padding: 0 24px;" *ngIf="showSuggestion">Wil je <span (click)="ticket.wristband = '' + suggestionNumber" id="wristbandSuggestion">bandje {{ suggestionNumber }}</span> toewijzen?</p>
 				<ion-list class="line-input">
 					<ion-item>
 						<ion-input #nrInput type='tel' maxlength='3' [(ngModel)]='ticket.wristband'
@@ -53,7 +54,6 @@
 			</div>
 		</div>
 	</div>
-	<button ion-button full (click)="g.goHome()" class="bg-red correction modern">Terug</button>
 	<button *ngIf="(ticket.wristband || '').length > 2" ion-button full (click)="saveTicket()"
 		class="bg-green correction modern">Opslaan</button>
 </ion-content>

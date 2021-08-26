@@ -17,26 +17,20 @@ export class ConnectChildToCabinPage {
 	hutNr: string;
 	error: string;
 
-	undoingInterval: any;
 	selectedChild: any;
 	removedChild: any;
 	typingTimer: any;
 	nieuwHutje: any;
 	tempHutNr: any;
-	undoItem: any;
 	history: any;
 
 	hutTickets: Array<any>;
 	tickets: Array<any>;
 
-	allowAutoPresence: boolean;
-	undoingIsDone: boolean;
-	autoPresence: boolean;
-	isUndoing: boolean;
-	searched: boolean;
-	loading: boolean;
 	alreadyHasHutError: boolean;
 	noWristbandError: boolean;
+	searched: boolean;
+	loading: boolean;
 
 	addModal: {
 		show: boolean;
@@ -72,10 +66,6 @@ export class ConnectChildToCabinPage {
 
     this.title = 'Beheer Hutjes';
 
-		this.allowAutoPresence = false;
-		this.undoingIsDone = false;
-		this.autoPresence = false;
-		this.isUndoing = false;
 		this.searched = false;
 		this.loading = false;
 		this.alreadyHasHutError = false;
@@ -111,7 +101,6 @@ export class ConnectChildToCabinPage {
 		Promise.all([
 			this.storage.get('cabinAddHistory').then((val) => {
 				this.history = val || [];
-				console.log(this.history);
 			}, (error) => {
 				this.history = [];
 			}),
@@ -142,28 +131,6 @@ export class ConnectChildToCabinPage {
 		return res;
 	}
 
-	undo(i) {
-		this.undoItem = i + 1;
-		let self = this;
-		this.undoingInterval = setInterval(function () {
-			if (!self.loading) {
-				console.log(self.undoItem);
-				if (document.getElementById(self.undoItem)) {
-					document.getElementById(self.undoItem).classList.add("done");
-				}
-				self.undoingIsDone = true;
-				clearInterval(self.undoingInterval);
-
-				setTimeout(function () {
-					self.undoingIsDone = false;
-					if (document.getElementById(self.undoItem)) {
-						document.getElementById(self.undoItem).classList.remove("done");
-					}
-				}, 1500);
-			}
-		}, 200);
-	}
-
 	search() {
 		this.searched = false;
 		this.hutTickets = [];
@@ -182,7 +149,6 @@ export class ConnectChildToCabinPage {
 	}
 
 	searchHut() {
-		console.log('searching: ' + this.hutNr);
 		if (isNaN(+this.hutNr) || +this.hutNr >= 400 || +this.hutNr < 0) {
 			this.error = 'Foutmelding';
 			this.errorHelp = 'Hutnummer moet tussen 0 en 399 zijn.';
@@ -228,7 +194,6 @@ export class ConnectChildToCabinPage {
 		}
 		self.loading = true;
 
-		console.log('searching: ' + this.searchTerm);
     this.g.apiCall('search', { searchTerm: this.searchTerm }).then((result) => {
       if(!result || result.response !== 'success') {
         self.error = (result || {}).error || (result || {}).response
@@ -264,17 +229,14 @@ export class ConnectChildToCabinPage {
 
 	reallyAddChildNow() {
 		this.loading = true;
-		this.isUndoing = false;
 		this.nieuwHutje = this.hutNr;
 		this.closeWarningModal();
 		this.closeAddModal();
-		console.log(this.selectedChild);
 		let self = this;
     this.g.apiCall('setHutNr', { id: this.selectedChild.id, hutNr: this.hutNr }).then((result) => {
       if(!result || result.response !== 'success') {
         alert('daar ging iets goed mis... het hutje is waarschijnlijk niet opgeslagen')
       } else {
-        console.log(self.selectedChild.hutNr)
         self.history.unshift({
           name: (self.selectedChild.nickName || self.selectedChild.firstName) + ' ' + self.selectedChild.lastName,
           wristband: self.selectedChild.wristband,
@@ -307,7 +269,6 @@ export class ConnectChildToCabinPage {
 
 	removeChildFromHut(child) {
 		let self = this;
-    console.log(child)
     this.removedChild = child;
     this.g.apiCall('setHutNr', { id: child.id, hutNr: null, removeFromHut: true }).then((result) => {
       if(!result || result.response !== 'success') {
@@ -340,6 +301,13 @@ export class ConnectChildToCabinPage {
 		this.addModal.show = true;
 		this.searchTerm = '';
 		document.querySelector('#myModal').classList.add('high');
+
+    setTimeout(function () {
+      if (document && document.getElementById("addModalInput")) {
+        let el = document.getElementById("addModalInput").getElementsByTagName("input")[0];
+        el.focus();
+      }
+    }, 200);
 	}
 
 	closeAddModal() {

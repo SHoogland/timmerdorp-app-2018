@@ -1,6 +1,6 @@
 <ion-content padding>
 	<ion-header (click)='g.goHome()'>
-		<ion-icon class='homeIcon' name="md-home"></ion-icon>
+		<i class="material-icons-outlined homeIcon">home</i>
 		<h1 id="ptitle">{{title}}</h1>
 		<ion-navbar>
 			<ion-title>
@@ -64,11 +64,11 @@
 			<p *ngIf="searched && hutTickets && !hutTickets.length && hutNr && hutNr.length === 3">
 				Nog geen kindertjes in dit hutje :(</p>
 			<button *ngFor="let child of hutTickets" ion-button full [ngClass]="'modern alternate ' + g.getWijk(hutNr)"
-				(click)="removeChild = child; showRemoveModal();">
-				{{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
+				(click)="removeChild = child; showRemoveModal();" style="margin-top: 0px!important;">
+				{{ child.nickName || child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
 			</button>
 			<button ion-button full (click)="showAddModal()" [ngClass]="'bg-blue correction ' + g.getWijk(hutNr)">
-				<ion-icon slot='start' name='add' id='addIcon'></ion-icon>
+				<ion-icon slot='start' name='add' style="left: 0px;" id='addIcon'></ion-icon>
 				Kind toevoegen
 			</button>
 		</div>
@@ -91,15 +91,10 @@
       </tr>
     </table>
 		<div id='modalBottom'>
-			<ion-item *ngIf="isTue&&allowAutoPresence">
-				<ion-label>Automatisch aanwezig melden</ion-label>
-				<ion-toggle [(ngModel)]="autoPresence"></ion-toggle>
-			</ion-item>
-
 			<p class="search-on">Zoek een kind en voeg het toe aan hutje {{ hutNr }}.</p>
 			<ion-list class="line-input">
 				<ion-item>
-					<ion-input class="ion-text-right" [(ngModel)]="searchTerm" (ngModelChange)="searchChild($event)">
+					<ion-input class="ion-text-right" id='addModalInput' [(ngModel)]="searchTerm" (ngModelChange)="searchChild($event)">
 					</ion-input>
 				</ion-item>
 			</ion-list>

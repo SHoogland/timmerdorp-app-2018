@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GlobalFunctions } from '../../providers/global';
+import { PresencePage } from '../presence/presence';
 
 declare let cordova: any;
 
@@ -64,6 +65,11 @@ export class SearchPage {
 
     this.timeOut = setTimeout;
 
+    if(this.navParams.get('searchTerm')) {
+      this.searchTerm = this.navParams.get('searchTerm')
+      this.searchThis()
+    }
+
     this.loading = false;
 
     this.error = '';
@@ -78,7 +84,7 @@ export class SearchPage {
       },
       {
         name: "Contactgegevens ouders",
-        props: ["tel1", "tel2"]
+        props: ["tel1", "tel2", "parent_email"]
       },
       {
         name: "Gegevens Kind",
@@ -92,7 +98,6 @@ export class SearchPage {
     Promise.all([
       this.storage.get('searchChildHistory').then((val) => {
         this.history = val || [];
-        console.log(this.history);
         this.history = this.g.filterHistory(this.history);
       }, (error) => {
         this.history = [];
@@ -108,17 +113,21 @@ export class SearchPage {
   search() {
     this.searched = false
     try {
+      if (this.searchTerm.length < 3) {
+        this.tickets = [];
+        return false;
+      }
       clearTimeout(this.typingTimer);
       this.typingTimer = setTimeout(() => {
         this.searchThis();
-      }, 100);
+      }, 500);
     } catch (e) {
       console.log(e);
     }
   }
 
   filterPhoneNr(num) {
-    return (num || [""])[0].replace(/[^0-9+]/g, '');
+    return num.replace(/[^0-9+]/g, '');
   }
 
 
@@ -128,12 +137,10 @@ export class SearchPage {
     self.error = '';
     self.errorHelp = '';
     if (this.searchTerm.length < 3) {
-      console.log("Cancelling search. Reason: term too short");
       return false;
     }
     self.loading = true;
 
-    console.log('searching: ' + this.searchTerm);
     this.g.apiCall('search', { searchTerm: this.searchTerm }).then((result) => {
       self.loading = false
       if(!result || result.response !== 'success') {
@@ -144,19 +151,21 @@ export class SearchPage {
       if(self.searchTerm.length < 3) return
       self.searched = true
       self.tickets = result.tickets.sort(function (a) {
-        if ((a.wristband || [])[0] == self.searchTerm) {
+        if (a.wristband == self.searchTerm) {
           return -1;
         }
         return 1;
       }); //give priority to wristbands over hut numbers
       self.ticketPropertiesMap = result.ticketPropertiesMap
     }).catch((e) => {
+      self.loading = false
       self.error = String(e)
     });
   }
 
   showModal(child) {
     this.modal.child = child;
+    this.g.setStatusBar(['yellow', 'red', 'blue', 'green'][(child.hutNr || "2")[0]])
     this.modal.showModal = true;
     this.history.unshift({
       firstName: child.nickName || child.firstName,
@@ -172,13 +181,14 @@ export class SearchPage {
 
   closeModal() {
     this.modal.showModal = false;
+    this.g.setStatusBar('blue')
     setTimeout(function () {
       document.querySelector('#myModal').classList.remove('high');
     }, 400);
   }
 
   scanChild(barcode) {
-    this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode });
+    this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   goHome() {
@@ -191,5 +201,9 @@ export class SearchPage {
     } else {
       this.g.goHome();
     }
+  }
+
+  markPresent(wristband) {
+    this.navCtrl.setRoot(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 }

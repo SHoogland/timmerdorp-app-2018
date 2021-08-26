@@ -18,10 +18,12 @@ import { WijkPage } from '../pages/wijk/wijk';
 import { AppInfoPage } from '../pages/app-info/app-info';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SchedulePage } from '../pages/schedule/schedule';
+import { BirthdaysPage } from '../pages/birthdays/birthdays';
 import { ChangeWristbandPage } from '../pages/change-wristband/change-wristband';
 import { FilesPage } from '../pages/files/files';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { GlobalFunctions } from '../providers/global';
+import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirmation';
 
 @NgModule({
 	declarations: [
@@ -32,9 +34,11 @@ import { GlobalFunctions } from '../providers/global';
 		ConnectChildToCabinPage,
 		PresencePage,
 		LoginPage,
+    EmailConfirmationPage,
 		WijkPage,
 		AppInfoPage,
 		SchedulePage,
+    BirthdaysPage,
 		ChangeWristbandPage,
 		FilesPage
 	],
@@ -53,9 +57,11 @@ import { GlobalFunctions } from '../providers/global';
 		ConnectChildToCabinPage,
 		PresencePage,
 		LoginPage,
+    EmailConfirmationPage,
 		WijkPage,
 		AppInfoPage,
 		SchedulePage,
+    BirthdaysPage,
 		ChangeWristbandPage,
 		FilesPage
 	],

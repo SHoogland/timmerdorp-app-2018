@@ -25,11 +25,26 @@ page-home {
 		padding: 0 !important;
 	}
 
-	button.small > span > div > ion-icon {
+  button.realWeather > .button-inner {
+    position: relative;
+    left: -13px;
+
+    h2 {
+      top: -8px;
+      left: 42px;
+    }
+    .weatherMsg {
+      top: -2px;
+      left: 42px;
+    }
+  }
+
+	button.small > span > div > i.material-icons {
 		font-size: 2em;
 		width: 100%;
 		text-align: center;
 		top: 24px;
+    left: 0px;
 	}
 	button.small:last-of-type {
 		margin-right: 0px !important;
@@ -95,21 +110,13 @@ page-home {
 		background: black;
 	}
 
-	.callBtn {
-		ion-icon {
-			margin-right: 12px;
-			position: relative;
-			font-size: 1.8em;
-		}
-		span {
-			font-size: 18px;
-		}
-	}
-
 	.homeBtnD {
 		text-align: left;
 		> span {
 			font-size: 18px;
+      top: -11px;
+      left: -6px;
+      position: relative;
 		}
 	}
 
@@ -151,8 +158,12 @@ page-home {
 		font-size: 48px !important;
 	}
 
-	button ion-icon {
+	button i.material-icons {
+    left: -12px;
+    top: -4px;
+    font-size: 1.6em;
 		margin-right: 12px;
+    width: 18px;
 		position: relative;
 	}
 
@@ -200,10 +211,10 @@ page-home {
 				background: rgba(0, 0, 0, 0.8) !important;
 			}
 		}
-		ion-icon {
-			font-size: 4rem;
-			top: -10px;
-			left: -8px;
+		i.material-icons {
+			font-size: 3rem;
+			top: -6px;
+			left: 1px;
 		}
 	}
 
@@ -211,7 +222,6 @@ page-home {
 		h2,
 		.weatherMsg {
 			overflow-x: hidden;
-			width: calc(100% - 52px);
 		}
 		h2 {
 			position: absolute;
@@ -222,7 +232,7 @@ page-home {
 		div.weatherMsg {
 			position: absolute;
 			top: 31px;
-			left: 70px;
+			left: 78px;
 			font-size: 70%;
 		}
 
@@ -233,7 +243,15 @@ page-home {
 		}
 	}
 
-	ion-icon.data {
+	i.material-icons.data {
 		left: -20px !important;
 	}
+
+  #ptitle, #ptitle * {
+    overflow: hidden;
+  }
+
+  ion-content.content-md {
+    background: $blue;
+  }
 }

@@ -1,0 +1,16 @@
+email-confirmation {
+  h1:not(#errorHeader) {
+    text-align: center;
+    font-weight: bold;
+    font-family: Montserrat!important;
+    font-size: 4rem!important;
+  }
+
+  div.scroll-content {
+    background: #0c7cd5;
+    color: white;
+    > .content {
+      padding-top: 50px!important;
+    }
+  }
+}

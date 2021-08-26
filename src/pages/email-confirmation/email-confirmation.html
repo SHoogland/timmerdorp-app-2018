@@ -1,0 +1,49 @@
+<ion-content padding>
+  <div class='content'>
+    <div class="container">
+      <div class="user-info" *ngIf="loading">
+        <ion-spinner color='white'></ion-spinner>
+      </div>
+      <div *ngIf="waitingForAdmin">
+        <h1>
+          Nog geen beheerder!
+        </h1>
+        <p>
+          Om gebruik te maken van de app, moet je eerst aangewezen worden als beheerder. We
+          hebben je registratie ontvangen en zullen je zo spoedig mogelijk toegang geven (indien terecht). Heeft het
+          haast? Ga dan naar Stephan (wijk geel) of Stan (wijk blauw) zodat zij je snel kunnen toevoegen.
+        </p>
+        <p>
+          Je bent ingelogd als {{ emailadres }}.
+        </p>
+        <br>
+
+        <button ion-button full (click)="belStan()" class="bg-green">
+          <ion-icon slot='start' style="margin-right: 16px;" name='call'></ion-icon>
+          <span>
+            Bel Stan
+          </span>
+        </button>
+      </div>
+      <div *ngIf="waitingForEmailConfirmation">
+        <h1>
+          E-mailadres nog niet bevestigd!
+        </h1>
+        <p>
+          Om gebruik te maken van de app, moet je eerst je e-mailadres bevestigen. Je hebt een
+          e-mail ontvangen met een link waarmee je dit kunt doen.
+        </p>
+        <p>
+          Je bent ingelogd als {{ emailadres }}.
+        </p>
+        <br>
+      </div>
+      <button ion-button full (click)="logOut()" style="background: #07497e;">
+        <ion-icon slot='start' style="margin-right: 16px;" name='md-log-out'></ion-icon>
+        <span>
+          Uitloggen
+        </span>
+      </button>
+    </div>
+  </div>
+</ion-content>

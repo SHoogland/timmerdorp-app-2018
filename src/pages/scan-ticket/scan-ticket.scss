@@ -21,4 +21,10 @@ page-scan-ticket {
 	.errorCard .content {
 		padding: 6px !important;
 	}
+
+  #wristbandSuggestion {
+    color: $blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }

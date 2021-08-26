@@ -1,92 +1,124 @@
 loginpage {
-	h1:not(#ptitle) {
-		text-align: center;
-		margin-top: 12px !important;
-		margin-bottom: 16px;
-	}
+  h1:not(#errorHeader) {
+    text-align: center;
+    font-weight: bold;
+    font-family: Montserrat!important;
+    font-size: 4rem!important;
+  }
 
-	.line-input:nth-of-type(2n + 1) {
-		margin-bottom: 16px !important;
-	}
+  .line-input:nth-of-type(2n + 1) {
+    margin-bottom: 16px !important;
+  }
 
-	#callBtn {
-		ion-icon {
-			margin-right: 12px;
-			position: relative;
-			font-size: 1.8em;
-		}
-		span {
-			font-size: 18px;
-		}
-	}
+  #callBtn {
+    ion-icon {
+      margin-right: 12px;
+      position: relative;
+      font-size: 1.8em;
+    }
+    span {
+      font-size: 18px;
+    }
+  }
 
-	#stagingMsg {
-		margin-bottom: 12px;
-	}
+  #statusMsg {
+    height: 20px;
+    font-size: 20px;
+    padding-left: 8px;
+    padding-top: 10px;
+    text-align: center;
+  }
 
-	#stagingBtn {
-		background: #fafafa;
-		color: #fafafa;
-	}
+  .successMsg {
+    color: green;
+  }
 
-	#statusMsg {
-		height: 20px;
-		font-size: 20px;
-		padding-left: 8px;
-		padding-top: 10px;
-		text-align: center;
-	}
+  .errorCard:not(.info) {
+    margin-bottom: 18px;
+    #errorHeader {
+      margin-top: 0px !important;
+      margin-bottom: 6px;
+    }
+  }
 
-	.successMsg {
-		color: green;
-	}
+  .errorCard.info {
+    background: $blue !important;
+    &:not(#warning) #errorHeader {
+      margin-top: 0px !important;
+      margin-bottom: 6px;
+    }
 
-	#saveBtn {
-		margin-top: 16px;
-		ion-icon {
-			margin-right: 12px;
-			position: relative;
-			font-size: 1.8em;
-		}
-		span {
-			font-size: 18px;
-		}
-	}
+    &#warning #errorHeader {
+      margin-top: 4px !important;
+      margin-bottom: 5px !important;
+    }
 
-	.errorCard:not(.info) {
-		margin-bottom: 18px;
-		#errorHeader {
-			margin-top: 0px !important;
-			margin-bottom: 6px;
-		}
-	}
+    &#warning button {
+      height: 32px;
+      margin-bottom: 8px;
+      margin-top: 8px;
+      background: rgba(0, 0, 0, 0.15);
+    }
+  }
 
-	.errorCard.info {
-		background: $blue !important;
-		&:not(#warning) #errorHeader {
-			margin-top: 0px !important;
-			margin-bottom: 6px;
-		}
+  button {
+    &.bg-blue {
+      margin-top: 24px !important;
+    }
+    max-width: 80%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
 
-		&#warning #errorHeader {
-			margin-top: 4px !important;
-			margin-bottom: 5px !important;
-		}
+  div.scroll-content {
+    background: #0c7cd5;
+    color: white;
+    > .content {
+      padding-top: 50px!important;
+      min-height: calc(100% - 120px);
+      > div {
+        min-height: 320px;
+      }
+    }
+  }
 
-		&#warning button {
-			height: 32px;
-			margin-bottom: 8px;
-			margin-top: 8px;
-			background: rgba(0, 0, 0, 0.15);
-		}
-	}
+  #switchBar {
+    background: #07497e;
+    height: 120px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
 
-	button {
-		&.bg-blue {
-			margin-top: 24px !important;
-		}
-		max-width: 80%;
-		margin-left: auto !important;
-		margin-right: auto !important;
-	}
+    table {
+      height: 100%;
+      width: 100%;
+
+      td {
+        height: 100%;
+        display: table-cell;
+        vertical-align: middle;
+
+        div {
+          margin: 0 auto;
+          width: fit-content;
+          cursor: pointer;
+
+          div {
+            background: white;
+            border-radius: 40px;
+            text-align: middle;
+            color: black;
+            height: 32px;
+            font-size: 18px;
+            margin: 0 auto;
+            width: fit-content;
+            padding: 16px 24px;
+            display: table-cell;
+            vertical-align: middle;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
 }

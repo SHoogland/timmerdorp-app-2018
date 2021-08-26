@@ -45,16 +45,13 @@ export class FilesPage {
 					const a = self.allAlbums[i];
 					let y = new Date(a.date_create * 1000).getFullYear();
 					if (self.albumYears.indexOf(y) == -1) self.albumYears.push(y);
-					// console.log(a, a.date_create);
 				}
-				console.log(self.albumYears);
 				self.filterAlbums();
 			});
 
 		this.httpClient
 			.get("https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json")
 			.subscribe((data: any) => {
-				console.log(data);
 				self.files = data.files || [];
 			});
 	}

@@ -1,136 +1,90 @@
 page-wijk {
-	.content {
-		padding: 0 !important;
-	}
+  .content {
+    padding: 0 !important;
+  }
 
-	#spinner {
-		transition-duration: 400ms;
-		height: 20px;
-		margin-bottom: 40px;
-		&.hidden {
-			height: 0px;
-			margin-bottom: 0px;
-		}
-	}
+  .halfWidth {
+    font-weight: bold;
+    font-size: 28px;
+    height: 180px;
+    margin: -2px !important;
+  }
 
-	#kiesWijkButton {
-		margin-right: 12px;
-		position: relative;
-		font-size: 1.8em;
-	}
+  #main {
+    text-align: center;
+    button {
+      span span {
+        font-weight: normal;
+        font-size: 20px;
+      }
+    }
+  }
 
-	.halfWidth {
-		font-weight: bold;
-		font-size: 28px;
-		height: 180px;
-		margin: -2px !important;
-	}
+  * {
+    transition-duration: 500ms;
+    transition-property: background-color !important;
+  }
 
-	#main {
-		text-align: center;
-		button {
-			span span {
-				font-weight: normal;
-				font-size: 20px;
-			}
-		}
-	}
+  h1:not(#ptitle) {
+    margin-top: 0;
+  }
 
-	* {
-		transition-duration: 500ms;
-		transition-property: background-color !important;
-	}
+  #main > .user-info {
+    border: none !important;
+  }
 
-	.red,
-	.red .toolbar-background {
-		background: $red !important;
-	}
-	.yellow,
-	.yellow .toolbar-background {
-		background: $yellow !important;
-	}
-	.green,
-	.green .toolbar-background {
-		background: $green !important;
-	}
+  span.button-inner {
+    font-size: 3rem;
+  }
 
-	.blue,
-	.blue .toolbar-background {
-		background: $blue !important;
-	}
+  ion-item {
+    background: #fafafa !important;
+    .item-inner {
+      border-bottom: 1px solid #dedede !important;
+    }
+  }
 
-	.toolbar-background {
-		background: white !important;
-	}
+  @media only screen and (min-width: 330px) {
+    ion-item .item-inner {
+      padding-left: 12px;
+    }
+  }
 
-	h1:not(#ptitle) {
-		margin-top: 0;
-	}
+  @media only screen and (max-width: 340px) {
+    ion-item,
+    ion-item * {
+      font-size: 16px !important;
+    }
+  }
 
-	#main > .user-info {
-		border: none !important;
-	}
+  #allStatsTable {
+    margin-bottom: 18px;
+  }
 
-	#wijkChoice {
-		text-align: center;
-	}
+  div.fab {
+    position: sticky;
+    padding-top: 8px;
+    bottom: 28px;
+    left: calc(100% - 52px - 28px);
+    background: white;
+    color: #555;
+    box-shadow: 0px 0px 30px 8px rgba(0, 0, 0, 0.25);
 
-	#wijkHeader {
-		padding-top: 20px;
-		background: #333;
-		color: white;
-		padding-bottom: 20px;
-		margin-bottom: 0px;
-	}
+    i.material-icons {
+      transform: rotate(0deg);
 
-	.wijk-header {
-		&:not(.blue, .red, .green, .yellow) {
-			* {
-				color: #333 !important;
-			}
-		}
+      &.isRefreshing {
+        animation-name: rotate;
+        animation-duration: 1000ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+    }
+  }
 
-		&.yellow,
-		&.green,
-		&.blue,
-		&.red {
-			* {
-				color: white !important;
-			}
-		}
-	}
-	.iconBtn {
-		border-radius: 0px !important;
-		ion-icon {
-			margin-right: 12px;
-			position: relative;
-			font-size: 1.2em;
-		}
-		span span {
-			font-size: 18px;
-		}
-	}
-
-	ion-item {
-		background: #fafafa !important;
-		.item-inner {
-			border-bottom: 1px solid #dedede !important;
-		}
-	}
-	@media only screen and (min-width: 330px) {
-		ion-item .item-inner {
-			padding-left: 12px;
-		}
-	}
-
-	@media only screen and (max-width: 340px) {
-		ion-item,
-		ion-item * {
-			font-size: 16px !important;
-		}
-	}
-
-	#allStatsTable {
-		margin-bottom: 18px;
-	}
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }
