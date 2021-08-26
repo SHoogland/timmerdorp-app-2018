@@ -17,14 +17,14 @@
         <h1>Inloggen</h1>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input class="ion-text-right" placeholder='E-mailadres' (keydown)="logInInput($event)" [(ngModel)]="(login || {}).username">
+            <ion-input class="ion-text-right" placeholder='E-mailadres' (keydown)="logInInput($event)" [(ngModel)]="(login || {}).username" autocomplete="email">
             </ion-input>
           </ion-item>
         </ion-list>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input class="ion-text-right" type='password' placeholder='Wachtwoord' (keydown)="logInInput($event)"
-              [(ngModel)]="(login || {}).password"></ion-input>
+            <ion-input class="ion-text-right" type='password' placeholder='Wachtwoord' (keydown)="logInInput($event)" [(ngModel)]="(login || {}).password" autocomplete="current-password">
+            </ion-input>
           </ion-item>
         </ion-list>
         <button id='saveBtn' ion-button full style="background: #085592" (click)='loginNow()'>
@@ -49,26 +49,26 @@
         <h1>Registreren</h1>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input class="ion-text-right" placeholder='Voornaam' (keydown)="regInput($event)" [(ngModel)]="(register || {}).voornaam">
+            <ion-input class="ion-text-right" placeholder='Voornaam' (keydown)="regInput($event)" [(ngModel)]="(register || {}).voornaam" autocomplete="given-name">
             </ion-input>
           </ion-item>
         </ion-list>
         <ion-list class="line-input" style="margin-bottom: 16px!important;">
           <ion-item>
-            <ion-input class="ion-text-right" placeholder='Achternaam' (keydown)="regInput($event)" [(ngModel)]="(register || {}).achternaam">
+            <ion-input class="ion-text-right" placeholder='Achternaam' (keydown)="regInput($event)" [(ngModel)]="(register || {}).achternaam" autocomplete="family-name">
             </ion-input>
           </ion-item>
         </ion-list>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input class="ion-text-right" placeholder='E-mailadres' (keydown)="regInput($event)" [(ngModel)]="(register || {}).username">
+            <ion-input class="ion-text-right" placeholder='E-mailadres' (keydown)="regInput($event)" [(ngModel)]="(register || {}).username" autocomplete="email">
             </ion-input>
           </ion-item>
         </ion-list>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input class="ion-text-right" type='password' placeholder='Wachtwoord' (keydown)="regInput($event)"
-              [(ngModel)]="(register || {}).password"></ion-input>
+            <ion-input class="ion-text-right" type='password' placeholder='Wachtwoord' (keydown)="regInput($event)" [(ngModel)]="(register || {}).password" autocomplete="new-password'">
+            </ion-input>
           </ion-item>
         </ion-list>
         <button id='saveBtn' ion-button full style="background: #085592" (click)='registerNow()'>

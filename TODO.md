@@ -1,6 +1,7 @@
 # App en webshop feedback en aandachtspunten uit 2021 (door Stan)
 - Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
 - Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
+- Kunnen we misschien geen bandjes bestellen met nummers 1-50, 101-150, 201-250, 301-350? Want dan wordt het erg verwarrend wanneer je zoekt op 201, bedoel je dan kind met bandje 201 of kind met hutje 201?
 - Hutjes plattegrond toevoegen met gps en alles
 - Ticket pdf moet louter een QR code zijn, no more user data
 - Meer statistieken/grafieken toevoegen
@@ -14,15 +15,17 @@
 - De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
 - De e-mail bevestigingspagina moet even customized worden voor enkel appgebruikers
 - In-app links moeten toegevoegd worden voor de mail aan stan (bevestigen van admins) en de mail aan nieuwe appgebruikers
-- iOS scroll overflow op homepagina uitzetten 
-- Link in e-mail bevestigen werkt niet op prod
-- Inloggen/registreren formulier moet props krijgen voor autofill
-- Mailtje over admin aan stan werd niet verstuurd in prod
-- Verversen knoppen kan weer weg bij emailverified 
 - Addadmin adhv email gaat niet goed als er geen user gevonden kan worden. Ook niet als er wel een user gevonden wordt. “Cannot read property 'set' of undefined”
+- Navigatie naar e-mail-confirmation mag props meegeven waarnaar wordt geluisterd, want ze worden toch wel gecorrigeerd indien onjuist
+- Splashscreendelay waarom 2500? Gewoon weghalen voor snellere launch?
+- ShowSplashScreenSpinner mag sowieso uit
+- AutoHideSplashScreen??
+- In zoekpagina modal moet linkerkolom breder
+- Verjaardagen: tekst past moeizaam, icoontje verder naar links en tekst ook, “wordt XX” misschien naar beneden, de headers “dinsdag … aug” enzo moeten naar links
 
 ## Twijfel voor 2022
 - De statusbar op de statistiekenpagina kleurt niet mee op iPhone...raar. Lastig op te lossen (bug in cordova, misschien iets updaten dan maar?)
+- Kijken of alle buttons een beetje schappelijk op de homepagina kunnen passen. ik vrees dat het heel krap wordt...
 
 ## Gefixt voor 2022
 - Gefixt: “E-mailadres nog niet bevestigd” mist een refresh knop
@@ -40,7 +43,15 @@
 - Gefixt? Mailgun Hotmail gezeik…
 - Gefixt: Je moet emailverified checken in check-if-admin. (en daarna mag je hem cachen in de Admin tabel zelf, mits de admin confirmed is)
 - Gefixt: Stuur stan, niet Stephan aub, een mail zodra er een aanmelding voor een admin is geweest
-
+- Gefixt: Het zou leuk zijn als je ook kunt verwijderen uit de admin tabel, en boven die tabel zit nu te veel padding. En boven die headers te weinig
+- Gefixt: Status bar op iPhone is gefixt ineens? Behalve bij search child modal. Maar dat komt wss omdat er hutnr staat ipv hutNr met hoofdletter N
+- Gefixt: Android build met —prod ipv —release
+- Gefixt: iOS scroll overflow op homepagina uitzetten 
+- Gefixt: Link in e-mail bevestigen werkt niet op prod
+- Gefixt: Inloggen/registreren formulier moet props krijgen voor autofill
+- Gefixt: Mailtje over admin aan stan werd niet verstuurd in prod
+- Gefixt: Verversen knoppen kan weer weg bij emailverified 
+- Gefixt: De “Het is xx•C” wordt afgehakt
 
 # App feedback en aandachtspunten 2019 (door Stan)
 **Het belangrijkste volgens velen: de app goed vooraf testen a.u.b. Iedereen was tevreden over de functionaliteiten, maar het zou leuk zijn als alles dinsdagochtend meteen al werkte natuurlijk ;)**

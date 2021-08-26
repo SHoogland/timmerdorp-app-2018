@@ -1,4 +1,4 @@
-ionic cordova build android --release --info
+ionic cordova build android --prod --release
 mv ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk android-release-unsigned.apk
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore -storepass timmerdorp2019 android-release-unsigned.apk alias_name
 rm -f timmerdorp.apk

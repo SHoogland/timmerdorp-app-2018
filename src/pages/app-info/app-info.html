@@ -31,12 +31,12 @@
       </button>
     </div>
     <div *ngIf="isStanOfStephan">
-      <h1 style="padding: 0 24px;">Potentiële nieuwe beheerders ({{ (potentialAdmins || {}).length }})</h1>
-      <p>
+      <h1 style="padding: 0 24px; margin: 24px 0 0 0;">Potentiële nieuwe beheerders ({{ (potentialAdmins || {}).length }})</h1>
+      <p *ngIf="addStatus">
         {{ addStatus }}
       </p>
-      <div style="overflow-x: scroll;">
-        <table *ngIf="(potentialAdmins || []).length" class="cleanTable withHeader">
+      <div *ngIf="(potentialAdmins || []).length" style="overflow-x: scroll;">
+        <table class="cleanTable withHeader">
           <tr>
             <td>
               Naam
@@ -46,6 +46,9 @@
             </td>
             <td>
               Toevoegen
+            </td>
+            <td>
+              Verwijderen
             </td>
           </tr>
           <tr *ngFor="let potentialAdmin of potentialAdmins">
@@ -58,15 +61,18 @@
             <td (click)="addAdmin(potentialAdmin.email)">
               <a href="#">Toevoegen</a>
             </td>
+            <td (click)="removePotentialAdmin(potentialAdmin.email)">
+              <a href="#">Verwijderen</a>
+            </td>
           </tr>
         </table>
-        <p *ngIf="!(potentialAdmins || []).length">
-          Er zijn geen potentiële nieuwe beheerders op het moment!
-        </p>
-        <p id="adminPrompt" (click)="adminPrompt()">Handmatig een admin toevoegen a.d.h.v. een e-mailadres?</p>
       </div>
-      <h1 style="padding: 0 16px;">Huidige beheerders ({{ (admins || {}).length }})</h1>
-      <p>
+      <p *ngIf="!(potentialAdmins || []).length">
+        Er zijn geen potentiële nieuwe beheerders op het moment!
+      </p>
+      <p id="adminPrompt" (click)="adminPrompt()">Handmatig een admin toevoegen a.d.h.v. een e-mailadres?</p>
+      <h1 style="padding: 0 16px; margin: 24px 0 0 0;">Huidige beheerders ({{ (admins || {}).length }})</h1>
+      <p *ngIf="removeStatus">
         {{ removeStatus }}
       </p>
       <div style="overflow-x: scroll;">
@@ -79,7 +85,7 @@
               E-mailadres
             </td>
             <td>
-              Toevoegen
+              Verwijderen
             </td>
           </tr>
           <tr *ngFor="let admin of admins">

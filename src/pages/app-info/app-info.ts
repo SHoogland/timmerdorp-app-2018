@@ -74,6 +74,20 @@ export class AppInfoPage {
     await this.getAdmins()
   }
 
+  async removePotentialAdmin(email) {
+    this.addStatus = 'Laden...'
+    let result = await this.g.apiCall('removeAdmin', { email: email, force: true })
+    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt...'
+
+    let self = this
+    setTimeout(function(){
+      self.addStatus = ''
+      self.cd.detectChanges()
+    }, 1000)
+
+    await this.getAdmins()
+  }
+
   async removeAdmin(email) {
     this.removeStatus = 'Laden...'
     let result = await this.g.apiCall('removeAdmin', { email: email })

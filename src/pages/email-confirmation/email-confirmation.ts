@@ -18,6 +18,7 @@ export class EmailConfirmationPage {
   waitingForEmailConfirmation: boolean;
   isConfirmingEmail: boolean;
   waitingForAdmin: boolean;
+  wentToLogin: boolean;
   loading: boolean;
 
   statusInterval: any;
@@ -32,11 +33,12 @@ export class EmailConfirmationPage {
 
   async init() {
     this.loading = false;
-    this.waitingForAdmin = false;
-    this.waitingForEmailConfirmation = false;
+    this.waitingForAdmin = this.navParams.get('waitingForAdmin') || false;
+    this.waitingForEmailConfirmation = this.navParams.get('waitingForEmailConfirmation') || false;
     this.error = '';
     this.errorHelp = '';
-    this.emailadres = '';
+    this.wentToLogin = false;
+    this.emailadres = this.navParams.get('email') || '';
     this.isConfirmingEmail = false;
 
     await this.checkStatus(true);
@@ -55,7 +57,10 @@ export class EmailConfirmationPage {
     if (showLoading) this.loading = true;
     let logInStatus = await this.g.checkIfStillLoggedIn();
     if (!logInStatus.result) {
-      this.g.toLogin();
+      if(!this.wentToLogin) {
+        this.g.toLogin();
+        this.wentToLogin = true;
+      }
     } else {
       this.emailadres = logInStatus.email;
 
@@ -78,9 +83,9 @@ export class EmailConfirmationPage {
   }
 
   async logOut() {
-    let self = this
     await Parse.User.logOut()
-    self.g.toLogin()
+    if(!this.wentToLogin) this.g.toLogin();
+    this.wentToLogin = true
   }
 
   belStan() {

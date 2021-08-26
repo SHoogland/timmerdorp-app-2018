@@ -160,7 +160,7 @@ export class SearchPage {
 
   showModal(child) {
     this.modal.child = child;
-    this.g.setStatusBar(['yellow', 'red', 'blue', 'green'][(child.hutnr || "2")[0]])
+    this.g.setStatusBar(['yellow', 'red', 'blue', 'green'][(child.hutNr || "2")[0]])
     this.modal.showModal = true;
     this.history.unshift({
       firstName: child.nickName || child.firstName,

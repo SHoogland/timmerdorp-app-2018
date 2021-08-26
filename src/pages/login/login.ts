@@ -144,7 +144,7 @@ export class LoginPage {
     .then(async function(result) {
       if(result === 'success') {
         await Parse.User.logIn(self.register.username.toLowerCase().replace(' ', ''), self.register.password)
-        self.navCtrl.setRoot(EmailConfirmationPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' })
+        self.navCtrl.setRoot(EmailConfirmationPage, { waitingForEmailConfirmation: true, email: self.register.username.toLowerCase().replace(' ', '') }, { animate: true, animation: "ios-transition", direction: 'forward' })
       }
       self.loading = false
     })
