@@ -1,53 +1,71 @@
 <ion-content padding>
-  <ion-header (click)="g.goHome()" [ngClass]='(wijk||"") + " wijk-header"'>
-    <ion-icon class='homeIcon' name="md-home"></ion-icon>
+  <ion-header (click)="g.goHome()" class='blue wijk-header'>
+		<i class="material-icons-outlined homeIcon">home</i>
     <h1 id="ptitle">{{title}}</h1>
-    <ion-navbar [ngClass]='(wijk||"")'>
+    <ion-navbar [ngClass]='blue'>
       <ion-title>
         <img src="assets/imgs/logo.png" class="nav-logo">
       </ion-title>
     </ion-navbar>
   </ion-header>
-  <div *ngIf='showSelection' id='wijkChoice'>
-    <h1 id='wijkHeader'>Kies je wijk</h1>
-    <button ion-button class='bg-blue modern customColoured halfWidth' full (click)='kiesWijk("blue")'>Blauw</button>
-    <button ion-button class='bg-red modern customColoured halfWidth' full (click)='kiesWijk("red")'>Rood</button>
-    <button ion-button class='bg-green modern customColoured halfWidth' full (click)='kiesWijk("green")'>Groen</button>
-    <button ion-button class='bg-yellow modern customColoured halfWidth' full (click)='kiesWijk("yellow")'>Geel</button>
-  </div>
   <div class='content'>
-    <div *ngIf='!showSelection' id='main'>
-      <div class="user-info">
-        <div id='spinner' [ngClass]="{'hidden': !loading}">
-          <div *ngIf="loading">
+    <div id='main'>
+      <div [ngClass]="loading ? 'user-info' : ''">
+        <div id='spinner' [ngClass]="{ 'hidden': !loading }">
+          <div *ngIf="loading && !isRefreshing">
             <ion-spinner color='primary'></ion-spinner>
           </div>
         </div>
       </div>
-      <table class='cleanTable longHeader'>
-        <tr *ngFor='let p of wijkprops'>
-          <td>{{p.title}}</td>
-          <td>{{(wijkstats||{})[p.prop]||"&mdash;"}}</td>
-        </tr>
-      </table>
-      <br>
-      <button [ngClass]='(wijk||"") + " iconBtn"' ion-button full id='kiesWijkButton' (click)="clearWijkSelection()">
-        <ion-icon slot='start' name='create'>
-        </ion-icon>
-        <span>
-          Verander wijkkeuze
-        </span>
-      </button>
-      <br>
-      <h1>Algemene Statistieken</h1>
-      <table class='cleanTable longHeader' id='allStatsTable'>
-        <tr *ngFor='let p of allprops'>
-          <td>{{p.title}}</td>
-          <td> {{(statistieken||{})[p.prop]||"&mdash;"}}</td>
-        </tr>
-      </table>
+      <div style="overflow-x: scroll;">
+        <table *ngIf="statistieken" class='cleanTable withHeader'>
+          <tr>
+            <td>
+            </td>
+            <td style="text-align: center;">
+              Totaal
+            </td>
+            <td *ngFor="let wijk of wijken" style="text-align: center;">
+              {{ g.getWijkName(wijk) }}
+            </td>
+          </tr>
+          <tr *ngFor='let p of wijkprops'>
+            <td style="min-width: 150px;">
+              {{ p.title }}
+            </td>
+            <td style="text-align: center; padding: 16px 8px !important;">
+              {{ statistieken[p.prop] || "&mdash;" }}
+            </td>
+            <td *ngFor="let wijk of wijken" style="text-align: center; padding: 16px 8px !important;">
+              {{ statistieken.quarters[wijk][p.prop] || "&mdash;" }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Aantal met hutnummer
+            </td>
+            <td style="text-align: center; padding: 16px 8px !important;">
+              {{ statistieken.haveHutnr }}
+            </td>
+            <td *ngFor="let wijk of wijken" style="text-align: center; padding: 16px 8px !important;">
+              &mdash;
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Aantal met polsbandje
+            </td>
+            <td style="text-align: center; padding: 16px 8px !important;">
+              {{ statistieken.haveWristband }}
+            </td>
+            <td *ngFor="let wijk of wijken" style="text-align: center; padding: 16px 8px !important;">
+              &mdash;
+            </td>
+          </tr>
+        </table>
+      </div>
 
-      <div *ngIf="admins && admins.length">
+      <div *ngIf="admins && admins.length" style="margin-top: 16px; padding-bottom: 64px;">
         <h1>De Badmeesterbattle</h1>
         <p style="padding: 12px;">
           Hieronder zie je welke Timmerdorp-topper de meeste kinderen aanwezig heeft gemeld. Doe je best, en <u>zorg dat
@@ -85,6 +103,9 @@
             </tr>
           </table>
         </div>
+      </div>
+      <div class="fab" (click)="refreshData()">
+        <i [ngClass]="isRefreshing ? 'isRefreshing material-icons' : 'material-icons'">refresh</i>
       </div>
     </div>
   </div>

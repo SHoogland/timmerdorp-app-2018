@@ -22,13 +22,14 @@ page-search {
 
     td {
       &:first-of-type {
-        width: 45%;
+        width: 55%;
       }
       &:not(:first-of-type) {
-        width: 45%;
+        width: calc(45% - 18px);
       }
       text-align: left;
       padding-left: 4px;
+      vertical-align: top;
       display: inline-block;
       font-size: 13px;
     }

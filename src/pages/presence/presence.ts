@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { Platform, NavController, Keyboard } from 'ionic-angular';
+import { Platform, NavController, Keyboard, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { GlobalFunctions } from '../../providers/global';
 
@@ -28,6 +28,7 @@ export class PresencePage {
 
 	constructor(
 		public navCtrl: NavController,
+    public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage,
 		public cd: ChangeDetectorRef,
@@ -77,7 +78,8 @@ export class PresencePage {
 		this.error = '';
 		this.ticket = {};
 
-		this.number = '';
+		this.number = this.navParams.get('wristband') || '';
+    if(this.number) this.getChild()
 		this.name = '';
 
     this.storage.get('presHistory').then((val) => {

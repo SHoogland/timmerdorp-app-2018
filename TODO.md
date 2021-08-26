@@ -1,33 +1,27 @@
-# App en webshop feedback en aandachtspunten uit 2021 (door Stan)
-- Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
-- Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
+# App feedback en aandachtspunten uit 2021 (door Stan)
 - Kunnen we misschien geen bandjes bestellen met nummers 1-50, 101-150, 201-250, 301-350? Want dan wordt het erg verwarrend wanneer je zoekt op 201, bedoel je dan kind met bandje 201 of kind met hutje 201?
 - Hutjes plattegrond toevoegen met gps en alles
-- Ticket pdf moet louter een QR code zijn, no more user data
 - Meer statistieken/grafieken toevoegen
-- Verjaardagen toevoegen
-- De change-wristband pagina eruit halen? Hij is enigszins buggy, ik heb alleen Sjoerd hem zien gebruiken, en je kan een polsbandje ook gewoon wijzigen door een kindje te zoeken en op polsbandje wijzigen te klikken
-- Statistieken pagina refresh knop erbij
-- Statistieken pagina alle wijken in 1x zien
 - Swipe is back op iPhone
-- Aan/afwezig melden vanaf zoekpagina
 - De hele app in wijk thema? Meteen vragen bij startup
-- De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
-- De e-mail bevestigingspagina moet even customized worden voor enkel appgebruikers
 - In-app links moeten toegevoegd worden voor de mail aan stan (bevestigen van admins) en de mail aan nieuwe appgebruikers
-- Addadmin adhv email gaat niet goed als er geen user gevonden kan worden. Ook niet als er wel een user gevonden wordt. “Cannot read property 'set' of undefined”
-- Navigatie naar e-mail-confirmation mag props meegeven waarnaar wordt geluisterd, want ze worden toch wel gecorrigeerd indien onjuist
-- Splashscreendelay waarom 2500? Gewoon weghalen voor snellere launch?
-- ShowSplashScreenSpinner mag sowieso uit
-- AutoHideSplashScreen??
-- In zoekpagina modal moet linkerkolom breder
-- Verjaardagen: tekst past moeizaam, icoontje verder naar links en tekst ook, “wordt XX” misschien naar beneden, de headers “dinsdag … aug” enzo moeten naar links
+- Waarschuwings-modal in presence, voor als je na dinsdag nog kinderen aanwezig meldt zonder hutnummer
 
-## Twijfel voor 2022
+## Webshop verbeterpunten voor 2022
+- De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
+- Ticket pdf moet louter een QR code zijn, no more user data
+- De e-mail bevestigingspagina moet even customized worden voor enkel appgebruikers
+- Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
+- Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
+
+
+### Twijfel voor 2022
 - De statusbar op de statistiekenpagina kleurt niet mee op iPhone...raar. Lastig op te lossen (bug in cordova, misschien iets updaten dan maar?)
 - Kijken of alle buttons een beetje schappelijk op de homepagina kunnen passen. ik vrees dat het heel krap wordt...
+- De change-wristband pagina eruit halen? Hij is enigszins buggy, ik heb alleen Sjoerd hem zien gebruiken, en je kan een polsbandje ook gewoon wijzigen door een kindje te zoeken en op polsbandje wijzigen te klikken
 
-## Gefixt voor 2022
+
+### Gefixt voor 2022
 - Gefixt: “E-mailadres nog niet bevestigd” mist een refresh knop
 - Gefixt: Op de “waitingforadmin” pagina verdwijnt de uitloggen knop wanneer “loading”, doe maar niet
 - Gefixt: Soms staat er nog voornaam in plaats van Roepnaam, pas op, anders wordt Henrieke boos
@@ -52,6 +46,19 @@
 - Gefixt: Mailtje over admin aan stan werd niet verstuurd in prod
 - Gefixt: Verversen knoppen kan weer weg bij emailverified 
 - Gefixt: De “Het is xx•C” wordt afgehakt
+- Gefixt: Splashscreendelay waarom 2500? Gewoon weghalen voor snellere launch?
+- Gefixt: ShowSplashScreenSpinner mag sowieso uit
+- Gefixt: AutoHideSplashScreen??
+- Gefixt: Addadmin adhv email gaat niet goed als er geen user gevonden kan worden. Ook niet als er wel een user gevonden wordt. “Cannot read property 'set' of undefined”
+- Gefixt: Navigatie naar e-mail-confirmation mag props meegeven waarnaar wordt geluisterd, want ze worden toch wel gecorrigeerd indien onjuist
+- Gefixt: Verjaardagen toevoegen
+- Gefixt: Statistieken pagina alle wijken in 1x zien
+- Gefixt: In zoekpagina modal moet linkerkolom breder
+- Gefixt: Verjaardagen: tekst past moeizaam, icoontje verder naar links en tekst ook, “wordt XX” misschien naar beneden, de headers “dinsdag … aug” enzo moeten naar links
+- Gefixt: Splashscreendelay omlaag naar 750 ofzo?
+- Gefixt: Statistieken pagina refresh knop erbij
+- Gefixt: Aan/afwezig melden vanaf zoekpagina
+
 
 # App feedback en aandachtspunten 2019 (door Stan)
 **Het belangrijkste volgens velen: de app goed vooraf testen a.u.b. Iedereen was tevreden over de functionaliteiten, maar het zou leuk zijn als alles dinsdagochtend meteen al werkte natuurlijk ;)**
