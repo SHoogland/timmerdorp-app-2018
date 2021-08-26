@@ -169,9 +169,9 @@ export class HomePage {
           icon: 'change_circle'
         },
         {
-          title: 'Wijk ' + this.g.getWijkName(this.wijk),
+          title: 'Statistieken',
           component: "wijk",
-          class: 'small bg-' + (this.wijk || 'blue'),
+          class: 'small bg-blue',
           icon: "insert_chart",
           small: true
         },

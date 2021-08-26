@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GlobalFunctions } from '../../providers/global';
+import { PresencePage } from '../presence/presence';
 
 declare let cordova: any;
 
@@ -112,6 +113,10 @@ export class SearchPage {
   search() {
     this.searched = false
     try {
+      if (this.searchTerm.length < 3) {
+        this.tickets = [];
+        return false;
+      }
       clearTimeout(this.typingTimer);
       this.typingTimer = setTimeout(() => {
         this.searchThis();
@@ -176,15 +181,14 @@ export class SearchPage {
 
   closeModal() {
     this.modal.showModal = false;
-    let self = this;
+    this.g.setStatusBar('blue')
     setTimeout(function () {
-      self.g.setStatusBar('blue')
       document.querySelector('#myModal').classList.remove('high');
     }, 400);
   }
 
   scanChild(barcode) {
-    this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode });
+    this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   goHome() {
@@ -197,5 +201,9 @@ export class SearchPage {
     } else {
       this.g.goHome();
     }
+  }
+
+  markPresent(wristband) {
+    this.navCtrl.setRoot(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 }

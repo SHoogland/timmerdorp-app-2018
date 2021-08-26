@@ -1,6 +1,6 @@
 <ion-content>
   <ion-header (click)='g.goHome()'>
-    <ion-icon class='homeIcon' name="md-home"></ion-icon>
+		<i class="material-icons-outlined homeIcon">home</i>
     <h1 id="ptitle">{{title}}</h1>
     <ion-navbar>
       <ion-title>
@@ -185,6 +185,7 @@
     </div>
     <button ion-button full (click)="closeModal();">Sluiten</button>
     <button ion-button full (click)="scanChild(modal.child.id)">Polsbandje wijzigen</button>
+    <button ion-button full *ngIf="modal.child.wristband" (click)="markPresent(modal.child.wristband)">Naar aanwezigheid</button>
     <button ion-button full (click)="goHome()">Terug naar homepagina</button>
   </div>
 </div>
