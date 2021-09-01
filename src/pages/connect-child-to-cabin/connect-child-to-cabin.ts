@@ -29,6 +29,7 @@ export class ConnectChildToCabinPage {
 
 	alreadyHasHutError: boolean;
 	noWristbandError: boolean;
+	searchedChild: boolean;
 	searched: boolean;
 	loading: boolean;
 
@@ -66,6 +67,7 @@ export class ConnectChildToCabinPage {
 
     this.title = 'Beheer Hutjes';
 
+		this.searchedChild = false;
 		this.searched = false;
 		this.loading = false;
 		this.alreadyHasHutError = false;
@@ -178,7 +180,8 @@ export class ConnectChildToCabinPage {
 		try {
 			clearTimeout(this.typingTimer);
 			this.typingTimer = setTimeout(() => {
-				this.searchThisChild();
+        this.searchedChild = false
+        this.searchThisChild();
 			}, 200);
 		} catch (e) {
 			console.log(e);
@@ -200,6 +203,7 @@ export class ConnectChildToCabinPage {
         self.errorHelp = (result || {}).errorMessage || (result || {}).response
         return;
       }
+      self.searchedChild = true
       self.loading = false
       self.tickets = result.tickets.sort(function (a) {
         if (a.wristband == self.searchTerm) {
@@ -208,6 +212,7 @@ export class ConnectChildToCabinPage {
         return 1;
       }); //give priority to wristbands over hut numbers
     }).catch((e) => {
+      self.searchedChild = true
       self.error = String(e)
     });
 	}

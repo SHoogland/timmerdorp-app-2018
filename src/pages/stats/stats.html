@@ -10,7 +10,7 @@
   </ion-header>
   <div class='content'>
     <div id='main'>
-      <div [ngClass]="loading ? 'user-info' : ''">
+      <div [ngClass]="loading && !isRefreshing ? 'user-info' : ''">
         <div id='spinner' [ngClass]="{ 'hidden': !loading }">
           <div *ngIf="loading && !isRefreshing">
             <ion-spinner color='primary'></ion-spinner>
@@ -18,7 +18,7 @@
         </div>
       </div>
       <div style="overflow-x: scroll;">
-        <table *ngIf="statistieken" class='cleanTable withHeader'>
+        <table *ngIf="statistieken" class='cleanTable withHeader leftFixed'>
           <tr>
             <td>
             </td>
@@ -66,13 +66,13 @@
       </div>
 
       <div *ngIf="admins && admins.length" style="margin-top: 16px; padding-bottom: 64px;">
-        <h1>De Badmeesterbattle</h1>
+        <h1>Timmerdorp Battle</h1>
         <p style="padding: 12px;">
-          Hieronder zie je welke Timmerdorp-topper de meeste kinderen aanwezig heeft gemeld. Doe je best, en <u>zorg dat
-            je meer kinderen helpt dan Twan!</u>
+          Hieronder zie je welke Timmerdorp-topper de meeste kinderen aanwezig heeft gemeld. Doe je best, en
+          <u>zorg dat je meer kinderen helpt dan Twan!</u>
         </p>
         <div style="overflow-x: scroll;">
-          <table class='cleanTable withHeader'>
+          <table class='cleanTable withHeader topFixed'>
             <tr>
               <td>
                 Naam

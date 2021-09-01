@@ -188,10 +188,12 @@ export class SearchPage {
   }
 
   scanChild(barcode) {
+    this.g.setStatusBar('blue')
     this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   goHome() {
+    this.g.setStatusBar('blue')
     if (this.modal.showModal) {
       let self = this;
       this.closeModal();
@@ -204,6 +206,7 @@ export class SearchPage {
   }
 
   markPresent(wristband) {
+    this.g.setStatusBar('blue')
     this.navCtrl.setRoot(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 }

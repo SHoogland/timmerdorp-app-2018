@@ -59,7 +59,7 @@
 			</div>
 		</div>
 		<div class="bracelet-number conditional"
-			[ngClass]='hutNr && hutNr.length === 3 && !error && searched? "shown":""'>
+			[ngClass]='hutNr && hutNr.length === 3 && !error && searched ? "shown":""'>
 			<h1 id='hutHeader' [ngClass]='g.getWijk(hutNr)'>Kinderen in hut {{hutNr}}</h1>
 			<p *ngIf="searched && hutTickets && !hutTickets.length && hutNr && hutNr.length === 3">
 				Nog geen kindertjes in dit hutje :(</p>
@@ -106,6 +106,8 @@
 			<div id='spinner'>
 				<ion-spinner *ngIf='loading' color='primary'></ion-spinner>
 			</div>
+
+      <p *ngIf="!loading && searchedChild && !(tickets || []).length">Geen kinderen gevonden! Je kunt zoeken op hutnummer, polsbandje, voornaam, en achternaam.</p>
 		</div>
 
 		<div *ngFor="let child of tickets" [ngClass]='"alternate " + g.getWijk(child.hutNr)'>

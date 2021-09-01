@@ -14,7 +14,7 @@ import { ScanTicketPage } from '../pages/scan-ticket/scan-ticket';
 import { ConnectChildToCabinPage } from '../pages/connect-child-to-cabin/connect-child-to-cabin';
 import { PresencePage } from '../pages/presence/presence';
 import { LoginPage } from '../pages/login/login';
-import { WijkPage } from '../pages/wijk/wijk';
+import { StatsPage } from '../pages/stats/stats';
 import { AppInfoPage } from '../pages/app-info/app-info';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SchedulePage } from '../pages/schedule/schedule';
@@ -35,7 +35,7 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 		PresencePage,
 		LoginPage,
     EmailConfirmationPage,
-		WijkPage,
+		StatsPage,
 		AppInfoPage,
 		SchedulePage,
     BirthdaysPage,
@@ -58,7 +58,7 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 		PresencePage,
 		LoginPage,
     EmailConfirmationPage,
-		WijkPage,
+		StatsPage,
 		AppInfoPage,
 		SchedulePage,
     BirthdaysPage,

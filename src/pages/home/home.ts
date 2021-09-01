@@ -6,7 +6,7 @@ import Parse from 'parse';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
-import { WijkPage } from '../wijk/wijk';
+import { StatsPage } from '../stats/stats';
 import { SearchPage } from '../search/search';
 import { ConnectChildToCabinPage } from '../connect-child-to-cabin/connect-child-to-cabin';
 import { Storage } from '@ionic/storage';
@@ -68,11 +68,11 @@ export class HomePage {
     this.readablePageList = {
       "scan-ticket": "ticketscanner",
       "weather": "weather",
-      "children": WijkPage,
+      "children": StatsPage,
       "connect-child-to-cabin": ConnectChildToCabinPage,
       "search": SearchPage,
       "presence": PresencePage,
-      "wijk": WijkPage,
+      "stats": StatsPage,
       "app-info": AppInfoPage,
       "login": LoginPage,
       "schedule": SchedulePage,
@@ -170,7 +170,7 @@ export class HomePage {
         },
         {
           title: 'Statistieken',
-          component: "wijk",
+          component: "stats",
           class: 'small bg-blue',
           icon: "insert_chart",
           small: true

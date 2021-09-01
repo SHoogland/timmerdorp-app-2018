@@ -5,10 +5,10 @@ import { Storage } from '@ionic/storage';
 import { GlobalFunctions } from '../../providers/global';
 
 @Component({
-	selector: 'page-wijk',
-	templateUrl: 'wijk.html'
+	selector: 'page-stats',
+	templateUrl: 'stats.html'
 })
-export class WijkPage {
+export class StatsPage {
 	statistieken: object;
 
 	title: string;
@@ -79,8 +79,7 @@ export class WijkPage {
 
 	async init() {
 		this.wijk = (await this.storage.get('wijk')) || 'blue';
-    this.wijken = ['yellow', 'red', 'blue', 'green'].sort((w) => (this.wijk === w ? -1 : 1))
-    console.log(this.wijken)
+    this.wijken = ['yellow', 'red', 'blue', 'green', 'hutlozen'].sort((w) => (this.wijk === w ? -1 : 1))
     this.title = 'Statistieken';
     this.updateData();
 
@@ -98,7 +97,6 @@ export class WijkPage {
       if(!result || result.response !== 'success') {
         return;
       }
-      console.log(result)
 
       self.statistieken = result;
 
