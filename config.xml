@@ -13,6 +13,16 @@
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
     </edit-config>
+    <config-file parent="com.apple.developer.associated-domains" target="*-Debug.plist">
+        <array>
+            <string>applinks:shop.timmerdorp.com</string>
+        </array>
+    </config-file>
+    <config-file parent="com.apple.developer.associated-domains" target="*-Release.plist">
+        <array>
+            <string>applinks:shop.timmerdorp.com</string>
+        </array>
+    </config-file>
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
