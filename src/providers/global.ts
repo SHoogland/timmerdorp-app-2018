@@ -95,6 +95,7 @@ export class GlobalFunctions {
     if (kleur == 'yellow') return 'Geel';
     if (kleur == 'red') return 'Rood';
     if (kleur == 'green') return 'Groen';
+    if (kleur == 'hutlozen') return 'Hutlozen';
     return '';
   }
 

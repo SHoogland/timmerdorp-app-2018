@@ -20,7 +20,7 @@ export class ScanTicketPage {
   error: string;
   title: string;
 
-  suggestionNumber: number;
+  suggestionNumber: string;
 
   modal: {
     showModal: boolean;
@@ -67,7 +67,10 @@ export class ScanTicketPage {
     let d = await this.storage.get('lastWristbandAssignmentDate')
     if(+new Date() - d < 10 * 60 * 1000) {
       this.showSuggestion = true;
-      this.suggestionNumber = 1 + +(await this.storage.get('lastWristbandAssignmentNumber'))
+      this.suggestionNumber = '' + (1 + +(await this.storage.get('lastWristbandAssignmentNumber')))
+      if(this.suggestionNumber.length === 1) {
+        this.suggestionNumber = '00' + this.suggestionNumber
+      }
     }
   }
 

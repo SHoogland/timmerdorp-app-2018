@@ -133,7 +133,7 @@ export class LoginPage {
       firstName: this.register.voornaam,
       lastName: this.register.achternaam,
       fromApp: true,
-      domain: this.g.staging ? 'http://localhost:3000' : 'shop.timmerdorp.com'
+      domain: this.g.staging ? 'http://localhost:3000' : 'https://shop.timmerdorp.com'
     }, true).catch((e) => {
       self.error = 'Registreren mislukt!'
       if(e.message === 'Account already exists for this username.') {

@@ -56,7 +56,7 @@ h1 {
 .conditional {
 	opacity: 0;
 	transition: opacity linear 400ms;
-	&.modal {
+	&.modal:not(.shown) {
 		z-index: -1;
 	}
 }
@@ -762,7 +762,15 @@ button {
 	font-size: 18px;
 
 	tr:nth-of-type(2n) {
-		background: #e5e5e5;
+    &, td {
+      background: #e5e5e5;
+    }
+	}
+
+	tr:nth-of-type(2n + 1) {
+    &, td {
+      background: $white;
+    }
 	}
 	td {
 		padding: 16px 18px !important;
@@ -784,6 +792,24 @@ button {
   }
 	text-align: left;
 	width: 100%;
+
+  &.leftFixed {
+    tr {
+      td:first-of-type {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+      }
+    }
+  }
+
+  &.topFixed {
+    tr:first-of-type {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+  }
 }
 
 ion-input.hideClear {
