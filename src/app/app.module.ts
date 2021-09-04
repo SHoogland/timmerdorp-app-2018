@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
@@ -68,6 +69,7 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 	providers: [
 		StatusBar,
 		SplashScreen,
+    Deeplinks,
 		HttpClient,
 		InAppBrowser,
 		BarcodeScanner,
