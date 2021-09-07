@@ -62,11 +62,11 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.deeplinks.route({}).subscribe((match) => {
         alert('match')
-        alert(match)
+        alert(JSON.stringify(match))
         // Handle the route manually
       }, (nomatch) => {
         alert('nomatch')
-        alert(nomatch)
+        alert(JSON.stringify(nomatch))
         // No match
       })
       /*
