@@ -6,23 +6,25 @@
 - De hele app in wijk thema? Meteen vragen bij startup
 - In-app links moeten toegevoegd worden voor de mail aan stan (bevestigen van admins) en de mail aan nieuwe appgebruikers
 - Waarschuwings-modal in presence, voor als je na dinsdag nog kinderen aanwezig meldt zonder hutnummer
+- Waarom is registreren zo traag? Kan dat sneller?
+- Registratieverzoek e-mail link aan stan moet nog werken, zet daar ook ff een e-mailadresje in van van wie het account is
 
 ## Webshop verbeterpunten voor 2022
 - De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
-- Ticket pdf moet louter een QR code zijn, no more user data
 - De e-mail bevestigingspagina moet even customized worden voor mensen die alleen de app gebruiken
 - Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
 - Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
 - Als in de e-mail verificatie pagina een niet-base64 code opgegeven wordt, geeft ie geen foutmelding (behalve in de console dan). Niet helemaal gebruiksvriendelijk
+- Corona-maatregelen (leeftijd t/m 12, ID-kaart mee, roepnaam, etc.) weghalen? hopelijk?
+- Even kijken of de checkboxes wat netter kunnen in het ticketformulier
 
 
-### Twijfel voor 2022
-- De statusbar op de statistiekenpagina kleurt niet mee op iPhone...raar. Lastig op te lossen (bug in cordova, misschien iets updaten dan maar?)
+## Twijfel voor 2022
 - Kijken of alle buttons een beetje schappelijk op de homepagina kunnen passen. ik vrees dat het heel krap wordt...
 - De change-wristband pagina eruit halen? Hij is enigszins buggy, ik heb alleen Sjoerd hem zien gebruiken, en je kan een polsbandje ook gewoon wijzigen door een kindje te zoeken en op polsbandje wijzigen te klikken
 
 
-### Gefixt voor 2022
+## Gefixt voor 2022
 - “E-mailadres nog niet bevestigd” mist een refresh knop
 - Op de “waitingforadmin” pagina verdwijnt de uitloggen knop wanneer “loading”, doe maar niet
 - Soms staat er nog voornaam in plaats van Roepnaam, pas op, anders wordt Henrieke boos
@@ -67,6 +69,15 @@
 - In statistieken, linkerkolom misschien fixed houden? En bij badmeesterbattle dan de bovenste kolom fixed houden
 - Vanuit zoekpagina modal wegklikken hoort ook de statusbar anders te kleuren
 - E-mail verifiëren voor app gaat toch niet goed
+- E-mailadres bij app info?
+- Als checkifadmin gebeurt en stan heeft nog geen melding ervan, stuur melding
+- cleanTable is nu #fff maar hoort een soort crème kleur te hebben zoals de achtergrond
+
+### Gefixt in Webshop
+- Ticket pdf moet alleen een QR code zijn, no more user data
+
+
+
 
 
 # App feedback en aandachtspunten 2019 (door Stan)
@@ -87,11 +98,11 @@
 
 
 ## Nog te doen in 2020 zelf:
-- Vast team opstellen van 8-10 mensen zodat ik meer overzicht en controle heb over wie de app gebruikt met welke update en zodat ik makkelijker instructies kan geven en misschien ook een vaste persoon/kraam/plaats waar kinders nieuwe polsbandjes halen (Stan)
+- Vast team opstellen van 8-10 mensen zodat ik meer overzicht en controle heb over wie de app gebruikt met welke update en zodat ik makkelijker instructies kan geven (Stan)
 - Maandagavond alvast de app installeren op zo veel mogelijk apparaten; op z'n minst de wijkhoofden/-nekken
 - Je kunt nu zoeken op voornaam óf achternaam, maar het is natuurlijk wel zo handig als je op beide achter elkaar zou kunnen zoeken (e.g.: nu zoek je "stan", of "van Baarsen", maar als je "Stan van Baarsen" zoekt, vind je niks. is raar). gefixt in 2021
-- Hopelijk kan ik in 2020 ook zelf de database beheren vanaf mijn laptop en het liefst ook de Play Store
-- De login-check is er nu uit gecomment, maar moet er zeker weer in in de production versie. gefixt in 2021
+- Hopelijk kan ik in 2020 ook zelf de server-code beheren vanaf mijn laptop en het liefst ook de Play Store
+- De login-check is er nu uit gecomment, maar moet er zeker weer in in de production versie.
 - Meer reserve polsbandjes kopen (725 in totaal misschien?) want kinderen raken die dingen bizar snel kwijt
 
 ## Website feedback:

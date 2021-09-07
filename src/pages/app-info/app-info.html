@@ -1,7 +1,9 @@
 <ion-content padding>
   <ion-header (click)='g.goHome()'>
 		<i class="material-icons-outlined homeIcon">home</i>
-    <h1 id="ptitle">{{title}}</h1>
+    <h1 id="ptitle">
+      {{ title }}
+    </h1>
     <ion-navbar>
       <ion-title>
         <img src="assets/imgs/logo.png" class="nav-logo">
@@ -11,12 +13,28 @@
   <div class='content'>
     <table class='cleanTable' id="appInfo">
       <tr>
-        <td>Test-versie:</td>
-        <td>{{!!g.staging ? "Ja" : "Nee"}}</td>
+        <td>
+          Test-versie:
+        </td>
+        <td>
+          {{ !!g.staging ? "Ja" : "Nee" }}
+        </td>
       </tr>
       <tr>
-        <td>Wijkkeuze:</td>
-        <td>{{g.getWijkName(wijk)}}</td>
+        <td>
+          Wijk:
+        </td>
+        <td>
+          {{ g.getWijkName(wijk) }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          E-mailadres:
+        </td>
+        <td>
+          {{ email }}
+        </td>
       </tr>
     </table>
     <br>
