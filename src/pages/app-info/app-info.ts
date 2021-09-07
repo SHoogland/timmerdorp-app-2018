@@ -15,6 +15,7 @@ export class AppInfoPage {
   addStatus: string
 	error: string;
 	title: string;
+  email: string;
 	wijk: string;
 
   isStanOfStephan: boolean;
@@ -46,6 +47,7 @@ export class AppInfoPage {
 		});
 
     await this.getAdmins()
+    this.email = (await this.g.checkIfStillLoggedIn()).email
 	}
 
   async getAdmins() {

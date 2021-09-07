@@ -1,7 +1,9 @@
 <ion-content padding>
   <ion-header (click)="g.goHome()" class='blue wijk-header'>
 		<i class="material-icons-outlined homeIcon">home</i>
-    <h1 id="ptitle">{{title}}</h1>
+    <h1 id="ptitle">
+      {{ title }}
+    </h1>
     <ion-navbar [ngClass]='blue'>
       <ion-title>
         <img src="assets/imgs/logo.png" class="nav-logo">
@@ -93,7 +95,7 @@
                 Totaal
               </td>
             </tr>
-            <tr *ngFor="let admin of admins; let i = index">
+            <tr *ngFor="let admin of admins; let i = index" class="{{ admin.isYou ? 'isYou' : ''}}">
               <td>{{ admin.naam }} </td>
               <td>{{ admin.di || 0 }} </td>
               <td>{{ admin.wo || 0 }} </td>

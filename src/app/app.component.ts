@@ -6,7 +6,6 @@ import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 import { HomePage } from '../pages/home/home';
 import { GlobalFunctions } from '../providers/global';
-import { AppInfoPage } from '../pages/app-info/app-info';
 
 declare let cordova: any;
 
