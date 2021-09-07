@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, NavController, Platform } from 'ionic-angular';
+import { App, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Storage } from '@ionic/storage';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
@@ -21,11 +21,11 @@ export class MyApp {
   pages: Array<{ title: string, component: any }>;
 
   constructor(
-		public navCtrl: NavController,
     private g: GlobalFunctions,
     public platform: Platform,
     public splashScreen: SplashScreen,
     public storage: Storage,
+    public app: App,
     private deeplinks: Deeplinks,
   ) {
     this.g.setStatusBar("#2196f3");
@@ -65,15 +65,20 @@ export class MyApp {
       this.deeplinks.route({}).subscribe((match) => {
         alert('match')
         alert(JSON.stringify(match))
-        if(match.$link.split('/verify-email')) {
-          this.navCtrl.setRoot(EmailConfirmationPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+        let link = match.$link
+        if(link && link.split('/verify-email')) {
+          let nav = this.app.getActiveNavs()[0];
+          nav.setRoot(EmailConfirmationPage, { login: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
         }
         // Handle the route manually
       }, (nomatch) => {
         alert('nomatch')
         alert(JSON.stringify(nomatch))
-        if(nomatch.$link.split('/verify-email')) {
-          this.navCtrl.setRoot(EmailConfirmationPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+        let link = nomatch.$link
+        if(link && link.split('/verify-email')) {
+          // let code = link.split()
+          let nav = this.app.getActiveNavs()[0];
+          nav.setRoot(EmailConfirmationPage, { login: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
         }
         // No match
       })
