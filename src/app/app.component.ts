@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, NavController, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Storage } from '@ionic/storage';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 import { HomePage } from '../pages/home/home';
 import { GlobalFunctions } from '../providers/global';
+import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirmation';
 
 declare let cordova: any;
 
@@ -20,6 +21,7 @@ export class MyApp {
   pages: Array<{ title: string, component: any }>;
 
   constructor(
+		public navCtrl: NavController,
     private g: GlobalFunctions,
     public platform: Platform,
     public splashScreen: SplashScreen,
@@ -63,10 +65,16 @@ export class MyApp {
       this.deeplinks.route({}).subscribe((match) => {
         alert('match')
         alert(JSON.stringify(match))
+        if(match.$link.split('/verify-email')) {
+          this.navCtrl.setRoot(EmailConfirmationPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+        }
         // Handle the route manually
       }, (nomatch) => {
         alert('nomatch')
         alert(JSON.stringify(nomatch))
+        if(nomatch.$link.split('/verify-email')) {
+          this.navCtrl.setRoot(EmailConfirmationPage, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+        }
         // No match
       })
       /*

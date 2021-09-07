@@ -1,5 +1,4 @@
 # App feedback en aandachtspunten uit 2021 (door Stan)
-- Kunnen we misschien geen bandjes bestellen met nummers 1-50, 101-150, 201-250, 301-350? Want dan wordt het erg verwarrend wanneer je zoekt op 201, bedoel je dan kind met bandje 201 of kind met hutje 201?
 - Hutjes plattegrond toevoegen met gps en alles
 - Meer statistieken/grafieken toevoegen
 - Swipe is back op iPhone
@@ -22,6 +21,7 @@
 ## Twijfel voor 2022
 - Kijken of alle buttons een beetje schappelijk op de homepagina kunnen passen. ik vrees dat het heel krap wordt...
 - De change-wristband pagina eruit halen? Hij is enigszins buggy, ik heb alleen Sjoerd hem zien gebruiken, en je kan een polsbandje ook gewoon wijzigen door een kindje te zoeken en op polsbandje wijzigen te klikken
+- Kunnen we misschien geen bandjes bestellen met nummers 1-50, 101-150, 201-250, 301-350? Want dan wordt het erg verwarrend wanneer je zoekt op 201, bedoel je dan kind met bandje 201 of kind met hutje 201?
 
 
 ## Gefixt voor 2022
