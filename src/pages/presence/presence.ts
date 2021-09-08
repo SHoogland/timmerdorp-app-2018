@@ -19,6 +19,7 @@ export class PresencePage {
 
   foundTicket: boolean;
 	modalShown: boolean;
+	hutNrModalShown: boolean;
 	greenBtn: boolean;
 	searched: boolean;
 	loading: boolean;
@@ -41,6 +42,8 @@ export class PresencePage {
         this.platform.registerBackButtonAction(() => {
           if (this.modalShown) {
             this.modalShown = false;
+					} else if (this.hutNrModalShown) {
+            this.hutNrModalShown = false;
 					} else {
             this.g.goHome();
 					}
@@ -71,6 +74,7 @@ export class PresencePage {
 		}
 
 		this.modalShown = false;
+		this.hutNrModalShown = false;
 		this.greenBtn = false;
 
 		this.searched = false;
@@ -167,16 +171,21 @@ export class PresencePage {
     });
 	}
 
-	togglePresence() {
+	togglePresence(force) {
 		this.hideKeyboard();
     this.error = ''
     this.errorHelp = ''
 		if (this.number.length != 3) return;
-    this.loading = true;
 		if (!this.ticket || !this.foundTicket) {
-			this.error = 'Geen kind gevonden!';
+      this.error = 'Geen kind gevonden!';
 			return;
 		}
+
+    if(new Date().getDay() > 2 && !this.ticket.hutNr && !force) {
+      this.showHutNrModal()
+      return
+    }
+    this.loading = true;
 
     if(this.ticket['aanwezig_' + this.day]) {
 			this.showModal();
@@ -208,6 +217,20 @@ export class PresencePage {
 		setTimeout(function () {
 			document.querySelector('#myModal').classList.remove('high');
 		}, 400);
+	}
+
+	showHutNrModal() {
+		this.hutNrModalShown = true;
+		document.querySelector('#hutNrModal').classList.add('high');
+	}
+
+	closeHutNrModal() {
+		this.loading = false;
+		this.hutNrModalShown = false;
+		setTimeout(function () {
+			document.querySelector('#hutNrModal').classList.remove('high');
+		}, 400);
+    this.togglePresence(true)
 	}
 
   childNumberInput(event) {

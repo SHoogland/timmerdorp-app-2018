@@ -42,7 +42,7 @@ export class ScanTicketPage {
       if (cordova.platformId === 'android') {
         this.platform.registerBackButtonAction(() => {
           if (this.modal.showModal) {
-            this.modal.showModal = false;
+            this.closeModal()
           } else {
             this.g.goHome();
           }
@@ -163,13 +163,12 @@ export class ScanTicketPage {
 
   showModal() {
     this.modal.showModal = true;
-    document.querySelector('#myModal').classList.add('high');
   }
 
   goHome() {
     if (this.modal.showModal) {
+      this.closeModal();
       let self = this;
-      this.modal.showModal = false;
       setTimeout(function () {
         self.g.goHome();
       }, 200);

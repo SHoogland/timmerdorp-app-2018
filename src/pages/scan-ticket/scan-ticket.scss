@@ -31,4 +31,12 @@ page-scan-ticket {
 	#modalBottom p {
 		margin-bottom: -8px;
 	}
+
+  #myModal {
+    display: none;
+    &.shown {
+      z-index: 10;
+      display: block;
+    }
+  }
 }

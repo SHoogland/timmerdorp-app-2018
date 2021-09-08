@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { Platform, NavController, NavParams } from 'ionic-angular';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -25,6 +25,7 @@ export class AppInfoPage {
 
 	constructor(
 		public navCtrl: NavController,
+    public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage,
 		public httpClient: HttpClient,
@@ -48,6 +49,12 @@ export class AppInfoPage {
 
     await this.getAdmins()
     this.email = (await this.g.checkIfStillLoggedIn()).email
+
+    if(this.navParams.get('confirmationId')) {
+      let result = await this.addAdmin(false, true, this.navParams.get('confirmationId'))
+      if(result) alert('Gelukt om admin toe te voegen!')
+      else alert('Mislukt om admin toe te voegen')
+    }
 	}
 
   async getAdmins() {
@@ -62,9 +69,9 @@ export class AppInfoPage {
     })
   }
 
-  async addAdmin(email, force?) {
+  async addAdmin(email, force?, id?) {
     this.addStatus = 'Laden...'
-    let result = await this.g.apiCall('addAdmin', { email: email, force: force })
+    let result = await this.g.apiCall('addAdmin', { email: email, force: force, id: id })
     this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt...'
 
     let self = this
@@ -74,6 +81,8 @@ export class AppInfoPage {
     }, 1000)
 
     await this.getAdmins()
+
+    return result.success
   }
 
   async removePotentialAdmin(email) {

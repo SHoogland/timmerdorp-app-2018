@@ -56,9 +56,6 @@ h1 {
 .conditional {
 	opacity: 0;
 	transition: opacity linear 400ms;
-	&.modal:not(.shown) {
-		z-index: -1;
-	}
 }
 
 .bar-button-default-md {
@@ -397,7 +394,7 @@ body {
 .modal {
 	position: fixed;
 	/* Stay in place */
-	z-index: 1;
+	z-index: -1;
 	/* Sit on top */
 	left: 0;
 	top: 0;

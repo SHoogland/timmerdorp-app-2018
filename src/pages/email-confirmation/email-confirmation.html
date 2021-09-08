@@ -38,6 +38,38 @@
         </p>
         <br>
       </div>
+      <div *ngIf="emailVerificationResult">
+        <div *ngIf="emailVerificationResult === 'success'">
+          <h1>
+            Gelukt!
+          </h1>
+          <p>
+            Het is gelukt om je e-mailadres te verifiëren! Klik hieronder om door te gaan.
+          </p>
+        </div>
+        <div *ngIf="emailVerificationResult === 'already_verified'">
+          <h1>
+            Je e-mailadres was al geverifieerd!
+          </h1>
+          <p>
+            Je e-mailadres was al geverifieerd, klik hieronder om door te gaan.
+          </p>
+        </div>
+        <button ion-button full (click)="logOut()" style="background: #07497e;"
+          *ngIf="emailVerificationResult === 'succes' || emailVerificationResult === 'already_verified"
+          (click)="checkStatus(true, true)">
+          Doorgaan
+        </button>
+        <div *ngIf="emailVerificationResult !== 'succes' && emailVerificationResult !== 'already_verified">
+          <h1>
+            E-mail verificatie mislukt!
+          </h1>
+          <p>
+            Het is helaas niet gelukt je e-mailadres te verifiëren. Probeer nog een keer op de link in je inbox te
+            klikken, of neem contact op met Stan of Stephan.
+          </p>
+        </div>
+      </div>
       <button ion-button full (click)="logOut()" style="background: #07497e;">
         <ion-icon slot='start' style="margin-right: 16px;" name='md-log-out'></ion-icon>
         <span>

@@ -6,9 +6,13 @@
         <div class="content">
           <ion-icon name="alert"></ion-icon>
           <h1 id='errorHeader'>Let op</h1>
-          <h4 id='errorHelp' style="margin-bottom: 0px;">Deze app is alleen bedoeld voor de vrijwilligers van Timmerdorp, niet voor
-            ouders of deelnemers! Klik op OK om door te gaan...<button ion-button (click)='showLogin()'
-            style="background: darkred; height: 60px; width: 140px; margin-top: 16px; margin-bottom: 16px; background: #053459;">OK</button></h4>
+          <h4 id='errorHelp' style="margin-bottom: 0px;">Deze app is alleen bedoeld voor de vrijwilligers van
+            Timmerdorp, niet voor ouders of deelnemers! Klik op OK om door te gaan...
+            <button ion-button (click)='showLogin()'
+              style="background: darkred; height: 60px; width: 140px; margin-top: 16px; margin-bottom: 16px; background: #053459;">
+              OK
+            </button>
+          </h4>
         </div>
       </div>
     </div>
@@ -17,13 +21,15 @@
         <h1>Inloggen</h1>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input class="ion-text-right" placeholder='E-mailadres' (keydown)="logInInput($event)" [(ngModel)]="(login || {}).username" autocomplete="email">
+            <ion-input class="ion-text-right" placeholder='E-mailadres' (keydown)="logInInput($event)"
+              [(ngModel)]="(login || {}).username" autocomplete="email">
             </ion-input>
           </ion-item>
         </ion-list>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input class="ion-text-right" type='password' placeholder='Wachtwoord' (keydown)="logInInput($event)" [(ngModel)]="(login || {}).password" autocomplete="current-password">
+            <ion-input class="ion-text-right" type='password' placeholder='Wachtwoord' (keydown)="logInInput($event)"
+              [(ngModel)]="(login || {}).password" autocomplete="current-password">
             </ion-input>
           </ion-item>
         </ion-list>
@@ -49,25 +55,29 @@
         <h1>Registreren</h1>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input class="ion-text-right" placeholder='Voornaam' (keydown)="regInput($event)" [(ngModel)]="(register || {}).voornaam" autocomplete="given-name">
+            <ion-input class="ion-text-right" placeholder='Voornaam' (keydown)="regInput($event)"
+              [(ngModel)]="(register || {}).voornaam" autocomplete="given-name">
             </ion-input>
           </ion-item>
         </ion-list>
         <ion-list class="line-input" style="margin-bottom: 16px!important;">
           <ion-item>
-            <ion-input class="ion-text-right" placeholder='Achternaam' (keydown)="regInput($event)" [(ngModel)]="(register || {}).achternaam" autocomplete="family-name">
+            <ion-input class="ion-text-right" placeholder='Achternaam' (keydown)="regInput($event)"
+              [(ngModel)]="(register || {}).achternaam" autocomplete="family-name">
             </ion-input>
           </ion-item>
         </ion-list>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input class="ion-text-right" placeholder='E-mailadres' (keydown)="regInput($event)" [(ngModel)]="(register || {}).username" autocomplete="email">
+            <ion-input class="ion-text-right" placeholder='E-mailadres' (keydown)="regInput($event)"
+              [(ngModel)]="(register || {}).username" autocomplete="email">
             </ion-input>
           </ion-item>
         </ion-list>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input class="ion-text-right" type='password' placeholder='Wachtwoord' (keydown)="regInput($event)" [(ngModel)]="(register || {}).password" autocomplete="new-password'">
+            <ion-input class="ion-text-right" type='password' placeholder='Wachtwoord' (keydown)="regInput($event)"
+              [(ngModel)]="(register || {}).password" autocomplete="new-password'">
             </ion-input>
           </ion-item>
         </ion-list>

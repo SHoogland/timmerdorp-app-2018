@@ -43,7 +43,7 @@
 			</div>
 			<div class="bracelet-number">
         <h1>Armbandnummer</h1>
-        <p style="padding: 0 24px;" *ngIf="showSuggestion">Wil je <span (click)="ticket.wristband = '' + suggestionNumber" id="wristbandSuggestion">bandje {{ suggestionNumber }}</span> toewijzen?</p>
+        <p style="padding: 0 24px;" *ngIf="showSuggestion">Wil je <span (click)="ticket.wristband = '' + suggestionNumber; saveTicket()" id="wristbandSuggestion">bandje {{ suggestionNumber }}</span> toewijzen?</p>
 				<ion-list class="line-input">
 					<ion-item>
 						<ion-input #nrInput type='tel' maxlength='3' [(ngModel)]='ticket.wristband'

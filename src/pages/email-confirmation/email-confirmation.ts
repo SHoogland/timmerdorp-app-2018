@@ -10,13 +10,13 @@ import Parse from 'parse';
 })
 
 export class EmailConfirmationPage {
+  emailVerificationResult: string;
   emailadres: string;
   errorHelp: string;
   number: string;
   error: string;
 
   waitingForEmailConfirmation: boolean;
-  isConfirmingEmail: boolean;
   waitingForAdmin: boolean;
   wentToLogin: boolean;
   loading: boolean;
@@ -39,7 +39,6 @@ export class EmailConfirmationPage {
     this.errorHelp = '';
     this.wentToLogin = false;
     this.emailadres = this.navParams.get('email') || '';
-    this.isConfirmingEmail = false;
 
     await this.checkStatus(true);
 
@@ -49,12 +48,13 @@ export class EmailConfirmationPage {
     }, 1000)
   }
 
-  async checkStatus(showLoading?) {
+  async checkStatus(showLoading?, force?) {
     if (this.navCtrl.getActive().component.name !== 'EmailConfirmationPage') {
       clearInterval(this.statusInterval)
       return
     }
     if (showLoading) this.loading = true;
+    if (this.emailVerificationResult && !force) return
     let logInStatus = await this.g.checkIfStillLoggedIn();
     if (!logInStatus.result) {
       if(!this.wentToLogin) {
@@ -65,8 +65,8 @@ export class EmailConfirmationPage {
       this.emailadres = logInStatus.email;
 
       if (!logInStatus.emailConfirmed) {
-        if (this.navParams.get('emailConfirmationCode')) {
-          this.isConfirmingEmail = true;
+        if (this.navParams.get('confirmationEmail') && this.navParams.get('confirmationCode')) {
+          this.confirmEmail(this.navParams.get('confirmationEmail'), this.navParams.get('confirmationCode'))
         } else {
           this.loading = false;
           this.waitingForEmailConfirmation = true;
@@ -86,6 +86,15 @@ export class EmailConfirmationPage {
     await Parse.User.logOut()
     if(!this.wentToLogin) this.g.toLogin();
     this.wentToLogin = true
+  }
+
+  async confirmEmail(email, code) {
+    let result = await this.g.apiCall('emailVerificationAttempt', {
+      email: atob(email),
+      code: atob(code)
+    })
+    this.loading = false
+    this.emailVerificationResult = result.emailVerificationResult
   }
 
   belStan() {
