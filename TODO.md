@@ -3,10 +3,8 @@
 - Meer statistieken/grafieken toevoegen
 - Swipe is back op iPhone
 - De hele app in wijk thema? Meteen vragen bij startup
-- In-app links moeten toegevoegd worden voor de mail aan stan (bevestigen van admins) en de mail aan nieuwe appgebruikers
-- Waarschuwings-modal in presence, voor als je na dinsdag nog kinderen aanwezig meldt zonder hutnummer
 - Waarom is registreren zo traag? Kan dat sneller?
-- Registratieverzoek e-mail link aan stan moet nog werken, zet daar ook ff een e-mailadresje in van van wie het account is
+- Delen knop toevoegen aan zoekpagina om links naar kindertjes te dalen
 
 ## Webshop verbeterpunten voor 2022
 - De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
@@ -72,6 +70,9 @@
 - E-mailadres bij app info?
 - Als checkifadmin gebeurt en stan heeft nog geen melding ervan, stuur melding
 - cleanTable is nu #fff maar hoort een soort crème kleur te hebben zoals de achtergrond
+- In-app links moeten toegevoegd worden voor de mail aan stan (bevestigen van admins) en de mail aan nieuwe appgebruikers
+- Waarschuwings-modal in presence, voor als je na dinsdag nog kinderen aanwezig meldt zonder hutnummer
+- Registratieverzoek e-mail link aan stan moet nog werken, zet daar ook ff een e-mailadresje in van van wie het account is
 
 ### Gefixt in Webshop
 - Ticket pdf moet alleen een QR code zijn, no more user data
