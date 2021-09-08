@@ -56,11 +56,11 @@
           </p>
         </div>
         <button ion-button full (click)="logOut()" style="background: #07497e;"
-          *ngIf="emailVerificationResult === 'succes' || emailVerificationResult === 'already_verified"
+          *ngIf="emailVerificationResult === 'succes' || emailVerificationResult === 'already_verified'"
           (click)="checkStatus(true, true)">
           Doorgaan
         </button>
-        <div *ngIf="emailVerificationResult !== 'succes' && emailVerificationResult !== 'already_verified">
+        <div *ngIf="emailVerificationResult !== 'succes' && emailVerificationResult !== 'already_verified'">
           <h1>
             E-mail verificatie mislukt!
           </h1>

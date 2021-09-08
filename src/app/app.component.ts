@@ -94,7 +94,7 @@ export class MyApp {
           }
         }
 
-        if (link && link.$path === '/app/kindje') {
+        if (link && link.$path === '/app/kindje' && link.queryString) {
           if (link.queryString.split('id=').length > 0) {
             let id = link.queryString.split('id=')[1].split('&')[0]
             nav.setRoot(SearchPage, { searchTerm: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
