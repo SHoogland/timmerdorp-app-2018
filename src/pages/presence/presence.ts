@@ -171,7 +171,7 @@ export class PresencePage {
     });
 	}
 
-	togglePresence(force) {
+	togglePresence(force?) {
 		this.hideKeyboard();
     this.error = ''
     this.errorHelp = ''
