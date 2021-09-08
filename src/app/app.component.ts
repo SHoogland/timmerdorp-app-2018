@@ -74,26 +74,34 @@ export class MyApp {
       // er komt nooit een match, want dan zouden we in de route functie bepaalde routes moeten doorgeven
       // ik doe het liever hieronder in de nomatch, en dan beslis ik wel handmatig of we iets met die route willen doen
     }, (nomatch) => {
-      let link = nomatch.$link
-      let nav = self.app.getActiveNavs()[0];
-      if(link && link.$path === '/app/verify-email') {
-        let code = link.queryString.split('code=')[1].split('&')[0]
-        let email = link.queryString.split('email=')[1].split('&')[0]
-        if(code && email) {
-          nav.setRoot(EmailConfirmationPage, { confirmationEmail: email, confirmationCode: code }, { animate: true, animation: "ios-transition", direction: 'forward' });
+      if (nomatch && self && self.app && self.app.getActiveNavs()) {
+        let link = nomatch.$link
+        let nav = self.app.getActiveNavs()[0];
+        if (link && link.$path === '/app/verify-email') {
+          if (link.queryString.split('id=').length > 0 && link.queryString.split('email=').length > 0) {
+            let code = link.queryString.split('code=')[1].split('&')[0]
+            let email = link.queryString.split('email=')[1].split('&')[0]
+            if (code && email) {
+              nav.setRoot(EmailConfirmationPage, { confirmationEmail: email, confirmationCode: code }, { animate: true, animation: "ios-transition", direction: 'forward' });
+            }
+          }
         }
-      }
 
-      if(link && link.$path === '/app/confirm-admin') {
-        let id = link.queryString.split('id=')[1].split('&')[0]
-        nav.setRoot(AppInfoPage, { confirmationId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
-      }
+        if (link && link.$path === '/app/confirm-admin' && link.queryString) {
+          if (link.queryString.split('id=').length > 0) {
+            let id = link.queryString.split('id=')[1].split('&')[0]
+            nav.setRoot(AppInfoPage, { confirmationId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
+          }
+        }
 
-      if(link && link.$path === '/app/kindje') {
-        let id = link.queryString.split('id=')[1].split('&')[0]
-        nav.setRoot(SearchPage, { searchTerm: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
+        if (link && link.$path === '/app/kindje') {
+          if (link.queryString.split('id=').length > 0) {
+            let id = link.queryString.split('id=')[1].split('&')[0]
+            nav.setRoot(SearchPage, { searchTerm: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
+          }
+        }
+        self.subscribeToDeeplinks()
       }
-      self.subscribeToDeeplinks()
     })
   }
 }
