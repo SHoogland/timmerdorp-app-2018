@@ -46,6 +46,7 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="SplashScreenDelay" value="500" />
     <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="StatusBarBackgroundColor" value="#2196f3" />
     <platform name="android">
         <allow-intent href="market:*" />
