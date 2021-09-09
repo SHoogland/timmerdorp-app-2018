@@ -78,10 +78,7 @@ export class MyApp {
         let link = nomatch.$link
         let nav = self.app.getActiveNavs()[0];
         if (link) {
-          alert(JSON.stringify(link))
-          alert(link.$path)
-          alert(link.queryString)
-          if(link.$path === '/app/verify-email') {
+          if(link.path === '/app/verify-email') {
             if (link.queryString.split('id=').length > 0 && link.queryString.split('email=').length > 0) {
               let code = link.queryString.split('code=')[1].split('&')[0]
               let email = link.queryString.split('email=')[1].split('&')[0]
@@ -89,14 +86,14 @@ export class MyApp {
             }
           }
 
-          if (link.$path === '/app/confirm-admin' && link.queryString) {
+          if (link.path === '/app/confirm-admin' && link.queryString) {
             if (link.queryString.split('id=').length > 0) {
               let id = link.queryString.split('id=')[1].split('&')[0]
               nav.setRoot(AppInfoPage, { confirmationId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
             }
           }
 
-          if (link.$path === '/app/kindje' && link.queryString) {
+          if (link.path === '/app/kindje' && link.queryString) {
             if (link.queryString.split('id=').length > 0) {
               let id = link.queryString.split('id=')[1].split('&')[0]
               nav.setRoot(SearchPage, { searchTerm: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
