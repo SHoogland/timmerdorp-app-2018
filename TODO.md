@@ -2,9 +2,10 @@
 - Hutjes plattegrond toevoegen met gps en alles
 - Meer statistieken/grafieken toevoegen
 - Swipe is back op iPhone
+- Registreer/inlog formuliertje mag ff wat netter, statusbalk kleurenkaart ook
 - De hele app in wijk thema? Meteen vragen bij startup
 - Waarom is registreren zo traag? Kan dat sneller?
-- Delen knop toevoegen aan zoekpagina om links naar kindertjes te dalen
+- Deeplinks werken nog niet op Android 
 
 ## Webshop verbeterpunten voor 2022
 - De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
