@@ -17,6 +17,7 @@ export class EmailConfirmationPage {
   error: string;
 
   waitingForEmailConfirmation: boolean;
+  isConfirmingEmail: boolean;
   waitingForAdmin: boolean;
   wentToLogin: boolean;
   loading: boolean;
@@ -40,7 +41,9 @@ export class EmailConfirmationPage {
     this.wentToLogin = false;
     this.emailadres = this.navParams.get('email') || '';
 
-    await this.checkStatus(true);
+    if (this.navParams.get('confirmationEmail') && this.navParams.get('confirmationCode')) {
+      this.confirmEmail(this.navParams.get('confirmationEmail'), this.navParams.get('confirmationCode'))
+    } else await this.checkStatus(true);
 
     let self = this
     this.statusInterval = setInterval(function () {
@@ -54,7 +57,8 @@ export class EmailConfirmationPage {
       return
     }
     if (showLoading) this.loading = true;
-    if (this.emailVerificationResult && !force) return
+    if (this.isConfirmingEmail && !force) return
+    this.isConfirmingEmail = false
     let logInStatus = await this.g.checkIfStillLoggedIn();
     if (!logInStatus.result) {
       if(!this.wentToLogin) {
@@ -65,13 +69,9 @@ export class EmailConfirmationPage {
       this.emailadres = logInStatus.email;
 
       if (!logInStatus.emailConfirmed) {
-        if (this.navParams.get('confirmationEmail') && this.navParams.get('confirmationCode')) {
-          this.confirmEmail(this.navParams.get('confirmationEmail'), this.navParams.get('confirmationCode'))
-        } else {
-          this.loading = false;
-          this.waitingForEmailConfirmation = true;
-          this.waitingForAdmin = false;
-        }
+        this.loading = false;
+        this.waitingForEmailConfirmation = true;
+        this.waitingForAdmin = false;
       } else if (!logInStatus.admin) {
         this.loading = false;
         this.waitingForAdmin = true;
@@ -89,12 +89,35 @@ export class EmailConfirmationPage {
   }
 
   async confirmEmail(email, code) {
+    this.isConfirmingEmail = true
+    this.loading = true
+    let realEmail;
+    try {
+      realEmail = atob(email)
+    } catch(e) {
+      alert('Ongeldige e-mail verificatie link!')
+    }
+    let realCode;
+    try {
+      realCode = atob(code)
+    } catch(e) {
+      alert('Ongeldige e-mail verificatie link!')
+    }
+
+    if(!realCode || !realEmail) {
+      this.g.goHome()
+      return
+    }
+
     let result = await this.g.apiCall('emailVerificationAttempt', {
-      email: atob(email),
-      code: atob(code)
-    })
+      email: realEmail,
+      code: realCode
+    }, true)
+
     this.loading = false
-    this.emailVerificationResult = result.emailVerificationResult
+    if(result) {
+      this.emailVerificationResult = result
+    }
   }
 
   belStan() {

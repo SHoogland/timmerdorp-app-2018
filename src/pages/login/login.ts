@@ -140,8 +140,7 @@ export class LoginPage {
         self.errorHelp = 'Er bestaat al een account met dit e-mailadres! Accounts van vorig jaar zijn nog steeds geldig. Probeer in te loggen.'
       }
       self.loading = false
-    })
-    .then(async function(result) {
+    }).then(async function(result) {
       if(result === 'success') {
         await Parse.User.logIn(self.register.username.toLowerCase().replace(' ', ''), self.register.password)
         self.navCtrl.setRoot(EmailConfirmationPage, { waitingForEmailConfirmation: true, email: self.register.username.toLowerCase().replace(' ', '') }, { animate: true, animation: "ios-transition", direction: 'forward' })

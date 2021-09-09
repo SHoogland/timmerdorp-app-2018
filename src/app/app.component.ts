@@ -65,8 +65,6 @@ export class MyApp {
   ngAfterViewInit() {
     this.platform.ready().then(() => {
       this.subscribeToDeeplinks()
-      let nav = this.app.getActiveNavs()[0];
-      nav.setRoot(SearchPage, { searchId: 'hVBMjm4K5Z' }, { animate: true, animation: "ios-transition", direction: 'forward' });
     })
   }
 
@@ -85,6 +83,7 @@ export class MyApp {
             if (link.queryString.split('id=').length > 0 && link.queryString.split('email=').length > 0) {
               let code = link.queryString.split('code=')[1].split('&')[0]
               let email = link.queryString.split('email=')[1].split('&')[0]
+              this.g.navigatedToDeeplink = true
               nav.setRoot(EmailConfirmationPage, { confirmationEmail: email, confirmationCode: code }, { animate: true, animation: "ios-transition", direction: 'forward' });
             }
           }
@@ -92,6 +91,7 @@ export class MyApp {
           if (link.path === '/app/confirm-admin' && link.queryString) {
             if (link.queryString.split('id=').length > 0) {
               let id = link.queryString.split('id=')[1].split('&')[0]
+              this.g.navigatedToDeeplink = true
               nav.setRoot(AppInfoPage, { confirmationId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
             }
           }
@@ -99,6 +99,7 @@ export class MyApp {
           if (link.path === '/app/kindje' && link.queryString) {
             if (link.queryString.split('id=').length > 0) {
               let id = link.queryString.split('id=')[1].split('&')[0]
+              this.g.navigatedToDeeplink = true
               nav.setRoot(SearchPage, { searchId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
             }
           }

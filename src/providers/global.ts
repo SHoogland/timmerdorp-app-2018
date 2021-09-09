@@ -11,8 +11,10 @@ declare let cordova: any;
 export class GlobalFunctions {
   stagingEndpoint: string;
   normalEndpoint: string;
-  staging: boolean;
+  
+  navigatedToDeeplink: boolean;
   loadedStagingStatus: boolean;
+  staging: boolean;
 
   serverURLs: any;
   serverUsernames: any;

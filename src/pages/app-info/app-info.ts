@@ -51,7 +51,7 @@ export class AppInfoPage {
     this.email = (await this.g.checkIfStillLoggedIn()).email
 
     if(this.navParams.get('confirmationId')) {
-      let result = await this.addAdmin(false, true, this.navParams.get('confirmationId'))
+      let result = await this.addAdmin(null, false, this.navParams.get('confirmationId'))
       if(result) alert('Gelukt om admin toe te voegen!')
       else alert('Mislukt om admin toe te voegen')
     }
