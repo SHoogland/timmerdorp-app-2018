@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
-import { DomSanitizer } from '@angular/platform-browser';
 import { GlobalFunctions } from '../../providers/global';
 import { PresencePage } from '../presence/presence';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 declare let cordova: any;
 
@@ -20,8 +20,9 @@ export class SearchPage {
   tickets: any;
   history: any;
 
-  loading: boolean;
+  isSearchingById: boolean;
   searched: boolean;
+  loading: boolean;
 
   searchTerm: string;
   errorHelp: string;
@@ -35,10 +36,10 @@ export class SearchPage {
 
   constructor(
     public navCtrl: NavController,
+    public socialSharing: SocialSharing,
     public navParams: NavParams,
     public platform: Platform,
     public storage: Storage,
-    public sanitizer: DomSanitizer,
     public g: GlobalFunctions
   ) {
     this.searched = false;
@@ -68,6 +69,30 @@ export class SearchPage {
     if(this.navParams.get('searchTerm')) {
       this.searchTerm = this.navParams.get('searchTerm')
       this.searchThis()
+    }
+
+    if(this.navParams.get('searchId')) {
+      let self = this
+      this.loading = true
+      this.isSearchingById = true
+      this.g.apiCall('search', { searchTerm: this.navParams.get('searchId') }).then((result) => {
+        self.isSearchingById = false
+        self.loading = false
+        if(!result || result.response !== 'success') {
+          self.error = (result || {}).error || (result || {}).response
+          self.errorHelp = (result || {}).errorMessage || (result || {}).response
+          return;
+        }
+        self.searched = true
+        self.tickets = result.tickets
+        self.showModal(result.tickets[0])
+        self.searchTerm = (result.tickets[0].nickName || result.tickets[0].firstName) + ' ' + result.tickets[0].lastName
+        self.ticketPropertiesMap = result.ticketPropertiesMap
+      }).catch((e) => {
+        self.loading = false
+        self.isSearchingById = false
+        self.error = String(e)
+      });
     }
 
     this.loading = false;
@@ -208,5 +233,10 @@ export class SearchPage {
   markPresent(wristband) {
     this.g.setStatusBar('blue')
     this.navCtrl.setRoot(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
+  }
+
+  shareChild(child) {
+    let msg = 'Moet je eens kijken naar Timmerdorp-deelnemer ' + (child.nickName || child.firstName) + ' in die fantastische Timmerdorp-app, klik dan hier: https://shop.timmerdorp.com/app/kindje?id=' + child.id
+    this.socialSharing.share(msg)
   }
 }

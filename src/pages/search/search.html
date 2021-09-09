@@ -41,7 +41,7 @@
     </div>
 
     <div id='history'
-      [ngClass]='(!((tickets || []).length) && (history || []).length > 0 && !(searchTerm || "").length)?"shown hideable":"hideable"'>
+      [ngClass]='(!((tickets || []).length) && (history || []).length > 0 && !(searchTerm || "").length) && !isSearchingById ? "shown hideable" : "hideable"'>
       <ion-list class='peopleList'>
         <ion-list-header>
           Zoekgeschiedenis ({{(history || []).length}})
@@ -113,7 +113,7 @@
   </div>
 </ion-content>
 
-<div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
+<div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal' ? closeModal() : ''" id="myModal"
   class="modal conditional">
   <div class="{{'modal-content ' + g.getWijk((modal.child.hutNr||'')[0])}}" *ngIf="modal.child">
     <div id="modalTop">
@@ -125,6 +125,7 @@
             {{ modal.child.nickName || modal.child.firstName }} {{ modal.child.lastName}}
           </td>
           <td>
+            <i class="material-icons" id="shareIcon" (click)="shareChild(modal.child);">share</i>
             <span (click)="closeModal();">&times;</span>
           </td>
         </tr>

@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
@@ -70,6 +71,7 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 		StatusBar,
 		SplashScreen,
     Deeplinks,
+    SocialSharing,
 		HttpClient,
 		InAppBrowser,
 		BarcodeScanner,

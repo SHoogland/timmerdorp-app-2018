@@ -880,15 +880,21 @@ ion-input.hideClear {
       position: relative;
     }
 
-    td:not(:first-of-type) span {
-      text-align: right;
-      position: absolute;
-      color: white;
-      font-size: 56px;
-      line-height: 40px;
-      right: 24px;
-      top: calc((100px - 40px)/2);
-      margin-top: 0px;
+    td:not(:first-of-type) {
+      span, #shareIcon {
+        text-align: right;
+        position: absolute;
+        color: white;
+        font-size: 56px;
+        line-height: 40px;
+        right: 24px;
+        top: calc((100px - 40px)/2);
+        margin-top: 0px;
+      }
+      #shareIcon {
+        right: 75px;
+        font-size: 30px;
+      }
     }
   }
 }
