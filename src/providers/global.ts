@@ -11,9 +11,8 @@ declare let cordova: any;
 export class GlobalFunctions {
   stagingEndpoint: string;
   normalEndpoint: string;
-  
+
   navigatedToDeeplink: boolean;
-  loadedStagingStatus: boolean;
   staging: boolean;
 
   serverURLs: any;
@@ -41,14 +40,6 @@ export class GlobalFunctions {
       staging: 'jsKey',
       production: 'xnFIbFCrE1vjzWbRVehMO4QzPpNMCIdDgORKNlRI'
     }
-
-    this.storage.get('staging').then((val) => {
-      this.staging = val;
-      this.loadedStagingStatus = true
-    }, (error) => {
-      this.staging = false;
-      this.loadedStagingStatus = true
-    })
 
     this.loginPage = require('../pages/login/login').LoginPage;
   }
@@ -157,15 +148,7 @@ export class GlobalFunctions {
   }
 
   async fixParseURL() {
-    if (!this.loadedStagingStatus) {
-      await this.storage.get('staging').then((val) => {
-        this.staging = val;
-        this.loadedStagingStatus = true
-      }, (error) => {
-        this.staging = false;
-        this.loadedStagingStatus = true
-      })
-    }
+    this.staging = await this.storage.get('staging')
 
     let newServerURL = this.serverURLs[this.staging ? 'staging' : 'production']
     if (Parse.serverURL !== newServerURL) {

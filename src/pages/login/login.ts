@@ -74,6 +74,8 @@ export class LoginPage {
 	async loginNow(surpressWarnings) {
     if(this.login.username === 'test123' && this.login.password === 'test123') {
       this.g.staging = !this.g.staging;
+      this.storage.set('staging', this.g.staging)
+
       alert('Gelukt! Testversie is nu ' + (this.g.staging ? 'ingeschakeld' : 'uitgeschakeld'))
       return;
     }

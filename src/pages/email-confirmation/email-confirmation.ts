@@ -113,7 +113,7 @@ export class EmailConfirmationPage {
       email: realEmail,
       code: realCode
     }, true)
-
+    
     this.loading = false
     if(result) {
       this.emailVerificationResult = result

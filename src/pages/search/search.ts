@@ -71,6 +71,8 @@ export class SearchPage {
       this.searchThis()
     }
 
+    this.loading = false;
+
     if(this.navParams.get('searchId')) {
       let self = this
       this.loading = true
@@ -94,8 +96,6 @@ export class SearchPage {
         self.error = String(e)
       });
     }
-
-    this.loading = false;
 
     this.error = '';
     this.errorHelp = '';
@@ -236,7 +236,7 @@ export class SearchPage {
   }
 
   shareChild(child) {
-    let msg = 'Moet je eens kijken naar Timmerdorp-deelnemer ' + (child.nickName || child.firstName) + ' in die fantastische Timmerdorp-app, klik dan hier: https://shop.timmerdorp.com/app/kindje?id=' + child.id
+    let msg = 'Moet je eens kijken naar Timmerdorp-deelnemer ' + (child.nickName || child.firstName) + '! Om dit te bekijken in die gave Timmerdorp-app, klik hier: https://shop.timmerdorp.com/app/kindje?id=' + child.id
     this.socialSharing.share(msg)
   }
 }
