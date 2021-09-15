@@ -43,12 +43,9 @@ export class EmailConfirmationPage {
 
     if (this.navParams.get('confirmationEmail') && this.navParams.get('confirmationCode')) {
       this.confirmEmail(this.navParams.get('confirmationEmail'), this.navParams.get('confirmationCode'))
-    } else await this.checkStatus(true);
-
-    let self = this
-    this.statusInterval = setInterval(function () {
-      self.checkStatus()
-    }, 1000)
+    } else {
+      this.startStatusCheckInterval()
+    }
   }
 
   async checkStatus(showLoading?, force?) {
@@ -60,7 +57,7 @@ export class EmailConfirmationPage {
     if (this.isConfirmingEmail && !force) return
     this.isConfirmingEmail = false
     let logInStatus = await this.g.checkIfStillLoggedIn();
-    if (!logInStatus.result) {
+    if (!logInStatus || !logInStatus.result) {
       if(!this.wentToLogin) {
         this.g.toLogin();
         this.wentToLogin = true;
@@ -113,7 +110,11 @@ export class EmailConfirmationPage {
       email: realEmail,
       code: realCode
     }, true)
-    
+
+    if(result === 'not_signed_in') {
+      this.g.toLogin()
+    }
+
     this.loading = false
     if(result) {
       this.emailVerificationResult = result
@@ -122,5 +123,13 @@ export class EmailConfirmationPage {
 
   belStan() {
     window.location.href = 'tel:0640516654'
+  }
+
+  async startStatusCheckInterval() {
+    await this.checkStatus(true, true);
+    let self = this
+    this.statusInterval = setInterval(function () {
+      self.checkStatus()
+    }, 1000)
   }
 }

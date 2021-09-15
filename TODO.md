@@ -2,7 +2,7 @@
 - Hutjes plattegrond toevoegen met gps en alles
 - Meer statistieken/grafieken toevoegen
 - Swipe is back op iPhone
-- Registreer/inlog formuliertje mag ff wat netter, statusbalk kleurenkaart ook
+- Registreer/inlog formuliertje mag ff wat netter, statusbalk kleuren daar ook
 - De hele app in wijk thema? Meteen vragen bij startup
 - Waarom is registreren zo traag? Kan dat sneller?
 - Deeplinks werken nog niet op Android 
@@ -74,6 +74,11 @@
 - In-app links moeten toegevoegd worden voor de mail aan stan (bevestigen van admins) en de mail aan nieuwe appgebruikers
 - Waarschuwings-modal in presence, voor als je na dinsdag nog kinderen aanwezig meldt zonder hutnummer
 - Registratieverzoek e-mail link aan stan moet nog werken, zet daar ook ff een e-mailadresje in van van wie het account is
+- Het zou wel nice zijn als Stephan en ik ook gegevens konden wijzigen van kindjes
+- Niet alle weer icoontjes werken
+- Search modal werkt net niet helemaal goed wat z-indices betreft op de zoekpagina als je op een zoek link klikt terwijl ie al open staat
+- “Sluiten & aanwezig melden” moet soms “Sluiten & afwezig melden” zijn
+
 
 ### Gefixt in Webshop
 - Ticket pdf moet alleen een QR code zijn, no more user data

@@ -65,8 +65,6 @@ export class MyApp {
   ngAfterViewInit() {
     this.platform.ready().then(() => {
       this.subscribeToDeeplinks()
-      let nav = this.app.getActiveNavs()[0];
-      nav.setRoot(EmailConfirmationPage, { confirmationEmail: 'c3RhbnZhbmJhYXJzZW4rMjMxOEBob3RtYWlsLmNvbQ', confirmationCode: 'cE1pWjNDNXJSRzFH' }, { animate: true, animation: "ios-transition", direction: 'forward' });
     })
   }
 

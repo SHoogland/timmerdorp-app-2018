@@ -13,11 +13,12 @@ export class GlobalFunctions {
   normalEndpoint: string;
 
   navigatedToDeeplink: boolean;
+  parseInitialized: boolean;
   staging: boolean;
 
-  serverURLs: any;
   serverUsernames: any;
   serverPasswords: any;
+  serverURLs: any;
   loginPage: any;
 
   constructor(
@@ -151,9 +152,10 @@ export class GlobalFunctions {
     this.staging = await this.storage.get('staging')
 
     let newServerURL = this.serverURLs[this.staging ? 'staging' : 'production']
-    if (Parse.serverURL !== newServerURL) {
+    if (Parse.serverURL !== newServerURL || !this.parseInitialized) {
       Parse.serverURL = newServerURL
       await Parse.initialize(this.serverUsernames[this.staging ? 'staging' : 'production'], this.serverPasswords[this.staging ? 'staging' : 'production'])
+      this.parseInitialized = true
     }
   }
 
