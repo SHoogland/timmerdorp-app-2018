@@ -131,6 +131,6 @@
 			<h1>Waarschuwing</h1>
 			<p style="margin-bottom: 0px;">Dit kind heeft nog geen hutnummer, terwijl Timmerdorp wel al is gestart! Zorg ervoor dat dit opgelost wordt, of vraag het even na bij Stan of Stephan.</p>
 		</div>
-		<button ion-button full (click)="closeHutNrModal()" class="bg-red correction">Sluiten & aanwezig melden</button>
+		<button ion-button full (click)="closeHutNrModal()" class="bg-red correction">Sluiten & {{ ((ticket || {})["aanwezig_" + day] ? 'afwezig' : 'aanwezig') }} melden</button>
 	</div>
 </div>

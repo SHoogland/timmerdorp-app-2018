@@ -57,7 +57,7 @@
         </div>
         <button ion-button full (click)="emailVerificationResult = ''; waitingForAdmin = true; isConfirmingEmail = false" style="background: #07497e;"
           *ngIf="emailVerificationResult === 'success' || emailVerificationResult === 'already_verified'"
-          (click)="checkStatus(true, true)">
+          (click)="startStatusCheckInterval()">
           Doorgaan
         </button>
         <div *ngIf="emailVerificationResult !== 'success' && emailVerificationResult !== 'already_verified'">

@@ -15,7 +15,6 @@ import { LoginPage } from '../login/login';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { AppInfoPage } from '../app-info/app-info';
 import { HttpClient } from '@angular/common/http';
-import { SchedulePage } from '../schedule/schedule';
 import { BirthdaysPage } from '../birthdays/birthdays';
 import { ChangeWristbandPage } from '../change-wristband/change-wristband';
 import { FilesPage } from '../files/files';
@@ -30,6 +29,7 @@ export class HomePage {
   showPhoto: boolean;
   android: boolean;
 
+  waitingPotentialAdmins: number;
   childrenCount: number;
   birthdays: number;
   wijkCount: number;
@@ -75,7 +75,6 @@ export class HomePage {
       "stats": StatsPage,
       "app-info": AppInfoPage,
       "login": LoginPage,
-      "schedule": SchedulePage,
       "birthdays": BirthdaysPage,
       "change-wristband": ChangeWristbandPage,
       "files": FilesPage
@@ -175,13 +174,6 @@ export class HomePage {
           icon: "insert_chart",
           small: true
         },
-        // {
-        //   title: 'Programma',
-        //   component: "schedule",
-        //   class: 'bg-blue small',
-        //   icon: "today",
-        //   small: true
-        // },
         {
           title: 'Verjaardagen',
           component: "birthdays",
@@ -235,6 +227,7 @@ export class HomePage {
           if (!logInStatus.admin || !logInStatus.emailConfirmed) {
             if(!self.g.navigatedToDeeplink) self.navCtrl.setRoot(EmailConfirmationPage, { waitingForEmailConfirmation: !logInStatus.emailConfirmed, waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin, email: logInStatus.email}, { animate: true, animation: "ios-transition", direction: 'forward' })
           }
+          self.waitingPotentialAdmins = logInStatus.waitingPotentialAdmins
         }
       }
     })
@@ -244,7 +237,7 @@ export class HomePage {
     let weatherMessage = "Geen regen voorspeld!";
     let totalRain = 0;
     let skipped = 0;
-    let weatherIcon = "sunny";
+    let weatherIcon = "water_drop";
     for (let i = 0; i < 2 + skipped; i++) {
       let w = data.list[i]; //weather data for a three-hour period
       let td = 1000 * w.dt - +new Date(); //time diff between now and w
@@ -263,7 +256,7 @@ export class HomePage {
       } else {
         weatherMessage = "Lichte buien voorspeld";
       }
-      weatherIcon = "rainy";
+      weatherIcon = "water_drop";
     }
 
     this.weather = {

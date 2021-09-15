@@ -33,6 +33,7 @@
         <span *ngIf="!p.small && !p.weather && !p.data">
           {{p.title}}
         </span>
+        <div *ngIf="waitingPotentialAdmins && p.title === 'App info'" id="potentialAdminsNotification">{{ waitingPotentialAdmins }}</div>
       </div>
     </button>
   </div>

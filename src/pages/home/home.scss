@@ -1,29 +1,29 @@
 @font-face {
-	font-family: ProductSans;
-	src: url("../assets/fonts/ProductSans-Bold.woff");
+  font-family: ProductSans;
+  src: url("../assets/fonts/ProductSans-Bold.woff");
 }
 
 page-home {
-	.button-inner {
-		display: block !important;
-	}
-	.modal-content {
-		ul {
-			li {
-				list-style: none;
-			}
-		}
-	}
-	.correction {
-		padding-top: 20px;
-	}
+  .button-inner {
+    display: block !important;
+  }
+  .modal-content {
+    ul {
+      li {
+        list-style: none;
+      }
+    }
+  }
+  .correction {
+    padding-top: 20px;
+  }
 
-	button.small {
-		width: 20%;
-		margin-right: 0px;
-		display: inline-block;
-		padding: 0 !important;
-	}
+  button.small {
+    width: 20%;
+    margin-right: 0px;
+    display: inline-block;
+    padding: 0 !important;
+  }
 
   button.realWeather > .button-inner {
     position: relative;
@@ -39,219 +39,232 @@ page-home {
     }
   }
 
-	button.small > span > div > i.material-icons {
-		font-size: 2em;
-		width: 100%;
-		text-align: center;
-		top: 24px;
+  button.small > span > div > i.material-icons {
+    font-size: 2em;
+    width: 100%;
+    text-align: center;
+    top: 24px;
     left: 0px;
-	}
-	button.small:last-of-type {
-		margin-right: 0px !important;
-	}
+  }
+  button.small:last-of-type {
+    margin-right: 0px !important;
+  }
 
-	ion-header,
-	ion-content {
-		position: relative;
-	}
+  ion-header,
+  ion-content {
+    position: relative;
+  }
 
-	ion-content {
-		margin-top: 0px;
-	}
+  ion-content {
+    margin-top: 0px;
+  }
 
-	ion-content,
-	.scroll-content {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
-		padding-top: 0px !important;
-	}
+  ion-content,
+  .scroll-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0px !important;
+  }
 
-	.homeButton {
-		border-radius: 0px !important;
-		margin-top: 0 !important;
-		margin-bottom: 0 !important;
-	}
+  .homeButton {
+    border-radius: 0px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
 
-	.homeButton.bg-blue:nth-of-type(2n + 1),
-	body {
-		background: darken($blue, 8%) !important;
-		&:hover {
-			background: darken($blue, 12%) !important;
-		}
-	}
+  .homeButton.bg-blue:nth-of-type(2n + 1),
+  body {
+    background: darken($blue, 8%) !important;
+    &:hover {
+      background: darken($blue, 12%) !important;
+    }
+  }
 
-	.scroll-content {
-		padding: 0px !important;
-		margin-top: 0px !important;
-	}
+  .scroll-content {
+    padding: 0px !important;
+    margin-top: 0px !important;
+  }
 
-	#homeButtons {
-		@media screen and (min-height: 880px) {
-			top: calc(100vh - 7 * 80px);
-		}
-		position: absolute;
-		top: 320px;
-		width: 100%;
-	}
+  #homeButtons {
+    @media screen and (min-height: 880px) {
+      top: calc(100vh - 7 * 80px);
+    }
+    position: absolute;
+    top: 320px;
+    width: 100%;
+  }
 
-	#overlay {
-		z-index: 20;
-		min-height: 320px;
-		width: 100%;
-		position: absolute;
-		height: calc(100vh - 7 * 80px);
-		background: rgba(0, 0, 0, 0.5);
-		&.hiddenHeader {
-			background: rgba(0, 0, 0, 0);
-		}
-	}
+  #overlay {
+    z-index: 20;
+    min-height: 320px;
+    width: 100%;
+    position: absolute;
+    height: calc(100vh - 7 * 80px);
+    background: rgba(0, 0, 0, 0.5);
+    &.hiddenHeader {
+      background: rgba(0, 0, 0, 0);
+    }
+  }
 
-	.blackBtn {
-		background: black;
-	}
+  .blackBtn {
+    background: black;
+  }
 
-	.homeBtnD {
-		text-align: left;
-		> span {
-			font-size: 18px;
+  .homeBtnD {
+    text-align: left;
+    > span {
+      font-size: 18px;
       top: -11px;
       left: -6px;
       position: relative;
-		}
-	}
+    }
+  }
 
-	ion-header {
-		* {
-			z-index: 25;
-		}
-		min-height: 400px;
-		position: absolute;
-		height: calc(100vh - 6 * 80px);
-		z-index: 10;
-		background-position: center;
-		background-size: cover;
-		&.fullscreen {
-			background-image: url(../assets/imgs/header_bg.jpg) !important;
-		}
-		background-image: url(../assets/imgs/header_bg.jpg);
-	}
+  ion-header {
+    * {
+      z-index: 25;
+    }
+    min-height: 400px;
+    position: absolute;
+    height: calc(100vh - 6 * 80px);
+    z-index: 10;
+    background-position: center;
+    background-size: cover;
+    &.fullscreen {
+      background-image: url(../assets/imgs/header_bg.jpg) !important;
+    }
+    background-image: url(../assets/imgs/header_bg.jpg);
+  }
 
-	.nav-logo {
-		width: 140px;
-		height: 140px;
-		background: rgba(0, 0, 0, 0.6);
-		border-radius: 50%;
-		padding: 10px;
-		margin-left: auto;
-		position: relative;
-		top: 40px;
-		display: block;
-		margin-right: auto;
-	}
+  .nav-logo {
+    width: 140px;
+    height: 140px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 10px;
+    margin-left: auto;
+    position: relative;
+    top: 40px;
+    display: block;
+    margin-right: auto;
+  }
 
-	#ptitle {
-		font-family: ProductSans !important;
-		bottom: 90px !important;
-		top: unset !important;
-		width: calc(100% - 30px);
-		left: 15px !important;
-		font-size: 48px !important;
-	}
+  #ptitle {
+    font-family: ProductSans !important;
+    bottom: 90px !important;
+    top: unset !important;
+    width: calc(100% - 30px);
+    left: 15px !important;
+    font-size: 48px !important;
+  }
 
-	button i.material-icons {
+  button i.material-icons {
     left: -12px;
     top: -4px;
     font-size: 1.6em;
-		margin-right: 12px;
+    margin-right: 12px;
     width: 18px;
-		position: relative;
-	}
+    position: relative;
+  }
 
-	button.halfWidth {
-		margin-left: 0 !important;
-	}
+  button.halfWidth {
+    margin-left: 0 !important;
+  }
 
-	.bg-white {
-		color: #333;
-		background: #eaeaea;
-		&:hover,
-		&:active {
-			background: #ccc !important;
-		}
-	}
+  .bg-white {
+    color: #333;
+    background: #eaeaea;
+    &:hover,
+    &:active {
+      background: #ccc !important;
+    }
+  }
 
-	ion-header .hiddenHeader {
-		opacity: 0 !important;
-	}
+  ion-header .hiddenHeader {
+    opacity: 0 !important;
+  }
 
-	ion-header,
-	ion-header * {
-		transition-duration: 500ms;
-		opacity: 1;
-	}
+  ion-header,
+  ion-header * {
+    transition-duration: 500ms;
+    opacity: 1;
+  }
 
-	.homeInfoCard {
-		.button-inner span {
-			top: -26px;
-			position: relative;
-		}
-		transition-duration: 500ms;
-		z-index: 20;
-		background: rgba(0, 0, 0, 0.75);
-		color: white !important;
-		&.hidden {
-			background: rgba(0, 0, 0, 0) !important;
-		}
-		&:hover,
-		&:active {
-			&.hidden {
-				background: rgba(0, 0, 0, 0) !important;
-			}
-			&:not(.hidden) {
-				background: rgba(0, 0, 0, 0.8) !important;
-			}
-		}
-		i.material-icons {
-			font-size: 3rem;
-			top: -6px;
-			left: 1px;
-		}
-	}
+  .homeInfoCard {
+    .button-inner span {
+      top: -26px;
+      position: relative;
+    }
+    transition-duration: 500ms;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.75);
+    color: white !important;
+    &.hidden {
+      background: rgba(0, 0, 0, 0) !important;
+    }
+    &:hover,
+    &:active {
+      &.hidden {
+        background: rgba(0, 0, 0, 0) !important;
+      }
+      &:not(.hidden) {
+        background: rgba(0, 0, 0, 0.8) !important;
+      }
+    }
+    i.material-icons {
+      font-size: 3rem;
+      top: -6px;
+      left: 1px;
+    }
+  }
 
-	.weather {
-		h2,
-		.weatherMsg {
-			overflow-x: hidden;
-		}
-		h2 {
-			position: absolute;
-			top: 26px;
-			left: 70px;
-			font-size: 16px;
-		}
-		div.weatherMsg {
-			position: absolute;
-			top: 31px;
-			left: 78px;
-			font-size: 70%;
-		}
+  .weather {
+    h2,
+    .weatherMsg {
+      overflow-x: hidden;
+    }
+    h2 {
+      position: absolute;
+      top: 26px;
+      left: 70px;
+      font-size: 16px;
+    }
+    div.weatherMsg {
+      position: absolute;
+      top: 31px;
+      left: 78px;
+      font-size: 70%;
+    }
 
-		#data {
-			position: relative;
-			top: -71px;
-			margin-left: -54px;
-		}
-	}
+    #data {
+      position: relative;
+      top: -71px;
+      margin-left: -54px;
+    }
+  }
 
-	i.material-icons.data {
-		left: -20px !important;
-	}
+  i.material-icons.data {
+    left: -20px !important;
+  }
 
-  #ptitle, #ptitle * {
+  #ptitle,
+  #ptitle * {
     overflow: hidden;
   }
 
   ion-content.content-md {
     background: $blue;
+  }
+
+  #potentialAdminsNotification {
+    background: $red;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 24px;
+    position: absolute;
+    right: 6px;
+    top: 10px;
   }
 }
