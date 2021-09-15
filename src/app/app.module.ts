@@ -44,7 +44,7 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 	],
 	imports: [
 		BrowserModule,
-		IonicModule.forRoot(MyApp, { mode: "md" }),
+		IonicModule.forRoot(MyApp, { mode: "md", swipeBackEnabled: true }),
 		IonicStorageModule.forRoot(),
 		HttpClientModule
 	],
