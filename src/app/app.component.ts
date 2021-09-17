@@ -7,7 +7,7 @@ import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { HomePage } from '../pages/home/home';
 import { GlobalFunctions } from '../providers/global';
 import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirmation';
-import { AppInfoPage } from '../pages/app-info/app-info';
+import { SettingsPage } from '../pages/settings/settings';
 import { SearchPage } from '../pages/search/search';
 
 declare let cordova: any;
@@ -85,6 +85,7 @@ export class MyApp {
               let email = link.queryString.split('email=')[1].split('&')[0]
               this.g.navigatedToDeeplink = true
               nav.setRoot(EmailConfirmationPage, { confirmationEmail: email, confirmationCode: code }, { animate: true, animation: "ios-transition", direction: 'forward' });
+              this.g.setStatusBar('blue')
             }
           }
 
@@ -92,7 +93,8 @@ export class MyApp {
             if (link.queryString.split('id=').length > 0) {
               let id = link.queryString.split('id=')[1].split('&')[0]
               this.g.navigatedToDeeplink = true
-              nav.setRoot(AppInfoPage, { confirmationId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
+              nav.setRoot(SettingsPage, { confirmationId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
+              this.g.setStatusBar('blue')
             }
           }
 
@@ -101,6 +103,7 @@ export class MyApp {
               let id = link.queryString.split('id=')[1].split('&')[0]
               this.g.navigatedToDeeplink = true
               nav.setRoot(SearchPage, { searchId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
+              this.g.setStatusBar('blue')
             }
           }
         }

@@ -20,6 +20,7 @@ export class EmailConfirmationPage {
   isConfirmingEmail: boolean;
   waitingForAdmin: boolean;
   wentToLogin: boolean;
+  wentHome: boolean;
   loading: boolean;
 
   statusInterval: any;
@@ -74,7 +75,10 @@ export class EmailConfirmationPage {
         this.waitingForAdmin = true;
         this.waitingForEmailConfirmation = false;
       } else {
-        this.g.goHome();
+        if(!this.wentHome) {
+          this.g.goHome();
+          this.wentHome = true
+        }
       }
     }
   }
