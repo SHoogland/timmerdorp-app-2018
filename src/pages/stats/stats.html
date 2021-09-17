@@ -12,9 +12,9 @@
   </ion-header>
   <div class='content'>
     <div id='main'>
-      <div [ngClass]="loading && !isRefreshing ? 'user-info' : ''">
-        <div id='spinner' [ngClass]="{ 'hidden': !loading }">
-          <div *ngIf="loading && !isRefreshing">
+      <div [ngClass]="(loadingWijk && loadingGraphData) && !isRefreshing ? 'user-info' : ''">
+        <div id='spinner' [ngClass]="{ 'hidden': !(loadingWijk && loadingGraphData) }">
+          <div *ngIf="(loadingWijk && loadingGraphData) && !isRefreshing">
             <ion-spinner color='primary'></ion-spinner>
           </div>
         </div>
@@ -68,8 +68,10 @@
       </div>
 
       <br>
-      <h1>Aantal kinderen op het terrein</h1>
-      <div id="presencesByTimeChart"></div>
+      <div *ngIf="showChildCountGraph">
+        <h1>Aantal kinderen op het terrein</h1>
+      </div>
+      <div id="presencesByTimeChart" [ngClass]="showChildCountGraph ? 'shown' : ''"></div>
 
       <div *ngIf="admins && admins.length" style="margin-top: 16px; padding-bottom: 64px;">
         <h1>Timmerdorp Battle</h1>

@@ -71,7 +71,7 @@ page-stats {
     display: none; // hide advertisement for chart framework
   }
 
-  #presencesByTimeChart {
+  #presencesByTimeChart.shown {
     height: 325px;
   }
 }
