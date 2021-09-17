@@ -13,7 +13,7 @@ import { Storage } from '@ionic/storage';
 import { PresencePage } from '../presence/presence';
 import { LoginPage } from '../login/login';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
-import { AppInfoPage } from '../app-info/app-info';
+import { SettingsPage } from '../settings/settings';
 import { HttpClient } from '@angular/common/http';
 import { BirthdaysPage } from '../birthdays/birthdays';
 import { ChangeWristbandPage } from '../change-wristband/change-wristband';
@@ -73,7 +73,7 @@ export class HomePage {
       "search": SearchPage,
       "presence": PresencePage,
       "stats": StatsPage,
-      "app-info": AppInfoPage,
+      "settings": SettingsPage,
       "login": LoginPage,
       "birthdays": BirthdaysPage,
       "change-wristband": ChangeWristbandPage,
@@ -189,8 +189,8 @@ export class HomePage {
           small: true
         },
         {
-          title: 'App info',
-          component: "app-info",
+          title: 'Instellingen',
+          component: "settings",
           class: 'bg-blue small',
           icon: "settings",
           small: true
@@ -237,7 +237,7 @@ export class HomePage {
     let weatherMessage = "Geen regen voorspeld!";
     let totalRain = 0;
     let skipped = 0;
-    let weatherIcon = "water_drop";
+    let weatherIcon = "wb_sunny";
     for (let i = 0; i < 2 + skipped; i++) {
       let w = data.list[i]; //weather data for a three-hour period
       let td = 1000 * w.dt - +new Date(); //time diff between now and w

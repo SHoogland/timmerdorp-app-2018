@@ -121,6 +121,9 @@
           Er zijn geen beheerders op het moment (dat is raar)
         </p>
       </div>
+      <div class="fab sticky-fab" (click)="refreshData()">
+        <i [ngClass]="isRefreshing ? 'isRefreshing material-icons' : 'material-icons'">refresh</i>
+      </div>
     </div>
   </div>
 </ion-content>

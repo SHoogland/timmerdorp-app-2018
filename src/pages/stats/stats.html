@@ -67,6 +67,10 @@
         </table>
       </div>
 
+      <br>
+      <h1>Aantal kinderen op het terrein</h1>
+      <div id="presencesByTimeChart"></div>
+
       <div *ngIf="admins && admins.length" style="margin-top: 16px; padding-bottom: 64px;">
         <h1>Timmerdorp Battle</h1>
         <p style="padding: 12px;">
@@ -106,7 +110,7 @@
           </table>
         </div>
       </div>
-      <div class="fab" (click)="refreshData()">
+      <div class="fab sticky-fab" (click)="refreshData()">
         <i [ngClass]="isRefreshing ? 'isRefreshing material-icons' : 'material-icons'">refresh</i>
       </div>
     </div>

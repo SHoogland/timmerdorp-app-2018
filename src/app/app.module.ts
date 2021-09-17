@@ -17,7 +17,7 @@ import { ConnectChildToCabinPage } from '../pages/connect-child-to-cabin/connect
 import { PresencePage } from '../pages/presence/presence';
 import { LoginPage } from '../pages/login/login';
 import { StatsPage } from '../pages/stats/stats';
-import { AppInfoPage } from '../pages/app-info/app-info';
+import { SettingsPage } from '../pages/settings/settings';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BirthdaysPage } from '../pages/birthdays/birthdays';
 import { ChangeWristbandPage } from '../pages/change-wristband/change-wristband';
@@ -37,7 +37,7 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 		LoginPage,
     EmailConfirmationPage,
 		StatsPage,
-		AppInfoPage,
+		SettingsPage,
     BirthdaysPage,
 		ChangeWristbandPage,
 		FilesPage
@@ -59,7 +59,7 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 		LoginPage,
     EmailConfirmationPage,
 		StatsPage,
-		AppInfoPage,
+		SettingsPage,
     BirthdaysPage,
 		ChangeWristbandPage,
 		FilesPage
