@@ -20,9 +20,11 @@ export class StatsPage {
   error: string;
   wijk: string;
 
+  showChildCountGraph: boolean;
   isRefreshing: boolean;
+  loadingWijk: boolean;
+  loadingGraphData: boolean;
   loginError: boolean;
-  loading: boolean;
 
   eventListener: any;
   wijkprops: any;
@@ -35,11 +37,8 @@ export class StatsPage {
     public storage: Storage,
     public g: GlobalFunctions
   ) {
-    this.init();
-    this.loading = false;
     this.error = '';
     this.admins = [];
-    this.isRefreshing = false;
 
     this.wijkprops = [
       {
@@ -82,7 +81,7 @@ export class StatsPage {
     this.wijken = []
   }
 
-  async init() {
+  async ngAfterViewInit() {
     this.wijk = (await this.storage.get('wijk')) || 'blue';
     this.wijken = ['yellow', 'red', 'blue', 'green', 'hutlozen'].sort((w) => (this.wijk === w ? -1 : 1))
     this.title = 'Statistieken';
@@ -91,12 +90,13 @@ export class StatsPage {
 
     let self = this;
     document.querySelector('div.sticky-fab i.material-icons').addEventListener('animationiteration', function () {
-      if (!self.loading) self.isRefreshing = false;
+      if (!(self.loadingWijk || self.loadingGraphData)) self.isRefreshing = false;
     })
   }
 
-  updateData() {
-    this.loading = true;
+  async updateData() {
+    this.loadingWijk = true;
+    this.loadingGraphData = true;
 
     let self = this;
     this.g.apiCall('wijkStats').then((result) => {
@@ -112,76 +112,132 @@ export class StatsPage {
         return a.total
       })
 
-      self.loading = false;
+      self.loadingWijk = false;
     });
 
-    this.g.apiCall('getPresencesByTime', { day: 'wed' }).then((result) => {
-      if (result.response !== 'success') return
-      let entries = result.entries
+    let result = await this.g.apiCall('getPresencesByTime')
+    this.parseGraphData(result)
+  }
 
-      entries = entries.sort((a, b) => (a.hour != b.hour ? a.hour - b.hour : a.minute - b.minute))
+  parseGraphData(result) {
+    if (result.response !== 'success') return
+    let entries = result.entries
+    if (!entries.length) {
+      this.showChildCountGraph = false
+      return
+    }
 
-      let isConsecutive = (a, b) => a.minute === 59 ? ((b.hour == a.hour + 1) && b.minute === 0) : (a.hour === b.hour && b.minute === a.minute + 1)
+    this.showChildCountGraph = true
+    entries = entries.sort((a, b) => (a.hour != b.hour ? a.hour - b.hour : a.minute - b.minute))
 
-      // if i.e. there is only an entry for 11:22 and 11:24, also fill them up to have 11:23 (with the same amount as 11:22)
-      for (let i = 0; i < entries.length - 1; i++) {
-        if (!isConsecutive(entries[i], entries[i + 1])) {
-          let newEntry = {
-            hour: entries[i].hour,
-            minute: entries[i].minute + 1,
-            total: entries[i].total,
-            yellow: entries[i].yellow,
-            red: entries[i].red,
-            blue: entries[i].blue,
-            green: entries[i].green,
-          }
-          if (+entries[i].minute === 59) {
-            newEntry.hour = entries[i].hour + 1
-            newEntry.minute = 0
-          }
-          entries.splice(i + 1, 0, newEntry) // voeg nieuwe entry toe aan entries
+    let isConsecutive = (a, b) => a.minute === 59 ? ((b.hour == a.hour + 1) && b.minute === 0) : (a.hour === b.hour && b.minute === a.minute + 1)
+
+    // if i.e. there is only an entry for 11:22 and 11:24, also fill them up to have 11:23 (with the same amount as 11:22)
+    for (let i = 0; i < entries.length - 1; i++) {
+      if (!isConsecutive(entries[i], entries[i + 1])) {
+        let newEntry = {
+          hour: entries[i].hour,
+          minute: entries[i].minute + 1,
+          total: entries[i].total,
+          yellow: entries[i].yellow,
+          red: entries[i].red,
+          blue: entries[i].blue,
+          green: entries[i].green,
         }
+        if (+entries[i].minute === 59) {
+          newEntry.hour = entries[i].hour + 1
+          newEntry.minute = 0
+        }
+        entries.splice(i + 1, 0, newEntry) // voeg nieuwe entry toe aan entries
       }
+    }
 
 
 
-      // Apply chart themes
-      am4core.useTheme(am4themes_animated);
-      am4core.useTheme(am4themes_kelly);
+    // Apply chart themes
+    am4core.useTheme(am4themes_animated);
+    am4core.useTheme(am4themes_kelly);
 
-      // Create chart instance
-      var chart = am4core.create("presencesByTimeChart", am4charts.XYChart);
+    // Create chart instance
+    var chart = am4core.create("presencesByTimeChart", am4charts.XYChart);
 
-      chart.marginRight = 400;
-      let data = []
-      let prependZero = (x) => (x < 10 ? '0' + x : x)
+    chart.marginRight = 400;
+    let data = []
+    let prependZero = (x) => (x < 10 ? '0' + x : x)
 
-      for (let i = 0; i < entries.length; i++) {
+    for (let i = 0; i < entries.length; i++) {
+      if (i === 0) {
+        let m = entries[i].minute - 1
+        let h = entries[i].hour
+        if (entries[i].minute === 0) {
+          h--
+          m = 59
+        }
         data.push({
-          t: prependZero(entries[i].hour) + ':' + prependZero(entries[i].minute),
-          v: entries[i].total
+          t: prependZero(h) + ':' + prependZero(m),
+          v: 0,
+          y: 0,
+          r: 0,
+          b: 0,
+          g: 0,
         })
       }
+      data.push({
+        t: prependZero(entries[i].hour) + ':' + prependZero(entries[i].minute),
+        v: entries[i].total,
+        y: entries[i].yellow,
+        r: entries[i].red,
+        b: entries[i].blue,
+        g: entries[i].green,
+      })
+    }
 
-      chart.data = data
+    chart.data = data
 
-      // Create axes
-      var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-      categoryAxis.dataFields.category = "t";
-      categoryAxis.title.text = "Tijdstip";
-      categoryAxis.renderer.grid.template.location = 0;
+    // Create axes
+    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "t";
+    categoryAxis.title.text = "Tijdstip";
+    categoryAxis.renderer.grid.template.location = 0;
 
 
-      var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.title.text = "Aantal kindjes";
+    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.title.text = "Aantal kindjes";
 
-      // Create series
-      var series = chart.series.push(new am4charts.LineSeries());
-      series.dataFields.valueY = "v";
+
+    let series = chart.series.push(new am4charts.LineSeries());
+    series.dataFields.valueY = "v";
+    series.stroke = am4core.color('#000')
+    series.dataFields.categoryX = "t";
+    series.name = "Aantal kindjes";
+
+    let seriesList = [{
+      name: 'Geel',
+      key: 'y',
+      color: '#fce700',
+    }, {
+      name: 'Rood',
+      key: 'r',
+      color: '#ee0202',
+    }, {
+      name: 'Blauw',
+      key: 'b',
+      color: '#2196f3',
+    }, {
+      name: 'Green',
+      key: 'g',
+      color: '#43a047',
+    }]
+
+    for (let i = 0; i < seriesList.length; i++) {
+      series = chart.series.push(new am4charts.LineSeries());
+      series.dataFields.valueY = seriesList[i].key;
       series.dataFields.categoryX = "t";
-      series.name = "Aantal kindjes";
-      series.tooltipText = "{name}: [bold]{valueY}[/]";
-    })
+      series.stroke = am4core.color(seriesList[i].color)
+      series.name = "Wijk " + seriesList[i].name;
+    }
+
+    this.loadingGraphData = false
   }
 
   refreshData() {
