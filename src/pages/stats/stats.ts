@@ -192,50 +192,77 @@ export class StatsPage {
       })
     }
 
+    if(result.currentTime) {
+      let i = data.length - 1
+      data.push({
+        t: result.currentTime,
+        v: data[i].v,
+        y: data[i].y,
+        r: data[i].r,
+        b: data[i].b,
+        g: data[i].g,
+      })
+    }
+
     chart.data = data
 
     // Create axes
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "t";
     categoryAxis.title.text = "Tijdstip";
-    categoryAxis.renderer.grid.template.location = 0;
-
 
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.title.text = "Aantal kindjes";
 
+    let seriesList = [
+      {
+        name: 'Geel',
+        key: 'y',
+        color: '#fce700',
+      },
+      {
+        name: 'Rood',
+        key: 'r',
+        color: '#ee0202',
+      },
+      {
+        name: 'Blauw',
+        key: 'b',
+        color: '#2196f3',
+      },
+      {
+        name: 'Groen',
+        key: 'g',
+        color: '#43a047',
+      }
+    ]
+
+    for (let i = 0; i < seriesList.length; i++) {
+      let series = chart.series.push(new am4charts.LineSeries());
+      series.dataFields.valueY = seriesList[i].key;
+      series.dataFields.categoryX = "t";
+      series.name = "Wijk " + seriesList[i].name;
+      series.stroke = am4core.color(seriesList[i].color)
+      series.fill = am4core.color(seriesList[i].color)
+      series.fillOpacity = 0.4;
+      series.strokeWidth = 2;
+      series.stacked = true;
+      series.tensionX = 0.8
+      series.tensionY = 1
+    }
 
     let series = chart.series.push(new am4charts.LineSeries());
     series.dataFields.valueY = "v";
     series.stroke = am4core.color('#000')
     series.dataFields.categoryX = "t";
-    series.name = "Aantal kindjes";
+    series.name = "Totaal aantal kindjes";
+    series.strokeWidth = 3;
+    series.tensionX = 0.8
+    series.tensionY = 1
 
-    let seriesList = [{
-      name: 'Geel',
-      key: 'y',
-      color: '#fce700',
-    }, {
-      name: 'Rood',
-      key: 'r',
-      color: '#ee0202',
-    }, {
-      name: 'Blauw',
-      key: 'b',
-      color: '#2196f3',
-    }, {
-      name: 'Green',
-      key: 'g',
-      color: '#43a047',
-    }]
+    chart.legend = new am4charts.Legend();
+    chart.legend.position = "bottom";
 
-    for (let i = 0; i < seriesList.length; i++) {
-      series = chart.series.push(new am4charts.LineSeries());
-      series.dataFields.valueY = seriesList[i].key;
-      series.dataFields.categoryX = "t";
-      series.stroke = am4core.color(seriesList[i].color)
-      series.name = "Wijk " + seriesList[i].name;
-    }
 
     this.loadingGraphData = false
   }

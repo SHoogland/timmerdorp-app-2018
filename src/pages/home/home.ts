@@ -293,15 +293,6 @@ export class HomePage {
     }
   }
 
-  forceOpenPage() {
-    this.openedPage.component = this.readablePageList[this.openedPage.component];
-    if (this.openedPage.component == 'ticketscanner') {
-      this.scanCode();
-    } else {
-      this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
-    }
-  }
-
   scanCode() {
     if (this.platform.is('cordova')) {
       this.barcodeScanner.scan({

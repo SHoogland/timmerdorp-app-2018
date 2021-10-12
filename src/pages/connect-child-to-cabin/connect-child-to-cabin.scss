@@ -6,8 +6,9 @@ page-connect-child-to-cabin {
 			}
 		}
 	}
-	.content {
-		padding: 0 !important;
+	.content.main-content {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
 	}
 	#hutHeader {
 		margin-bottom: 0px;

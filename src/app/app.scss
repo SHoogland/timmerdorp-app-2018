@@ -122,11 +122,15 @@ span.notTinyScreen {
 }
 
 ion-header {
-	position: sticky;
+	position: fixed;
 }
 
 div.content {
 	padding: 10px !important;
+}
+
+div.content.main-content {
+	padding: 90px 10px 10px 10px !important;
 }
 
 .label {
