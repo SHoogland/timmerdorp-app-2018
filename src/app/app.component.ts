@@ -21,6 +21,10 @@ export class MyApp {
 
   rootPage: any = HomePage;
   pages: Array<{ title: string, component: any }>;
+  swipeGestureStartX: number;
+  swipeGestureStartY: number;
+  swipeTimeout: any;
+
 
   constructor(
     private g: GlobalFunctions,
@@ -65,7 +69,85 @@ export class MyApp {
   ngAfterViewInit() {
     this.platform.ready().then(() => {
       this.subscribeToDeeplinks()
-    })
+
+      if (this.platform.is('cordova')) {
+        if (cordova.platformId === 'ios') {
+          let b = document.body
+          let self = this
+          b.addEventListener('mousedown', function (event) {
+            self.mouseDown(event)
+          });
+
+          b.addEventListener('mouseup', function (event) {
+            self.mouseUp(event)
+          });
+
+          b.addEventListener('mousemove', function (event) {
+            self.mouseMove(event)
+          })
+        }
+      }
+    });
+  }
+
+  computeScrollX(event) {
+    return (event.pageX) || (event.clientX + (document.body.scrollLeft || 0) - (document.body.clientLeft || 0))
+  }
+
+  computeScrollY(event) {
+    return (event.pageY) || (event.clientY + (document.body.scrollTop || 0) - (document.body.clientTop || 0))
+  }
+
+  mouseDown(event) {
+    if (this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase() === 'page-home') return;
+
+    let x = this.computeScrollX(event)
+    if (x < 25) {
+      this.swipeGestureStartX = this.computeScrollX(event)
+      this.swipeGestureStartY = this.computeScrollY(event)
+      document.getElementById('backBtnHint').style.top = (this.swipeGestureStartY - (56 / 2)) + 'px'
+    }
+  }
+
+  mouseUp(event) {
+    if (!this.swipeGestureStartX) return
+
+    let backBtnHint = document.getElementById('backBtnHint')
+    let xMovement = this.computeScrollX(event) - this.swipeGestureStartX
+    if (xMovement > 80) {
+      backBtnHint.style.background = '#b0d0ff'
+      backBtnHint.style.transitionProperty = 'background, opacity'
+      this.g.goHome();
+      this.swipeTimeout = setTimeout(function () {
+        backBtnHint.style.background = '#ffffff'
+        backBtnHint.style.opacity = '0'
+      }, 300)
+    } else {
+      backBtnHint.style.opacity = '0'
+    }
+    this.swipeGestureStartX = null;
+    this.swipeGestureStartY = null;
+  }
+
+  mouseMove(event) {
+    if (!this.swipeGestureStartX) return
+
+    let backBtnHint = document.getElementById('backBtnHint')
+    let xMovement = this.computeScrollX(event) - this.swipeGestureStartX
+    if (xMovement > 25) {
+      clearTimeout(this.swipeTimeout)
+      backBtnHint.style.transitionProperty = ''
+      backBtnHint.style.background = '#ffffff'
+      backBtnHint.style.opacity = '0'
+
+      if (xMovement > 80) {
+        document.getElementById('backBtnHint').style.opacity = '1'
+      } else {
+        document.getElementById('backBtnHint').style.opacity = '' + ((xMovement - 25) / (80 - 25))
+      }
+    } else {
+      document.getElementById('backBtnHint').style.opacity = '0'
+    }
   }
 
   subscribeToDeeplinks() {
@@ -79,7 +161,7 @@ export class MyApp {
         let nav = self.app.getActiveNavs()[0];
 
         if (link) {
-          if(link.path === '/app/verify-email') {
+          if (link.path === '/app/verify-email') {
             if (link.queryString.split('id=').length > 0 && link.queryString.split('email=').length > 0) {
               let code = link.queryString.split('code=')[1].split('&')[0]
               let email = link.queryString.split('email=')[1].split('&')[0]
