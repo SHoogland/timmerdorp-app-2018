@@ -114,8 +114,8 @@ export class GlobalFunctions {
     let newHistory = [];
     let seenChildren = [];
     for (let i = 0; i < history.length; i++) {
-      if (seenChildren.indexOf(history[i].wristband) === -1) {
-        seenChildren.push(history[i].wristband);
+      if (seenChildren.indexOf(history[i].id) === -1) {
+        seenChildren.push(history[i].id);
         newHistory.push(history[i]);
       }
     }

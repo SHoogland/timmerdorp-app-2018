@@ -1,11 +1,13 @@
 # App feedback en aandachtspunten uit 2021 (door Stan)
 - Hutjes plattegrond toevoegen met gps en alles
 - Meer statistieken/grafieken toevoegen
+  - Hierbij misschien ook iets meer navigatie tovoegen, dus knoppen om in de grafiek alleen de totalen te laten zien, of uitgesplitst per wijk, of alleen alles tussen 8:30 en 11:30, etc
 - Swipe is back op iPhone
 - Registreer/inlog formuliertje mag ff wat netter, statusbalk kleuren daar ook
 - De hele app in wijk thema? Meteen vragen bij startup
 - Waarom is registreren zo traag? Kan dat sneller?
-- Deeplinks werken nog niet op Android 
+- Deeplinks werken nog niet op Android
+- Als je al een account hebt gemaakt in de webshop, en vervolgens inlogt via de app, dan kom je alsnog niet helemaal lekker in de Admin table
 
 ## Webshop verbeterpunten voor 2022
 - De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies

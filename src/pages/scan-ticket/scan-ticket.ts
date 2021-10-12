@@ -94,7 +94,8 @@ export class ScanTicketPage {
         lastName: ticket.lastName,
         wristband: ticket.wristband,
         hutNr: ticket.hutNr,
-        wijk: self.g.getColor(ticket.hutNr)
+        wijk: self.g.getColor(ticket.hutNr),
+        id: ticket.id,
       });
 
       self.storage.set("searchChildHistory", self.g.filterHistory(history));

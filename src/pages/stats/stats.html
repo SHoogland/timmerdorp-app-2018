@@ -10,7 +10,7 @@
       </ion-title>
     </ion-navbar>
   </ion-header>
-  <div class='content'>
+  <div class='content main-content'>
     <div id='main'>
       <div [ngClass]="(loadingWijk && loadingGraphData) && !isRefreshing ? 'user-info' : ''">
         <div id='spinner' [ngClass]="{ 'hidden': !(loadingWijk && loadingGraphData) }">
