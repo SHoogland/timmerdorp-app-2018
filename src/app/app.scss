@@ -56,9 +56,6 @@ h1 {
 .conditional {
 	opacity: 0;
 	transition: opacity linear 400ms;
-	&.modal:not(.shown) {
-		z-index: -1;
-	}
 }
 
 .bar-button-default-md {
@@ -125,11 +122,15 @@ span.notTinyScreen {
 }
 
 ion-header {
-	position: sticky;
+	position: fixed;
 }
 
 div.content {
 	padding: 10px !important;
+}
+
+div.content.main-content {
+	padding: 90px 10px 10px 10px !important;
 }
 
 .label {
@@ -397,7 +398,7 @@ body {
 .modal {
 	position: fixed;
 	/* Stay in place */
-	z-index: 1;
+	z-index: -1;
 	/* Sit on top */
 	left: 0;
 	top: 0;
@@ -769,7 +770,7 @@ button {
 
 	tr:nth-of-type(2n + 1) {
     &, td {
-      background: $white;
+      background: #fafafa;
     }
 	}
 	td {
@@ -883,15 +884,21 @@ ion-input.hideClear {
       position: relative;
     }
 
-    td:not(:first-of-type) span {
-      text-align: right;
-      position: absolute;
-      color: white;
-      font-size: 56px;
-      line-height: 40px;
-      right: 24px;
-      top: calc((100px - 40px)/2);
-      margin-top: 0px;
+    td:not(:first-of-type) {
+      span, #shareIcon {
+        text-align: right;
+        position: absolute;
+        color: white;
+        font-size: 56px;
+        line-height: 40px;
+        right: 24px;
+        top: calc((100px - 40px)/2);
+        margin-top: 0px;
+      }
+      #shareIcon {
+        right: 75px;
+        font-size: 30px;
+      }
     }
   }
 }
@@ -938,5 +945,35 @@ button {
   }
   span {
     font-size: 18px;
+  }
+}
+
+
+
+div.sticky-fab {
+  position: sticky;
+  padding-top: 8px;
+  z-index: 10;
+  bottom: 28px;
+  left: calc(100% - 52px - 28px);
+  background: white;
+  color: #555;
+  box-shadow: 0px 0px 30px 8px rgba(0, 0, 0, 0.25);
+
+  i.material-icons {
+    transform: rotate(0deg);
+
+    &.isRefreshing {
+      animation-name: rotate;
+      animation-duration: 1000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
   }
 }

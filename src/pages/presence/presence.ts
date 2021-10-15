@@ -17,8 +17,9 @@ export class PresencePage {
 	name: string;
 	day: string;
 
-  foundTicket: boolean;
+	foundTicket: boolean;
 	modalShown: boolean;
+	hutNrModalShown: boolean;
 	greenBtn: boolean;
 	searched: boolean;
 	loading: boolean;
@@ -28,26 +29,28 @@ export class PresencePage {
 
 	constructor(
 		public navCtrl: NavController,
-    public navParams: NavParams,
+		public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage,
 		public cd: ChangeDetectorRef,
 		public keyboard: Keyboard,
 		public g: GlobalFunctions
 	) {
-    this.title = 'Aanwezigheid';
+		this.title = 'Aanwezigheid';
 		if (this.platform.is('cordova')) {
-      if (cordova.platformId === 'android') {
-        this.platform.registerBackButtonAction(() => {
-          if (this.modalShown) {
-            this.modalShown = false;
+			if (cordova.platformId === 'android') {
+				this.platform.registerBackButtonAction(() => {
+					if (this.modalShown) {
+						this.modalShown = false;
+					} else if (this.hutNrModalShown) {
+						this.hutNrModalShown = false;
 					} else {
-            this.g.goHome();
+						this.g.goHome();
 					}
 				});
 			}
 		}
-    this.foundTicket = false;
+		this.foundTicket = false;
 	}
 
 	init() {
@@ -71,6 +74,7 @@ export class PresencePage {
 		}
 
 		this.modalShown = false;
+		this.hutNrModalShown = false;
 		this.greenBtn = false;
 
 		this.searched = false;
@@ -79,15 +83,15 @@ export class PresencePage {
 		this.ticket = {};
 
 		this.number = this.navParams.get('wristband') || '';
-    if(this.number) this.getChild()
+		if (this.number) this.getChild()
 		this.name = '';
 
-    this.storage.get('presHistory').then((val) => {
-      this.history = val || [];
-      this.history = this.g.filterHistory(this.history);
-    }, (error) => {
-      this.history = [];
-    });
+		this.storage.get('presHistory').then((val) => {
+			this.history = val || [];
+			this.history = this.g.filterHistory(this.history);
+		}, (error) => {
+			this.history = [];
+		});
 	}
 
 	getDayName(d) {
@@ -95,7 +99,7 @@ export class PresencePage {
 		if (d == 'wo') return "Woensdag"
 		if (d == 'do') return "Donderdag"
 		if (d == 'vr') return "Vrijdag"
-    return 'onbekend'
+		return 'onbekend'
 	}
 
 	ionViewDidLoad() {
@@ -107,37 +111,38 @@ export class PresencePage {
 	}
 
 	getChild() {
-    this.error = '';
-    this.searched = false;
-    this.foundTicket = false;
-    if (this.number.length === 3) {
-      this.loading = true;
+		this.error = '';
+		this.searched = false;
+		this.foundTicket = false;
+		if (this.number.length === 3) {
+			this.loading = true;
 
-      let self = this;
-      this.g.apiCall('findChildByWristband', { wristband: this.number }).then((result) => {
-        self.loading = false;
-        self.searched = true;
-        if(result.response !== 'success') {
-          self.error = result.errorMessage || result.response;
-          return
-        } else {
-          self.ticket = result.ticket;
-          self.foundTicket = true;
-          self.history.unshift({
-            firstName: self.ticket.nickName || self.ticket.firstName,
-            lastName: self.ticket.lastName,
-            wristband: self.ticket.wristband,
-            hutNr: self.ticket.hutNr,
-            wijk: self.g.getColor(self.ticket.hutNr)
-          });
-          self.history = this.g.filterHistory(this.history);
-          self.storage.set("presHistory", self.history);
-        }
-      })
+			let self = this;
+			this.g.apiCall('findChildByWristband', { wristband: this.number }).then((result) => {
+				self.loading = false;
+				self.searched = true;
+				if (result.response !== 'success') {
+					self.error = result.errorMessage || result.response;
+					return
+				} else {
+					self.ticket = result.ticket;
+					self.foundTicket = true;
+					self.history.unshift({
+						firstName: self.ticket.nickName || self.ticket.firstName,
+						lastName: self.ticket.lastName,
+						wristband: self.ticket.wristband,
+						hutNr: self.ticket.hutNr,
+						wijk: self.g.getColor(self.ticket.hutNr),
+            id: self.ticket.id,
+					});
+					self.history = this.g.filterHistory(this.history);
+					self.storage.set("presHistory", self.history);
+				}
+			})
 		} else {
 			this.loading = false;
 			this.ticket = null;
-      this.foundTicket = false;
+			this.foundTicket = false;
 		}
 	}
 
@@ -149,52 +154,57 @@ export class PresencePage {
 		}
 		if (this.number.length != 3) return;
 
-    if (!this.ticket || !this.foundTicket) {
-			this.error = 'Geen kind gevonden!';
-			return;
-		}
-
-    let self = this;
-
-    this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day, forcePresence: true, presence: false }).then((result) => {
-      if(!result || !(result || {}).response || result.response != "success") {
-        alert('Absent melden niet gelukt! Vraag na bij Stan of Stephan wat er mis ging...')
-      } else {
-        self.ticket['aanwezig_' + self.day] = result.newPresence
-        self.markDone()
-      }
-      self.closeModal()
-    });
-	}
-
-	togglePresence() {
-		this.hideKeyboard();
-    this.error = ''
-    this.errorHelp = ''
-		if (this.number.length != 3) return;
-    this.loading = true;
 		if (!this.ticket || !this.foundTicket) {
 			this.error = 'Geen kind gevonden!';
 			return;
 		}
 
-    if(this.ticket['aanwezig_' + this.day]) {
+		let self = this;
+
+		this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day, forcePresence: true, presence: false }).then((result) => {
+			if (!result || !(result || {}).response || result.response != "success") {
+				alert('Absent melden niet gelukt! Vraag na bij Stan of Stephan wat er mis ging...')
+			} else {
+				self.ticket['aanwezig_' + self.day] = result.newPresence
+				self.markDone()
+			}
+			self.closeModal()
+		});
+	}
+
+	togglePresence(force?) {
+		this.hideKeyboard();
+		this.error = ''
+		this.errorHelp = ''
+		if (this.number.length != 3) return;
+		if (!this.ticket || !this.foundTicket) {
+			this.error = 'Geen kind gevonden!';
+			return;
+		}
+
+		if (new Date().getDay() > 2 && !this.ticket.hutNr && !force) {
+			this.showHutNrModal()
+			return
+		}
+		this.loading = true;
+
+		if (this.ticket['aanwezig_' + this.day]) {
 			this.showModal();
 			return;
-    }
+		}
 
-    let self = this;
+		let self = this;
 
-    this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day }).then((result) => {
-      self.loading = false
-      if(!result || !(result || {}).response || result.response != "success") {
-        self.error = (result || {}).error || 'Foutmelding!';
-        self.errorHelp = (result || {}).errorMessage || (result || {}).response;
-      } else {
-        self.ticket['aanwezig_' + self.day] = result.newPresence
-        self.markDone()
-      }
-    });
+		this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day }).then((result) => {
+			self.loading = false
+			if (!result || !(result || {}).response || result.response != "success") {
+				self.error = (result || {}).error || 'Foutmelding!';
+				self.errorHelp = (result || {}).errorMessage || (result || {}).response;
+			} else {
+				self.ticket['aanwezig_' + self.day] = result.newPresence
+				self.markDone()
+			}
+		});
 	}
 
 	showModal() {
@@ -210,18 +220,32 @@ export class PresencePage {
 		}, 400);
 	}
 
-  childNumberInput(event) {
-    if(event.key === 'Enter') {
-      this.togglePresence();
-      return;
-    }
-  }
+	showHutNrModal() {
+		this.hutNrModalShown = true;
+		document.querySelector('#hutNrModal').classList.add('high');
+	}
+
+	closeHutNrModal() {
+		this.loading = false;
+		this.hutNrModalShown = false;
+		setTimeout(function () {
+			document.querySelector('#hutNrModal').classList.remove('high');
+		}, 400);
+		this.togglePresence(true)
+	}
+
+	childNumberInput(event) {
+		if (event.key === 'Enter') {
+			this.togglePresence();
+			return;
+		}
+	}
 
 
 	markDone() {
 		this.ticket = null;
-    this.foundTicket = false;
-    this.searched = false;
+		this.foundTicket = false;
+		this.searched = false;
 		this.greenBtn = true;
 		let self = this;
 		(<HTMLScriptElement>document.querySelector("#numberInput input")).focus();

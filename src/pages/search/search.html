@@ -1,14 +1,16 @@
 <ion-content>
   <ion-header (click)='g.goHome()'>
 		<i class="material-icons-outlined homeIcon">home</i>
-    <h1 id="ptitle">{{title}}</h1>
+    <h1 id="ptitle">
+      {{ title }}
+    </h1>
     <ion-navbar>
       <ion-title>
         <img src="assets/imgs/logo.png" class="nav-logo">
       </ion-title>
     </ion-navbar>
   </ion-header>
-  <div class='content'>
+  <div class='content main-content'>
     <div class="container">
       <div class="bracelet-number">
         <h1 class='title'>Zoekopdracht:</h1>
@@ -23,7 +25,7 @@
       </div>
     </div>
 
-    <div [ngClass]="'user-info errorCard' + (error&&searchTerm?' hasError':'')">
+    <div [ngClass]="'user-info errorCard' + (error && searchTerm ? ' hasError' : '')">
       <div class="content" *ngIf='error&&searchTerm'>
         <ion-icon name='warning'></ion-icon>
         <h1 id='errorHeader' [innerHTML]='error'></h1>
@@ -39,7 +41,7 @@
     </div>
 
     <div id='history'
-      [ngClass]='(!((tickets || []).length) && (history || []).length > 0 && !(searchTerm || "").length)?"shown hideable":"hideable"'>
+      [ngClass]='(!((tickets || []).length) && (history || []).length > 0 && !(searchTerm || "").length) && !isSearchingById ? "shown hideable" : "hideable"'>
       <ion-list class='peopleList'>
         <ion-list-header>
           Zoekgeschiedenis ({{(history || []).length}})
@@ -75,9 +77,9 @@
     </div>
 
 
-    <ion-list class='peopleList' [ngClass]='tickets.length ? "hideable shown" : "hideable"'>
+    <ion-list class='peopleList' [ngClass]='(tickets || []).length ? "hideable shown" : "hideable"'>
       <ion-list-header>
-        Zoekresultaten ({{tickets.length}})
+        Zoekresultaten ({{ (tickets || []).length }})
       </ion-list-header>
       <div *ngFor="let child of tickets" (click)='showModal(child)' class='{{"childItem " + g.getWijk(child.hutNr)}}'>
         <table>
@@ -111,9 +113,9 @@
   </div>
 </ion-content>
 
-<div [ngClass]="{'shown': modal.showModal}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
+<div [ngClass]="{'shown': (modal || {}).showModal, 'high': (modal || {}).high}" (click)="$event.target.id==='myModal' ? closeModal() : ''" id="myModal"
   class="modal conditional">
-  <div class="{{'modal-content ' + g.getWijk((modal.child.hutNr||'')[0])}}" *ngIf="modal.child">
+  <div *ngIf="(modal || {}).child" class="{{'modal-content ' + g.getWijk((modal.child.hutNr||'')[0])}}">
     <div id="modalTop">
     </div>
     <div id="modalBottom" style="padding: 0px;">
@@ -123,6 +125,7 @@
             {{ modal.child.nickName || modal.child.firstName }} {{ modal.child.lastName}}
           </td>
           <td>
+            <i class="material-icons" id="shareIcon" (click)="shareChild(modal.child);">share</i>
             <span (click)="closeModal();">&times;</span>
           </td>
         </tr>
@@ -131,23 +134,64 @@
         <div *ngFor="let cat of tableCategories">
           <h3>{{ cat.name }}</h3>
           <div *ngIf="cat.name === 'Gegevens Kind'">
-            <tr>
-              <td><b>Volledige naam:</b></td>
-              <td>{{ modal.child['firstName'] + ' ' + modal.child['lastName'] }}</td>
+            <tr *ngIf="!isEditingTicket">
+              <td>
+                <b>Volledige naam:</b>
+              </td>
+              <td>
+                {{ modal.child['firstName'] + ' ' + modal.child['lastName'] }}
+              </td>
             </tr>
-            <tr *ngIf="modal.child['hutNr']">
-              <td><b>Hutnummer:</b></td>
-              <td>{{ modal.child['hutNr'] }}</td>
+            <div *ngIf="isEditingTicket">
+              <tr>
+                <td>
+                  <b>Voornaam:</b>
+                </td>
+                <td>
+                  <input [(ngModel)]="modal.child.firstName">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Roepnaam:</b>
+                </td>
+                <td>
+                  <input [(ngModel)]="modal.child.nickName">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Achternaam:</b>
+                </td>
+                <td>
+                  <input [(ngModel)]="modal.child.lastName">
+                </td>
+              </tr>
+            </div>
+            <tr *ngIf="modal.child['hutNr'] || isEditingTicket">
+              <td>
+                <b>Hutnummer:</b>
+              </td>
+              <td>
+                <input *ngIf="isEditingTicket" [(ngModel)]="modal.child.hutNr">
+                <div *ngIf="!isEditingTicket">
+                  {{ modal.child['hutNr'] }}
+                </div>
+              </td>
             </tr>
           </div>
           <tr *ngFor="let prop of cat.props">
             <div *ngIf="modal.child[prop] || prop === 'opmerkingen'">
               <td *ngIf="prop != 'parent_email'"><b>{{ (ticketPropertiesMap[prop]||{}).appLabel || (ticketPropertiesMap[prop]||{}).label }}:</b></td>
               <td *ngIf="prop != 'tel1' && prop != 'tel2' && prop != 'tel_huisarts' && prop != 'parent_email' && cat.name != 'Aanwezigheid'">
-                {{ modal.child[prop] || '&#8212;'}}
+                <input [(ngModel)]="modal.child[prop]" *ngIf="isEditingTicket">
+                <div *ngIf="!isEditingTicket">
+                  {{ modal.child[prop] || '&#8212;'}}
+                </div>
               </td>
               <td *ngIf='prop === "tel1" || prop === "tel2" || prop === "tel_huisarts"'>
-                <a href="tel: {{filterPhoneNr(modal.child[prop])}}">
+                <input [(ngModel)]="modal.child[prop]" *ngIf="isEditingTicket">
+                <a *ngIf="!isEditingTicket" href="tel: {{filterPhoneNr(modal.child[prop])}}">
                   {{ modal.child[prop] }}
                 </a>
               </td>
@@ -184,6 +228,8 @@
       </table>
     </div>
     <button ion-button full (click)="closeModal();">Sluiten</button>
+    <button *ngIf="!isEditingTicket && canEditTickets" ion-button full (click)="isEditingTicket = true;">Bewerken</button>
+    <button *ngIf="isEditingTicket && canEditTickets" ion-button full (click)="saveTicketEdit();">Opslaan</button>
     <button ion-button full (click)="scanChild(modal.child.id)">Polsbandje wijzigen</button>
     <button ion-button full *ngIf="modal.child.wristband" (click)="markPresent(modal.child.wristband)">Naar aanwezigheid</button>
     <button ion-button full (click)="goHome()">Terug naar homepagina</button>

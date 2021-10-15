@@ -8,7 +8,7 @@
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
-	<div class='content'>
+	<div class='content main-content'>
 		<div class="container">
 			<div class="bracelet-number">
 				<h3>Aanwezigheid registreren voor <u id='dayName'
@@ -105,7 +105,7 @@
 	</div>
 </ion-content>
 
-<div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='myModal'?closeModal():''" id="myModal"
+<div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='myModal' ? closeModal() : ''" id="myModal"
 	class="modal conditional">
 	<div class="modal-content">
 		<div id='modalTop' class='warnModal'>
@@ -118,5 +118,19 @@
 		<button ion-button full (click)="closeModal()" class="bg-red correction">Terug</button>
 		<button ion-button full (click)="makeAbsent()" class="bg-blue correction">Afwezig
 			melden</button>
+	</div>
+</div>
+
+<div [ngClass]="{'shown': hutNrModalShown}" (click)="$event.target.id === 'myModal' ? closeModal() : ''" id="hutNrModal"
+	class="modal conditional">
+	<div class="modal-content">
+		<div id='modalTop' class='warnModal'>
+		</div>
+		<div id='modalBottom'>
+			<span class="close" (click)="closeModal();">&times;</span>
+			<h1>Waarschuwing</h1>
+			<p style="margin-bottom: 0px;">Dit kind heeft nog geen hutnummer, terwijl Timmerdorp wel al is gestart! Zorg ervoor dat dit opgelost wordt, of vraag het even na bij Stan of Stephan.</p>
+		</div>
+		<button ion-button full (click)="closeHutNrModal()" class="bg-red correction">Sluiten & {{ ((ticket || {})["aanwezig_" + day] ? 'afwezig' : 'aanwezig') }} melden</button>
 	</div>
 </div>

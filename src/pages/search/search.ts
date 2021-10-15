@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { App, NavController, NavParams, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ScanTicketPage } from '../scan-ticket/scan-ticket';
-import { DomSanitizer } from '@angular/platform-browser';
 import { GlobalFunctions } from '../../providers/global';
 import { PresencePage } from '../presence/presence';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 declare let cordova: any;
 
@@ -20,8 +20,11 @@ export class SearchPage {
   tickets: any;
   history: any;
 
-  loading: boolean;
+  isEditingTicket: boolean;
+  isSearchingById: boolean;
+  canEditTickets: boolean;
   searched: boolean;
+  loading: boolean;
 
   searchTerm: string;
   errorHelp: string;
@@ -29,18 +32,23 @@ export class SearchPage {
   error: string;
 
   modal: {
-    showModal: boolean;
-    child: any;
+    showModal: boolean,
+    high: boolean,
+    child: any,
   }
 
   constructor(
     public navCtrl: NavController,
+    public socialSharing: SocialSharing,
     public navParams: NavParams,
     public platform: Platform,
     public storage: Storage,
-    public sanitizer: DomSanitizer,
-    public g: GlobalFunctions
+    public g: GlobalFunctions,
+    private app: App,
   ) {
+  }
+
+  ngAfterViewInit() {
     this.searched = false;
     this.title = 'Kinderen Zoeken'
     if (this.platform.is('cordova')) {
@@ -54,13 +62,10 @@ export class SearchPage {
         });
       }
     }
-    this.init();
-  }
-
-  init() {
     this.modal = {
       child: null,
-      showModal: false
+      showModal: false,
+      high: false,
     }
 
     this.timeOut = setTimeout;
@@ -72,6 +77,12 @@ export class SearchPage {
 
     this.loading = false;
 
+    if(this.navParams.get('searchId')) {
+      this.loading = true
+      this.isSearchingById = true
+      this.searchThis(this.navParams.get('searchId'))
+    }
+
     this.error = '';
     this.errorHelp = '';
 
@@ -79,16 +90,16 @@ export class SearchPage {
 
     this.tableCategories = [
       {
-        name: "Gegevens huisarts",
-        props: ["naam_huisarts", "tel_huisarts"]
+        name: 'Gegevens Kind',
+        props: ['birthdate', 'wristband', 'opmerkingen']
       },
       {
-        name: "Contactgegevens ouders",
-        props: ["tel1", "tel2", "parent_email"]
+        name: 'Gegevens huisarts',
+        props: ['naam_huisarts', 'tel_huisarts']
       },
       {
-        name: "Gegevens Kind",
-        props: ["birthdate", "wristband", "hutNr", "opmerkingen"]
+        name: 'Contactgegevens ouders',
+        props: ['tel1', 'tel2', 'parent_email']
       },
     ]
     this.tickets = [];
@@ -111,6 +122,7 @@ export class SearchPage {
   }
 
   search() {
+    if(this.isSearchingById) return
     this.searched = false
     try {
       if (this.searchTerm.length < 3) {
@@ -131,24 +143,29 @@ export class SearchPage {
   }
 
 
-  async searchThis() {
+  async searchThis(searchId?) {
     let self = this;
     self.tickets = [];
     self.error = '';
     self.errorHelp = '';
-    if (this.searchTerm.length < 3) {
+    if (!this.isSearchingById && this.searchTerm.length < 3) {
+      return false;
+    }
+    if (!searchId && this.isSearchingById) {
       return false;
     }
     self.loading = true;
 
-    this.g.apiCall('search', { searchTerm: this.searchTerm }).then((result) => {
+    this.g.apiCall('search', { searchTerm: this.isSearchingById ? searchId : this.searchTerm }).then((result) => {
       self.loading = false
       if(!result || result.response !== 'success') {
         self.error = (result || {}).error || (result || {}).response
         self.errorHelp = (result || {}).errorMessage || (result || {}).response
         return;
       }
-      if(self.searchTerm.length < 3) return
+
+      if(!self.isSearchingById && self.searchTerm.length < 3) return
+
       self.searched = true
       self.tickets = result.tickets.sort(function (a) {
         if (a.wristband == self.searchTerm) {
@@ -156,8 +173,18 @@ export class SearchPage {
         }
         return 1;
       }); //give priority to wristbands over hut numbers
+
+
+      self.canEditTickets = result.canEditTickets
       self.ticketPropertiesMap = result.ticketPropertiesMap
+
+      if(self.isSearchingById) {
+        self.showModal(result.tickets[0])
+        self.searchTerm = (result.tickets[0].nickName || result.tickets[0].firstName) + ' ' + result.tickets[0].lastName
+        self.isSearchingById = false
+      }
     }).catch((e) => {
+      self.isSearchingById = false
       self.loading = false
       self.error = String(e)
     });
@@ -172,19 +199,18 @@ export class SearchPage {
       lastName: child.lastName,
       wristband: child.wristband,
       hutNr: child.hutNr,
-      wijk: this.g.getColor(child.hutNr)
+      wijk: this.g.getColor(child.hutNr),
+      id: child.id,
     });
     this.history = this.g.filterHistory(this.history);
     this.storage.set("searchChildHistory", this.history);
-    document.querySelector('#myModal').classList.add('high');
+    this.modal.high = true
   }
 
   closeModal() {
     this.modal.showModal = false;
     this.g.setStatusBar('blue')
-    setTimeout(function () {
-      document.querySelector('#myModal').classList.remove('high');
-    }, 400);
+    this.modal.high = false
   }
 
   scanChild(barcode) {
@@ -208,5 +234,16 @@ export class SearchPage {
   markPresent(wristband) {
     this.g.setStatusBar('blue')
     this.navCtrl.setRoot(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
+  }
+
+  shareChild(child) {
+    let msg = 'Moet je eens kijken naar Timmerdorp-deelnemer ' + (child.nickName || child.firstName) + '! Om dit te bekijken in die gave Timmerdorp-app, klik hier: https://shop.timmerdorp.com/app/kindje?id=' + child.id
+    this.socialSharing.share(msg)
+  }
+
+  async saveTicketEdit() {
+    let result = await this.g.apiCall('saveTicketEdit', { ticket: this.modal.child })
+    if(!result || result.message != 'success') alert('hmmmm (geen response)')
+    this.isEditingTicket = false
   }
 }

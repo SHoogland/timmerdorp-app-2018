@@ -1,14 +1,16 @@
 <ion-content padding>
   <ion-header (click)="g.goHome()" class='wijk-header'>
 		<i class="material-icons-outlined homeIcon">home</i>
-    <h1 id="ptitle">{{title}}</h1>
+    <h1 id="ptitle">
+      {{ title }}
+    </h1>
     <ion-navbar>
       <ion-title>
         <img src="assets/imgs/logo.png" class="nav-logo">
       </ion-title>
     </ion-navbar>
   </ion-header>
-  <div class='content'>
+  <div class='content main-content'>
     <div class="user-info" *ngIf="loading">
       <div id='spinner' [ngClass]="{'hidden': !loading}">
         <div>

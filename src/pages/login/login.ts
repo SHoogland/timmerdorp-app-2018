@@ -74,6 +74,8 @@ export class LoginPage {
 	async loginNow(surpressWarnings) {
     if(this.login.username === 'test123' && this.login.password === 'test123') {
       this.g.staging = !this.g.staging;
+      this.storage.set('staging', this.g.staging)
+
       alert('Gelukt! Testversie is nu ' + (this.g.staging ? 'ingeschakeld' : 'uitgeschakeld'))
       return;
     }
@@ -140,8 +142,7 @@ export class LoginPage {
         self.errorHelp = 'Er bestaat al een account met dit e-mailadres! Accounts van vorig jaar zijn nog steeds geldig. Probeer in te loggen.'
       }
       self.loading = false
-    })
-    .then(async function(result) {
+    }).then(async function(result) {
       if(result === 'success') {
         await Parse.User.logIn(self.register.username.toLowerCase().replace(' ', ''), self.register.password)
         self.navCtrl.setRoot(EmailConfirmationPage, { waitingForEmailConfirmation: true, email: self.register.username.toLowerCase().replace(' ', '') }, { animate: true, animation: "ios-transition", direction: 'forward' })

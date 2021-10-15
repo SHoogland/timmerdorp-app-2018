@@ -1,5 +1,5 @@
 <ion-content padding>
-  <div class='content'>
+  <div class='content main-content'>
     <div class="container">
       <div class="user-info" *ngIf="loading">
         <ion-spinner color='white'></ion-spinner>
@@ -27,7 +27,7 @@
       </div>
       <div *ngIf="waitingForEmailConfirmation">
         <h1>
-          E-mailadres nog niet bevestigd!
+          E-mail nog niet bevestigd!
         </h1>
         <p>
           Om gebruik te maken van de app, moet je eerst je e-mailadres bevestigen. Je hebt een
@@ -37,6 +37,38 @@
           Je bent ingelogd als {{ emailadres }}.
         </p>
         <br>
+      </div>
+      <div *ngIf="emailVerificationResult">
+        <div *ngIf="emailVerificationResult === 'success'">
+          <h1>
+            Gelukt!
+          </h1>
+          <p>
+            Het is gelukt om je e-mailadres te verifiëren! Klik hieronder om door te gaan.
+          </p>
+        </div>
+        <div *ngIf="emailVerificationResult === 'already_verified'">
+          <h1>
+            Je e-mailadres was al geverifieerd!
+          </h1>
+          <p>
+            Je e-mailadres was al geverifieerd, klik hieronder om door te gaan.
+          </p>
+        </div>
+        <button ion-button full (click)="emailVerificationResult = ''; waitingForAdmin = true; isConfirmingEmail = false" style="background: #07497e;"
+          *ngIf="emailVerificationResult === 'success' || emailVerificationResult === 'already_verified'"
+          (click)="startStatusCheckInterval()">
+          Doorgaan
+        </button>
+        <div *ngIf="emailVerificationResult !== 'success' && emailVerificationResult !== 'already_verified'">
+          <h1>
+            E-mail verificatie mislukt!
+          </h1>
+          <p>
+            Het is helaas niet gelukt je e-mailadres te verifiëren. Probeer nog een keer op de link in je inbox te
+            klikken, of neem contact op met Stan of Stephan.
+          </p>
+        </div>
       </div>
       <button ion-button full (click)="logOut()" style="background: #07497e;">
         <ion-icon slot='start' style="margin-right: 16px;" name='md-log-out'></ion-icon>

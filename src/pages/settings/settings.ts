@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { Platform, NavController, NavParams } from 'ionic-angular';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -7,23 +7,27 @@ import { Storage } from '@ionic/storage';
 import { GlobalFunctions } from '../../providers/global';
 
 @Component({
-	selector: 'page-app-info',
-	templateUrl: 'app-info.html'
+	selector: 'page-settings',
+	templateUrl: 'settings.html'
 })
-export class AppInfoPage {
+export class SettingsPage {
   removeStatus: string
   addStatus: string
 	error: string;
 	title: string;
+  email: string;
 	wijk: string;
 
   isStanOfStephan: boolean;
+  isRefreshing: boolean;
+  loading: boolean;
 
   admins: Array<any>;
   potentialAdmins: Array<any>;
 
 	constructor(
 		public navCtrl: NavController,
+    public navParams: NavParams,
 		public platform: Platform,
 		public storage: Storage,
 		public httpClient: HttpClient,
@@ -46,9 +50,22 @@ export class AppInfoPage {
 		});
 
     await this.getAdmins()
+    this.email = (await this.g.checkIfStillLoggedIn()).email
+
+    if(this.navParams.get('confirmationId')) {
+      let result = await this.addAdmin(null, false, this.navParams.get('confirmationId'))
+      if(result) alert('Gelukt om admin toe te voegen!')
+      else alert('Mislukt om admin toe te voegen')
+    }
+
+    let self = this;
+    document.querySelector('div.sticky-fab i.material-icons').addEventListener('animationiteration', function() {
+      if(!self.loading) self.isRefreshing = false;
+    })
 	}
 
   async getAdmins() {
+    this.loading = true
     let self = this;
     this.g.apiCall('getAdmins').then(function(result) {
       if(result.denied) {
@@ -57,12 +74,13 @@ export class AppInfoPage {
       self.isStanOfStephan = true;
       self.admins = result.admins;
       self.potentialAdmins = result.potentialAdmins;
+      self.loading = false
     })
   }
 
-  async addAdmin(email, force?) {
+  async addAdmin(email, force?, id?) {
     this.addStatus = 'Laden...'
-    let result = await this.g.apiCall('addAdmin', { email: email, force: force })
+    let result = await this.g.apiCall('addAdmin', { email: email, force: force, id: id })
     this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt...'
 
     let self = this
@@ -72,6 +90,8 @@ export class AppInfoPage {
     }, 1000)
 
     await this.getAdmins()
+
+    return result.success
   }
 
   async removePotentialAdmin(email) {
@@ -123,4 +143,9 @@ export class AppInfoPage {
 	ionViewDidLoad() {
 		this.init();
 	}
+
+  refreshData() {
+    this.isRefreshing = true;
+    this.getAdmins();
+  }
 }

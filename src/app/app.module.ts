@@ -4,6 +4,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
@@ -15,9 +17,8 @@ import { ConnectChildToCabinPage } from '../pages/connect-child-to-cabin/connect
 import { PresencePage } from '../pages/presence/presence';
 import { LoginPage } from '../pages/login/login';
 import { StatsPage } from '../pages/stats/stats';
-import { AppInfoPage } from '../pages/app-info/app-info';
+import { SettingsPage } from '../pages/settings/settings';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { SchedulePage } from '../pages/schedule/schedule';
 import { BirthdaysPage } from '../pages/birthdays/birthdays';
 import { ChangeWristbandPage } from '../pages/change-wristband/change-wristband';
 import { FilesPage } from '../pages/files/files';
@@ -36,15 +37,14 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 		LoginPage,
     EmailConfirmationPage,
 		StatsPage,
-		AppInfoPage,
-		SchedulePage,
+		SettingsPage,
     BirthdaysPage,
 		ChangeWristbandPage,
 		FilesPage
 	],
 	imports: [
 		BrowserModule,
-		IonicModule.forRoot(MyApp, { mode: "md" }),
+		IonicModule.forRoot(MyApp, { mode: "md", swipeBackEnabled: true }),
 		IonicStorageModule.forRoot(),
 		HttpClientModule
 	],
@@ -59,8 +59,7 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 		LoginPage,
     EmailConfirmationPage,
 		StatsPage,
-		AppInfoPage,
-		SchedulePage,
+		SettingsPage,
     BirthdaysPage,
 		ChangeWristbandPage,
 		FilesPage
@@ -68,6 +67,8 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 	providers: [
 		StatusBar,
 		SplashScreen,
+    Deeplinks,
+    SocialSharing,
 		HttpClient,
 		InAppBrowser,
 		BarcodeScanner,

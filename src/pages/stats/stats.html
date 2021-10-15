@@ -1,18 +1,20 @@
 <ion-content padding>
   <ion-header (click)="g.goHome()" class='blue wijk-header'>
 		<i class="material-icons-outlined homeIcon">home</i>
-    <h1 id="ptitle">{{title}}</h1>
+    <h1 id="ptitle">
+      {{ title }}
+    </h1>
     <ion-navbar [ngClass]='blue'>
       <ion-title>
         <img src="assets/imgs/logo.png" class="nav-logo">
       </ion-title>
     </ion-navbar>
   </ion-header>
-  <div class='content'>
+  <div class='content main-content'>
     <div id='main'>
-      <div [ngClass]="loading && !isRefreshing ? 'user-info' : ''">
-        <div id='spinner' [ngClass]="{ 'hidden': !loading }">
-          <div *ngIf="loading && !isRefreshing">
+      <div [ngClass]="(loadingWijk && loadingGraphData) && !isRefreshing ? 'user-info' : ''">
+        <div id='spinner' [ngClass]="{ 'hidden': !(loadingWijk && loadingGraphData) }">
+          <div *ngIf="(loadingWijk && loadingGraphData) && !isRefreshing">
             <ion-spinner color='primary'></ion-spinner>
           </div>
         </div>
@@ -65,6 +67,12 @@
         </table>
       </div>
 
+      <br>
+      <div *ngIf="showChildCountGraph">
+        <h1>Aantal kinderen op het terrein</h1>
+      </div>
+      <div id="presencesByTimeChart" [ngClass]="showChildCountGraph ? 'shown' : ''"></div>
+
       <div *ngIf="admins && admins.length" style="margin-top: 16px; padding-bottom: 64px;">
         <h1>Timmerdorp Battle</h1>
         <p style="padding: 12px;">
@@ -93,7 +101,7 @@
                 Totaal
               </td>
             </tr>
-            <tr *ngFor="let admin of admins; let i = index">
+            <tr *ngFor="let admin of admins; let i = index" class="{{ admin.isYou ? 'isYou' : ''}}">
               <td>{{ admin.naam }} </td>
               <td>{{ admin.di || 0 }} </td>
               <td>{{ admin.wo || 0 }} </td>
@@ -104,7 +112,7 @@
           </table>
         </div>
       </div>
-      <div class="fab" (click)="refreshData()">
+      <div class="fab sticky-fab" (click)="refreshData()">
         <i [ngClass]="isRefreshing ? 'isRefreshing material-icons' : 'material-icons'">refresh</i>
       </div>
     </div>

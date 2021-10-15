@@ -11,12 +11,14 @@ declare let cordova: any;
 export class GlobalFunctions {
   stagingEndpoint: string;
   normalEndpoint: string;
-  staging: boolean;
-  loadedStagingStatus: boolean;
 
-  serverURLs: any;
+  navigatedToDeeplink: boolean;
+  parseInitialized: boolean;
+  staging: boolean;
+
   serverUsernames: any;
   serverPasswords: any;
+  serverURLs: any;
   loginPage: any;
 
   constructor(
@@ -39,14 +41,6 @@ export class GlobalFunctions {
       staging: 'jsKey',
       production: 'xnFIbFCrE1vjzWbRVehMO4QzPpNMCIdDgORKNlRI'
     }
-
-    this.storage.get('staging').then((val) => {
-      this.staging = val;
-      this.loadedStagingStatus = true
-    }, (error) => {
-      this.staging = false;
-      this.loadedStagingStatus = true
-    })
 
     this.loginPage = require('../pages/login/login').LoginPage;
   }
@@ -120,8 +114,8 @@ export class GlobalFunctions {
     let newHistory = [];
     let seenChildren = [];
     for (let i = 0; i < history.length; i++) {
-      if (seenChildren.indexOf(history[i].wristband) === -1) {
-        seenChildren.push(history[i].wristband);
+      if (seenChildren.indexOf(history[i].id) === -1) {
+        seenChildren.push(history[i].id);
         newHistory.push(history[i]);
       }
     }
@@ -155,20 +149,13 @@ export class GlobalFunctions {
   }
 
   async fixParseURL() {
-    if (!this.loadedStagingStatus) {
-      await this.storage.get('staging').then((val) => {
-        this.staging = val;
-        this.loadedStagingStatus = true
-      }, (error) => {
-        this.staging = false;
-        this.loadedStagingStatus = true
-      })
-    }
+    this.staging = await this.storage.get('staging')
 
     let newServerURL = this.serverURLs[this.staging ? 'staging' : 'production']
-    if (Parse.serverURL !== newServerURL) {
+    if (Parse.serverURL !== newServerURL || !this.parseInitialized) {
       Parse.serverURL = newServerURL
       await Parse.initialize(this.serverUsernames[this.staging ? 'staging' : 'production'], this.serverPasswords[this.staging ? 'staging' : 'production'])
+      this.parseInitialized = true
     }
   }
 

@@ -1,22 +1,40 @@
 <ion-content padding>
   <ion-header (click)='g.goHome()'>
 		<i class="material-icons-outlined homeIcon">home</i>
-    <h1 id="ptitle">{{title}}</h1>
+    <h1 id="ptitle">
+      {{ title }}
+    </h1>
     <ion-navbar>
       <ion-title>
         <img src="assets/imgs/logo.png" class="nav-logo">
       </ion-title>
     </ion-navbar>
   </ion-header>
-  <div class='content'>
+  <div class='content main-content'>
     <table class='cleanTable' id="appInfo">
       <tr>
-        <td>Test-versie:</td>
-        <td>{{!!g.staging ? "Ja" : "Nee"}}</td>
+        <td>
+          Test-versie:
+        </td>
+        <td>
+          {{ !!g.staging ? "Ja" : "Nee" }}
+        </td>
       </tr>
       <tr>
-        <td>Wijkkeuze:</td>
-        <td>{{g.getWijkName(wijk)}}</td>
+        <td>
+          Wijk:
+        </td>
+        <td>
+          {{ g.getWijkName(wijk) }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          E-mailadres:
+        </td>
+        <td>
+          {{ email }}
+        </td>
       </tr>
     </table>
     <br>
@@ -30,7 +48,7 @@
       </button>
     </div>
     <div *ngIf="isStanOfStephan">
-      <h1 style="padding: 0 24px; margin: 24px 0 0 0;">Potentiële nieuwe beheerders ({{ (potentialAdmins || {}).length }})</h1>
+      <h1 style="padding: 0 24px; margin: 24px 0 0 0;">Verzoeken tot nieuwe beheerders ({{ (potentialAdmins || {}).length }})</h1>
       <p *ngIf="addStatus">
         {{ addStatus }}
       </p>
@@ -102,6 +120,9 @@
         <p *ngIf="!(admins || []).length">
           Er zijn geen beheerders op het moment (dat is raar)
         </p>
+      </div>
+      <div class="fab sticky-fab" (click)="refreshData()">
+        <i [ngClass]="isRefreshing ? 'isRefreshing material-icons' : 'material-icons'">refresh</i>
       </div>
     </div>
   </div>
