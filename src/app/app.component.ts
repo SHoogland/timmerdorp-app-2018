@@ -99,12 +99,18 @@ export class MyApp {
   }
 
   mouseDown(event) {
-    if (this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase() === 'page-home') return;
+    let page = this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()
+    if (page === 'page-home' || page === 'page-login') return;
 
     let x = this.computeScrollX(event)
-    if (x < 25) {
-      this.swipeGestureStartX = this.computeScrollX(event)
-      this.swipeGestureStartY = this.computeScrollY(event)
+    let y = this.computeScrollY(event)
+
+    let windowHeight = document.body.getBoundingClientRect().height
+    let notBottomSwipe = windowHeight ? y < (windowHeight - 50) : true
+
+    if (x < 25 && y > 80 && notBottomSwipe) {
+      this.swipeGestureStartX = x
+      this.swipeGestureStartY = y
       document.getElementById('backBtnHint').style.top = (this.swipeGestureStartY - (56 / 2)) + 'px'
     }
   }
