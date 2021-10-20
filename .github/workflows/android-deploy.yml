@@ -1,0 +1,29 @@
+name: Deploy Android
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy-android:
+    name: Deploy Android
+    runs-on: macos-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+      # - name: Use Node.js 12.x
+      #   uses: MatiseAms/setup-node@master
+      #   with:
+      #     node-version: 12.x
+      # - name: npm ci
+      #   run: npm ci
+      # - name: npm install ionic and cordova cli
+      #   run: npm i -g @ionic/cli cordova
+      # - name: Get and set build nr
+      #   run: node --experimental-modules scripts/get-set-buildnr.mjs
+      #   env:
+      #     APP_CENTER_TOKEN: ${{ secrets.APP_CENTER_TOKEN }}
+      # - name: ionic build android
+      #   run: |
+      #     ionic cordova build android
