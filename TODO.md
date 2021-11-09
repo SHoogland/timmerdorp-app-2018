@@ -6,6 +6,8 @@
 - De hele app in wijk thema? Meteen vragen bij startup
 - Waarom is registreren zo traag? Kan dat sneller?
 - Deeplinks werken nog niet op Android 
+- faceid auth bij het openen van de app?
+- bestanden werken niet meer, niet handig
 
 ## Webshop verbeterpunten voor 2022
 - De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
