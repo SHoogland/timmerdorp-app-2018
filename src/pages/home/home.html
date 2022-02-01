@@ -1,41 +1,45 @@
 <ion-content class='homeContent' padding>
-  <ion-header [ngClass]='showPhoto?"fullscreen":""' (click)='showPhoto = !showPhoto'>
-    <div [ngClass]='showPhoto?"hiddenHeader":""' id='overlay'></div>
-    <h1 [ngClass]='showPhoto?"hiddenHeader":""' class='home' id="ptitle">Timmerdorp<br>{{y}}</h1>
-    <img [ngClass]='showPhoto?"hiddenHeader":""' src="assets/imgs/logo.png" class="nav-logo">
+  <ion-header [ngClass]='showPhoto ? "fullscreen" : ""'>
+    <div [ngClass]='showPhoto ? "hiddenHeader" : ""' id='overlay'>
+      <table id="titleContainer">
+        <h1 [ngClass]='showPhoto ? "hiddenHeader" : ""' class='home' id="ptitle" (click)='showPhoto = !showPhoto'>Timmerdorp <br>{{y}}</h1>
+      </table>
+    </div>
   </ion-header>
 
-
-  <div id='homeButtons'>
-    <button ion-button full *ngFor="let p of pages" (click)="openPage(p)"
-      [ngClass]="p.class + (!showPhoto || (!p.weather && !p.data) ? '' : ' hidden')" class='homeButton'>
-      <div class='homeBtnD' *ngIf='!showPhoto || (!p.weather && !p.data)'>
-        <i class="material-icons" slot='start' [ngClass]="(p.data ? 'data' : '')">
-          {{p.weather && weather ? weather.icon : (p.icon || "") }}
-        </i>
-        <div *ngIf="p.weather">
-          <h2>Het is {{(weather||{}).temp}}&deg;C</h2>
-          <div class='weatherMsg'>
-            <p>{{(weather||{}).msg}}</p>
+  <div id="homeBtnContainer">
+    <div id='homeButtons'>
+      <button ion-button full *ngFor="let p of pages" (click)="openPage(p)"
+        [ngClass]="p.class + (!showPhoto || (!p.weather && !p.data) ? '' : ' hidden')" class='homeButton'>
+        <div class='homeBtnD' *ngIf='!showPhoto || (!p.weather && !p.data)'>
+          <i class="material-icons" slot='start' [ngClass]="(p.data ? 'data' : '')">
+            {{p.weather && weather ? weather.icon : (p.icon || "") }}
+          </i>
+          <div *ngIf="p.weather">
+            <h2>Het is {{(weather||{}).temp}}&deg;C</h2>
+            <div class='weatherMsg'>
+              <p>{{(weather||{}).msg}}</p>
+            </div>
           </div>
+          <div *ngIf="p.data" id="data">
+            <div class="weatherMsg" style="top: 3px; font-size: 80%;">
+              <p>{{ childrenCount || 0 }} kind{{ childrenCount !== 1 ? "eren" : "" }} hier</p>
+            </div>
+            <div class="weatherMsg" style="top: 22px; font-size: 80%;">
+              <p>{{ wijkCount || 0 }} in wijk {{ wijken[wijk] }}</p>
+            </div>
+            <div class="weatherMsg" style="top: 41px; font-size: 80%;">
+              <p>{{ birthdays || 0 }} {{ birthdays === 1 ? "jarige" : "jarigen" }} vandaag</p>
+            </div>
+          </div>
+          <span *ngIf="!p.small && !p.weather && !p.data">
+            {{p.title}}
+          </span>
+          <div *ngIf="waitingPotentialAdmins && p.title === 'App info'" id="potentialAdminsNotification">{{
+            waitingPotentialAdmins }}</div>
         </div>
-        <div *ngIf="p.data" id="data">
-          <div class="weatherMsg" style="top: 3px; font-size: 80%;">
-            <p>{{ childrenCount || 0 }} kind{{ childrenCount !== 1 ? "eren" : "" }} hier</p>
-          </div>
-          <div class="weatherMsg" style="top: 22px; font-size: 80%;">
-            <p>{{ wijkCount || 0 }} in wijk {{ wijken[wijk] }}</p>
-          </div>
-          <div class="weatherMsg" style="top: 41px; font-size: 80%;">
-            <p>{{ birthdays || 0 }} {{ birthdays === 1 ? "jarige" : "jarigen" }} vandaag</p>
-          </div>
-        </div>
-        <span *ngIf="!p.small && !p.weather && !p.data">
-          {{p.title}}
-        </span>
-        <div *ngIf="waitingPotentialAdmins && p.title === 'App info'" id="potentialAdminsNotification">{{ waitingPotentialAdmins }}</div>
-      </div>
-    </button>
+      </button>
+    </div>
   </div>
   <span>{{error}}</span>
 

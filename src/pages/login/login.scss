@@ -121,4 +121,20 @@ loginpage {
       }
     }
   }
+
+  #warning {
+    ion-icon {
+      font-size: 10rem;
+      top: 40px;
+      left: 28px;
+    }
+    max-width: unset!important;
+    #errorHeader {
+      font-size: 32px;
+    }
+    #errorHeader, #errorHelp {
+      left: 140px!important;
+      width: calc(100% - 150px)!important;
+    }
+  }
 }
