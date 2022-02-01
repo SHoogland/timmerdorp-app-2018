@@ -234,7 +234,7 @@ export class HomePage {
   }
 
   processWeatherData(data) {
-    let weatherMessage = "Geen regen voorspeld!";
+    let weatherMessage = "Geen regen (?)";
     let totalRain = 0;
     let skipped = 0;
     let weatherIcon = "wb_sunny";
@@ -252,9 +252,9 @@ export class HomePage {
     let rainPerHour = totalRain / 6;
     if (rainPerHour > 0) {
       if (rainPerHour > .5) {
-        weatherMessage = "Veel regen voorspeld";
+        weatherMessage = "Veel regen!";
       } else {
-        weatherMessage = "Lichte buien voorspeld";
+        weatherMessage = "Lichte buien";
       }
       weatherIcon = "water_drop";
     }
