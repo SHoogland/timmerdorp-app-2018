@@ -167,9 +167,9 @@ export class GlobalFunctions {
     }
   }
 
-  async checkIfStillLoggedIn() {
+  async checkIfStillLoggedIn(wantsAdmin) {
     await this.fixParseURL();
-    return await this.apiCall('checkIfLoggedIn', {})
+    return await this.apiCall('checkIfLoggedIn', { wantsToBecomeAdmin: wantsAdmin })
   }
 
   async switchEnv() {

@@ -57,7 +57,7 @@ export class EmailConfirmationPage {
     if (showLoading) this.loading = true;
     if (this.isConfirmingEmail && !force) return
     this.isConfirmingEmail = false
-    let logInStatus = await this.g.checkIfStillLoggedIn();
+    let logInStatus = await this.g.checkIfStillLoggedIn(true);
     if (!logInStatus || !logInStatus.result) {
       if(!this.wentToLogin) {
         this.g.toLogin();
@@ -134,6 +134,6 @@ export class EmailConfirmationPage {
     let self = this
     this.statusInterval = setInterval(function () {
       self.checkStatus()
-    }, 1000)
+    }, 2000)
   }
 }
