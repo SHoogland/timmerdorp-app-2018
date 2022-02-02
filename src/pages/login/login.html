@@ -50,7 +50,7 @@
             <h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
           </div>
         </div>
-        <p>Heb je al een account aangemaakt in de Timmerdorp-webshop, om bijvoorbeeld kaartjes te kopen voor je kinderen? Log dan in met dat webshop-account.</p>
+        <p style="padding: 0 10%; font-size: 1.6rem; font-family: 'Montserrat', Roboto, Arial;">Heb je al een account aangemaakt in de Timmerdorp-webshop, om bijvoorbeeld kaartjes te kopen voor je kinderen? Log dan in met dat webshop-account.</p>
       </div>
       <div *ngIf="!loginPart">
         <h1>Registreren</h1>
@@ -105,7 +105,7 @@
   <div *ngIf="!hideLogin" id="switchBar">
     <table>
       <td>
-        <div (click)="loginPart = !loginPart">
+        <div (click)="loginPart = !loginPart; error = null;">
           <div>
             {{ loginPart ? "REGISTREREN" : "INLOGGEN" }}
           </div>
