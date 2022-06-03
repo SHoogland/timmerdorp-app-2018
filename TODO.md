@@ -3,21 +3,22 @@
 - De hele app in wijk thema? Meteen vragen bij startup
 - Deeplinks werken nog niet op Android
 - Wachtwoord vergeten pagina in app
+- zooltjes in ticket bandje ophalen flow en afvinken uitgedeeld
 
 ## Webshop verbeterpunten voor 2022
-- Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
 - Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
 - Corona-maatregelen (leeftijd t/m 12, ID-kaart mee, roepnaam vs volledige voornaam, etc.) weghalen? hopelijk?
-- Even kijken of de checkboxes wat netter kunnen in het ticketformulier
-- Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller
-
+- zooltjes toevoegen aan ticket (incl betaling)
+- eenmalige leidingcodes ipv zelfde link voor iedereen
 
 ## Twijfel voor 2022
 - Hutjes plattegrond toevoegen met gps
 - Kunnen we misschien geen bandjes bestellen met nummers 1-50, 101-150, 201-250, 301-350? Want dan wordt het erg verwarrend wanneer je zoekt op 201, bedoel je dan kind met bandje 201 of kind met hutje 201?
-
+- Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller (geen support mail clients)
 
 ## Gefixt voor 2022
+- Even kijken of de checkboxes wat netter kunnen in het ticketformulier
+- Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
 - Bij het confirmen van je e-mail vanuit de app kom je nog niet in de admin tabel? erg raar
 - Als je al een account hebt gemaakt in de webshop, en vervolgens inlogt via de app, dan kom je alsnog niet helemaal lekker in de Admin table
 - De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet
