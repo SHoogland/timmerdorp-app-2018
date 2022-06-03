@@ -7,7 +7,7 @@ page-scan-ticket {
 		}
 	}
 
-	div:not(.errorCard) .content {
+	div:not(.errorCard) .content:not(.main-content) {
 		padding: 0 !important;
 	}
 

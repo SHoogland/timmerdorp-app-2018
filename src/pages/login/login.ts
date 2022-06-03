@@ -139,7 +139,9 @@ export class LoginPage {
     }, true).catch((e) => {
       self.error = 'Registreren mislukt!'
       if(e.message === 'Account already exists for this username.') {
-        self.errorHelp = 'Er bestaat al een account met dit e-mailadres! Accounts van vorig jaar zijn nog steeds geldig. Probeer in te loggen.'
+        self.errorHelp = 'Er bestaat al een account met dit e-mailadres! Accounts van vorig jaar, en accounts uit de webshop, zijn nog steeds geldig. Probeer in te loggen.'
+      } else {
+        self.errorHelp = e.message
       }
       self.loading = false
     }).then(async function(result) {

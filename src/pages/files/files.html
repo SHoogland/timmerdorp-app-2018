@@ -41,6 +41,10 @@
 			</div>
 		</div>
 
+    <div *ngIf="albums && albums.length === 0">
+      Er zijn (nog) geen fotoalbums voor {{photoYear}}. Kies hierboven een ander jaar.
+    </div>
+
 		<div id="columns">
 			<div *ngFor="let a of albums">
 				<ion-card (click)="openAlbum(a.id)" button>

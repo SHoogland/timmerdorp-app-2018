@@ -81,7 +81,7 @@ export class SettingsPage {
   async addAdmin(email, force?, id?) {
     this.addStatus = 'Laden...'
     let result = await this.g.apiCall('addAdmin', { email: email, force: force, id: id })
-    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt...'
+    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt... bestaat de gebruiker wel? en heeft hij/zij zijn/haar emailadres wel bevestigd?'
 
     let self = this
     setTimeout(function(){
@@ -97,7 +97,7 @@ export class SettingsPage {
   async removePotentialAdmin(email) {
     this.addStatus = 'Laden...'
     let result = await this.g.apiCall('removeAdmin', { email: email, force: true })
-    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt...'
+    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt... (bestaat de gebruiker wel? en heeft hij/zij zijn/haar emailadres bevestigd?'
 
     let self = this
     setTimeout(function(){
@@ -117,7 +117,7 @@ export class SettingsPage {
       if(result.stanOfStephan) {
         this.removeStatus = 'Je kan Stan of Stephan niet verwijderen natuurlijk, grapjas...'
       } else {
-        this.removeStatus = 'Niet gelukt...'
+        this.removeStatus = 'Niet gelukt... bestaat de user wel? en heeft hij/zij zijn/haar e-mailadres wel bevestigd?'
       }
     }
 

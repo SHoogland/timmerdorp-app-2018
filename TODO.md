@@ -1,31 +1,31 @@
 # App feedback en aandachtspunten uit 2021 (door Stan)
-- Hutjes plattegrond toevoegen met gps en alles
-- Meer statistieken/grafieken toevoegen
-  - Hierbij misschien ook iets meer navigatie tovoegen, dus knoppen om in de grafiek alleen de totalen te laten zien, of uitgesplitst per wijk, of alleen alles tussen 8:30 en 11:30, etc
-- Swipe is back op iPhone
 - Registreer/inlog formuliertje mag ff wat netter, statusbalk kleuren daar ook
 - De hele app in wijk thema? Meteen vragen bij startup
-- Waarom is registreren zo traag? Kan dat sneller?
 - Deeplinks werken nog niet op Android
-- Als je al een account hebt gemaakt in de webshop, en vervolgens inlogt via de app, dan kom je alsnog niet helemaal lekker in de Admin table
+- Wachtwoord vergeten pagina in app
 
 ## Webshop verbeterpunten voor 2022
-- De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
-- De e-mail bevestigingspagina moet even customized worden voor mensen die alleen de app gebruiken
 - Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
 - Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
-- Als in de e-mail verificatie pagina een niet-base64 code opgegeven wordt, geeft ie geen foutmelding (behalve in de console dan). Niet helemaal gebruiksvriendelijk
-- Corona-maatregelen (leeftijd t/m 12, ID-kaart mee, roepnaam, etc.) weghalen? hopelijk?
+- Corona-maatregelen (leeftijd t/m 12, ID-kaart mee, roepnaam vs volledige voornaam, etc.) weghalen? hopelijk?
 - Even kijken of de checkboxes wat netter kunnen in het ticketformulier
+- Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller
 
 
 ## Twijfel voor 2022
-- Kijken of alle buttons een beetje schappelijk op de homepagina kunnen passen. ik vrees dat het heel krap wordt...
-- De change-wristband pagina eruit halen? Hij is enigszins buggy, ik heb alleen Sjoerd hem zien gebruiken, en je kan een polsbandje ook gewoon wijzigen door een kindje te zoeken en op polsbandje wijzigen te klikken
+- Hutjes plattegrond toevoegen met gps
 - Kunnen we misschien geen bandjes bestellen met nummers 1-50, 101-150, 201-250, 301-350? Want dan wordt het erg verwarrend wanneer je zoekt op 201, bedoel je dan kind met bandje 201 of kind met hutje 201?
 
 
 ## Gefixt voor 2022
+- Bij het confirmen van je e-mail vanuit de app kom je nog niet in de admin tabel? erg raar
+- Als je al een account hebt gemaakt in de webshop, en vervolgens inlogt via de app, dan kom je alsnog niet helemaal lekker in de Admin table
+- De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet
+- De change-wristband pagina eruit halen? Hij is enigszins buggy, ik heb alleen Sjoerd hem zien gebruiken, en je kan een polsbandje ook gewoon wijzigen door een kindje te zoeken en op polsbandje wijzigen te klikken
+- Kijken of alle buttons een beetje schappelijk op de homepagina kunnen passen. ik vrees dat het heel krap wordt...
+- Swipe is back op iPhone
+- Meer statistieken/grafieken toevoegen
+  - Hierbij misschien ook iets meer navigatie tovoegen, dus knoppen om in de grafiek alleen de totalen te laten zien, of uitgesplitst per wijk, of alleen alles tussen 8:30 en 11:30, etc
 - “E-mailadres nog niet bevestigd” mist een refresh knop
 - Op de “waitingforadmin” pagina verdwijnt de uitloggen knop wanneer “loading”, doe maar niet
 - Soms staat er nog voornaam in plaats van Roepnaam, pas op, anders wordt Henrieke boos
