@@ -65,7 +65,94 @@ export class MyApp {
   ngAfterViewInit() {
     this.platform.ready().then(() => {
       this.subscribeToDeeplinks()
-    })
+
+      if (this.platform.is('cordova')) {
+        if (cordova.platformId === 'ios') {
+          let b = document.body
+          let self = this
+          b.addEventListener('touchdown', function (event) {
+            self.touchStart(event)
+          });
+
+          b.addEventListener('touchend', function (event) {
+            self.touchEnd(event)
+          });
+
+          b.addEventListener('touchmove', function (event) {
+            self.touchMove(event)
+          })
+        }
+      }
+    });
+  }
+
+  computeScrollX(event) {
+    return (event.pageX) || (event.clientX + (document.body.scrollLeft || 0) - (document.body.clientLeft || 0))
+  }
+
+  computeScrollY(event) {
+    return (event.pageY) || (event.clientY + (document.body.scrollTop || 0) - (document.body.clientTop || 0))
+  }
+
+  touchStart(event) {
+    let page = this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()
+    if (page === 'page-home' || page === 'page-login') return;
+
+    let x = this.computeScrollX(event)
+    let y = this.computeScrollY(event)
+
+    let windowHeight = document.body.getBoundingClientRect().height
+    let notBottomSwipe = windowHeight ? y < (windowHeight - 50) : true
+
+    if (x < 25 && y > 80 && notBottomSwipe) {
+      this.swipeGestureStartX = x
+      this.swipeGestureStartY = y
+      document.getElementById('backBtnHint').style.top = (this.swipeGestureStartY - (56 / 2)) + 'px'
+    }
+  }
+
+  touchEnd(event) {
+    if (!this.swipeGestureStartX) return
+
+    let backBtnHint = document.getElementById('backBtnHint')
+    let xMovement = this.computeScrollX(event) - this.swipeGestureStartX
+    if (xMovement > 80) {
+      backBtnHint.style.background = '#b0d0ff'
+      backBtnHint.style.transitionProperty = 'background, opacity'
+      this.g.goHome();
+      this.swipeTimeout = setTimeout(function () {
+        backBtnHint.style.background = '#ffffff'
+        backBtnHint.style.opacity = '0'
+      }, 300)
+    } else {
+      backBtnHint.style.opacity = '0'
+      setTimeout(function(){
+        backBtnHint.style.top = '-100px'
+      }, 400)
+    }
+    this.swipeGestureStartX = null;
+    this.swipeGestureStartY = null;
+  }
+
+  touchMove(event) {
+    if (!this.swipeGestureStartX) return
+
+    let backBtnHint = document.getElementById('backBtnHint')
+    let xMovement = this.computeScrollX(event) - this.swipeGestureStartX
+    if (xMovement > 25) {
+      clearTimeout(this.swipeTimeout)
+      backBtnHint.style.transitionProperty = ''
+      backBtnHint.style.background = '#ffffff'
+      backBtnHint.style.opacity = '0'
+
+      if (xMovement > 80) {
+        document.getElementById('backBtnHint').style.opacity = '1'
+      } else {
+        document.getElementById('backBtnHint').style.opacity = '' + ((xMovement - 25) / (80 - 25))
+      }
+    } else {
+      document.getElementById('backBtnHint').style.opacity = '0'
+    }
   }
 
   subscribeToDeeplinks() {

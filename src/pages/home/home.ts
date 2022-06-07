@@ -16,7 +16,6 @@ import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { AppInfoPage } from '../app-info/app-info';
 import { HttpClient } from '@angular/common/http';
 import { BirthdaysPage } from '../birthdays/birthdays';
-import { ChangeWristbandPage } from '../change-wristband/change-wristband';
 import { FilesPage } from '../files/files';
 import { GlobalFunctions } from '../../providers/global';
 import { EmailConfirmationPage } from '../email-confirmation/email-confirmation';
@@ -76,7 +75,6 @@ export class HomePage {
       "app-info": AppInfoPage,
       "login": LoginPage,
       "birthdays": BirthdaysPage,
-      "change-wristband": ChangeWristbandPage,
       "files": FilesPage
     }
     this.g.setStatusBar("#2196f3");
@@ -134,7 +132,7 @@ export class HomePage {
           title: '-',
           component: "children",
           class: 'bg-white halfWidth homeInfoCard weather',
-          icon: "calculate",
+          icon: "query_stats",
           data: true
         },
         {
@@ -160,12 +158,6 @@ export class HomePage {
           component: "connect-child-to-cabin",
           class: 'bg-blue',
           icon: 'person_add_alt'
-        },
-        {
-          title: 'Verander polsbandje',
-          component: "change-wristband",
-          class: 'bg-blue',
-          icon: 'change_circle'
         },
         {
           title: 'Statistieken',
@@ -314,7 +306,7 @@ export class HomePage {
         this.error = error.message;
       });
     } else {
-      this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 'xu7BiCElBu' });
+      this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 'xO0ioOoL4P' });
     }
   }
 }

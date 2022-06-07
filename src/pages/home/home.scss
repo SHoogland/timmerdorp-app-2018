@@ -94,12 +94,16 @@ page-home {
     width: 100%;
   }
 
+  #homeBtnContainer {
+    height: 400px;
+  }
+
   #overlay {
     z-index: 20;
     min-height: 320px;
     width: 100%;
     position: absolute;
-    height: calc(100vh - 7 * 80px);
+    height: calc(100vh - 6 * 80px);
     background: rgba(0, 0, 0, 0.5);
     &.hiddenHeader {
       background: rgba(0, 0, 0, 0);
@@ -124,9 +128,8 @@ page-home {
     * {
       z-index: 25;
     }
-    min-height: 400px;
-    position: absolute;
-    height: calc(100vh - 6 * 80px);
+    min-height: 160px;
+    height: calc(100vh - 5 * 80px);
     z-index: 10;
     background-position: center;
     background-size: cover;

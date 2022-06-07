@@ -8,14 +8,7 @@
 			</ion-title>
 		</ion-navbar>
 	</ion-header>
-	<div class='content'>
-		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
-			<div class="content" *ngIf='error'>
-				<ion-icon name='warning'></ion-icon>
-				<h1 id='errorHeader' [innerHTML]='error'>{{ error }}</h1>
-				<h4 id='errorHelp' [innerHTML]='errorHelp' style="padding-bottom: 12px;">{{ errorHelp }}</h4>
-			</div>
-		</div>
+	<div class='content main-content'>
 		<div [ngClass]='loading?"loading load-spinner":"load-spinner"'>
 			<ion-spinner color='primary' *ngIf='loading'></ion-spinner>
 		</div>
@@ -39,10 +32,27 @@
 						<td>Hutnummer: </td>
 						<td>{{ ticket.hutNr }}</td>
 					</tr>
+					<tr>
+						<td>Zooltjes besteld:</td>
+						<td>{{ ticket.hasSole ? "Ja" : "Nee" }}</td>
+					</tr>
+					<tr>
+						<td>Zooltjes opgehaald:</td>
+						<td><input type="checkbox" [checked]="ticket.collectedSole" (click)="!ticket.collectedSole ? collectSole() : ''" [disabled]="ticket.collectedSole"/> {{ ticket.loadingSole ? "Laden..." : (ticket.collectedSole ? "Ja" : "Nee") }}</td>
+					</tr>
 				</table>
 			</div>
+
+      <div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
+        <div class="content" *ngIf='error'>
+          <ion-icon name='warning'></ion-icon>
+          <h1 id='errorHeader' [innerHTML]='error'>{{ error }}</h1>
+          <h4 id='errorHelp' [innerHTML]='errorHelp' style="padding-bottom: 12px;">{{ errorHelp }}</h4>
+        </div>
+      </div>
+
 			<div class="bracelet-number">
-        <h1>Armbandnummer</h1>
+        <h1>Polsbandnummer</h1>
         <p style="padding: 0 24px;" *ngIf="showSuggestion">Wil je <span (click)="ticket.wristband = '' + suggestionNumber; saveTicket()" id="wristbandSuggestion">bandje {{ suggestionNumber }}</span> toewijzen?</p>
 				<ion-list class="line-input">
 					<ion-item>
@@ -66,7 +76,7 @@
 		<div id='modalBottom'>
 			<span class="close" (click)="closeModal();">&times;</span>
 			<h1>Waarschuwing</h1>
-			<p>Dit ticket heeft al een armband!</p>
+			<p>Dit ticket heeft al een polsband!</p>
 		</div>
 		<button ion-button full (click)="closeModal();" class="correction">Alsnog doorgaan</button>
 		<button ion-button full (click)="goHome()" class="correction">Terug naar homepagina</button>

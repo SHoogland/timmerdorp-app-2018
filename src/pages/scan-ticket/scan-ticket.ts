@@ -10,9 +10,11 @@ declare let cordova: any;
   templateUrl: 'scan-ticket.html',
 })
 export class ScanTicketPage {
+  disableSoleCheckbox: boolean;
   wristBandError: boolean;
   showSuggestion: boolean;
   loadedTicket: boolean;
+  loadingSole: boolean;
   loading: boolean;
 
   oldNumber: string;
@@ -88,9 +90,9 @@ export class ScanTicketPage {
       }
       let ticket = result.ticket;
 
-      let history = await self.storage.get('searchChildHistory')
+      let history = await self.storage.get('searchChildHistory') || []
       history.unshift({
-        firstName: ticket.nickName || ticket.firstName,
+        firstName: ticket.firstName,
         lastName: ticket.lastName,
         wristband: ticket.wristband,
         hutNr: ticket.hutNr,
@@ -102,6 +104,18 @@ export class ScanTicketPage {
       self.loadedTicket = true;
       if (self.ticket.wristband) self.showModal()
     });
+  }
+
+  collectSole() {
+    this.loadingSole = true
+    let self = this
+    console.log(this.ticket.id)
+    this.g.apiCall('collectSole', {
+      id: this.ticket.id,
+    }).then((result) => {
+      self.loadingSole = false
+      self.ticket.collectedSole = true
+    })
   }
 
   saveTicket() {
@@ -131,7 +145,7 @@ export class ScanTicketPage {
       self.storage.get('editHistory').then((val) => {
         let editHis = val || [];
         editHis.unshift({
-          name: (self.ticket.nickName || self.ticket.firstName) + " " + self.ticket.lastName,
+          name: (self.ticket.firstName) + " " + self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
           wijk: self.g.getColor(self.ticket.hutNr)
@@ -142,7 +156,7 @@ export class ScanTicketPage {
       }, (error) => {
         let editHis = [];
         editHis.unshift({
-          name: (self.ticket.nickName || self.ticket.firstName) + " " + self.ticket.lastName,
+          name: (self.ticket.firstName) + " " + self.ticket.lastName,
           oldNr: result.oldNumber || "onbekend",
           newNr: result.newNumber,
           wijk: self.g.getColor(self.ticket.hutNr)

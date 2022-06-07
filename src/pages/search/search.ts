@@ -180,7 +180,7 @@ export class SearchPage {
 
       if(self.isSearchingById) {
         self.showModal(result.tickets[0])
-        self.searchTerm = (result.tickets[0].nickName || result.tickets[0].firstName) + ' ' + result.tickets[0].lastName
+        self.searchTerm = (result.tickets[0].firstName) + ' ' + result.tickets[0].lastName
         self.isSearchingById = false
       }
     }).catch((e) => {
@@ -195,7 +195,7 @@ export class SearchPage {
     this.g.setStatusBar(['yellow', 'red', 'blue', 'green'][(child.hutNr || "2")[0]])
     this.modal.showModal = true;
     this.history.unshift({
-      firstName: child.nickName || child.firstName,
+      firstName: child.firstName,
       lastName: child.lastName,
       wristband: child.wristband,
       hutNr: child.hutNr,
@@ -236,7 +236,7 @@ export class SearchPage {
   }
 
   shareChild(child) {
-    let msg = 'Moet je eens kijken naar Timmerdorp-deelnemer ' + (child.nickName || child.firstName) + '! Om dit te bekijken in die gave Timmerdorp-app, klik hier: https://shop.timmerdorp.com/app/kindje?id=' + child.id
+    let msg = 'Moet je eens kijken naar Timmerdorp-deelnemer ' + child.firstName + '! Om dit te bekijken in die gave Timmerdorp-app, klik hier: https://shop.timmerdorp.com/app/kindje?id=' + child.id
     this.socialSharing.share(msg)
   }
 

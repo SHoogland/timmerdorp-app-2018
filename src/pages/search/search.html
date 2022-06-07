@@ -14,7 +14,7 @@
     <div class="container">
       <div class="bracelet-number">
         <h1 class='title'>Zoekopdracht:</h1>
-        <p class="search-on">(voornaam, achternaam, armbandnummer of hutnummer)</p>
+        <p class="search-on">(Naam polsbandnummer of hutnummer)</p>
         <ion-list class="line-input">
           <ion-item>
             <ion-input [ngClass]="'ion-text-right' + ((searchTerm||'').length?'':' hideClear')" clearInput
@@ -47,7 +47,7 @@
           Zoekgeschiedenis ({{(history || []).length}})
         </ion-list-header>
         <div *ngFor="let h of (history || [])"
-          (click)='searchTerm = "" + ((h.nickName || h.firstName) + " " + h.lastName || h.wristband || h.hutNr); searchThis()'
+          (click)='searchTerm = "" + ((h.firstName) + " " + h.lastName || h.wristband || h.hutNr); searchThis()'
           class='{{"childItem " + g.getWijk(h.hutNr)}}'>
           <table>
             <tr>
@@ -60,7 +60,7 @@
               </td>
               <td>
                 <h2>
-                  {{ h.nickName || h.firstName }}
+                  {{ h.firstName }}
                   <br>
                   {{ h.lastName }}
                 </h2>
@@ -93,7 +93,7 @@
             </td>
             <td>
               <h2>
-                {{ child.nickName || child.firstName }}
+                {{ child.firstName }}
                 <br>
                 {{ child.lastName }}
               </h2>
@@ -122,7 +122,7 @@
       <table id="titleLayout">
         <tr>
           <td>
-            {{ modal.child.nickName || modal.child.firstName }} {{ modal.child.lastName}}
+            {{ modal.child.firstName }} {{ modal.child.lastName}}
           </td>
           <td>
             <i class="material-icons" id="shareIcon" (click)="shareChild(modal.child);">share</i>

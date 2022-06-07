@@ -1,23 +1,12 @@
 # App feedback en aandachtspunten uit 2021 (door Stan)
-- Hutjes plattegrond toevoegen met gps en alles
-- Meer statistieken/grafieken toevoegen
-- Swipe is back op iPhone
 - Registreer/inlog formuliertje mag ff wat netter, statusbalk kleuren daar ook
 - De hele app in wijk thema? Meteen vragen bij startup
-- Waarom is registreren zo traag? Kan dat sneller?
 - Deeplinks werken nog niet op Android 
 - faceid auth bij het openen van de app?
 - bestanden werken niet meer, niet handig
 
 ## Webshop verbeterpunten voor 2022
-- De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet. Er hoeft geen cookie-waarschuwing, want het zijn functionele cookies
-- De e-mail bevestigingspagina moet even customized worden voor mensen die alleen de app gebruiken
-- Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
-- Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
-- Als in de e-mail verificatie pagina een niet-base64 code opgegeven wordt, geeft ie geen foutmelding (behalve in de console dan). Niet helemaal gebruiksvriendelijk
-- Corona-maatregelen (leeftijd t/m 12, ID-kaart mee, roepnaam, etc.) weghalen? hopelijk?
-- Even kijken of de checkboxes wat netter kunnen in het ticketformulier
-
+- eenmalige leidingcodes ipv zelfde link voor iedereen
 
 ## Twijfel voor 2022
 - Kijken of alle buttons een beetje schappelijk op de homepagina kunnen passen. ik vrees dat het heel krap wordt...

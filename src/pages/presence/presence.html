@@ -48,7 +48,7 @@
 				<table>
 					<tr>
 						<td>Naam: </td>
-						<td>{{ (ticket.nickName || ticket.firstName) }} {{ ticket.lastName }}</td>
+						<td>{{ ticket.firstName }} {{ ticket.lastName }}</td>
 					</tr>
 					<tr>
 						<td>Polsbandnummer: </td>
@@ -87,7 +87,7 @@
               </td>
               <td>
                 <h2>
-                  {{ h.nickName || h.firstName }}
+                  {{ h.firstName }}
                   <br>
                   {{ h.lastName }}
                 </h2>

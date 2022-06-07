@@ -65,7 +65,7 @@
 				Nog geen kindertjes in dit hutje :(</p>
 			<button *ngFor="let child of hutTickets" ion-button full [ngClass]="'modern alternate ' + g.getWijk(hutNr)"
 				(click)="removeChild = child; showRemoveModal();" style="margin-top: 0px!important;">
-				{{ child.nickName || child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
+				{{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
 			</button>
 			<button ion-button full (click)="showAddModal()" [ngClass]="'bg-blue correction ' + g.getWijk(hutNr)">
 				<ion-icon slot='start' name='add' style="left: 0px;" id='addIcon'></ion-icon>
@@ -107,12 +107,12 @@
 				<ion-spinner *ngIf='loading' color='primary'></ion-spinner>
 			</div>
 
-      <p *ngIf="!loading && searchedChild && !(tickets || []).length">Geen kinderen gevonden! Je kunt zoeken op hutnummer, polsbandje, voornaam, en achternaam.</p>
+      <p *ngIf="!loading && searchedChild && !(tickets || []).length">Geen kinderen gevonden! Je kunt zoeken op hutnummer, polsbandje, of naam.</p>
 		</div>
 
 		<div *ngFor="let child of tickets" [ngClass]='"alternate " + g.getWijk(child.hutNr)'>
 			<button ion-button full (click)="addChildToHut(child);" class="modern">
-				{{ child.nickName || child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
+				{{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
 				<span *ngIf="child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;hutje: {{child.hutNr }}</span>
 				<span *ngIf="!child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;Geen hutje :(</span>
 			</button>
@@ -128,7 +128,7 @@
 		<div id='modalBottom'>
 			<span class="close" (click)="closeRemoveModal();">&times;</span>
 			<h1>Waarschuwing</h1>
-			<p *ngIf="removeChild">Weet je zeker dat je {{ removeChild.nickName || removeChild.firstName }}
+			<p *ngIf="removeChild">Weet je zeker dat je {{ removeChild.firstName }}
 				wilt verwijderen?</p>
 		</div>
 		<button ion-button full (click)="removeChildFromHut(removeChild)">Ja</button>
@@ -144,10 +144,10 @@
 		<div id='modalBottom'>
 			<span class="close" (click)="closeWarningModal();">&times;</span>
 			<h1>Waarschuwing</h1>
-			<p *ngIf="selectedChild && alreadyHasHutError">{{ selectedChild.nickName || selectedChild.firstName }} heeft al een
+			<p *ngIf="selectedChild && alreadyHasHutError">{{ selectedChild.firstName }} heeft al een
 				hutje! Weet je zeker dat je hem/haar wilt overplaatsen van hutje {{selectedChild.hutNr}} naar hutje
 				{{hutNr}}?</p>
-			<p *ngIf="selectedChild&&noWristbandError">{{ selectedChild.nickName || selectedChild.firstName }} heeft nog geen
+			<p *ngIf="selectedChild&&noWristbandError">{{ selectedChild.firstName }} heeft nog geen
 				polsbandje! Hij/zij kan nog niet toegevoegd worden aan een hutje.</p>
 		</div>
 		<button ion-button full (click)="closeWarningModal()" *ngIf='noWristbandError'>Terug</button>
