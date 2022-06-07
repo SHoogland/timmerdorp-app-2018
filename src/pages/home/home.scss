@@ -86,11 +86,8 @@ page-home {
   }
 
   #homeButtons {
-    @media screen and (min-height: 880px) {
-      top: calc(100vh - 7 * 80px);
-    }
-    position: absolute;
-    top: 320px;
+    position: relative;
+    top: -80px;
     width: 100%;
   }
 
@@ -100,7 +97,7 @@ page-home {
 
   #overlay {
     z-index: 20;
-    min-height: 320px;
+    min-height: 80px;
     width: 100%;
     position: absolute;
     height: calc(100vh - 6 * 80px);
@@ -133,33 +130,34 @@ page-home {
     z-index: 10;
     background-position: center;
     background-size: cover;
-    &.fullscreen {
-      background-image: url(../assets/imgs/header_bg.jpg) !important;
-    }
     background-image: url(../assets/imgs/header_bg.jpg);
   }
 
-  .nav-logo {
-    width: 140px;
-    height: 140px;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 50%;
-    padding: 10px;
-    margin-left: auto;
+  #ptitle {
+    text-align: center;
+    font-family: ProductSans !important;
+    margin: 0;
+    width: 100%;
+    font-size: 56px !important;
     position: relative;
-    top: 40px;
-    display: block;
-    margin-right: auto;
+    z-index: 20;
+    color: white;
+
+    @media screen and (max-height: 680px) {
+      font-size: 40px !important;
+      br {
+        display: none;
+      }
+    }
+    display: table-cell;
+    vertical-align: middle;
   }
 
-  #ptitle {
-    font-family: ProductSans !important;
-    bottom: 90px !important;
-    top: unset !important;
-    width: calc(100% - 30px);
-    left: 15px !important;
-    font-size: 48px !important;
+  #titleContainer {
+    height: 100%;
+    width: 100%;
   }
+
 
   button i.material-icons {
     left: -12px;

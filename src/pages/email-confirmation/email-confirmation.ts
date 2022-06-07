@@ -20,6 +20,7 @@ export class EmailConfirmationPage {
   isConfirmingEmail: boolean;
   waitingForAdmin: boolean;
   wentToLogin: boolean;
+  wentHome: boolean;
   loading: boolean;
 
   statusInterval: any;
@@ -56,7 +57,7 @@ export class EmailConfirmationPage {
     if (showLoading) this.loading = true;
     if (this.isConfirmingEmail && !force) return
     this.isConfirmingEmail = false
-    let logInStatus = await this.g.checkIfStillLoggedIn();
+    let logInStatus = await this.g.checkIfStillLoggedIn(true);
     if (!logInStatus || !logInStatus.result) {
       if(!this.wentToLogin) {
         this.g.toLogin();
@@ -74,7 +75,10 @@ export class EmailConfirmationPage {
         this.waitingForAdmin = true;
         this.waitingForEmailConfirmation = false;
       } else {
-        this.g.goHome();
+        if(!this.wentHome) {
+          this.g.goHome();
+          this.wentHome = true
+        }
       }
     }
   }
@@ -130,6 +134,6 @@ export class EmailConfirmationPage {
     let self = this
     this.statusInterval = setInterval(function () {
       self.checkStatus()
-    }, 1000)
+    }, 2000)
   }
 }

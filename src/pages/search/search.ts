@@ -199,7 +199,8 @@ export class SearchPage {
       lastName: child.lastName,
       wristband: child.wristband,
       hutNr: child.hutNr,
-      wijk: this.g.getColor(child.hutNr)
+      wijk: this.g.getColor(child.hutNr),
+      id: child.id,
     });
     this.history = this.g.filterHistory(this.history);
     this.storage.set("searchChildHistory", this.history);

@@ -7,10 +7,10 @@ import { Storage } from '@ionic/storage';
 import { GlobalFunctions } from '../../providers/global';
 
 @Component({
-	selector: 'page-app-info',
-	templateUrl: 'app-info.html'
+	selector: 'page-settings',
+	templateUrl: 'settings.html'
 })
-export class AppInfoPage {
+export class SettingsPage {
   removeStatus: string
   addStatus: string
 	error: string;
@@ -19,6 +19,8 @@ export class AppInfoPage {
 	wijk: string;
 
   isStanOfStephan: boolean;
+  isRefreshing: boolean;
+  loading: boolean;
 
   admins: Array<any>;
   potentialAdmins: Array<any>;
@@ -55,9 +57,15 @@ export class AppInfoPage {
       if(result) alert('Gelukt om admin toe te voegen!')
       else alert('Mislukt om admin toe te voegen')
     }
+
+    let self = this;
+    document.querySelector('div.sticky-fab i.material-icons').addEventListener('animationiteration', function() {
+      if(!self.loading) self.isRefreshing = false;
+    })
 	}
 
   async getAdmins() {
+    this.loading = true
     let self = this;
     this.g.apiCall('getAdmins').then(function(result) {
       if(result.denied) {
@@ -66,13 +74,14 @@ export class AppInfoPage {
       self.isStanOfStephan = true;
       self.admins = result.admins;
       self.potentialAdmins = result.potentialAdmins;
+      self.loading = false
     })
   }
 
   async addAdmin(email, force?, id?) {
     this.addStatus = 'Laden...'
     let result = await this.g.apiCall('addAdmin', { email: email, force: force, id: id })
-    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt...'
+    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt... bestaat de gebruiker wel? en heeft hij/zij zijn/haar emailadres wel bevestigd?'
 
     let self = this
     setTimeout(function(){
@@ -88,7 +97,7 @@ export class AppInfoPage {
   async removePotentialAdmin(email) {
     this.addStatus = 'Laden...'
     let result = await this.g.apiCall('removeAdmin', { email: email, force: true })
-    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt...'
+    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt... (bestaat de gebruiker wel? en heeft hij/zij zijn/haar emailadres bevestigd?'
 
     let self = this
     setTimeout(function(){
@@ -108,7 +117,7 @@ export class AppInfoPage {
       if(result.stanOfStephan) {
         this.removeStatus = 'Je kan Stan of Stephan niet verwijderen natuurlijk, grapjas...'
       } else {
-        this.removeStatus = 'Niet gelukt...'
+        this.removeStatus = 'Niet gelukt... bestaat de user wel? en heeft hij/zij zijn/haar e-mailadres wel bevestigd?'
       }
     }
 
@@ -134,4 +143,9 @@ export class AppInfoPage {
 	ionViewDidLoad() {
 		this.init();
 	}
+
+  refreshData() {
+    this.isRefreshing = true;
+    this.getAdmins();
+  }
 }

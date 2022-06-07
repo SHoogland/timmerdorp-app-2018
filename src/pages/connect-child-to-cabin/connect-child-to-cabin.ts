@@ -248,8 +248,10 @@ export class ConnectChildToCabinPage {
           oldNr: self.selectedChild.hutNr,
           hutNr: self.nieuwHutje,
           wijk: self.g.getColor(self.nieuwHutje),
-          ticket: self.updateT(self.selectedChild)
+          ticket: self.updateT(self.selectedChild),
+          id: self.selectedChild.id,
         });
+        self.searchedChild = false
 
         self.storage.set("cabinAddHistory", self.history);
       }
@@ -286,7 +288,8 @@ export class ConnectChildToCabinPage {
           hutNr: self.nieuwHutje,
           wijk: self.g.getColor(self.nieuwHutje),
           ticket: self.updateT2(self.removedChild),
-          removal: true
+          id: self.selectedChild.id,
+          removal: true,
         });
 
         self.storage.set("cabinAddHistory", self.history);
@@ -318,6 +321,7 @@ export class ConnectChildToCabinPage {
 	closeAddModal() {
 		let self = this;
 		this.addModal.show = false;
+    self.searchedChild = false;
 		setTimeout(function () {
 			document.querySelector('#myModal').classList.remove('high');
 			self.searchError = '';

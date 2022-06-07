@@ -80,31 +80,29 @@ h1 {
 	opacity: 1;
 }
 
-#ptitle {
-	position: absolute;
-	top: 2px;
-	margin-top: 22px;
-	white-space: nowrap;
-	font-size: 30px;
-	overflow-x: hidden;
-	&:not(.home) {
-		@media only screen and (max-width: 360px) {
-			font-size: 24px !important;
-			line-height: 24px;
-			padding-top: 28px;
-		}
-		line-height: 30px;
-		padding-top: 25px;
-		top: 0;
-		margin-top: 0;
-		margin-bottom: 0;
-		height: 80px;
-	}
-	width: calc(100% - 132px);
-	z-index: 100;
-	text-align: center;
-	left: 66px;
-	color: white;
+#ptitle:not(.home) {
+  position: absolute;
+  top: 2px;
+  margin-top: 22px;
+  white-space: nowrap;
+  font-size: 30px;
+  overflow-x: hidden;
+  @media only screen and (max-width: 360px) {
+    font-size: 24px !important;
+    line-height: 24px;
+    padding-top: 28px;
+  }
+  line-height: 30px;
+  padding-top: 25px;
+  top: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 80px;
+  width: calc(100% - 132px);
+  z-index: 100;
+  text-align: center;
+  left: 66px;
+  color: white;
 }
 
 span.tinyScreen {
@@ -122,11 +120,15 @@ span.notTinyScreen {
 }
 
 ion-header {
-	position: sticky;
+	position: fixed;
 }
 
 div.content {
 	padding: 10px !important;
+}
+
+div.content.main-content {
+	padding: 90px 10px 10px 10px !important;
 }
 
 .label {
@@ -941,5 +943,35 @@ button {
   }
   span {
     font-size: 18px;
+  }
+}
+
+
+
+div.sticky-fab {
+  position: sticky;
+  padding-top: 8px;
+  z-index: 10;
+  bottom: 28px;
+  left: calc(100% - 52px - 28px);
+  background: white;
+  color: #555;
+  box-shadow: 0px 0px 30px 8px rgba(0, 0, 0, 0.25);
+
+  i.material-icons {
+    transform: rotate(0deg);
+
+    &.isRefreshing {
+      animation-name: rotate;
+      animation-duration: 1000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
   }
 }

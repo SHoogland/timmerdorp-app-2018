@@ -132,7 +132,8 @@ export class PresencePage {
 						lastName: self.ticket.lastName,
 						wristband: self.ticket.wristband,
 						hutNr: self.ticket.hutNr,
-						wijk: self.g.getColor(self.ticket.hutNr)
+						wijk: self.g.getColor(self.ticket.hutNr),
+            id: self.ticket.id,
 					});
 					self.history = this.g.filterHistory(this.history);
 					self.storage.set("presHistory", self.history);

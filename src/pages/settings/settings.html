@@ -10,7 +10,7 @@
       </ion-title>
     </ion-navbar>
   </ion-header>
-  <div class='content'>
+  <div class='content main-content'>
     <table class='cleanTable' id="appInfo">
       <tr>
         <td>
@@ -120,6 +120,9 @@
         <p *ngIf="!(admins || []).length">
           Er zijn geen beheerders op het moment (dat is raar)
         </p>
+      </div>
+      <div class="fab sticky-fab" (click)="refreshData()">
+        <i [ngClass]="isRefreshing ? 'isRefreshing material-icons' : 'material-icons'">refresh</i>
       </div>
     </div>
   </div>
