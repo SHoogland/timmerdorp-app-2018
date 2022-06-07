@@ -128,7 +128,8 @@ export class StatsPage {
     }
 
     this.showChildCountGraph = true
-    entries = entries.sort((a, b) => (a.hour != b.hour ? a.hour - b.hour : a.minute - b.minute))
+    entries = entries.sort((a, b) => (a.h != b.h ? a.h - b.h : a.m - b.m))
+    entries = this.expandEntries(entries)
 
     let isConsecutive = (a, b) => a.minute === 59 ? ((b.hour == a.hour + 1) && b.minute === 0) : (a.hour === b.hour && b.minute === a.minute + 1)
 
@@ -265,6 +266,33 @@ export class StatsPage {
 
 
     this.loadingGraphData = false
+  }
+
+  expandEntries(entries) {
+    let firstEntry = {
+      hour: entries[0].h,
+      minute: entries[0].m,
+      yellow: entries[0].y,
+      red: entries[0].r,
+      blue: entries[0].b,
+      green: entries[0].g,
+      total: entries[0].t,
+    }
+    let expandedEntries = [firstEntry]
+    for(let i = 1; i < entries.length; i++) {
+      let pe = expandedEntries[i - 1]
+      let e = entries[i]
+      expandedEntries.push({
+        hour: e.h,
+        minute: e.m,
+        yellow: pe.yellow + (e.y || 0),
+        red: pe.red + (e.r || 0),
+        blue: pe.blue + (e.b || 0),
+        green: pe.green + (e.g || 0),
+        total: pe.total + (e.t || 0),
+      })
+    }
+    return expandedEntries
   }
 
   refreshData() {
