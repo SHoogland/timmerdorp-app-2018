@@ -4,16 +4,13 @@
 - Deeplinks werken nog niet op Android
 - Wachtwoord vergeten pagina in app
 - zooltjes in ticket bandje ophalen flow en afvinken uitgedeeld
+- Sommige kindjes hebben een firstName met een spatie aan het einde, zorg dat dat goed gedisplayed wordt
 
-## Webshop verbeterpunten voor 2022
-- Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
-- Corona-maatregelen (leeftijd t/m 12, ID-kaart mee, roepnaam vs volledige voornaam, etc.) weghalen? hopelijk?
-- zooltjes toevoegen aan ticket (incl betaling)
-- eenmalige leidingcodes ipv zelfde link voor iedereen
+## Webshop verbeterpunten voor 2023
+- Sommige kids hebben een spatie achter hun firstName gekregen, hoe kan dat? als we geen oorzaak vinden: zorg dan dat ie bij save-ticket er iig uit gefilterd wordt.
 
 ## Twijfel voor 2022
 - Hutjes plattegrond toevoegen met gps
-- Kunnen we misschien geen bandjes bestellen met nummers 1-50, 101-150, 201-250, 301-350? Want dan wordt het erg verwarrend wanneer je zoekt op 201, bedoel je dan kind met bandje 201 of kind met hutje 201?
 - Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller (geen support mail clients)
 
 ## Gefixt voor 2022
