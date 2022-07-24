@@ -252,7 +252,7 @@ export class HomePage {
     }
 
     this.weather = {
-      temp: (Math.round((data.list[0].main.temp - 273.15) * 10) / 10).toFixed(1),
+      temp: Math.round(data.list[0].main.temp - 273.15),
       msg: weatherMessage,
       icon: weatherIcon
     }

@@ -84,7 +84,7 @@ export class LoginPage {
     if (!self.login.username || !self.login.password) {
       if(!surpressWarnings) {
         self.error = 'Inloggen mislukt!'
-        self.errorHelp = 'Een gebruikersnaam en wachtwoord zijn vereist'
+        self.errorHelp = 'Een e-mailadres en wachtwoord zijn vereist'
       }
       return
     }
@@ -97,7 +97,7 @@ export class LoginPage {
     await Parse.User.logIn(self.login.username.toLowerCase().replace(' ', ''), self.login.password).catch(
       error => {
         let readableErrors = {
-          'Invalid username/password.': 'Verkeerde gebruikersnaam of wachtwoord.',
+          'Invalid username/password.': 'Verkeerd e-mailadres of wachtwoord.',
           'password is required.': 'Om in te loggen is een wachtwoord vereist!',
         }
         self.error = 'Inloggen mislukt'
@@ -123,7 +123,7 @@ export class LoginPage {
     if (!self.register.username || !self.register.password) {
       if(!surpressWarnings) {
         self.error = 'Registreren mislukt!'
-        self.errorHelp = 'Een gebruikersnaam en wachtwoord zijn vereist'
+        self.errorHelp = 'Een e-mailadres en wachtwoord zijn vereist'
       }
       return
     }

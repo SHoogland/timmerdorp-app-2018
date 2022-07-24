@@ -126,15 +126,16 @@ loginpage {
     ion-icon {
       font-size: 10rem;
       top: 40px;
-      left: 28px;
+      left: 18px;
     }
     max-width: unset!important;
     #errorHeader {
       font-size: 32px;
+      font-weight: bold;
     }
     #errorHeader, #errorHelp {
-      left: 140px!important;
-      width: calc(100% - 150px)!important;
+      left: 100px!important;
+      width: calc(100% - 100px)!important;
     }
   }
 }

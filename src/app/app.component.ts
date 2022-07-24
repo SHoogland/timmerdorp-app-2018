@@ -74,7 +74,7 @@ export class MyApp {
         if (cordova.platformId === 'ios') {
           let b = document.body
           let self = this
-          b.addEventListener('touchdown', function (event) {
+          b.addEventListener('touchstart', function (event) {
             self.touchStart(event)
           });
 

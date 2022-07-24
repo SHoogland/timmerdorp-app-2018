@@ -2,7 +2,7 @@
   <div class='content main-content'>
     <div *ngIf='hideLogin'>
       <h1 style="font-size: 3.5rem!important;">Welkom bij de Timmerdorp app!</h1>
-      <div class="user-info errorCard hasError" id='warning' style="width: 80%; background: #07497e!important;">
+      <div class="user-info errorCard hasError" id='warning' style="width: 90%; background: #07497e!important;">
         <div class="content">
           <ion-icon name="alert"></ion-icon>
           <h1 id='errorHeader'>Let op</h1>
@@ -50,7 +50,7 @@
             <h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
           </div>
         </div>
-        <p style="padding: 0 10%; font-size: 1.6rem; font-family: 'Montserrat', Roboto, Arial;">Heb je al een account aangemaakt in de Timmerdorp-webshop, om bijvoorbeeld kaartjes te kopen voor je kinderen? Log dan in met dat webshop-account.</p>
+        <p style="padding: 0 10%; font-size: 1.6rem; font-family: Roboto, Arial;">Heb je al een account aangemaakt in de Timmerdorp-webshop, om bijvoorbeeld kaartjes te kopen voor je kinderen? Log dan in met dat webshop-account.</p>
       </div>
       <div *ngIf="!loginPart">
         <h1>Registreren</h1>

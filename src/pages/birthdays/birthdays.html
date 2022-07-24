@@ -23,7 +23,7 @@
         <ion-list-header style="padding-left: 0px!important;">
           {{ dates[i] + ' (' + data[d].count + ')'}}
         </ion-list-header>
-        <div *ngIf="!data[d].kids.length"><b>Geen kinderen jarig :(</b></div>
+        <div *ngIf="!data[d].kids.length"><b>Geen kinderen jarig</b></div>
         <div *ngFor="let bday of data[d].kids" class='{{ "childItem " + g.getWijk(bday.hutNr) }}' (click)='zoekKind(bday)'>
           <table>
             <tr>

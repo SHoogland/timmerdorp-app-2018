@@ -62,7 +62,7 @@
 			[ngClass]='hutNr && hutNr.length === 3 && !error && searched ? "shown":""'>
 			<h1 id='hutHeader' [ngClass]='g.getWijk(hutNr)'>Kinderen in hut {{hutNr}}</h1>
 			<p *ngIf="searched && hutTickets && !hutTickets.length && hutNr && hutNr.length === 3">
-				Nog geen kindertjes in dit hutje :(</p>
+				Nog geen kinderen in dit hutje</p>
 			<button *ngFor="let child of hutTickets" ion-button full [ngClass]="'modern alternate ' + g.getWijk(hutNr)"
 				(click)="removeChild = child; showRemoveModal();" style="margin-top: 0px!important;">
 				{{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
@@ -114,7 +114,7 @@
 			<button ion-button full (click)="addChildToHut(child);" class="modern">
 				{{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
 				<span *ngIf="child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;hutje: {{child.hutNr }}</span>
-				<span *ngIf="!child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;Geen hutje :(</span>
+				<span *ngIf="!child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;Geen hutje</span>
 			</button>
 		</div>
 	</div>
