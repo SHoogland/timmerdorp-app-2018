@@ -1,20 +1,21 @@
 # App feedback en aandachtspunten uit 2021 (door Stan)
 - Registreer/inlog formuliertje mag ff wat netter, statusbalk kleuren daar ook
 - Wachtwoord vergeten pagina in app
-- De hele app in wijk thema? Meteen vragen bij startup
+- zooltjes in ticket bandje ophalen flow en afvinken uitgedeeld
 - Deeplinks werken nog niet op Android 
 - faceid auth bij het openen van de app?
-- bestanden werken niet meer, niet handig
 
-## Webshop verbeterpunten voor 2022
+## Webshop verbeterpunten voor 2023
 - eenmalige leidingcodes ipv zelfde link voor iedereen
+- Sommige kids hebben een spatie achter hun firstName gekregen, hoe kan dat? als we geen oorzaak vinden: zorg dan dat ie bij save-ticket er iig uit gefilterd wordt.
 
 ## Twijfel voor 2022
 - Hutjes plattegrond toevoegen met gps
-- Kunnen we misschien geen bandjes bestellen met nummers 1-50, 101-150, 201-250, 301-350? Want dan wordt het erg verwarrend wanneer je zoekt op 201, bedoel je dan kind met bandje 201 of kind met hutje 201?
 - Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller (geen support mail clients)
 
 ## Gefixt voor 2022
+- De hele app in wijk thema? Meteen vragen bij startup
+- bestanden werken niet meer, niet handig
 - Even kijken of de checkboxes wat netter kunnen in het ticketformulier
 - Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
 - Bij het confirmen van je e-mail vanuit de app kom je nog niet in de admin tabel? erg raar
