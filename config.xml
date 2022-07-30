@@ -3,7 +3,7 @@
     <name>Timmerdorp</name>
     <description>Scan tickets with your phone.</description>
     <author email="stanvanbaarsen@hotmail.com" href="https://timmerdorp.com/">Stephan Hoogland en Stan van Baarsen</author>
-    <content original-src="index.html" src="http://192.168.1.214:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
     <allow-navigation href="http://*/*" />
@@ -147,5 +147,4 @@
             <path url="/app/" />
         </host>
     </universal-links>
-    <allow-navigation href="http://192.168.1.214:8100" sessionid="0d327324" />
 </widget>

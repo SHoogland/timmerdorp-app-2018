@@ -2,7 +2,8 @@
   <ion-header [ngClass]='showPhoto ? "fullscreen" : ""'>
     <div [ngClass]='showPhoto ? "hiddenHeader" : ""' id='overlay'>
       <table id="titleContainer">
-        <h1 [ngClass]='showPhoto ? "hiddenHeader" : ""' class='home' id="ptitle" (click)='showPhoto = !showPhoto'>Timmerdorp <br>{{y}}</h1>
+        <h1 [ngClass]='showPhoto ? "hiddenHeader" : ""' class='home' id="ptitle" (click)='showPhoto = !showPhoto'>
+          Timmerdorp <br>{{y}}</h1>
       </table>
     </div>
   </ion-header>
@@ -10,7 +11,7 @@
   <div id="homeBtnContainer">
     <div id='homeButtons'>
       <button ion-button full *ngFor="let p of pages" (click)="openPage(p)"
-        [ngClass]="p.class + (!showPhoto || (!p.weather && !p.data) ? '' : ' hidden')" class='homeButton'>
+        [ngClass]="p.class + (!showPhoto || (!p.weather && !p.data) ? '' : ' hidden') + ' alternate bg-'  + g.wijk + ' '  + g.wijk" class='homeButton'>
         <div class='homeBtnD' *ngIf='!showPhoto || (!p.weather && !p.data)'>
           <i class="material-icons" slot='start' [ngClass]="(p.data ? 'data' : '')">
             {{p.weather && weather ? weather.icon : (p.icon || "") }}
@@ -35,11 +36,32 @@
           <span *ngIf="!p.small && !p.weather && !p.data">
             {{p.title}}
           </span>
-          <div *ngIf="waitingPotentialAdmins && p.title === 'Instellingen'" id="potentialAdminsNotification">{{waitingPotentialAdmins }}</div>
+          <div *ngIf="waitingPotentialAdmins && p.title === 'Instellingen'" id="potentialAdminsNotification">
+            {{waitingPotentialAdmins }}</div>
         </div>
       </button>
     </div>
   </div>
   <span>{{error}}</span>
 
+  <div *ngIf="showWijkChoice" id="wijkChoice" class="{{currentWijkChoice + (finishedWijkChoice ? ' fadedOut' : '')}}">
+    <h1>Wijk-keuze</h1>
+    <p *ngIf="!onlyChangeWijk">Het allerlaatste wat je moet doen voor je de app kunt gebruiken, is hieronder selecteren bij welke wijk je hoort:
+    </p>
+    <ion-list>
+      <ion-item>
+        <ion-select cancelText="Annuleren" interface="action-sheet" placeholder="Kies je wijk..."
+          (ionChange)="wijkChoiceChange($event)">
+          <ion-option value="blue">Blauw</ion-option>
+          <ion-option value="yellow">Geel</ion-option>
+          <ion-option value="red">Rood</ion-option>
+          <ion-option value="green">Groen</ion-option>
+          <ion-option value="white">Wit/EHBO</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <br>
+    <button *ngIf="!!currentWijkChoice" ion-button full (click)="saveWijkChoice()" class="modern"
+      style="background: rgba(0,0,0,.2)">Opslaan</button>
+  </div>
 </ion-content>

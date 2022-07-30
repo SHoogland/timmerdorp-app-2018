@@ -50,7 +50,7 @@ export class FilesPage {
 			});
 
 		this.httpClient
-			.get("https://stannl.github.io/TimmerUpdatesAPI/TimmerUpdates.json")
+			.get("https://timmerdorp.stanvanbaarsen.nl/api/files")
 			.subscribe((data: any) => {
 				self.files = data.files || [];
 			});

@@ -114,45 +114,6 @@ page-connect-child-to-cabin {
 		padding: 0px 6px;
 	}
 
-	.alternate {
-		&:nth-of-type(2n + 1) {
-			&.Blauw,
-			&.Blauw > button {
-				background: darken($blue, 8%) !important;
-			}
-			&.Rood,
-			&.Rood > button {
-				background: darken($red, 8%) !important;
-			}
-			&.Groen,
-			&.Groen > button {
-				background: darken($green, 8%) !important;
-			}
-			&.Geel,
-			&.Geel > button {
-				background: darken($yellow, 8%) !important;
-			}
-		}
-		&:nth-of-type(2n) {
-			&.Blauw,
-			&.Blauw > button {
-				background: $blue !important;
-			}
-			&.Rood,
-			&.Rood > button {
-				background: $red !important;
-			}
-			&.Groen,
-			&.Groen > button {
-				background: $green !important;
-			}
-			&.Geel,
-			&.Geel > button {
-				background: $yellow !important;
-			}
-		}
-	}
-
 	ion-list.line-input {
 		max-width: 80%;
 		margin-left: auto;

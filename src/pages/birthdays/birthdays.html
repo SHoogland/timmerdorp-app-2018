@@ -1,10 +1,10 @@
 <ion-content padding>
   <ion-header (click)="g.goHome()" class='wijk-header'>
-		<i class="material-icons-outlined homeIcon">home</i>
-    <h1 id="ptitle">
+		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons-outlined homeIcon">home</i>
+    <h1 [ngClass]="g.wijk" id="ptitle">
       {{ title }}
     </h1>
-    <ion-navbar>
+    <ion-navbar [ngClass]="g.wijk">
       <ion-title>
         <img src="assets/imgs/logo.png" class="nav-logo">
       </ion-title>
@@ -32,7 +32,7 @@
               </td>
               <td style="padding-left: 0px;">
                 <h2>
-                  <b>{{ bday.firstName }} {{ bday.lastName }}</b>
+                  <b>{{ bday.name }}</b>
                   <br>
                   <p style="font-size: 14px; margin-bottom: 4px; margin-top: 0px;">Wordt {{ bday.newAge }}!</p>
                   <p style="font-size: 14px; margin-bottom: 0px; margin-top: 0px;">Hutje: {{ bday.hutNr }}</p>

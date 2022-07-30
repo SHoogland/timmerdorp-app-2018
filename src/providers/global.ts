@@ -11,6 +11,7 @@ declare let cordova: any;
 export class GlobalFunctions {
 	stagingEndpoint: string;
 	normalEndpoint: string;
+  wijk: string;
 
 	navigatedToDeeplink: boolean;
 	parseInitialized: boolean;
@@ -27,6 +28,8 @@ export class GlobalFunctions {
 		public statusBar: StatusBar,
 		public app: App,
 	) {
+    this.wijk = "blue"
+
 		this.serverURLs = {
 			staging: 'http://localhost:1337/1/',
 			production: 'https://api.timmerdorp.com/1/'
@@ -43,6 +46,10 @@ export class GlobalFunctions {
 		}
 
 		this.loginPage = require('../pages/login/login').LoginPage;
+
+    this.storage.get('wijk').then(async (val) => {
+      this.wijk = val || "blue";
+    })
 	}
 
 	setStatusBar(c) {
@@ -89,6 +96,7 @@ export class GlobalFunctions {
 		if (kleur == 'yellow') return 'Geel';
 		if (kleur == 'red') return 'Rood';
 		if (kleur == 'green') return 'Groen';
+		if (kleur == 'white') return 'Wit/EHBO';
 		if (kleur == 'hutlozen') return 'Hutlozen';
 		return '';
 	}

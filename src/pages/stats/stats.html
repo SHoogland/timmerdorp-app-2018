@@ -1,10 +1,10 @@
 <ion-content padding>
   <ion-header (click)="g.goHome()" class='blue wijk-header'>
-		<i class="material-icons-outlined homeIcon">home</i>
-    <h1 id="ptitle">
+		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons-outlined homeIcon">home</i>
+    <h1 [ngClass]="g.wijk" id="ptitle">
       {{ title }}
     </h1>
-    <ion-navbar [ngClass]='blue'>
+    <ion-navbar [ngClass]='g.wijk'>
       <ion-title>
         <img src="assets/imgs/logo.png" class="nav-logo">
       </ion-title>

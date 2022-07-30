@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Storage } from '@ionic/storage';
 import { GlobalFunctions } from '../../providers/global';
+import { HomePage } from '../home/home';
 
 @Component({
 	selector: 'page-settings',
@@ -87,7 +88,7 @@ export class SettingsPage {
     setTimeout(function(){
       self.addStatus = ''
       self.cd.detectChanges()
-    }, 1000)
+    }, 2000)
 
     await this.getAdmins()
 
@@ -147,5 +148,9 @@ export class SettingsPage {
   refreshData() {
     this.isRefreshing = true;
     this.getAdmins();
+  }
+
+  changeWijk() {
+    this.navCtrl.setRoot(HomePage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 }
