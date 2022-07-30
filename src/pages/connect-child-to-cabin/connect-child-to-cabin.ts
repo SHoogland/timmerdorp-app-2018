@@ -243,7 +243,7 @@ export class ConnectChildToCabinPage {
         alert('daar ging iets goed mis... het hutje is waarschijnlijk niet opgeslagen')
       } else {
         self.history.unshift({
-          name: (self.selectedChild.nickName || self.selectedChild.firstName) + ' ' + self.selectedChild.lastName,
+          name: (self.selectedChild.firstName) + ' ' + self.selectedChild.lastName,
           wristband: self.selectedChild.wristband,
           oldNr: self.selectedChild.hutNr,
           hutNr: self.nieuwHutje,
@@ -282,7 +282,7 @@ export class ConnectChildToCabinPage {
         alert('daar ging iets goed mis... het hutje is waarschijnlijk niet opgeslagen')
       } else {
         self.history.unshift({
-          name: (self.removedChild.nickName || self.removedChild.firstName) + ' ' + self.removedChild.lastName,
+          name: (self.removedChild.firstName) + ' ' + self.removedChild.lastName,
           wristband: self.removedChild.wristband,
           oldNr: self.removedChild.hutNr,
           hutNr: self.nieuwHutje,

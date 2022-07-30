@@ -1,12 +1,12 @@
 # App feedback en aandachtspunten uit 2021 (door Stan)
 - Registreer/inlog formuliertje mag ff wat netter, statusbalk kleuren daar ook
-- De hele app in wijk thema? Meteen vragen bij startup
-- Deeplinks werken nog niet op Android
 - Wachtwoord vergeten pagina in app
 - zooltjes in ticket bandje ophalen flow en afvinken uitgedeeld
-- Sommige kindjes hebben een firstName met een spatie aan het einde, zorg dat dat goed gedisplayed wordt
+- Deeplinks werken nog niet op Android 
+- faceid auth bij het openen van de app?
 
 ## Webshop verbeterpunten voor 2023
+- eenmalige leidingcodes ipv zelfde link voor iedereen
 - Sommige kids hebben een spatie achter hun firstName gekregen, hoe kan dat? als we geen oorzaak vinden: zorg dan dat ie bij save-ticket er iig uit gefilterd wordt.
 
 ## Twijfel voor 2022
@@ -14,6 +14,8 @@
 - Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller (geen support mail clients)
 
 ## Gefixt voor 2022
+- De hele app in wijk thema? Meteen vragen bij startup
+- bestanden werken niet meer, niet handig
 - Even kijken of de checkboxes wat netter kunnen in het ticketformulier
 - Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
 - Bij het confirmen van je e-mail vanuit de app kom je nog niet in de admin tabel? erg raar

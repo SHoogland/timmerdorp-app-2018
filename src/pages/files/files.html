@@ -1,11 +1,10 @@
 <ion-content padding>
 	<ion-header (click)="g.goHome()">
-		<ion-icon class="homeIcon" name="md-home"></ion-icon>
-    <h1 id="ptitle">
+		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons-outlined homeIcon">home</i>
+    <h1 [ngClass]="g.wijk" id="ptitle">
       {{ title }}
     </h1>
-		<ion-navbar>
-			<ion-title>
+    <ion-navbar [ngClass]="g.wijk">			<ion-title>
 				<img src="assets/imgs/logo.png" class="nav-logo">
 			</ion-title>
 		</ion-navbar>
@@ -50,7 +49,7 @@
 				<ion-card (click)="openAlbum(a.id)" button>
 					<img [src]="( (a || {})['primary_photo_extras'] || {})['url_m']" />
 					<ion-card-header>
-						<h5>{{((a||{}).title||{})['_content']}}</h5>
+						<h5 style="font-weight: bold; font-family: 'ProductSans';">{{((a||{}).title||{})['_content']}}</h5>
 					</ion-card-header>
 				</ion-card>
 			</div>

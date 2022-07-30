@@ -122,13 +122,14 @@ export class StatsPage {
   parseGraphData(result) {
     if (result.response !== 'success') return
     let entries = result.entries
-    if (!entries.length) {
+    if (!entries.length || entries[0] == null) {
       this.showChildCountGraph = false
       return
     }
 
     this.showChildCountGraph = true
-    entries = entries.sort((a, b) => (a.hour != b.hour ? a.hour - b.hour : a.minute - b.minute))
+    entries = entries.sort((a, b) => (a.h != b.h ? a.h - b.h : a.m - b.m))
+    entries = this.expandEntries(entries)
 
     let isConsecutive = (a, b) => a.minute === 59 ? ((b.hour == a.hour + 1) && b.minute === 0) : (a.hour === b.hour && b.minute === a.minute + 1)
 
@@ -157,6 +158,7 @@ export class StatsPage {
     // Apply chart themes
     am4core.useTheme(am4themes_animated);
     am4core.useTheme(am4themes_kelly);
+    am4core.options.autoDispose = true;
 
     // Create chart instance
     var chart = am4core.create("presencesByTimeChart", am4charts.XYChart);
@@ -192,16 +194,19 @@ export class StatsPage {
       })
     }
 
-    if(result.currentTime) {
+    if (result.currentTime) {
       let i = data.length - 1
-      data.push({
-        t: result.currentTime,
-        v: data[i].v,
-        y: data[i].y,
-        r: data[i].r,
-        b: data[i].b,
-        g: data[i].g,
-      })
+      if (+result.currentTime.replace(':', '') > +data[i].t.replace(':', '')) {
+        // add an entry for the current time, which has the same values as the last entry
+        data.push({
+          t: result.currentTime,
+          v: data[i].v,
+          y: data[i].y,
+          r: data[i].r,
+          b: data[i].b,
+          g: data[i].g,
+        })
+      }
     }
 
     chart.data = data
@@ -212,7 +217,7 @@ export class StatsPage {
     categoryAxis.title.text = "Tijdstip";
 
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.title.text = "Aantal kindjes";
+    valueAxis.title.text = "Aantal kinderen";
 
     let seriesList = [
       {
@@ -255,7 +260,7 @@ export class StatsPage {
     series.dataFields.valueY = "v";
     series.stroke = am4core.color('#000')
     series.dataFields.categoryX = "t";
-    series.name = "Totaal aantal kindjes";
+    series.name = "Totaal aantal kinderen";
     series.strokeWidth = 3;
     series.tensionX = 0.8
     series.tensionY = 1
@@ -265,6 +270,33 @@ export class StatsPage {
 
 
     this.loadingGraphData = false
+  }
+
+  expandEntries(entries) {
+    let firstEntry = {
+      hour: entries[0].h,
+      minute: entries[0].m,
+      yellow: entries[0].y,
+      red: entries[0].r,
+      blue: entries[0].b,
+      green: entries[0].g,
+      total: entries[0].t,
+    }
+    let expandedEntries = [firstEntry]
+    for (let i = 1; i < entries.length; i++) {
+      let pe = expandedEntries[i - 1]
+      let e = entries[i]
+      expandedEntries.push({
+        hour: e.h,
+        minute: e.m,
+        yellow: pe.yellow + (e.y || 0),
+        red: pe.red + (e.r || 0),
+        blue: pe.blue + (e.b || 0),
+        green: pe.green + (e.g || 0),
+        total: pe.total + (e.t || 0),
+      })
+    }
+    return expandedEntries
   }
 
   refreshData() {

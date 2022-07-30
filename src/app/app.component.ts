@@ -74,16 +74,16 @@ export class MyApp {
         if (cordova.platformId === 'ios') {
           let b = document.body
           let self = this
-          b.addEventListener('mousedown', function (event) {
-            self.mouseDown(event)
+          b.addEventListener('touchstart', function (event) {
+            self.touchStart(event)
           });
 
-          b.addEventListener('mouseup', function (event) {
-            self.mouseUp(event)
+          b.addEventListener('touchend', function (event) {
+            self.touchEnd(event)
           });
 
-          b.addEventListener('mousemove', function (event) {
-            self.mouseMove(event)
+          b.addEventListener('touchmove', function (event) {
+            self.touchMove(event)
           })
         }
       }
@@ -98,7 +98,7 @@ export class MyApp {
     return (event.pageY) || (event.clientY + (document.body.scrollTop || 0) - (document.body.clientTop || 0))
   }
 
-  mouseDown(event) {
+  touchStart(event) {
     let page = this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()
     if (page === 'page-home' || page === 'page-login') return;
 
@@ -115,7 +115,7 @@ export class MyApp {
     }
   }
 
-  mouseUp(event) {
+  touchEnd(event) {
     if (!this.swipeGestureStartX) return
 
     let backBtnHint = document.getElementById('backBtnHint')
@@ -130,12 +130,15 @@ export class MyApp {
       }, 300)
     } else {
       backBtnHint.style.opacity = '0'
+      setTimeout(function(){
+        backBtnHint.style.top = '-100px'
+      }, 400)
     }
     this.swipeGestureStartX = null;
     this.swipeGestureStartY = null;
   }
 
-  mouseMove(event) {
+  touchMove(event) {
     if (!this.swipeGestureStartX) return
 
     let backBtnHint = document.getElementById('backBtnHint')

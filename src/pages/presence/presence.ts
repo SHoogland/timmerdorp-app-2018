@@ -128,7 +128,7 @@ export class PresencePage {
 					self.ticket = result.ticket;
 					self.foundTicket = true;
 					self.history.unshift({
-						firstName: self.ticket.nickName || self.ticket.firstName,
+						firstName: self.ticket.firstName,
 						lastName: self.ticket.lastName,
 						wristband: self.ticket.wristband,
 						hutNr: self.ticket.hutNr,
@@ -258,6 +258,6 @@ export class PresencePage {
 	}
 
 	alert() {
-		alert("Om fouten te voorkomen is het niet mogelijk aanwezigheid te veranderen voor andere dagen. Vragen, of alsnog een wijziging aanvragen? Zoek Stan uit wijk blauw of Stephan uit wijk geel");
+		alert("Om fouten te voorkomen is het niet meer mogelijk aanwezigheid te veranderen voor andere dagen. Vragen, of alsnog een wijziging aanvragen? Zoek Stan uit wijk blauw of Stephan uit wijk geel");
 	}
 }

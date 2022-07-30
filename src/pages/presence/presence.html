@@ -1,9 +1,8 @@
 <ion-content padding>
 	<ion-header (click)="g.goHome()">
-		<i class="material-icons-outlined homeIcon">home</i>
-		<h1 id="ptitle">{{title}}</h1>
-		<ion-navbar>
-			<ion-title>
+		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons-outlined homeIcon">home</i>
+		<h1 [ngClass]="g.wijk" id="ptitle">{{title}}</h1>
+    <ion-navbar [ngClass]="g.wijk">			<ion-title>
 				<img src="assets/imgs/logo.png" class="nav-logo">
 			</ion-title>
 		</ion-navbar>
@@ -48,7 +47,7 @@
 				<table>
 					<tr>
 						<td>Naam: </td>
-						<td>{{ (ticket.nickName || ticket.firstName) }} {{ ticket.lastName }}</td>
+						<td>{{ ticket.firstName }} {{ ticket.lastName }}</td>
 					</tr>
 					<tr>
 						<td>Polsbandnummer: </td>
@@ -68,7 +67,7 @@
 		</div>
 
     <div *ngIf="searched && !foundTicket">
-      <b>Geen kindjes gevonden! Probeer anders het polsbandje te achterhalen door het kind met zijn/haar naam op te zoeken via de zoekpagina.</b>
+      <b>Geen kinderen gevonden! Probeer anders het polsbandje te achterhalen door het kind met zijn/haar naam op te zoeken via de zoekpagina.</b>
     </div>
 
     <ion-list class='peopleList fadeIn {{ !searched && (history || []).length && !loading && !foundTicket ? "shown" : "" }}'>
@@ -87,7 +86,7 @@
               </td>
               <td>
                 <h2>
-                  {{ h.nickName || h.firstName }}
+                  {{ h.firstName }}
                   <br>
                   {{ h.lastName }}
                 </h2>

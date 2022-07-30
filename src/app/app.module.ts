@@ -20,7 +20,6 @@ import { StatsPage } from '../pages/stats/stats';
 import { SettingsPage } from '../pages/settings/settings';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BirthdaysPage } from '../pages/birthdays/birthdays';
-import { ChangeWristbandPage } from '../pages/change-wristband/change-wristband';
 import { FilesPage } from '../pages/files/files';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { GlobalFunctions } from '../providers/global';
@@ -39,7 +38,6 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 		StatsPage,
 		SettingsPage,
     BirthdaysPage,
-		ChangeWristbandPage,
 		FilesPage
 	],
 	imports: [
@@ -61,7 +59,6 @@ import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirm
 		StatsPage,
 		SettingsPage,
     BirthdaysPage,
-		ChangeWristbandPage,
 		FilesPage
 	],
 	providers: [

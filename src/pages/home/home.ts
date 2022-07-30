@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { Platform, NavController, NavParams } from 'ionic-angular';
 
 import Parse from 'parse';
 
@@ -16,7 +16,6 @@ import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { SettingsPage } from '../settings/settings';
 import { HttpClient } from '@angular/common/http';
 import { BirthdaysPage } from '../birthdays/birthdays';
-import { ChangeWristbandPage } from '../change-wristband/change-wristband';
 import { FilesPage } from '../files/files';
 import { GlobalFunctions } from '../../providers/global';
 import { EmailConfirmationPage } from '../email-confirmation/email-confirmation';
@@ -26,6 +25,9 @@ import { EmailConfirmationPage } from '../email-confirmation/email-confirmation'
   templateUrl: 'home.html'
 })
 export class HomePage {
+  finishedWijkChoice: boolean;
+  onlyChangeWijk: boolean; //als user hier komt vanaf settings puur om wijk te veranderen
+  showWijkChoice: boolean;
   showPhoto: boolean;
   android: boolean;
 
@@ -35,6 +37,7 @@ export class HomePage {
   wijkCount: number;
   y: number;
 
+  currentWijkChoice: string;
   wijkChoice: string;
   error: string;
   wijk: string;
@@ -51,6 +54,7 @@ export class HomePage {
 
   constructor(
     private barcodeScanner: BarcodeScanner,
+		public navParams: NavParams,
     public navCtrl: NavController,
     public platform: Platform,
     public storage: Storage,
@@ -76,7 +80,6 @@ export class HomePage {
       "settings": SettingsPage,
       "login": LoginPage,
       "birthdays": BirthdaysPage,
-      "change-wristband": ChangeWristbandPage,
       "files": FilesPage
     }
     this.g.setStatusBar("#2196f3");
@@ -87,8 +90,18 @@ export class HomePage {
 
     if (this.platform.is("android")) this.android = true;
 
+    if(this.navParams.get('changeWijk')) {
+      this.currentWijkChoice = this.g.wijk
+      this.showWijkChoice = true
+      this.onlyChangeWijk = true
+    }
+
     this.storage.get('wijk').then(async (val) => {
-      this.wijk = val || "blue";
+      if(!val) {
+        this.showWijkChoice = true
+      }
+
+      this.g.wijk = val || "blue";
       this.wijken = {
         blue: "blauw",
         red: "rood",
@@ -109,7 +122,7 @@ export class HomePage {
           }
         }
         let dag = ['di', 'wo', 'do', 'vr'][new Date().getDay() - 2];
-        self.wijkCount = result.quarters[self.wijk]['aanwezig_' + dag] || 0;
+        self.wijkCount = result.quarters[self.g.wijk == 'white' ? 'blue' : self.g.wijk]['aanwezig_' + dag] || 0;
         self.childrenCount = result['aanwezig_' + dag] || 0;
         self.birthdays = (result.birthdays[dag] || {}).count;
 
@@ -126,79 +139,69 @@ export class HomePage {
         {
           title: '-',
           component: "weather",
-          class: 'bg-white halfWidth homeInfoCard weather realWeather',
+          class: 'halfWidth homeInfoCard weather realWeather',
           icon: "partly-sunny",
           weather: true
         },
         {
           title: '-',
           component: "children",
-          class: 'bg-white halfWidth homeInfoCard weather',
-          icon: "calculate",
+          class: 'halfWidth homeInfoCard weather',
+          icon: "query_stats",
           data: true
         },
         {
           title: 'Zoek kinderen',
           component: "search",
-          class: 'bg-blue',
           icon: "search"
         },
         {
           title: 'Aanwezigheid',
           component: "presence",
-          class: 'bg-blue',
           icon: "how_to_reg"
         },
         {
           title: 'Scan ticket',
           component: "scan-ticket",
-          class: 'bg-blue',
           icon: 'qr_code_scanner'
         },
         {
           title: 'Beheer hutjes',
           component: "connect-child-to-cabin",
-          class: 'bg-blue',
           icon: 'person_add_alt'
-        },
-        {
-          title: 'Verander polsbandje',
-          component: "change-wristband",
-          class: 'bg-blue',
-          icon: 'change_circle'
         },
         {
           title: 'Statistieken',
           component: "stats",
-          class: 'small bg-blue',
+          class: 'small',
           icon: "insert_chart",
           small: true
         },
         {
           title: 'Verjaardagen',
           component: "birthdays",
-          class: 'bg-blue small',
+          class: 'small',
           icon: "cake",
           small: true
         },
         {
           title: 'Foto\'s en Bijlagen',
           component: "files",
-          class: 'bg-blue small',
+          class: 'small',
           icon: "image",
           small: true
         },
         {
           title: 'Instellingen',
           component: "settings",
-          class: 'bg-blue small',
+          class: 'small',
           icon: "settings",
           small: true
         },
         {
           title: 'Log uit',
           component: "login",
-          class: 'bg-red small',
+          class: 'small',
           icon: "logout",
           small: true
         }
@@ -228,6 +231,10 @@ export class HomePage {
             if(!self.g.navigatedToDeeplink) self.navCtrl.setRoot(EmailConfirmationPage, { waitingForEmailConfirmation: !logInStatus.emailConfirmed, waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin, email: logInStatus.email}, { animate: true, animation: "ios-transition", direction: 'forward' })
           }
           self.waitingPotentialAdmins = logInStatus.waitingPotentialAdmins
+          if(self.g.wijk != logInStatus.wijk) {
+            self.g.wijk = logInStatus.wijk
+            self.storage.set('wijk', self.g.wijk)
+          }
         }
       }
     })
@@ -260,7 +267,7 @@ export class HomePage {
     }
 
     this.weather = {
-      temp: (Math.round((data.list[0].main.temp - 273.15) * 10) / 10).toFixed(1),
+      temp: Math.round(data.list[0].main.temp - 273.15),
       msg: weatherMessage,
       icon: weatherIcon
     }
@@ -271,13 +278,19 @@ export class HomePage {
   }
 
   async openPage(page) {
-    this.openedPage = page;
+    this.openedPage = {
+      component: page.component,
+    }
 
     let ogPage = this.openedPage.component
     this.openedPage.component = this.readablePageList[this.openedPage.component];
     if (this.openedPage.component === 'ticketscanner') {
       this.scanCode();
     } else if (this.openedPage.component === 'weather') {
+      if(this.showPhoto) {
+        this.showPhoto = false;
+        return;
+      }
       this.iab.create("https://buienradar.nl/weer/heiloo/nl/2754516", "_system");
     } else if (ogPage === 'presence') {
       if (new Date().getDay() < 2 || new Date().getDay() > 5) {
@@ -289,6 +302,12 @@ export class HomePage {
       await Parse.User.logOut();
       this.g.toLogin();
     } else {
+      if(this.openedPage.component.name == 'StatsPage') {
+        if(this.showPhoto) {
+          this.showPhoto = false;
+          return;
+        }
+      }
       this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
     }
   }
@@ -305,7 +324,27 @@ export class HomePage {
         this.error = error.message;
       });
     } else {
-      this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 'xu7BiCElBu' });
+      this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 'xO0ioOoL4P' });
+    }
+  }
+
+  wijkChoiceChange(e) {
+    this.currentWijkChoice = e
+  }
+
+  saveWijkChoice() {
+    this.g.wijk = this.currentWijkChoice;
+    this.finishedWijkChoice = true;
+    this.g.apiCall('setAdminWijk', { wijk: this.g.wijk })
+    this.storage.set('wijk', this.g.wijk)
+
+    if(this.onlyChangeWijk) {
+      this.navCtrl.setRoot(SettingsPage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'backward' });
+    } else {
+      let self = this;
+      setTimeout(function(){
+        self.showWijkChoice = false;
+      }, 500)
     }
   }
 }

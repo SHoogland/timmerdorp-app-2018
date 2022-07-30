@@ -66,6 +66,6 @@ export class BirthdaysPage {
 	}
 
   zoekKind(kind) {
-    this.navCtrl.setRoot(SearchPage, { searchTerm: (kind.nickName || kind.firstName) + ' ' + kind.lastName}, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.setRoot(SearchPage, { searchTerm: kind.firstName + ' ' + kind.lastName}, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 }

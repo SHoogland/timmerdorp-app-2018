@@ -19,65 +19,87 @@
 }
 
 body {
-	font-size: 16px;
-	line-height: 20px;
-	letter-spacing: 0.5px;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.5px;
 }
 
 h1,
 button,
 .result-child {
-	font-family: Mikado-Bold;
+  font-family: Mikado-Bold;
 }
 
-.toolbar-background,
 .toolbar {
-	background: $blue !important;
-	border-bottom: none !important;
+  &.yellow {
+    &, & > .toolbar-background {
+      background: $yellow!important;
+    }
+  }
+  &.white {
+    &, & > .toolbar-background {
+      background: #fafafa!important;
+    }
+  }
+  &.red {
+    &, & > .toolbar-background {
+      background: $red!important;
+    }
+  }
+  &.green {
+    &, & > .toolbar-background {
+      background: $green!important;
+    }
+  }
+
+  border-bottom: none !important;
+  &, & > .toolbar-background {
+    background: $blue !important;
+  }
 }
 
 ion-list.line-input {
-	max-width: 80%;
-	margin-left: auto;
-	margin-right: auto;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 h1 {
-	font-size: 32px;
+  font-size: 32px;
 }
 
 .bg-yellow {
-	background: $yellow;
-	&:hover {
-		background: darken($yellow, 11%) !important;
-	}
+  background: $yellow;
+  &:hover {
+    background: darken($yellow, 11%) !important;
+  }
 }
 
 .conditional {
-	opacity: 0;
-	transition: opacity linear 400ms;
+  opacity: 0;
+  transition: opacity linear 400ms;
 }
 
 .bar-button-default-md {
-	transition-duration: 250ms !important;
+  transition-duration: 250ms !important;
 }
 
 .bar-button-default-md:hover:not(.disable-hover),
 .bar-button-clear-md-default:hover:not(.disable-hover),
 .bar-button-md-default:hover:not(.disable-hover) {
-	color: #d3d3d3 !important;
+  color: #d3d3d3 !important;
 }
 
 .toolbar-title-md {
-	padding: 0 !important;
+  padding: 0 !important;
 }
 
 .modal.high {
-	z-index: 10;
+  z-index: 10;
 }
 
 .shown {
-	opacity: 1;
+  opacity: 1;
 }
 
 #ptitle:not(.home) {
@@ -103,290 +125,293 @@ h1 {
   text-align: center;
   left: 66px;
   color: white;
+  &.yellow, &.white {
+    color: #333;
+  }
 }
 
 span.tinyScreen {
-	position: absolute;
-	top: 16px;
-	@media screen and (min-width: 381px) {
-		display: none;
-	}
+  position: absolute;
+  top: 16px;
+  @media screen and (min-width: 381px) {
+    display: none;
+  }
 }
 
 span.notTinyScreen {
-	@media screen and (max-width: 380px) {
-		display: none;
-	}
+  @media screen and (max-width: 380px) {
+    display: none;
+  }
 }
 
 ion-header {
-	position: fixed;
+  position: fixed;
 }
 
 div.content {
-	padding: 10px !important;
+  padding: 10px !important;
 }
 
 div.content.main-content {
-	padding: 90px 10px 10px 10px !important;
+  padding: 90px 10px 10px 10px !important;
 }
 
 .label {
-	font-size: 18px;
+  font-size: 18px;
 }
 
-ion-content:not(.homeContent)>.scroll-content {
-	margin-top: 0px !important;
-	padding: 0px !important;
+ion-content:not(.homeContent) > .scroll-content {
+  margin-top: 0px !important;
+  padding: 0px !important;
 }
 
 .bg-blue {
-	background: $blue;
-	&:hover,
-	&.activated {
-		background: darken($blue, 12%) !important;
-	}
+  background: $blue;
+  &:hover,
+  &.activated {
+    background: darken($blue, 12%) !important;
+  }
 }
 
 .bg-green {
-	background: $green;
+  background: $green;
 }
 
 .bg-red {
-	background: $red;
+  background: $red;
 }
 
 button.bg-red:hover,
 button.bg-red.activated {
-	background: darken($red, 8%) !important;
+  background: darken($red, 8%) !important;
 }
 
 button.bg-green:hover,
 button.bg-green.activated {
-	background: darken($green, 8%) !important;
+  background: darken($green, 8%) !important;
 }
 
 button.bg-grey:hover,
 button.bg-grey.activated {
-	background: #ccc !important;
-	color: black !important;
+  background: #ccc !important;
+  color: black !important;
 }
 
 .bg-grey {
-	background: $lightGrey;
-	&:hover {
-		color: $white;
-	}
+  background: $lightGrey;
+  &:hover {
+    color: $white;
+  }
 }
 
 .bar-button-menutoggle-md ion-icon {
-	font-size: 4rem;
+  font-size: 4rem;
 }
 
 .homeIcon {
-	position: absolute;
-	z-index: 1;
-	color: white;
-	font-size: 4.3rem;
-	left: 20px;
-	top: 18px;
+  position: absolute;
+  z-index: 1;
+  color: white;
+  font-size: 4.3rem;
+  left: 20px;
+  top: 18px;
 }
 
 button {
-	transition-duration: 300ms !important;
+  transition-duration: 300ms !important;
 }
 
 .bg-black {
-	background: #000;
+  background: #000;
 }
 
 button.modern,
 button.modern *,
-button.modern>* {
-	color: white !important;
+button.modern > * {
+  color: white !important;
 }
 
 .stanModal div button {
-	color: white !important;
-	margin: 0px 0 0px 0 !important;
+  color: white !important;
+  margin: 0px 0 0px 0 !important;
 }
 
 .color-mediumBlack {
-	color: $mediumBlack;
+  color: $mediumBlack;
 }
 
 // Span elements
 .form-error {
-	position: relative;
-	top: 12px;
-	color: $red;
+  position: relative;
+  top: 12px;
+  color: $red;
 }
 
 .child-row {
-	display: block;
-	padding-bottom: 10px;
+  display: block;
+  padding-bottom: 10px;
 }
 
 .search-on {
-	margin-bottom: 8px;
-	margin-top: 10px;
+  margin-bottom: 8px;
+  margin-top: 10px;
 }
 
 .toast-container {
-	// background: $darkGrey;
-	border-radius: 5px;
-	color: $darkGrey !important;
+  // background: $darkGrey;
+  border-radius: 5px;
+  color: $darkGrey !important;
 }
 
 ion-navbar {
-	height: 80px;
-	-webkit-box-shadow: none;
-	box-shadow: none;
-	border-bottom: 2px solid $blue;
-	.nav-logo {
-		position: relative;
-		width: 90px;
-		height: rem(60);
-		float: right;
-		padding-right: rem(10);
-	}
-	.bar-button {
-		height: 80px;
-		width: 80px;
-		left: -10px;
-		color: $white;
-		border-radius: 0;
-		background: $blue;
-	}
+  height: 80px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 2px solid $blue;
+  .nav-logo {
+    position: relative;
+    width: 90px;
+    height: rem(60);
+    float: right;
+    padding-right: rem(10);
+  }
+  .bar-button {
+    height: 80px;
+    width: 80px;
+    left: -10px;
+    color: $white;
+    border-radius: 0;
+    background: $blue;
+  }
 }
 
 .toolbar-ios ion-title {
-	padding: 0;
+  padding: 0;
 }
 
 .toolbar {
-	min-height: 71px;
-	border-bottom: 2px solid $blue;
+  min-height: 71px;
+  border-bottom: 2px solid $blue;
 }
 
 .button-inner .ion-md-menu {
-	font-size: 4rem !important;
+  font-size: 4rem !important;
 }
 
 .menu-inner {
-	background: #fff;
-	width: 100%;
+  background: #fff;
+  width: 100%;
 }
 
 .item-inner {
-	padding-right: 8px;
-	border-bottom: 0px solid #dedede !important;
+  padding-right: 8px;
+  border-bottom: 0px solid #dedede !important;
 }
 
 ion-toolbar {
-	height: 80px;
-	img {
-		display: none;
-	}
-	padding-bottom: 40px;
-	.bar-button-close {
-		height: 85px;
-		width: 80px;
-		top: -4px;
-		left: -4px;
-		color: $white;
-		border-radius: 0;
-		background: $blue;
-	}
+  height: 80px;
+  img {
+    display: none;
+  }
+  padding-bottom: 40px;
+  .bar-button-close {
+    height: 85px;
+    width: 80px;
+    top: -4px;
+    left: -4px;
+    color: $white;
+    border-radius: 0;
+    background: $blue;
+  }
 }
 
 .nav-items {
-	text-align: center;
-	padding: 32px;
-	margin-bottom: 10px;
-	width: 100%;
-	background: $lightGrey;
-	&:first-of-type {
-		border-top: 0px;
-		margin-top: 50px;
-	}
+  text-align: center;
+  padding: 32px;
+  margin-bottom: 10px;
+  width: 100%;
+  background: $lightGrey;
+  &:first-of-type {
+    border-top: 0px;
+    margin-top: 50px;
+  }
 }
 
 .user-info {
-	padding-top: 20px;
-	text-align: center;
-	padding: 12px 0;
-	border-bottom: none;
-	h1 {
-		&:not(.title) {
-			padding-bottom: 15px;
-		}
-		margin-top: 8px !important;
-	}
+  padding-top: 20px;
+  text-align: center;
+  padding: 12px 0;
+  border-bottom: none;
+  h1 {
+    &:not(.title) {
+      padding-bottom: 15px;
+    }
+    margin-top: 8px !important;
+  }
 }
 
 ion-spinner {
-	width: 48px;
-	height: 48px;
+  width: 48px;
+  height: 48px;
 }
 
 .bracelet-number {
-	padding-top: 20px;
-	text-align: center;
-	padding-bottom: 20px;
-	h1:not(.title) {
-		padding-bottom: 15px;
-	}
-	.correction {
-		position: relative;
-		top: 40px;
-	}
+  padding-top: 20px;
+  text-align: center;
+  padding-bottom: 20px;
+  h1:not(.title) {
+    padding-bottom: 15px;
+  }
+  .correction {
+    position: relative;
+    top: 40px;
+  }
 }
 
 .container {
-	position: relative;
+  position: relative;
   max-width: 600px;
   margin: 0 auto;
   padding: 0 14px;
 }
 
 .item-inner {
-	box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .button {
-	padding: 32px;
-	margin-bottom: 20px;
-	height: 80px;
-	box-shadow: none;
-	font-size: 16px;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	text-transform: none;
-	&:first-of-type {
-		margin-top: -8px;
-	}
+  padding: 32px;
+  margin-bottom: 20px;
+  height: 80px;
+  box-shadow: none;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  &:first-of-type {
+    margin-top: -8px;
+  }
 }
 
 * {
-	border-bottom-color: none !important;
+  border-bottom-color: none !important;
 }
 
 .container-bottom {
-	position: sticky;
-	bottom: 0;
-	border: solid 1px green;
-	width: calc(100% - 32px);
-	.gradient {
-		border: 1px solid red;
-		height: 80px;
-		background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
-	}
+  position: sticky;
+  bottom: 0;
+  border: solid 1px green;
+  width: calc(100% - 32px);
+  .gradient {
+    border: 1px solid red;
+    height: 80px;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
+  }
 }
 
 html,
 body {
-	height: 100%;
+  height: 100%;
 }
 
 // Modalbox
@@ -394,255 +419,254 @@ body {
 /* The Modal (background) */
 
 .modal {
-	position: fixed;
-	/* Stay in place */
-	z-index: -1;
-	/* Sit on top */
-	left: 0;
-	top: 0;
-	padding: 24px;
-	width: 100%;
-	/* Full width */
-	height: 100%;
-	/* Full height */
-	overflow: auto;
-	/* Enable scroll if needed */
-	background-color: rgb(0, 0, 0);
-	/* Fallback color */
-	background-color: rgba(16, 16, 16, 0.9);
-	/* Black w/ opacity */
+  position: fixed;
+  /* Stay in place */
+  z-index: -1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  padding: 24px;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(16, 16, 16, 0.9);
+  /* Black w/ opacity */
 }
 
 #childDataHeader {
-	margin: 20px 0;
+  margin: 20px 0;
 }
 
 .content-md {
-	color: #202124;
-	background: #fafafa;
+  color: #202124;
+  background: #fafafa;
 }
-
 
 /* Modal Content/Box */
 
 .modal-content {
-	position: relative;
-	background-color: $white;
-	margin: 20px auto;
-	padding: 20px;
-	h1 {
-		margin-top: 45px;
-	}
-	span {
-		line-height: 40px;
-	}
-	padding: 0;
-	ul {
-		li {
-			list-style: none;
-		}
-	}
-	button {
-		border-radius: 0px !important;
-		margin: 0px;
-		&:nth-of-type(2n).modal-content:not(.item-cover) {
-			background: $blue;
-		}
-		&:nth-of-type(2n+1):not(.item-cover) {
-			background: darken($blue, 8%);
-		}
-		&:hover:not(.item-cover),
-		&.activated:not(.item-cover) {
-			background: darken($blue, 11%) !important;
-		}
-	}
+  position: relative;
+  background-color: $white;
+  margin: 20px auto;
+  padding: 20px;
+  h1 {
+    margin-top: 45px;
+  }
+  span {
+    line-height: 40px;
+  }
+  padding: 0;
+  ul {
+    li {
+      list-style: none;
+    }
+  }
+  button {
+    border-radius: 0px !important;
+    margin: 0px;
+    &:nth-of-type(2n).modal-content:not(.item-cover) {
+      background: $blue;
+    }
+    &:nth-of-type(2n + 1):not(.item-cover) {
+      background: darken($blue, 8%);
+    }
+    &:hover:not(.item-cover),
+    &.activated:not(.item-cover) {
+      background: darken($blue, 11%) !important;
+    }
+  }
 }
 
 button.halfWidth {
-	width: 50%;
-	margin-top: 0px !important;
-	display: inline-block;
-	&:nth-of-type(2n+1) {
-		margin-left: -4px;
-	}
+  width: 50%;
+  margin-top: 0px !important;
+  display: inline-block;
+  &:nth-of-type(2n + 1) {
+    margin-left: -4px;
+  }
 }
 
 #modalTop.warnModal {
-	background: #e82525;
+  background: #e82525;
 }
 
 button.modern {
-	border-radius: 0px !important;
-	margin: 0px;
-	&:nth-of-type(2n):not(.customColoured) {
-		background: $blue;
-	}
-	&:nth-of-type(2n+1):not(.customColoured) {
-		background: darken($blue, 9%);
-	}
-	&:hover:not(.customColoured),
-	&.activated:not(.customColoured) {
-		background: darken($blue, 11%) !important;
-	}
+  border-radius: 0px !important;
+  margin: 0px;
+  &:nth-of-type(2n):not(.customColoured) {
+    background: $blue;
+  }
+  &:nth-of-type(2n + 1):not(.customColoured) {
+    background: darken($blue, 9%);
+  }
+  &:hover:not(.customColoured),
+  &.activated:not(.customColoured) {
+    background: darken($blue, 11%) !important;
+  }
 }
 
 #modalBottom {
-	text-align: center;
-	padding: 16px;
-	z-index: 200;
-	position: relative;
-	span {
-		color: white;
-		margin-top: 12px;
-		font-size: 56px;
-	}
-	h1 {
-		color: white;
-		margin-top: 15px !important;
-		margin-bottom: 48px;
-		font-size: 31px;
-		font-weight: normal;
-	}
+  text-align: center;
+  padding: 16px;
+  z-index: 200;
+  position: relative;
+  span {
+    color: white;
+    margin-top: 12px;
+    font-size: 56px;
+  }
+  h1 {
+    color: white;
+    margin-top: 15px !important;
+    margin-bottom: 48px;
+    font-size: 31px;
+    font-weight: normal;
+  }
 }
 
 #modalTop {
-	background: #2196f3;
-	width: 100%;
-	height: 100px;
-	position: absolute;
+  background: #2196f3;
+  width: 100%;
+  height: 100px;
+  position: absolute;
 }
-
 
 /* The Close Button */
 
 .close {
-	color: $mediumBlack;
-	float: right;
-	font-size: 22px;
+  color: $mediumBlack;
+  float: right;
+  font-size: 22px;
 }
 
 .close:hover,
 .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 ion-navbar .nav-logo {
-	width: 75px !important;
+  width: 75px !important;
 }
 
 .toolbar-background.bg-darkred,
 button.bg-darkred {
-	background: #b20606 !important;
-	&:hover {
-		background: #9e0c0c !important;
-	}
+  background: #b20606 !important;
+  &:hover {
+    background: #9e0c0c !important;
+  }
 }
 
 button {
-	border-radius: 4px !important;
+  border-radius: 4px !important;
 }
 
 h1,
 button {
-	font-family: Roboto, Arial !important;
+  font-family: Roboto, Arial !important;
 }
 
 .scroll-content {
-	margin-top: 64px;
+  margin-top: 64px;
 }
 
 .peopleList {
-	padding: 20px;
-	ion-list-header {
-    background: rgba(0,0,0,0);
-		ion-label {
-			text-transform: uppercase;
-			font-weight: bold;
-			font-size: 18px;
-		}
-	}
+  padding: 20px;
+  ion-list-header {
+    background: rgba(0, 0, 0, 0);
+    ion-label {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
 
-	ion-item, .childItem {
-		box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 24px;
-		border-radius: 6px;
-		padding: 0px;
-		height: 80px;
-		margin-bottom: 16px;
-		.input-wrapper ion-label {
-			div:first-of-type {
-				@media screen and (min-width: 360px) {
-					width: 80px;
-					margin-right: 16px;
-				}
-				@media screen and (max-width: 360px) {
-					width: 40px;
-					margin-right: 8px;
-				}
-				height: 80px;
+  ion-item,
+  .childItem {
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 24px;
+    border-radius: 6px;
+    padding: 0px;
+    height: 80px;
+    margin-bottom: 16px;
+    .input-wrapper ion-label {
+      div:first-of-type {
+        @media screen and (min-width: 360px) {
+          width: 80px;
+          margin-right: 16px;
+        }
+        @media screen and (max-width: 360px) {
+          width: 40px;
+          margin-right: 8px;
+        }
+        height: 80px;
         padding-top: 4px;
-				float: left;
-			}
-			column-count: 2;
-		}
-		h3 {
-			position: relative;
-			@media screen and (min-width: 360px) {
-				span:not(.largeScreenSpan) {
-					position: absolute;
-					right: 0px;
-				}
-			}
-		}
-		h2 {
-				font-size: 1.8rem;
-		}
-		color: #666;
-		.item-inner {
-			border-left: 6px solid white;
-		}
-		&.Blauw {
-			.fab {
-				background: $blue;
-			}
+        float: left;
+      }
+      column-count: 2;
+    }
+    h3 {
+      position: relative;
+      @media screen and (min-width: 360px) {
+        span:not(.largeScreenSpan) {
+          position: absolute;
+          right: 0px;
+        }
+      }
+    }
+    h2 {
+      font-size: 1.8rem;
+    }
+    color: #666;
+    .item-inner {
+      border-left: 6px solid white;
+    }
+    &.Blauw {
+      .fab {
+        background: $blue;
+      }
       border-left: 6px solid $blue;
-		}
-		&.Rood {
-			.fab {
-				background: $red;
-			}
+    }
+    &.Rood {
+      .fab {
+        background: $red;
+      }
       border-left: 6px solid $red;
-		}
-		&.Geel {
-			.fab {
-				background: $yellow;
-			}
+    }
+    &.Geel {
+      .fab {
+        background: $yellow;
+      }
       border-left: 6px solid $yellow;
     }
-		&.Groen {
-			.fab {
-				background: $green;
-			}
+    &.Groen {
+      .fab {
+        background: $green;
+      }
       border-left: 6px solid $green;
-		}
-		.item-inner {
-			padding: 12px;
-		}
-		.fab {
-			height: 48px;
-			width: 48px;
-			background: #2196f3;
-			padding: 11px;
-			color: white;
-			right: 12px;
-			padding-top: 0px !important;
-			top: 15px;
-			position: absolute;
-			border-radius: 50% !important;
-			padding-left: 12px !important;
-		}
-	}
+    }
+    .item-inner {
+      padding: 12px;
+    }
+    .fab {
+      height: 48px;
+      width: 48px;
+      background: #2196f3;
+      padding: 11px;
+      color: white;
+      right: 12px;
+      padding-top: 0px !important;
+      top: 15px;
+      position: absolute;
+      border-radius: 50% !important;
+      padding-left: 12px !important;
+    }
+  }
 }
 
 @media screen and (max-width: 360px) {
@@ -652,135 +676,137 @@ button {
 }
 
 .infoCard {
-	position: relative;
-	border-radius: 8px;
-	min-width: 300px;
-	max-width: calc(100% - 24px);
-	width: 400px;
-	.inhoud {
-		border-radius: 8px;
-		padding-top: 20px;
-		padding-left: 16px;
-	}
-	tr td:first-of-type {
-		padding-right: 12px;
-	}
-	box-shadow: 4px 4px 24px #aaa;
-	margin: auto;
-	background: #f0f0f0;
-	.inhoud.Rood {
-		border-left: 10px solid $red;
-	}
-	.inhoud.Blauw {
-		border-left: 10px solid $blue;
-	}
-	.inhoud.Groen {
-		border-left: 10px solid $green;
-	}
-	.inhoud.Geel {
-		border-left: 10px solid $yellow;
-	}
+  position: relative;
+  border-radius: 8px;
+  min-width: 300px;
+  max-width: calc(100% - 24px);
+  width: 400px;
+  .inhoud {
+    border-radius: 8px;
+    padding-top: 20px;
+    padding-left: 16px;
+  }
+  tr td:first-of-type {
+    padding-right: 12px;
+  }
+  box-shadow: 4px 4px 24px #aaa;
+  margin: auto;
+  background: #f0f0f0;
+  .inhoud.Rood {
+    border-left: 10px solid $red;
+  }
+  .inhoud.Blauw {
+    border-left: 10px solid $blue;
+  }
+  .inhoud.Groen {
+    border-left: 10px solid $green;
+  }
+  .inhoud.Geel {
+    border-left: 10px solid $yellow;
+  }
 }
 
 .errorMsg {
-	color: red;
-	font-weight: bold;
+  color: red;
+  font-weight: bold;
 }
 
 .errorCard {
-	padding: 0 !important;
-	min-width: 280px;
-	max-width: 360px;
-	width: 80%;
-	&.hasError {
-		min-height: 100px;
-	}
-	margin-left: auto;
-	margin-right: auto;
-	background: #b00020 !important;
-	.content {
-		position: relative;
-	}
-	h1 {
-		margin-top: 0px;
-	}
-	* {
-		color: white !important;
-		font-weight: normal;
-	}
-	ion-icon {
-		align-self: left;
-		font-size: 6.8rem;
-		position: absolute;
-		left: 20px;
-		height: calc(100% - 20px);
-		top: calc(50% - 3.4rem);
-	}
-	#errorHeader {
-		position: relative;
-		left: 90px;
-		width: calc(100% - 88px);
-		text-align: left;
-		top: 8px;
-		font-size: 2.3rem;
-	}
-	#errorHelp {
-		font-size: 14px;
-		left: 90px;
-		position: relative;
-		width: calc(100% - 100px);
-		text-align: left;
-		margin-top: -12px;
+  padding: 0 !important;
+  min-width: 280px;
+  max-width: 360px;
+  width: 80%;
+  &.hasError {
+    min-height: 100px;
+  }
+  margin-left: auto;
+  margin-right: auto;
+  background: #b00020 !important;
+  .content {
+    position: relative;
+  }
+  h1 {
+    margin-top: 0px;
+  }
+  * {
+    color: white !important;
+    font-weight: normal;
+  }
+  ion-icon {
+    align-self: left;
+    font-size: 6.8rem;
+    position: absolute;
+    left: 20px;
+    height: calc(100% - 20px);
+    top: calc(50% - 3.4rem);
+  }
+  #errorHeader {
+    position: relative;
+    left: 90px;
+    width: calc(100% - 88px);
+    text-align: left;
+    top: 8px;
+    font-size: 2.3rem;
+  }
+  #errorHelp {
+    font-size: 14px;
+    left: 90px;
+    position: relative;
+    width: calc(100% - 100px);
+    text-align: left;
+    margin-top: -12px;
     min-height: 50px;
-	}
-	a {
-		text-decoration: underline;
-	}
+  }
+  a {
+    text-decoration: underline;
+  }
 }
 
 .fadeIn {
-	opacity: 0;
-	transition-duration: 600ms;
-	&.shown {
-		opacity: 1;
-	}
+  opacity: 0;
+  transition-duration: 600ms;
+  &.shown {
+    opacity: 1;
+  }
 }
 
 .input-cover {
-	display: none !important;
+  display: none !important;
 }
 
 .text-input-clear-icon {
-	padding: 8px !important;
-	height: 20px !important;
-	margin-top: 0px !important;
-	display: block !important;
+  padding: 8px !important;
+  height: 20px !important;
+  margin-top: 0px !important;
+  display: block !important;
 }
 
 .cleanTable {
-	font-size: 18px;
+  font-size: 18px;
 
-	tr:nth-of-type(2n) {
-    &, td {
+  tr:nth-of-type(2n) {
+    &,
+    td {
       background: #e5e5e5;
     }
-	}
+  }
 
-	tr:nth-of-type(2n + 1) {
-    &, td {
+  tr:nth-of-type(2n + 1) {
+    &,
+    td {
       background: #fafafa;
     }
-	}
-	td {
-		padding: 16px 18px !important;
-	}
-	td:first-of-type {
-		width: 50%;
-	}
+  }
+  td {
+    padding: 16px 18px !important;
+  }
+  td:first-of-type {
+    width: 50%;
+  }
 
-	&.longHeader td:first-of-type {
-		width: 80%;
-	}
+  &.longHeader td:first-of-type {
+    width: 80%;
+  }
 
   &.withHeader {
     tr:first-of-type {
@@ -789,8 +815,8 @@ button {
       }
     }
   }
-	text-align: left;
-	width: 100%;
+  text-align: left;
+  width: 100%;
 
   &.leftFixed {
     tr {
@@ -812,13 +838,12 @@ button {
 }
 
 ion-input.hideClear {
-	.text-input-clear-icon,
-	.text-input-clear-icon:hover {
-		color: white;
-		background: white;
-	}
+  .text-input-clear-icon,
+  .text-input-clear-icon:hover {
+    color: white;
+    background: white;
+  }
 }
-
 
 .childItem {
   border-left: 6px solid $blue;
@@ -829,7 +854,8 @@ ion-input.hideClear {
     width: 100%;
   }
 
-  h3, h2 {
+  h3,
+  h2 {
     margin: 0;
     font-weight: normal;
   }
@@ -878,19 +904,21 @@ ion-input.hideClear {
       padding-right: 60px;
       font-size: 3rem;
       color: white;
+      font-weight: bold;
       line-height: normal;
       position: relative;
     }
 
     td:not(:first-of-type) {
-      span, #shareIcon {
+      span,
+      #shareIcon {
         text-align: right;
         position: absolute;
         color: white;
         font-size: 56px;
         line-height: 40px;
         right: 24px;
-        top: calc((100px - 40px)/2);
+        top: calc((100px - 40px) / 2);
         margin-top: 0px;
       }
       #shareIcon {
@@ -901,15 +929,14 @@ ion-input.hideClear {
   }
 }
 
-
-
 .childItem {
-  &, & tbody, & tr {
-  width: 100%;
-  display: block;
+  &,
+  & tbody,
+  & tr {
+    width: 100%;
+    display: block;
   }
 }
-
 
 ion-item.item-input.item-md {
   padding: 0;
@@ -930,12 +957,12 @@ ion-item.item-input.item-md {
 
 .modal {
   button {
-    margin-top: 0px!important;
+    margin-top: 0px !important;
   }
 }
 
 button {
-  margin-top: 16px!important;
+  margin-top: 16px !important;
   ion-icon {
     position: absolute;
     left: 28px;
@@ -945,8 +972,6 @@ button {
     font-size: 18px;
   }
 }
-
-
 
 div.sticky-fab {
   position: sticky;
@@ -974,4 +999,120 @@ div.sticky-fab {
   to {
     transform: rotate(360deg);
   }
+}
+
+.alternate {
+  &:nth-of-type(2n + 1) {
+    &.Blauw,
+    &.blue {
+      &,
+      & > button {
+        background: darken($blue, 8%) !important;
+      }
+      &:hover {
+        background: darken($blue, 12%)!important;
+      }
+    }
+    &.Rood,
+    &.red {
+      &,
+      & > button {
+        background: darken($red, 8%) !important;
+      }
+      &:hover {
+        background: darken($red, 12%)!important;
+      }
+    }
+    &.Groen,
+    &.green {
+      &,
+      & > button {
+        background: darken($green, 8%) !important;
+      }
+      &:hover {
+        background: darken($green, 12%)!important;
+      }
+    }
+    &.Geel,
+    &.yellow {
+      &,
+      & > button {
+        background: darken($yellow, 8%) !important;
+      }
+      &:hover {
+        background: darken($yellow, 10%)!important;
+      }
+      color: #333;
+    }
+    &.Wit,
+    &.white {
+      &,
+      & > button {
+        background: #dadada !important;
+      }
+      &:hover {
+        background: #c0c0c0 !important;
+      }
+      color: #333;
+    }
+  }
+
+  &:nth-of-type(2n) {
+    &.Blauw,
+    &.blue {
+      &,
+      & > button {
+        background: $blue !important;
+      }
+      &:hover {
+        background: darken($blue, 6%)!important;
+      }
+    }
+    &.Rood,
+    &.red {
+      &,
+      & > button {
+        background: $red !important;
+      }
+      &:hover {
+        background: darken($red, 6%)!important;
+      }
+    }
+    &.Groen,
+    &.green {
+      &,
+      & > button {
+        background: $green !important;
+      }
+      &:hover {
+        background: darken($green, 6%)!important;
+      }
+    }
+    &.Geel,
+    &.yellow {
+      &,
+      & > button {
+        background: $yellow !important;
+      }
+      &:hover {
+        background: darken($yellow, 6%)!important;
+      }
+      color: #333;
+    }
+    &.Wit,
+    &.white {
+      &,
+      & > button {
+        background: #fafafa !important;
+      }
+      &:hover {
+        background: #eee !important;
+      }
+      color: #333;
+    }
+  }
+}
+
+.dark-icon {
+  color: #333;
 }
