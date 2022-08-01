@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, NavParams } from 'ionic-angular';
+import { Platform, NavController, NavParams, Haptic } from 'ionic-angular';
 
 import Parse from 'parse';
 
@@ -60,7 +60,8 @@ export class HomePage {
     public storage: Storage,
     public httpClient: HttpClient,
     private iab: InAppBrowser,
-    private g: GlobalFunctions
+    private g: GlobalFunctions,
+    private haptic: Haptic
   ) {
     this.y = new Date().getFullYear();
   }
@@ -320,6 +321,9 @@ export class HomePage {
         prompt: "Scan barcode vanaf een papieren of digitaal ticket."
       }).then((barcodeData) => {
         this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });
+        if(this.haptic.available()) {
+          this.haptic.notification({ type: 'success' });
+        }
       }, (error) => {
         this.error = error.message;
       });

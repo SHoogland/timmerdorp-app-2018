@@ -26,6 +26,7 @@ export class ScanTicketPage {
 
   modal: {
     showModal: boolean;
+    high: boolean;
   }
   ticket: any;
 
@@ -37,7 +38,8 @@ export class ScanTicketPage {
     public g: GlobalFunctions
   ) {
     this.modal = {
-      showModal: false
+      showModal: false,
+      high: false
     }
     this.title = 'Ticketgegevens';
     if (this.platform.is('cordova')) {
@@ -56,6 +58,8 @@ export class ScanTicketPage {
       id: this.navParams.get('barcode'),
       wristband: ''
     }
+
+    if(!this.ticket.id) this.g.goHome();
     this.loadedTicket = false;
 
   }
@@ -170,13 +174,15 @@ export class ScanTicketPage {
 
   closeModal() {
     this.modal.showModal = false;
+    let self = this
     setTimeout(function () {
-      document.querySelector('#myModal').classList.remove('high');
+      self.modal.high = false
     }, 400);
   }
 
   showModal() {
     this.modal.showModal = true;
+    this.modal.high = true;
   }
 
   goHome() {
