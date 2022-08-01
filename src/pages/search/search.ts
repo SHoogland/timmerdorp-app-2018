@@ -70,14 +70,14 @@ export class SearchPage {
 
     this.timeOut = setTimeout;
 
-    if(this.navParams.get('searchTerm')) {
+    if (this.navParams.get('searchTerm')) {
       this.searchTerm = this.navParams.get('searchTerm')
       this.searchThis()
     }
 
     this.loading = false;
 
-    if(this.navParams.get('searchId')) {
+    if (this.navParams.get('searchId')) {
       this.loading = true
       this.isSearchingById = true
       this.searchThis(this.navParams.get('searchId'))
@@ -122,7 +122,7 @@ export class SearchPage {
   }
 
   search() {
-    if(this.isSearchingById) return
+    if (this.isSearchingById) return
     this.searched = false
     try {
       if (this.searchTerm.length < 3) {
@@ -158,13 +158,13 @@ export class SearchPage {
 
     this.g.apiCall('search', { searchTerm: this.isSearchingById ? searchId : this.searchTerm }).then((result) => {
       self.loading = false
-      if(!result || result.response !== 'success') {
+      if (!result || result.response !== 'success') {
         self.error = (result || {}).error || (result || {}).response
         self.errorHelp = (result || {}).errorMessage || (result || {}).response
         return;
       }
 
-      if(!self.isSearchingById && self.searchTerm.length < 3) return
+      if (!self.isSearchingById && self.searchTerm.length < 3) return
 
       self.searched = true
       self.tickets = result.tickets.sort(function (a) {
@@ -178,7 +178,7 @@ export class SearchPage {
       self.canEditTickets = result.canEditTickets
       self.ticketPropertiesMap = result.ticketPropertiesMap
 
-      if(self.isSearchingById) {
+      if (self.isSearchingById) {
         self.showModal(result.tickets[0])
         self.searchTerm = (result.tickets[0].firstName) + ' ' + result.tickets[0].lastName
         self.isSearchingById = false
@@ -204,22 +204,25 @@ export class SearchPage {
     });
     this.history = this.g.filterHistory(this.history);
     this.storage.set("searchChildHistory", this.history);
-    this.modal.high = true
+    this.modal.high = true;
   }
 
   closeModal() {
     this.modal.showModal = false;
-    this.g.setStatusBar('blue')
-    this.modal.high = false
+    this.g.setStatusBar(this.g.wijk);
+    let self = this;
+    setTimeout(function () {
+      self.modal.high = false
+    }, 400)
   }
 
   scanChild(barcode) {
-    this.g.setStatusBar('blue')
+    this.g.setStatusBar(this.g.wijk)
     this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   goHome() {
-    this.g.setStatusBar('blue')
+    this.g.setStatusBar(this.g.wijk)
     if (this.modal.showModal) {
       let self = this;
       this.closeModal();
@@ -232,7 +235,7 @@ export class SearchPage {
   }
 
   markPresent(wristband) {
-    this.g.setStatusBar('blue')
+    this.g.setStatusBar(this.g.wijk)
     this.navCtrl.setRoot(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
@@ -243,7 +246,7 @@ export class SearchPage {
 
   async saveTicketEdit() {
     let result = await this.g.apiCall('saveTicketEdit', { ticket: this.modal.child })
-    if(!result || result.message != 'success') alert('hmmmm (geen response)')
+    if (!result || result.message != 'success') alert('hmmmm (geen response)')
     this.isEditingTicket = false
   }
 }

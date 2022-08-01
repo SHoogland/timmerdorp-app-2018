@@ -9,6 +9,7 @@ import { GlobalFunctions } from '../providers/global';
 import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirmation';
 import { SettingsPage } from '../pages/settings/settings';
 import { SearchPage } from '../pages/search/search';
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 
 declare let cordova: any;
 
@@ -54,7 +55,7 @@ export class MyApp {
         if (this.platform.is('cordova')) {
           if (cordova.platformId === 'android') {
             this.platform.registerBackButtonAction(() => {
-              let preventBack = ['page-search', 'page-connect-child-to-cabin', 'page-home', 'page-presence', 'page-scan-ticket']
+              let preventBack = ['page-search', 'page-connect-child-to-cabin', 'page-home', 'page-presence', 'page-scan-ticket', 'page-forgot-password', 'page-login', 'email-confirmation']
               if (preventBack.indexOf(this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()) === -1) {
                 this.g.goHome();
               }
@@ -100,7 +101,7 @@ export class MyApp {
 
   touchStart(event) {
     let page = this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()
-    if (page === 'page-home' || page === 'page-login') return;
+    if (page === 'page-home' || page === 'page-login' || 'email-confirmation' || 'page-forgot-password') return;
 
     let x = this.computeScrollX(event)
     let y = this.computeScrollY(event)
@@ -130,7 +131,7 @@ export class MyApp {
       }, 300)
     } else {
       backBtnHint.style.opacity = '0'
-      setTimeout(function(){
+      setTimeout(function () {
         backBtnHint.style.top = '-100px'
       }, 400)
     }
@@ -171,7 +172,7 @@ export class MyApp {
 
         if (link) {
           if (link.path === '/app/verify-email') {
-            if (link.queryString.split('id=').length > 0 && link.queryString.split('email=').length > 0) {
+            if (link.queryString.split('code=').length > 0 && link.queryString.split('email=').length > 0) {
               let code = link.queryString.split('code=')[1].split('&')[0]
               let email = link.queryString.split('email=')[1].split('&')[0]
               this.g.navigatedToDeeplink = true
@@ -194,6 +195,16 @@ export class MyApp {
               let id = link.queryString.split('id=')[1].split('&')[0]
               this.g.navigatedToDeeplink = true
               nav.setRoot(SearchPage, { searchId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
+              this.g.setStatusBar('blue')
+            }
+          }
+
+          if (link.path === '/app/new-password' && link.queryString) {
+            if (link.queryString.split('code=').length > 0 && link.queryString.split('email=').length > 0) {
+              let code = link.queryString.split('code=')[1].split('&')[0]
+              let email = link.queryString.split('email=')[1].split('&')[0]
+              this.g.navigatedToDeeplink = true
+              nav.setRoot(ForgotPasswordPage, { forgotEmail: email, forgotEmailCode: code }, { animate: true, animation: "ios-transition", direction: 'forward' });
               this.g.setStatusBar('blue')
             }
           }

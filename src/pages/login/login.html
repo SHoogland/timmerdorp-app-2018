@@ -4,16 +4,28 @@
       <h1 style="font-size: 3.5rem!important;">Welkom bij de Timmerdorp app!</h1>
       <div class="user-info errorCard hasError" id='warning' style="width: 90%; background: #07497e!important;">
         <div class="content">
-          <ion-icon name="alert"></ion-icon>
-          <h1 id='errorHeader'>Let op</h1>
-          <h4 id='errorHelp' style="margin-bottom: 0px;">Deze app is alleen bedoeld voor de vrijwilligers van
-            Timmerdorp, niet voor ouders of deelnemers! Klik op OK om door te gaan... <br>
-            <button ion-button (click)='showLogin()'
-              style="background: darkred; height: 60px; width: 140px; margin-top: 16px; margin-bottom: 16px; background: #053459;">
-              OK
-            </button>
-          </h4>
+          <table>
+            <tr>
+              <td>
+                <ion-icon style="padding-left: 4px; padding-right: 4px;" name="alert"></ion-icon>
+              </td>
+              <td>
+                <h1 id='errorHeader'>Let op</h1>
+                <h4 id='errorHelp' style="margin-bottom: 8px;">Deze app is alleen bedoeld voor de vrijwilligers van
+                  Timmerdorp, niet voor ouders of deelnemers!
+                  <br>
+                </h4>
+              </td>
+            </tr>
+          </table>
         </div>
+      </div>
+      <div style="width: 100%; text-align: center;">
+        <button ion-button (click)='showLogin()'
+          style="background: darkred; height: 60px; width: 180px; margin-top: 16px; margin-bottom: 16px; background: #053459; padding-left: 20px; padding-right: 20px;">
+          <i class="material-icons" style="color: white; font-weight: bold; padding-right: 12px;">arrow_forward</i>
+          Doorgaan
+        </button>
       </div>
     </div>
     <div *ngIf="!hideLogin">
@@ -33,13 +45,15 @@
             </ion-input>
           </ion-item>
         </ion-list>
-        <button id='saveBtn' ion-button full style="background: #085592" (click)='loginNow()'>
+        <button id='saveBtn' ion-button full style="background: #085592; border-radius: 6px;" (click)='loginNow()'>
           <ion-icon slot='start' name='md-log-in'>
           </ion-icon>
           <span>
             Inloggen
           </span>
         </button>
+        <p (click)="forgotPassword()"
+          style="color: white; text-decoration: underline; width: 100%; text-align: center;">Wachtwoord vergeten?</p>
         <div class="user-info" *ngIf="loading">
           <ion-spinner color='white'></ion-spinner>
         </div>
@@ -50,7 +64,22 @@
             <h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
           </div>
         </div>
-        <p style="padding: 0 10%; font-size: 1.6rem; font-family: Roboto, Arial;">Heb je al een account aangemaakt in de Timmerdorp-webshop, om bijvoorbeeld kaartjes te kopen voor je kinderen? Log dan in met dat webshop-account.</p>
+        <div class="user-info errorCard hasError" id='warning'
+          style="width: 80%; border-radius: 6px; background: #07497e!important;">
+          <div class="content">
+            <tr>
+              <td>
+                <ion-icon name="alert" style="font-size: 7rem;"></ion-icon>
+              </td>
+              <td>
+                <h4 id='errorHelp' style="margin-bottom: 0px;">
+                  Heb je al een account aangemaakt in de Timmerdorp-webshop, om bijvoorbeeld kaartjes te kopen voor je
+                  kinderen? Log dan in met dat webshop-account. Ook accounts van vorig jaar zijn nog geldig!
+                </h4>
+              </td>
+            </tr>
+          </div>
+        </div>
       </div>
       <div *ngIf="!loginPart">
         <h1>Registreren</h1>

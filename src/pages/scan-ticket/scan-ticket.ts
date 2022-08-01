@@ -67,10 +67,10 @@ export class ScanTicketPage {
     this.wristBandError = false;
 
     let d = await this.storage.get('lastWristbandAssignmentDate')
-    if(+new Date() - d < 10 * 60 * 1000) {
+    if (+new Date() - d < 10 * 60 * 1000) {
       this.showSuggestion = true;
       this.suggestionNumber = '' + (1 + +(await this.storage.get('lastWristbandAssignmentNumber')))
-      if(this.suggestionNumber.length === 1) {
+      if (this.suggestionNumber.length === 1) {
         this.suggestionNumber = '00' + this.suggestionNumber
       }
     }
@@ -81,7 +81,7 @@ export class ScanTicketPage {
     this.loading = true;
 
     let self = this;
-    this.g.apiCall('findChildById', { id: this.ticket.id }).then(async function(result) {
+    this.g.apiCall('findChildById', { id: this.ticket.id }).then(async function (result) {
       self.loading = false;
       if (result.response !== 'success') {
         self.error = result.error || result.response;
@@ -110,7 +110,6 @@ export class ScanTicketPage {
   collectSole() {
     this.loadingSole = true
     let self = this
-    console.log(this.ticket.id)
     this.g.apiCall('collectSole', {
       id: this.ticket.id,
     }).then((result) => {
@@ -190,5 +189,5 @@ export class ScanTicketPage {
     } else {
       this.g.goHome();
     }
-	}
+  }
 }
