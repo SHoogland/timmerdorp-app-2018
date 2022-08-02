@@ -10,6 +10,7 @@ declare let cordova: any;
 	templateUrl: 'presence.html'
 })
 export class PresencePage {
+  absenceReason: string;
 	errorHelp: string;
 	number: string;
 	title: string;
@@ -159,11 +160,16 @@ export class PresencePage {
 			return;
 		}
 
+    if(!this.absenceReason) {
+      alert("Je moet wel een reden opgeven voor het vertrek.")
+      return
+    }
+
 		let self = this;
 
-		this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day, forcePresence: true, presence: false }).then((result) => {
+		this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day, forcePresence: true, presence: false, reason: this.absenceReason }).then((result) => {
 			if (!result || !(result || {}).response || result.response != "success") {
-				alert('Aanwezig/afwezig melden niet gelukt! Vraag na bij Stan of Stephan wat er mis ging...')
+				alert('Afwezig melden niet gelukt! Vraag na bij Stan of Stephan wat er mis ging...')
 			} else {
 				self.ticket['aanwezig_' + self.day] = result.newPresence
 				self.markDone()
@@ -255,9 +261,5 @@ export class PresencePage {
 			(<HTMLScriptElement>document.querySelector("#numberInput input")).focus();
 			self.cd.detectChanges();
 		}, 1000);
-	}
-
-	alert() {
-		alert("Om fouten te voorkomen is het niet meer mogelijk aanwezigheid te veranderen voor andere dagen. Vragen, of alsnog een wijziging aanvragen? Zoek Stan uit wijk blauw of Stephan uit wijk geel");
 	}
 }

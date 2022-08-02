@@ -193,6 +193,42 @@ export class GlobalFunctions {
 
   async switchEnv() {
     this.staging = !this.staging
-    this.storage.set('staging', this.staging);
+    await this.storage.set('staging', this.staging)
+  }
+
+  generateGebeurtenisDescription(h, withChildName) {
+    let d = h.get('datetime');
+    let dateString = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'][d.getDay()] + ' om ' + this.prependZero(d.getHours()) + ':' + this.prependZero(d.getMinutes())
+
+    let result = ''
+
+    if(h.get('eventType') == 'marked-absent') {
+      result = '<u>Afwezig</u> gemeld door ' + h.get('adminName') + ' met als reden: <i>' + h.get('reason') + '</i>.'
+    }
+    if(h.get('eventType') == 'marked-present') {
+      result = 'Aanwezig gemeld door ' + h.get('adminName') + '.'
+    }
+    if(h.get('eventType') == 'set-hutnr') {
+      if(!h.get('old')) {
+        result = 'Toegevoegd aan hutje met nummer <u>' + h.get('new') + '</u> door ' + h.get('adminName') + '.'
+      } else if(!h.get('new')) {
+        result = 'Verwijderd uit hutje <u>' + h.get('old') + '</u> door ' + h.get('adminName') + '.'
+      } else {
+        result = 'Overgeplaatst van hutje <u>' + h.get('old') + '</u> naar hutje <u>' + h.get('new') + '</u> door ' + h.get('adminName') + '.'
+      }
+    }
+    if(h.get('eventType') == 'gave-wristband') {
+      if(!h.get('old')) {
+        result = 'Polsbandje gegeven met nummer <u>' + h.get('new') + '</u> door ' + h.get('adminName') + '.'
+      } else {
+        result = 'Nieuw polsbandje gegeven met nummer <u>' + h.get('new') + '</u> (eerst: ' + h.get('old') + ') door ' + h.get('adminName') + '.'
+      }
+    }
+
+    if(withChildName) {
+      return '<b>' + dateString + ':</b> ' + h.get('ticket').get('firstName') + ' ' + h.get('ticket').get('lastName') + ' (bandje ' + h.get('ticket').get('wristband') + ') ' + result.substring(0,1).toLowerCase() + result.substring(1).replace('Afwezig', 'afwezig')
+    } else {
+      return '<b>' + dateString + ':</b> ' + result
+    }
   }
 }

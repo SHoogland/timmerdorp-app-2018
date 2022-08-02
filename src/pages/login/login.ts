@@ -114,20 +114,24 @@ export class LoginPage {
   }
 
   registerNow(surpressWarnings) {
-    if (this.register.username === 'test123' && this.register.password === 'test123') {
-      this.g.staging = !this.g.staging;
-      alert('Gelukt! Testversie is nu ' + (this.g.staging ? 'ingeschakeld' : 'uitgeschakeld'))
-      return;
-    }
-
     let self = this;
-    if (!self.register.username || !self.register.password) {
+    self.register.username = self.register.username.replace(" ", "")
+    let emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (!self.register.username || !self.register.password || !emailRegex.test(self.register.username)) {
       if (!surpressWarnings) {
         self.error = 'Registreren mislukt!'
-        self.errorHelp = 'Een e-mailadres en wachtwoord zijn vereist'
+        self.errorHelp = 'Een geldig e-mailadres en wachtwoord zijn vereist'
       }
       return
     }
+    if(!self.register.voornaam || !self.register.achternaam) {
+      if (!surpressWarnings) {
+        self.error = 'Registreren mislukt!'
+        self.errorHelp = 'Vul alsjeblieft je hele naam in'
+      }
+      return
+    }
+
     self.loading = true
     this.g.apiCall('registreren', {
       username: this.register.username,

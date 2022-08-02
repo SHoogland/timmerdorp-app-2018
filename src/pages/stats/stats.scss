@@ -21,11 +21,6 @@ page-stats {
     }
   }
 
-  * {
-    transition-duration: 500ms;
-    transition-property: background-color !important;
-  }
-
   h1:not(#ptitle) {
     margin-top: 0;
   }
@@ -73,6 +68,6 @@ page-stats {
   }
 
   #presencesByTimeChart.shown {
-    height: 325px;
+    height: 375px;
   }
 }

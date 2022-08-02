@@ -23,8 +23,11 @@ export class SettingsPage {
   isRefreshing: boolean;
   loading: boolean;
 
-  admins: Array<any>;
   potentialAdmins: Array<any>;
+  history: Array<any>;
+  admins: Array<any>;
+
+  historyLength: number;
 
   constructor(
     public navCtrl: NavController,
@@ -76,6 +79,8 @@ export class SettingsPage {
       self.admins = result.admins;
       self.potentialAdmins = result.potentialAdmins;
       self.loading = false
+      self.history = result.history
+      self.historyLength = result.historyLength
     })
   }
 
@@ -152,5 +157,15 @@ export class SettingsPage {
 
   changeWijk() {
     this.navCtrl.setRoot(HomePage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
+  }
+
+  moreHistory() {
+    let self = this
+    this.g.apiCall('getAdmins', { justMoreHistory: true, skip: this.history.length }).then(function (result) {
+      if (result.denied) {
+        return;
+      }
+      self.history = self.history.concat(result.result)
+    })
   }
 }

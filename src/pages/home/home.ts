@@ -307,7 +307,7 @@ export class HomePage {
       await Parse.User.logOut();
       this.g.toLogin();
     } else {
-      if (this.openedPage.component.name == 'StatsPage') {
+      if (this.openedPage.component.name == 'StatsPage' && page.class.startsWith('half')) {
         if (this.showPhoto) {
           this.showPhoto = false;
           return;
@@ -325,7 +325,7 @@ export class HomePage {
         prompt: "Scan barcode vanaf een papieren of digitaal ticket."
       }).then((barcodeData) => {
         this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });
-        if(this.haptic.available()) {
+        if (this.haptic.available()) {
           this.haptic.notification({ type: 'success' });
         }
       }, (error) => {
