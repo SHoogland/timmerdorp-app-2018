@@ -51,7 +51,7 @@ export class SearchPage {
 
   ngAfterViewInit() {
     this.searched = false;
-    this.title = 'Kinderen Zoeken'
+    this.title = 'Zoeken'
     if (this.platform.is('cordova')) {
       if (cordova.platformId === 'android') {
         this.platform.registerBackButtonAction(() => {
