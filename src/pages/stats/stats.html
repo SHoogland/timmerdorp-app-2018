@@ -81,7 +81,7 @@
         <div style="overflow-x: scroll;">
           <table class='cleanTable withHeader topFixed'>
             <tr>
-              <td>
+              <td style="min-width: 150px;">
                 Naam
               </td>
               <td>
@@ -101,7 +101,7 @@
               </td>
             </tr>
             <tr *ngFor="let admin of admins; let i = index" class="{{ admin.isYou ? 'isYou' : ''}}">
-              <td>{{ admin.naam }} </td>
+              <td class="{{ admin.wijk }}">{{ admin.naam }} </td>
               <td>{{ admin.di || 0 }} </td>
               <td>{{ admin.wo || 0 }} </td>
               <td>{{ admin.do || 0 }} </td>

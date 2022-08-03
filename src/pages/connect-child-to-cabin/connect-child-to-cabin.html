@@ -12,7 +12,7 @@
   <div class='content main-content'>
     <div class="user-info">
       <ion-list class="line-input">
-        <h1 class='title'>Hutnummer:</h1>
+        <h3>Hutnummer:</h3>
         <ion-item>
           <ion-input #nrInput type='tel' class="ion-text-right" [(ngModel)]="hutNr" maxlength='3'
             (ngModelChange)="search($event)">
@@ -111,12 +111,13 @@
         <ion-spinner *ngIf='loading' color='primary'></ion-spinner>
       </div>
 
-      <p *ngIf="!loading && searchedChild && !(tickets || []).length">Geen kinderen gevonden! Je kunt zoeken op
-        hutnummer, polsbandje, of naam.</p>
+      <p *ngIf="!loading && searchedChild && !(tickets || []).length">
+        Geen kinderen gevonden! Je kunt zoeken op polsbandje of naam.
+      </p>
     </div>
 
-    <div *ngFor="let child of tickets" [ngClass]='"alternate " + g.getWijk(child.hutNr)'>
-      <button ion-button full (click)="addChildToHut(child);" class="modern">
+    <div *ngFor="let child of tickets" [ngClass]='"alternate " + (child.hutNr ? g.getWijk(child.hutNr) : g.getWijk(hutNr))'>
+      <button ion-button full (click)="addChildToHut(child);" class="modern childAddBtn">
         {{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
         <span *ngIf="child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;hutje: {{child.hutNr }}</span>
         <span *ngIf="!child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;Geen hutje</span>

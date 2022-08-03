@@ -205,7 +205,7 @@ export class ConnectChildToCabinPage {
     }
     self.loading = true;
 
-    this.g.apiCall('search', { searchTerm: this.searchTerm }).then((result) => {
+    this.g.apiCall('search', { searchTerm: this.searchTerm, connectChildToCabin: true }).then((result) => {
       if (!result || result.response !== 'success') {
         self.error = (result || {}).error || (result || {}).response
         self.errorHelp = (result || {}).errorMessage || (result || {}).response
@@ -213,9 +213,18 @@ export class ConnectChildToCabinPage {
       }
       self.searchedChild = true
       self.loading = false
-      self.tickets = result.tickets.sort(function (a, b) {
-        return a.firstName > b.firstName ? 1 : -1
-      }); //give priority to wristbands over hut numbers
+      let rankResult = function (item) {
+        if (item.wristband == self.searchTerm) {
+          return -1;
+        }
+        let penalty = !!item.hutNr ? 5 : 0
+        if(item.firstName.toLowerCase().startsWith(self.searchTerm.toLowerCase())) return penalty + 1
+        if(item.lastName.toLowerCase().startsWith(self.searchTerm.toLowerCase())) return penalty + 2
+        if(item.firstName.toLowerCase().split(self.searchTerm.toLowerCase()).length > 1) return penalty + 3
+        if(item.lastName.toLowerCase().split(self.searchTerm.toLowerCase()).length > 1) return penalty + 4
+        return penalty + 5;
+      }
+      self.tickets = result.tickets.sort((a,b) => rankResult(a) > rankResult(b) ? 1 : -1)
     }).catch((e) => {
       self.searchedChild = true
       self.error = String(e)

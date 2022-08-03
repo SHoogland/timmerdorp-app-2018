@@ -31,6 +31,14 @@
       </tr>
       <tr>
         <td>
+          Naam:
+        </td>
+        <td>
+          {{ name }}
+        </td>
+      </tr>
+      <tr>
+        <td>
           E-mailadres:
         </td>
         <td>
@@ -133,7 +141,7 @@
         <h1 style="padding: 0 16px; margin: 24px 0 0 0;">
           Gebeurtenis-log (0-{{history.length}} van de {{historyLength}})
         </h1>
-        <ul style="padding-left: 18px;">
+        <ul style="padding-left: 28px;">
           <li *ngFor="let h of history" [innerHTML]='g.generateGebeurtenisDescription(h, true)'
             style="list-style: disc; text-align: left; margin-bottom: 6px; line-height: 2rem;"></li>
         </ul>

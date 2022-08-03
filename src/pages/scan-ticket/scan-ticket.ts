@@ -22,7 +22,7 @@ export class ScanTicketPage {
   error: string;
   title: string;
 
-  suggestionNumber: string;
+  suggestionNumber: number;
 
   modal: {
     showModal: boolean;
@@ -59,7 +59,7 @@ export class ScanTicketPage {
       wristband: ''
     }
 
-    if(!this.ticket.id) this.g.goHome();
+    if (!this.ticket.id) this.g.goHome();
     this.loadedTicket = false;
   }
 
@@ -72,10 +72,7 @@ export class ScanTicketPage {
     let d = await this.storage.get('lastWristbandAssignmentDate')
     if (+new Date() - d < 10 * 60 * 1000) {
       this.showSuggestion = true;
-      this.suggestionNumber = '' + (1 + +(await this.storage.get('lastWristbandAssignmentNumber')))
-      if (this.suggestionNumber.length === 1) {
-        this.suggestionNumber = '00' + this.suggestionNumber
-      }
+      this.suggestionNumber = (1 + +(await this.storage.get('lastWristbandAssignmentNumber')))
     }
   }
 
@@ -172,7 +169,7 @@ export class ScanTicketPage {
   }
 
   bandNrInput(e) {
-    if(e.key === "Enter") this.saveTicket()
+    if (e.key === "Enter") this.saveTicket()
   }
 
   closeModal() {
@@ -198,5 +195,9 @@ export class ScanTicketPage {
     } else {
       this.g.goHome();
     }
+  }
+
+  prependZeroes(num) {
+    return (num + '').length === 1 ? '00' + num : num;
   }
 }

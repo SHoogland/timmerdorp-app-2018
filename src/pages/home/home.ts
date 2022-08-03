@@ -96,11 +96,6 @@ export class HomePage {
     }
 
     this.storage.get('wijk').then(async (val) => {
-      if (!val) {
-        this.showWijkChoice = true
-      }
-      console.log(val)
-
       this.g.wijk = val || "blue";
       this.g.setStatusBar(this.g.wijk);
 
@@ -235,6 +230,7 @@ export class HomePage {
             if (!self.g.navigatedToDeeplink) self.navCtrl.setRoot(EmailConfirmationPage, { waitingForEmailConfirmation: !logInStatus.emailConfirmed, waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin, email: logInStatus.email }, { animate: true, animation: "ios-transition", direction: 'forward' })
           }
           self.waitingPotentialAdmins = logInStatus.waitingPotentialAdmins
+          if(!logInStatus.wijk) self.showWijkChoice = true
           if (self.g.wijk != logInStatus.wijk) {
             self.g.wijk = logInStatus.wijk
             self.storage.set('wijk', self.g.wijk)

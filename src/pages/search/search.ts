@@ -168,13 +168,17 @@ export class SearchPage {
       if (!self.isSearchingById && self.searchTerm.length < 3) return
 
       self.searched = true
-      self.tickets = result.tickets.sort(function (a) {
-        if (a.wristband == self.searchTerm) {
+      let rankResult = function (item) {
+        if (item.wristband == self.searchTerm) {
           return -1;
         }
-        return 1;
-      }); //give priority to wristbands over hut numbers
-
+        if(item.firstName.toLowerCase().startsWith(self.searchTerm.toLowerCase())) return 1
+        if(item.lastName.toLowerCase().startsWith(self.searchTerm.toLowerCase())) return 2
+        if(item.firstName.toLowerCase().split(self.searchTerm.toLowerCase()).length > 1) return 3
+        if(item.lastName.toLowerCase().split(self.searchTerm.toLowerCase()).length > 1) return 4
+        return 5;
+      }
+      self.tickets = result.tickets.sort((a,b) => rankResult(a) > rankResult(b) ? 1 : -1)
 
       self.canEditTickets = result.canEditTickets
       self.ticketPropertiesMap = result.ticketPropertiesMap
@@ -252,7 +256,10 @@ export class SearchPage {
   }
 
   async saveTicketEdit() {
-    let result = await this.g.apiCall('saveTicketEdit', { ticket: this.modal.child })
+    let ticketObj = {}
+    Object.keys(this.modal.child).forEach((key) => ticketObj[key] = this.modal.child[key])
+    delete ticketObj['history']
+    let result = await this.g.apiCall('saveTicketEdit', { ticket: ticketObj })
     if (!result || result.message != 'success') alert('hmmmm (geen response)')
     this.isEditingTicket = false
   }

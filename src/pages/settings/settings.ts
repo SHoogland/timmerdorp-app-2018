@@ -17,6 +17,7 @@ export class SettingsPage {
   error: string;
   title: string;
   email: string;
+  name: string;
   wijk: string;
 
   isStanOfStephan: boolean;
@@ -54,18 +55,15 @@ export class SettingsPage {
     });
 
     await this.getAdmins()
-    this.email = (await this.g.checkIfStillLoggedIn()).email
+    let loginCheckResult = await this.g.checkIfStillLoggedIn()
+    this.email = loginCheckResult.email
+    this.name = loginCheckResult.name
 
     if (this.navParams.get('confirmationId')) {
       let result = await this.addAdmin(null, false, this.navParams.get('confirmationId'))
       if (result) alert('Gelukt om admin toe te voegen!')
       else alert('Mislukt om admin toe te voegen')
     }
-
-    let self = this;
-    document.querySelector('div.sticky-fab i.material-icons').addEventListener('animationiteration', function () {
-      if (!self.loading) self.isRefreshing = false;
-    })
   }
 
   async getAdmins() {
@@ -78,9 +76,10 @@ export class SettingsPage {
       self.isStanOfStephan = true;
       self.admins = result.admins;
       self.potentialAdmins = result.potentialAdmins;
-      self.loading = false
       self.history = result.history
       self.historyLength = result.historyLength
+      self.loading = false
+      self.isRefreshing = false
     })
   }
 

@@ -70,4 +70,20 @@ page-stats {
   #presencesByTimeChart.shown {
     height: 375px;
   }
+
+  td.white {
+    color: gray;
+  }
+  td.blue {
+    color: $blue;
+  }
+  td.yellow {
+    color: $yellow;
+  }
+  td.red {
+    color: $red;
+  }
+  td.green {
+    color: $green;
+  }
 }

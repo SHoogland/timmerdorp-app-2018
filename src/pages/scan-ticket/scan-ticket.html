@@ -27,8 +27,7 @@
         <table class='cleanTable'>
           <tr>
             <td>Naam:</td>
-            <td>{{ ticket.firstName + ((ticket.nickName && ticket.nickName !== ticket.firstName) ? ' (' +
-              ticket.nickName + ')' : '') }} {{ ticket.lastName }}</td>
+            <td>{{ ticket.firstName }} {{ ticket.lastName }}</td>
           </tr>
           <tr>
             <td>Ticket QR-code:</td>
@@ -57,13 +56,21 @@
 
       <div class="bracelet-number">
         <h1>Polsbandnummer</h1>
-        <p style="padding: 0 24px;" *ngIf="showSuggestion">Wil je soms <span
-            (click)="ticket.wristband = '' + (suggestionNumber - 2); saveTicket()" id="wristbandSuggestion">bandje {{
-            suggestionNumber - 2 }}</span> of <span (click)="ticket.wristband = '' + suggestionNumber; saveTicket()"
-            id="wristbandSuggestion">bandje {{ suggestionNumber }}</span> toewijzen?</p>
+        <p style="padding: 0 24px;" *ngIf="showSuggestion">
+          Wil je soms
+          <span (click)="ticket.wristband = '' + prependZeroes(suggestionNumber - 2); saveTicket()" id="wristbandSuggestion">
+            bandje {{ prependZeroes(suggestionNumber - 2) }}
+          </span>
+          of
+          <span (click)="ticket.wristband = '' + prependZeroes(suggestionNumber); saveTicket()" id="wristbandSuggestion">
+            bandje {{ prependZeroes(suggestionNumber) }}
+          </span>
+          toewijzen?
+        </p>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input (keyup)="bandNrInput($event)" #nrInput type='tel' maxlength='3' [(ngModel)]='ticket.wristband' class="ion-text-right">
+            <ion-input (keyup)="bandNrInput($event)" #nrInput type='tel' maxlength='3' [(ngModel)]='ticket.wristband'
+              class="ion-text-right">
             </ion-input>
           </ion-item>
         </ion-list>

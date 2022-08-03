@@ -201,32 +201,36 @@ export class GlobalFunctions {
     let dateString = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'][d.getDay()] + ' om ' + this.prependZero(d.getHours()) + ':' + this.prependZero(d.getMinutes())
 
     let result = ''
+    let admin = h.get('adminName')
 
-    if(h.get('eventType') == 'marked-absent') {
-      result = '<u>Afwezig</u> gemeld door ' + h.get('adminName') + ' met als reden: <i>' + h.get('reason') + '</i>.'
+    if (h.get('eventType') == 'marked-absent') {
+      result = `<u>Afwezig</u> gemeld door ${admin} met als reden: <i>${h.get('reason')}</i>.`
     }
-    if(h.get('eventType') == 'marked-present') {
-      result = 'Aanwezig gemeld door ' + h.get('adminName') + '.'
+    if (h.get('eventType') == 'marked-present') {
+      result = `Aanwezig gemeld door ${admin}.`
     }
-    if(h.get('eventType') == 'set-hutnr') {
-      if(!h.get('old')) {
-        result = 'Toegevoegd aan hutje met nummer <u>' + h.get('new') + '</u> door ' + h.get('adminName') + '.'
-      } else if(!h.get('new')) {
-        result = 'Verwijderd uit hutje <u>' + h.get('old') + '</u> door ' + h.get('adminName') + '.'
+    if (h.get('eventType') == 'collected-sole') {
+      result = `Veiligheidszooltjes gemarkeerd als opgehaald door ${admin}.`
+    }
+    if (h.get('eventType') == 'set-hutnr') {
+      if (!h.get('old')) {
+        result = `Toegevoegd aan hutje met nummer <u>${h.get('new')}</u> door ${admin}.`
+      } else if (!h.get('new')) {
+        result = `Verwijderd uit hutje <u>${h.get('old')}</u> door ${admin}.`
       } else {
-        result = 'Overgeplaatst van hutje <u>' + h.get('old') + '</u> naar hutje <u>' + h.get('new') + '</u> door ' + h.get('adminName') + '.'
+        result = `Overgeplaatst van hutje <u>${h.get('old')}</u> naar hutje <u>${h.get('new')}</u> door ${admin}.`
       }
     }
-    if(h.get('eventType') == 'gave-wristband') {
-      if(!h.get('old')) {
-        result = 'Polsbandje gegeven met nummer <u>' + h.get('new') + '</u> door ' + h.get('adminName') + '.'
+    if (h.get('eventType') == 'gave-wristband') {
+      if (!h.get('old')) {
+        result = `Polsbandje gegeven met nummer <u>${h.get('new')}</u> door ${admin}.`
       } else {
-        result = 'Nieuw polsbandje gegeven met nummer <u>' + h.get('new') + '</u> (eerst: ' + h.get('old') + ') door ' + h.get('adminName') + '.'
+        result = `Nieuw polsbandje gegeven met nummer <u>${h.get('new')}</u> (eerst: ${h.get('old')}) door ${admin}.`
       }
     }
 
-    if(withChildName) {
-      return '<b>' + dateString + ':</b> ' + h.get('ticket').get('firstName') + ' ' + h.get('ticket').get('lastName') + ' (bandje ' + h.get('ticket').get('wristband') + ') ' + result.substring(0,1).toLowerCase() + result.substring(1).replace('Afwezig', 'afwezig')
+    if (withChildName) {
+      return '<b>' + dateString + ':</b> ' + h.get('ticket').get('firstName') + ' ' + h.get('ticket').get('lastName') + ' (bandje ' + h.get('ticket').get('wristband') + ') ' + result.substring(0, 1).toLowerCase() + result.substring(1).replace('Afwezig', 'afwezig')
     } else {
       return '<b>' + dateString + ':</b> ' + result
     }
