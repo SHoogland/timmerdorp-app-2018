@@ -15,7 +15,24 @@
 @import "./theme/elements";
 
 * {
-  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-family: Montserrat, Roboto, Arial, Helvetica, sans-serif;
+}
+
+button, ion-button {
+  &:not(.homeButton) {
+    &:not(.material-icons) {
+      &, *:not(ion-icon):not(.material-icons)  {
+        font-family: Roboto, Arial, Helvetica, sans-serif;
+      }
+    }
+  }
+  font-weight: bold;
+}
+
+.errorCard *, table * {
+  &:not(ion-icon):not(.material-icons) {
+    font-family: Roboto, Arial, Helvetica, sans-serif!important;
+  }
 }
 
 body {
@@ -102,7 +119,11 @@ h1 {
   opacity: 1;
 }
 
+
 #ptitle:not(.home) {
+  font-family: 'Mikado-Bold'!important;
+  font-weight: normal;
+  letter-spacing: 2px;
   position: absolute;
   top: 2px;
   margin-top: 22px;
@@ -902,7 +923,9 @@ ion-input.hideClear {
     td:first-of-type {
       padding-left: 28px;
       padding-right: 60px;
-      font-size: 3rem;
+      font-size: 3.2rem;
+      font-family: Montserrat, Roboto, Arial, Helvetica, sans-serif;
+      font-weight: bold;
       color: white;
       font-weight: bold;
       line-height: normal;

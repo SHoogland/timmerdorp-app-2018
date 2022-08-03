@@ -25,6 +25,7 @@ export class MyApp {
   swipeGestureStartX: number;
   swipeGestureStartY: number;
   swipeTimeout: any;
+  swipeTimeout2: any;
 
 
   constructor(
@@ -125,9 +126,13 @@ export class MyApp {
       backBtnHint.style.background = '#b0d0ff'
       backBtnHint.style.transitionProperty = 'background, opacity'
       this.g.goHome();
+      let self = this;
       this.swipeTimeout = setTimeout(function () {
         backBtnHint.style.background = '#ffffff'
         backBtnHint.style.opacity = '0'
+        self.swipeTimeout2 = setTimeout(function() {
+          backBtnHint.style.top = '-100px'
+        }, 400);
       }, 300)
     } else {
       backBtnHint.style.opacity = '0'
@@ -146,6 +151,7 @@ export class MyApp {
     let xMovement = this.computeScrollX(event) - this.swipeGestureStartX
     if (xMovement > 25) {
       clearTimeout(this.swipeTimeout)
+      clearTimeout(this.swipeTimeout2)
       backBtnHint.style.transitionProperty = ''
       backBtnHint.style.background = '#ffffff'
       backBtnHint.style.opacity = '0'

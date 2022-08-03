@@ -61,7 +61,6 @@ export class ScanTicketPage {
 
     if(!this.ticket.id) this.g.goHome();
     this.loadedTicket = false;
-
   }
 
   async init() {
@@ -170,6 +169,10 @@ export class ScanTicketPage {
         self.g.goHome();
       });
     });
+  }
+
+  bandNrInput(e) {
+    if(e.key === "Enter") this.saveTicket()
   }
 
   closeModal() {

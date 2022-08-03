@@ -163,7 +163,7 @@ export class PresencePage {
 
 		this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day, forcePresence: true, presence: false }).then((result) => {
 			if (!result || !(result || {}).response || result.response != "success") {
-				alert('Absent melden niet gelukt! Vraag na bij Stan of Stephan wat er mis ging...')
+				alert('Aanwezig/afwezig melden niet gelukt! Vraag na bij Stan of Stephan wat er mis ging...')
 			} else {
 				self.ticket['aanwezig_' + self.day] = result.newPresence
 				self.markDone()

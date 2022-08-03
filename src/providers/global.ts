@@ -28,8 +28,6 @@ export class GlobalFunctions {
     public statusBar: StatusBar,
     public app: App,
   ) {
-    this.wijk = "blue"
-
     this.serverURLs = {
       staging: 'http://localhost:1337/1/',
       production: 'https://api.timmerdorp.com/1/'

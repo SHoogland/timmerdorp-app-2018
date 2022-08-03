@@ -120,32 +120,32 @@ page-connect-child-to-cabin {
 		margin-right: auto;
 	}
 
-	.bracelet-number .correction {
-		top: 0 !important;
-		margin-top: 0 !important;
-		margin-bottom: 0 !important;
-		border-radius: 0 !important;
-	}
-	.bracelet-number .correction,
-	#modalTop {
-		&.Blauw {
-			background: darken($blue, 16%) !important;
-		}
+  .bracelet-number .correction {
+    top: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-radius: 0 !important;
+  }
+  .bracelet-number .correction,
+  #modalTop {
+    &.Blauw {
+      background: darken($blue, 16%) !important;
+    }
 
-		&.Rood {
-			background: darken($red, 14%) !important;
-		}
+    &.Rood {
+      background: darken($red, 14%) !important;
+    }
 
-		&.Groen {
-			background: darken($green, 14%) !important;
-		}
+    &.Groen {
+      background: darken($green, 14%) !important;
+    }
 
-		&.Geel {
-			background: darken($yellow, 8%) !important;
-		}
-	}
+    &.Geel {
+      background: darken($yellow, 6%) !important;
+    }
+  }
 
-	.bracelet-number {
-		padding-bottom: 0px !important;
-	}
+  .bracelet-number {
+    padding-bottom: 0px !important;
+  }
 }

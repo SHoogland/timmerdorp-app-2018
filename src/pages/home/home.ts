@@ -99,9 +99,12 @@ export class HomePage {
       if (!val) {
         this.showWijkChoice = true
       }
+      console.log(val)
 
       this.g.wijk = val || "blue";
       this.g.setStatusBar(this.g.wijk);
+
+
 
       this.wijken = {
         blue: "blauw",
@@ -300,6 +303,7 @@ export class HomePage {
         this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
       }
     } else if (ogPage === 'login') {
+      this.g.wijk = ''
       await Parse.User.logOut();
       this.g.toLogin();
     } else {
@@ -328,7 +332,7 @@ export class HomePage {
         this.error = error.message;
       });
     } else {
-      this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 'xO0ioOoL4P' });
+      this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 'E1rxELGqIa' });
     }
   }
 

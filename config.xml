@@ -147,4 +147,5 @@
             <path url="/app/" />
         </host>
     </universal-links>
+    <plugin name="cordova-plugin-androidx" spec="^3.0.0" />
 </widget>

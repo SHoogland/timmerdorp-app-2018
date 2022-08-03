@@ -5,6 +5,7 @@ import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { GlobalFunctions } from '../../providers/global';
 import { PresencePage } from '../presence/presence';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { ConnectChildToCabinPage } from '../connect-child-to-cabin/connect-child-to-cabin';
 
 declare let cordova: any;
 
@@ -208,6 +209,7 @@ export class SearchPage {
   }
 
   closeModal() {
+    this.isEditingTicket = false;
     this.modal.showModal = false;
     this.g.setStatusBar(this.g.wijk);
     let self = this;
@@ -237,6 +239,11 @@ export class SearchPage {
   markPresent(wristband) {
     this.g.setStatusBar(this.g.wijk)
     this.navCtrl.setRoot(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
+  }
+
+  toHut(hutNr) {
+    this.g.setStatusBar('blue')
+    this.navCtrl.setRoot(ConnectChildToCabinPage, { 'hutNr': hutNr }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   shareChild(child) {

@@ -157,13 +157,13 @@ loginpage {
       &.item-input-has-focus {
         background: lighten(#78bff8, 10%);
       }
-      color: black;
+      color: white;
       border-radius: 6px;
       height: 58px;
       margin-bottom: 18px;
-      font-size: 18px;
+      font-size: 1.8rem;
       & input::placeholder {
-        color: black;
+        color: #333;
       }
     }
   }

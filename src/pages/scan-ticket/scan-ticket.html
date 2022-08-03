@@ -14,6 +14,14 @@
       <ion-spinner color='primary' *ngIf='loading'></ion-spinner>
     </div>
 
+    <div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
+      <div class="content" *ngIf='error'>
+        <ion-icon name='warning'></ion-icon>
+        <h1 id='errorHeader' [innerHTML]='error'>{{ error }}</h1>
+        <h4 id='errorHelp' [innerHTML]='errorHelp' style="padding-bottom: 12px;">{{ errorHelp }}</h4>
+      </div>
+    </div>
+
     <div *ngIf="loadedTicket">
       <div class="user-info">
         <table class='cleanTable'>
@@ -47,14 +55,6 @@
         </table>
       </div>
 
-      <div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
-        <div class="content" *ngIf='error'>
-          <ion-icon name='warning'></ion-icon>
-          <h1 id='errorHeader' [innerHTML]='error'>{{ error }}</h1>
-          <h4 id='errorHelp' [innerHTML]='errorHelp' style="padding-bottom: 12px;">{{ errorHelp }}</h4>
-        </div>
-      </div>
-
       <div class="bracelet-number">
         <h1>Polsbandnummer</h1>
         <p style="padding: 0 24px;" *ngIf="showSuggestion">Wil je soms <span
@@ -63,7 +63,7 @@
             id="wristbandSuggestion">bandje {{ suggestionNumber }}</span> toewijzen?</p>
         <ion-list class="line-input">
           <ion-item>
-            <ion-input #nrInput type='tel' maxlength='3' [(ngModel)]='ticket.wristband' class="ion-text-right">
+            <ion-input (keyup)="bandNrInput($event)" #nrInput type='tel' maxlength='3' [(ngModel)]='ticket.wristband' class="ion-text-right">
             </ion-input>
           </ion-item>
         </ion-list>

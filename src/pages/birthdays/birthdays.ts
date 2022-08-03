@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { GlobalFunctions } from '../../providers/global';
 import { Storage } from '@ionic/storage';
 import { SearchPage } from '../search/search';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class BirthdaysPage {
 
 	constructor(
 		public navCtrl: NavController,
+    public socialSharing: SocialSharing,
 		public httpClient: HttpClient,
 		public g: GlobalFunctions,
 		public storage: Storage
@@ -51,6 +53,15 @@ export class BirthdaysPage {
     });
 	}
 
+  shareDate(d){
+    let bdays = this.data[d].kids
+    let getBdayMsg = (bday) => bday.name + ' uit hutje ' + bday.hutNr + ' (wijk ' + this.g.getWijk(bday.hutNr) + ') wordt ' + bday.newAge + '!'
+    let msg = `Vandaag ${bdays.length > 1 ? 'zijn' : 'is'} er op Timmerdorp ${bdays.length} verjaardag${bdays.length > 1 ? 'en!\n -' : '!'} ${bdays.map(getBdayMsg).join('\n - ')}`
+
+    msg += '\n\nVergeten jullie niet te feliciteren?'
+    this.socialSharing.share(msg)
+  }
+
 	getDate() {
 		return this.g.prependZero(new Date().getMonth() + 1) + "-" + this.g.prependZero(new Date().getDate()) + "-" + new Date().getFullYear();
 	}
@@ -66,6 +77,6 @@ export class BirthdaysPage {
 	}
 
   zoekKind(kind) {
-    this.navCtrl.setRoot(SearchPage, { searchTerm: kind.firstName + ' ' + kind.lastName}, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.setRoot(SearchPage, { searchTerm: kind.name }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 }

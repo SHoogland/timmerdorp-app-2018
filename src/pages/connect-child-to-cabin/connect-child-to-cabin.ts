@@ -67,6 +67,12 @@ export class ConnectChildToCabinPage {
       });
     }
 
+    let hnr = this.navParams.get('hutNr')
+    if(hnr) {
+      this.hutNr = hnr;
+      this.search();
+    }
+
     this.title = 'Beheer Hutjes';
 
     this.searchedChild = false;
@@ -95,7 +101,7 @@ export class ConnectChildToCabinPage {
 
   init() {
     this.interval = setInterval(function () {
-      console.log((this.removeModal || {}).show); //hierdoor werkt de removeModal (ionic gedoe)
+      (this.removeModal || {}).show; //hierdoor werkt de removeModal (ionic gedoe)
     }, 250);
   }
 
@@ -207,11 +213,8 @@ export class ConnectChildToCabinPage {
       }
       self.searchedChild = true
       self.loading = false
-      self.tickets = result.tickets.sort(function (a) {
-        if (a.wristband == self.searchTerm) {
-          return -1;
-        }
-        return 1;
+      self.tickets = result.tickets.sort(function (a, b) {
+        return a.firstName > b.firstName ? 1 : -1
       }); //give priority to wristbands over hut numbers
     }).catch((e) => {
       self.searchedChild = true
@@ -290,7 +293,7 @@ export class ConnectChildToCabinPage {
           hutNr: self.nieuwHutje,
           wijk: self.g.getColor(self.nieuwHutje),
           ticket: self.updateT2(self.removedChild),
-          id: self.selectedChild.id,
+          id: self.removedChild.id,
           removal: true,
         });
 

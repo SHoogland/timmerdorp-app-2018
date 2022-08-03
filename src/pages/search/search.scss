@@ -102,10 +102,10 @@ page-search {
 		}
 		&.Geel {
 			button:hover {
-				background: darken($yellow, 6%) !important;
+				background: darken($yellow, 8%) !important;
 			}
 			button:nth-of-type(2n + 1) {
-				background: darken($yellow, 3%);
+				background: darken($yellow, 8%);
 			}
 			button:nth-of-type(2n) {
 				background: $yellow;
