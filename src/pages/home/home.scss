@@ -327,4 +327,12 @@ page-home {
       opacity: 0;
     }
   }
+
+  * {
+    font-family: Roboto, Arial, Arial, Helvetica, sans-serif;
+  }
+
+  #ptitle, #ptitle * {
+    font-family: Roboto, Arial, Arial, Helvetica, sans-serif;
+  }
 }

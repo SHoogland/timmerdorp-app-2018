@@ -22,10 +22,11 @@ export class ScanTicketPage {
   error: string;
   title: string;
 
-  suggestionNumber: string;
+  suggestionNumber: number;
 
   modal: {
     showModal: boolean;
+    high: boolean;
   }
   ticket: any;
 
@@ -37,7 +38,8 @@ export class ScanTicketPage {
     public g: GlobalFunctions
   ) {
     this.modal = {
-      showModal: false
+      showModal: false,
+      high: false
     }
     this.title = 'Ticketgegevens';
     if (this.platform.is('cordova')) {
@@ -56,8 +58,9 @@ export class ScanTicketPage {
       id: this.navParams.get('barcode'),
       wristband: ''
     }
-    this.loadedTicket = false;
 
+    if (!this.ticket.id) this.g.goHome();
+    this.loadedTicket = false;
   }
 
   async init() {
@@ -67,12 +70,9 @@ export class ScanTicketPage {
     this.wristBandError = false;
 
     let d = await this.storage.get('lastWristbandAssignmentDate')
-    if(+new Date() - d < 10 * 60 * 1000) {
+    if (+new Date() - d < 10 * 60 * 1000) {
       this.showSuggestion = true;
-      this.suggestionNumber = '' + (1 + +(await this.storage.get('lastWristbandAssignmentNumber')))
-      if(this.suggestionNumber.length === 1) {
-        this.suggestionNumber = '00' + this.suggestionNumber
-      }
+      this.suggestionNumber = (1 + +(await this.storage.get('lastWristbandAssignmentNumber')))
     }
   }
 
@@ -81,7 +81,7 @@ export class ScanTicketPage {
     this.loading = true;
 
     let self = this;
-    this.g.apiCall('findChildById', { id: this.ticket.id }).then(async function(result) {
+    this.g.apiCall('findChildById', { id: this.ticket.id }).then(async function (result) {
       self.loading = false;
       if (result.response !== 'success') {
         self.error = result.error || result.response;
@@ -110,7 +110,6 @@ export class ScanTicketPage {
   collectSole() {
     this.loadingSole = true
     let self = this
-    console.log(this.ticket.id)
     this.g.apiCall('collectSole', {
       id: this.ticket.id,
     }).then((result) => {
@@ -169,15 +168,21 @@ export class ScanTicketPage {
     });
   }
 
+  bandNrInput(e) {
+    if (e.key === "Enter") this.saveTicket()
+  }
+
   closeModal() {
     this.modal.showModal = false;
+    let self = this
     setTimeout(function () {
-      document.querySelector('#myModal').classList.remove('high');
+      self.modal.high = false
     }, 400);
   }
 
   showModal() {
     this.modal.showModal = true;
+    this.modal.high = true;
   }
 
   goHome() {
@@ -190,5 +195,9 @@ export class ScanTicketPage {
     } else {
       this.g.goHome();
     }
-	}
+  }
+
+  prependZeroes(num) {
+    return (num + '').length === 1 ? '00' + num : num;
+  }
 }

@@ -1,6 +1,7 @@
 <ion-content padding>
   <ion-header (click)='g.goHome()'>
-		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons-outlined homeIcon">home</i>
+    <i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''"
+      class="material-icons-outlined homeIcon">home</i>
     <h1 [ngClass]="g.wijk" id="ptitle">
       {{ title }}
     </h1>
@@ -30,6 +31,14 @@
       </tr>
       <tr>
         <td>
+          Naam:
+        </td>
+        <td>
+          {{ name }}
+        </td>
+      </tr>
+      <tr>
+        <td>
           E-mailadres:
         </td>
         <td>
@@ -48,77 +57,98 @@
       </button>
     </div>
     <div *ngIf="isStanOfStephan">
-      <h1 style="padding: 0 24px; margin: 24px 0 0 0;">Verzoeken tot nieuwe beheerders ({{ (potentialAdmins || {}).length }})</h1>
-      <p *ngIf="addStatus">
-        {{ addStatus }}
-      </p>
-      <div *ngIf="(potentialAdmins || []).length" style="overflow-x: scroll;">
-        <table class="cleanTable withHeader">
-          <tr>
-            <td>
-              Naam
-            </td>
-            <td>
-              E-mailadres
-            </td>
-            <td>
-              Toevoegen
-            </td>
-            <td>
-              Verwijderen
-            </td>
-          </tr>
-          <tr *ngFor="let potentialAdmin of potentialAdmins">
-            <td>
-              {{ potentialAdmin.name }}
-            </td>
-            <td>
-              {{ potentialAdmin.email }}
-            </td>
-            <td (click)="addAdmin(potentialAdmin.email)">
-              <a href="#">Toevoegen</a>
-            </td>
-            <td (click)="removePotentialAdmin(potentialAdmin.email)">
-              <a href="#">Verwijderen</a>
-            </td>
-          </tr>
-        </table>
+      <div id="potentialAdmins">
+        <h1 style="padding: 0 24px; margin: 24px 0 0 0;">Verzoeken tot nieuwe beheerders ({{ (potentialAdmins ||
+          {}).length }})</h1>
+        <p *ngIf="addStatus">
+          {{ addStatus }}
+        </p>
+        <div *ngIf="(potentialAdmins || []).length" style="overflow-x: scroll;">
+          <table class="cleanTable withHeader">
+            <tr>
+              <td>
+                Naam
+              </td>
+              <td>
+                E-mailadres
+              </td>
+              <td>
+                Toevoegen
+              </td>
+              <td>
+                Verwijderen
+              </td>
+            </tr>
+            <tr *ngFor="let potentialAdmin of potentialAdmins">
+              <td>
+                {{ potentialAdmin.name }}
+              </td>
+              <td>
+                {{ potentialAdmin.email }}
+              </td>
+              <td (click)="addAdmin(potentialAdmin.email)">
+                <a href="#">Toevoegen</a>
+              </td>
+              <td (click)="removePotentialAdmin(potentialAdmin.email)">
+                <a href="#">Verwijderen</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <p *ngIf="!(potentialAdmins || []).length">
+          Er zijn geen potentiële nieuwe beheerders op het moment!
+        </p>
+        <p id="adminPrompt" (click)="adminPrompt()">Handmatig een admin toevoegen a.d.h.v. een e-mailadres?</p>
       </div>
-      <p *ngIf="!(potentialAdmins || []).length">
-        Er zijn geen potentiële nieuwe beheerders op het moment!
-      </p>
-      <p id="adminPrompt" (click)="adminPrompt()">Handmatig een admin toevoegen a.d.h.v. een e-mailadres?</p>
-      <h1 style="padding: 0 16px; margin: 24px 0 0 0;">Huidige beheerders ({{ (admins || {}).length }})</h1>
-      <p *ngIf="removeStatus">
-        {{ removeStatus }}
-      </p>
-      <div style="overflow-x: scroll;">
-        <table *ngIf="(admins || []).length" class="cleanTable withHeader">
-          <tr>
-            <td>
-              Naam
-            </td>
-            <td>
-              E-mailadres
-            </td>
-            <td>
-              Verwijderen
-            </td>
-          </tr>
-          <tr *ngFor="let admin of admins">
-            <td>
-              {{ admin.name }}
-            </td>
-            <td>
-              {{ admin.email }}
-            </td>
-            <td (click)="removeAdmin(admin.email)">
-              <a href="#">Verwijderen</a>
-            </td>
-          </tr>
-        </table>
-        <p *ngIf="!(admins || []).length">
-          Er zijn geen beheerders op het moment (dat is raar)
+
+      <div id="currentAdmins">
+        <h1 style="padding: 0 16px; margin: 24px 0 0 0;">Huidige beheerders ({{ (admins || {}).length }})</h1>
+        <p *ngIf="removeStatus">
+          {{ removeStatus }}
+        </p>
+        <div style="overflow-x: scroll;">
+          <table *ngIf="(admins || []).length" class="cleanTable withHeader">
+            <tr>
+              <td>
+                Naam
+              </td>
+              <td>
+                E-mailadres
+              </td>
+              <td>
+                Verwijderen
+              </td>
+            </tr>
+            <tr *ngFor="let admin of admins">
+              <td>
+                {{ admin.name }}
+              </td>
+              <td>
+                {{ admin.email }}
+              </td>
+              <td (click)="removeAdmin(admin.email)">
+                <a href="#">Verwijderen</a>
+              </td>
+            </tr>
+          </table>
+          <p *ngIf="!(admins || []).length">
+            Er zijn geen beheerders op het moment (dat is raar)
+          </p>
+        </div>
+      </div>
+
+      <div id="historyList">
+        <h1 style="padding: 0 16px; margin: 24px 0 0 0;">
+          Gebeurtenis-log (0-{{history.length}} van de {{historyLength}})
+        </h1>
+        <ul style="padding-left: 28px;">
+          <li *ngFor="let h of history" [innerHTML]='g.generateGebeurtenisDescription(h, true)'
+            style="list-style: disc; text-align: left; margin-bottom: 6px; line-height: 2rem;"></li>
+        </ul>
+        <p *ngIf="history.length != historyLength" (click)="moreHistory()" style="padding-left: 8px; text-decoration: underline;">
+          <a>
+            Nog 100 resultaten ophalen (van de overgebleven {{ historyLength - history.length }})
+          </a>
         </p>
       </div>
       <div class="fab sticky-fab" (click)="refreshData()">

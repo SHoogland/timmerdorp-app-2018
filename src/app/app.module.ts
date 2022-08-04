@@ -24,54 +24,57 @@ import { FilesPage } from '../pages/files/files';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { GlobalFunctions } from '../providers/global';
 import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirmation';
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 
 @NgModule({
-	declarations: [
-		MyApp,
-		HomePage,
-		ScanTicketPage,
-		SearchPage,
-		ConnectChildToCabinPage,
-		PresencePage,
-		LoginPage,
+  declarations: [
+    MyApp,
+    HomePage,
+    ScanTicketPage,
+    SearchPage,
+    ConnectChildToCabinPage,
+    PresencePage,
+    LoginPage,
     EmailConfirmationPage,
-		StatsPage,
-		SettingsPage,
+    StatsPage,
+    SettingsPage,
     BirthdaysPage,
-		FilesPage
-	],
-	imports: [
-		BrowserModule,
-		IonicModule.forRoot(MyApp, { mode: "md", swipeBackEnabled: true }),
-		IonicStorageModule.forRoot(),
-		HttpClientModule
-	],
-	bootstrap: [IonicApp],
-	entryComponents: [
-		MyApp,
-		HomePage,
-		ScanTicketPage,
-		SearchPage,
-		ConnectChildToCabinPage,
-		PresencePage,
-		LoginPage,
+    FilesPage,
+    ForgotPasswordPage,
+  ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp, { mode: "md", swipeBackEnabled: true }),
+    IonicStorageModule.forRoot(),
+    HttpClientModule
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    HomePage,
+    ScanTicketPage,
+    SearchPage,
+    ConnectChildToCabinPage,
+    PresencePage,
+    LoginPage,
     EmailConfirmationPage,
-		StatsPage,
-		SettingsPage,
+    StatsPage,
+    SettingsPage,
     BirthdaysPage,
-		FilesPage
-	],
-	providers: [
-		StatusBar,
-		SplashScreen,
+    FilesPage,
+    ForgotPasswordPage,
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
     Deeplinks,
     SocialSharing,
-		HttpClient,
-		InAppBrowser,
-		BarcodeScanner,
-		{ provide: ErrorHandler, useClass: IonicErrorHandler },
-		GlobalFunctions
-	],
-	schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    HttpClient,
+    InAppBrowser,
+    BarcodeScanner,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    GlobalFunctions
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

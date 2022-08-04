@@ -27,7 +27,7 @@
               <p>{{ childrenCount || 0 }} kind{{ childrenCount !== 1 ? "eren" : "" }} hier</p>
             </div>
             <div class="weatherMsg" style="top: 22px; font-size: 80%;">
-              <p>{{ wijkCount || 0 }} in wijk {{ wijken[wijk] }}</p>
+              <p>{{ wijkCount || 0 }} in wijk {{ wijken[g.wijk] }}</p>
             </div>
             <div class="weatherMsg" style="top: 41px; font-size: 80%;">
               <p>{{ birthdays || 0 }} {{ birthdays === 1 ? "jarige" : "jarigen" }} vandaag</p>
@@ -50,7 +50,7 @@
     </p>
     <ion-list>
       <ion-item>
-        <ion-select cancelText="Annuleren" interface="action-sheet" placeholder="Kies je wijk..."
+        <ion-select cancelText="Annuleren" interface="action-sheet" placeholder="Kies je wijk"
           (ionChange)="wijkChoiceChange($event)">
           <ion-option value="blue">Blauw</ion-option>
           <ion-option value="yellow">Geel</ion-option>

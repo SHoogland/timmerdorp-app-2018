@@ -1,26 +1,28 @@
 <ion-content padding>
-	<ion-header (click)='g.goHome()'>
-		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons-outlined homeIcon">home</i>
-		<h1 [ngClass]="g.wijk" id="ptitle">{{title}}</h1>
+  <ion-header (click)='g.goHome()'>
+    <i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''"
+      class="material-icons-outlined homeIcon">home</i>
+    <h1 [ngClass]="g.wijk" id="ptitle">{{title}}</h1>
     <ion-navbar [ngClass]="g.wijk">
-			<ion-title>
-				<img src="assets/imgs/logo.png" class="nav-logo">
-			</ion-title>
-		</ion-navbar>
-	</ion-header>
-	<div class='content main-content'>
-		<div class="user-info">
-			<ion-list class="line-input">
-				<h1 class='title'>Hutnummer:</h1>
-				<ion-item>
-					<ion-input #nrInput type='tel' class="ion-text-right" [(ngModel)]="hutNr" maxlength='3'
-						(ngModelChange)="search($event)">
-					</ion-input>
-				</ion-item>
-			</ion-list>
-		</div>
+      <ion-title>
+        <img src="assets/imgs/logo.png" class="nav-logo">
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  <div class='content main-content'>
+    <div class="user-info">
+      <ion-list class="line-input">
+        <h3>Hutnummer:</h3>
+        <ion-item>
+          <ion-input #nrInput type='tel' class="ion-text-right" [(ngModel)]="hutNr" maxlength='3'
+            (ngModelChange)="search($event)">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
 
-    <ion-list *ngIf="!(hutNr && hutNr.length === 3) && history && history.length > 0 && (!loading || isUndoing)" class="peopleList">
+    <ion-list *ngIf="!(hutNr && hutNr.length === 3) && history && history.length > 0 && (!loading || isUndoing)"
+      class="peopleList">
       <ion-list-header>
         Wijzigingsgeschiedenis ({{history.length}})
       </ion-list-header>
@@ -35,8 +37,10 @@
               </td>
               <td style="padding-right: 24px;">
                 <p style="margin-bottom: 0px;">Oud<span class='largeScreenSpan'> hutje</span>: {{h.oldNr || "-"}}</p>
-                <p *ngIf="h.removal" style="margin-top: 0px;"><i>Verwijderd <span class='largeScreenSpan'>uit hutje</span></i></p>
-                <p *ngIf="!h.removal" style="margin-top: 0px;">Nieuw<span class='largeScreenSpan'> hutje</span>: {{ h.hutNr }}</p>
+                <p *ngIf="h.removal" style="margin-top: 0px;"><i>Verwijderd <span class='largeScreenSpan'>uit
+                      hutje</span></i></p>
+                <p *ngIf="!h.removal" style="margin-top: 0px;">Nieuw<span class='largeScreenSpan'> hutje</span>: {{
+                  h.hutNr }}</p>
               </td>
             </tr>
           </table>
@@ -44,114 +48,116 @@
       </div>
     </ion-list>
 
-		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
-			<div class="content" *ngIf='error&&hutNr'>
-				<ion-icon name='warning'></ion-icon>
-				<h1 id='errorHeader' [innerHTML]='error'></h1>
-				<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
-			</div>
-		</div>
-		<div class="user-info">
-			<div>
-				<div *ngIf="loading">
-					<ion-spinner color='primary'></ion-spinner>
-				</div>
-			</div>
-		</div>
-		<div class="bracelet-number conditional"
-			[ngClass]='hutNr && hutNr.length === 3 && !error && searched ? "shown":""'>
-			<h1 id='hutHeader' [ngClass]='g.getWijk(hutNr)'>Kinderen in hut {{hutNr}}</h1>
-			<p *ngIf="searched && hutTickets && !hutTickets.length && hutNr && hutNr.length === 3">
-				Nog geen kinderen in dit hutje</p>
-			<button *ngFor="let child of hutTickets" ion-button full [ngClass]="'modern alternate ' + g.getWijk(hutNr)"
-				(click)="removeChild = child; showRemoveModal();" style="margin-top: 0px!important;">
-				{{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
-			</button>
-			<button ion-button full (click)="showAddModal()" [ngClass]="'bg-blue correction ' + g.getWijk(hutNr)">
-				<ion-icon slot='start' name='add' style="left: 0px;" id='addIcon'></ion-icon>
-				Kind toevoegen
-			</button>
-		</div>
-	</div>
+    <div [ngClass]="'user-info errorCard' + (error?' hasError':'')">
+      <div class="content" *ngIf='error&&hutNr'>
+        <ion-icon name='warning'></ion-icon>
+        <h1 id='errorHeader' [innerHTML]='error'></h1>
+        <h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
+      </div>
+    </div>
+    <div class="user-info">
+      <div>
+        <div *ngIf="loading">
+          <ion-spinner color='primary'></ion-spinner>
+        </div>
+      </div>
+    </div>
+    <div class="bracelet-number conditional" [ngClass]='hutNr && hutNr.length === 3 && !error && searched ? "shown":""'>
+      <h1 id='hutHeader' [ngClass]='g.getWijk(hutNr)'>Kinderen in hut {{hutNr}}</h1>
+      <p *ngIf="searched && hutTickets && !hutTickets.length && hutNr && hutNr.length === 3">
+        Nog geen kinderen in dit hutje</p>
+      <button *ngFor="let child of hutTickets" ion-button full [ngClass]="'modern alternate ' + g.getWijk(hutNr)"
+        (click)="removeChild = child; showRemoveModal();" style="margin-top: 0px!important;">
+        {{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
+      </button>
+      <button ion-button full (click)="showAddModal()" [ngClass]="'bg-blue correction ' + g.getWijk(hutNr)">
+        <ion-icon slot='start' name='add' style="left: 0px;" id='addIcon'></ion-icon>
+        Kind toevoegen
+      </button>
+    </div>
+  </div>
 </ion-content>
 
 <div [ngClass]="{'shown': addModal.show}" (click)="$event.target.id==='myModal'?closeAddModal():''" id="myModal"
-	class="modal conditional">
-	<div class="modal-content">
-		<div id='modalTop' [ngClass]='g.getWijk(hutNr)'>
-		</div>
+  class="modal conditional">
+  <div class="modal-content">
+    <div id='modalTop' [ngClass]='g.getWijk(hutNr)'>
+    </div>
     <table id="titleLayout">
       <tr>
         <td>
           Kind Toevoegen
         </td>
         <td>
-    			<span (click)="closeAddModal();">&times;</span>
+          <span (click)="closeAddModal();">&times;</span>
         </td>
       </tr>
     </table>
-		<div id='modalBottom'>
-			<p class="search-on">Zoek een kind en voeg het toe aan hutje {{ hutNr }}.</p>
-			<ion-list class="line-input">
-				<ion-item>
-					<ion-input class="ion-text-right" id='addModalInput' [(ngModel)]="searchTerm" (ngModelChange)="searchChild($event)">
-					</ion-input>
-				</ion-item>
-			</ion-list>
+    <div id='modalBottom'>
+      <p class="search-on">Zoek een kind en voeg het toe aan hutje {{ hutNr }}.</p>
+      <ion-list class="line-input">
+        <ion-item>
+          <ion-input class="ion-text-right" id='addModalInput' [(ngModel)]="searchTerm"
+            (ngModelChange)="searchChild($event)">
+          </ion-input>
+        </ion-item>
+      </ion-list>
 
-			<p class='errorMsg'>
-				{{ searchError }}
-			</p>
+      <p class='errorMsg'>
+        {{ searchError }}
+      </p>
 
-			<div id='spinner'>
-				<ion-spinner *ngIf='loading' color='primary'></ion-spinner>
-			</div>
+      <div id='spinner'>
+        <ion-spinner *ngIf='loading' color='primary'></ion-spinner>
+      </div>
 
-      <p *ngIf="!loading && searchedChild && !(tickets || []).length">Geen kinderen gevonden! Je kunt zoeken op hutnummer, polsbandje, of naam.</p>
-		</div>
+      <p *ngIf="!loading && searchedChild && !(tickets || []).length">
+        Geen kinderen gevonden! Je kunt zoeken op polsbandje of naam.
+      </p>
+    </div>
 
-		<div *ngFor="let child of tickets" [ngClass]='"alternate " + g.getWijk(child.hutNr)'>
-			<button ion-button full (click)="addChildToHut(child);" class="modern">
-				{{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
-				<span *ngIf="child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;hutje: {{child.hutNr }}</span>
-				<span *ngIf="!child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;Geen hutje</span>
-			</button>
-		</div>
-	</div>
+    <div *ngFor="let child of tickets" [ngClass]='"alternate " + (child.hutNr ? g.getWijk(child.hutNr) : g.getWijk(hutNr))'>
+      <button ion-button full (click)="addChildToHut(child);" class="modern childAddBtn">
+        {{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
+        <span *ngIf="child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;hutje: {{child.hutNr }}</span>
+        <span *ngIf="!child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;Geen hutje</span>
+      </button>
+    </div>
+  </div>
 </div>
 
 <div [ngClass]="{'shown': removeModal.show}" id="removeModal"
-	(click)="$event.target.id==='removeModal'?closeRemoveModal():''" class="conditional modal stanModal">
-	<div class="modal-content">
-		<div id='modalTop' class='warnModal'>
-		</div>
-		<div id='modalBottom'>
-			<span class="close" (click)="closeRemoveModal();">&times;</span>
-			<h1>Waarschuwing</h1>
-			<p *ngIf="removeChild">Weet je zeker dat je {{ removeChild.firstName }}
-				wilt verwijderen?</p>
-		</div>
-		<button ion-button full (click)="removeChildFromHut(removeChild)">Ja</button>
-		<button ion-button full (click)="closeRemoveModal()">Nee</button>
-	</div>
+  (click)="$event.target.id==='removeModal'?closeRemoveModal():''" class="conditional modal stanModal">
+  <div class="modal-content">
+    <div id='modalTop' class='warnModal'>
+    </div>
+    <div id='modalBottom'>
+      <span class="close" (click)="closeRemoveModal();">&times;</span>
+      <h1 class="modalTitle">Waarschuwing</h1>
+      <p *ngIf="removeChild">Weet je zeker dat je {{ removeChild.firstName }}
+        wilt verwijderen?</p>
+    </div>
+    <button ion-button full (click)="removeChildFromHut(removeChild)">Ja</button>
+    <button ion-button full (click)="closeRemoveModal()">Nee</button>
+  </div>
 </div>
 
 <div [ngClass]="{'shown': warningModal.show}" id="warningModal"
-	(click)="$event.target.id==='warningModal'?closeWarningModal():''" class="conditional modal stanModal">
-	<div class="modal-content">
-		<div id='modalTop' class='warnModal'>
-		</div>
-		<div id='modalBottom'>
-			<span class="close" (click)="closeWarningModal();">&times;</span>
-			<h1>Waarschuwing</h1>
-			<p *ngIf="selectedChild && alreadyHasHutError">{{ selectedChild.firstName }} heeft al een
-				hutje! Weet je zeker dat je hem/haar wilt overplaatsen van hutje {{selectedChild.hutNr}} naar hutje
-				{{hutNr}}?</p>
-			<p *ngIf="selectedChild&&noWristbandError">{{ selectedChild.firstName }} heeft nog geen
-				polsbandje! Hij/zij kan nog niet toegevoegd worden aan een hutje.</p>
-		</div>
-		<button ion-button full (click)="closeWarningModal()" *ngIf='noWristbandError'>Terug</button>
-		<button ion-button full (click)="reallyAddChildNow()" *ngIf='alreadyHasHutError'>Ja</button>
-		<button ion-button full (click)="closeWarningModal()" *ngIf='alreadyHasHutError'>Nee</button>
-	</div>
+  (click)="$event.target.id==='warningModal'?closeWarningModal():''" class="conditional modal stanModal">
+  <div class="modal-content">
+    <div id='modalTop' class='warnModal'>
+    </div>
+    <div id='modalBottom'>
+      <span class="close" (click)="closeWarningModal();">&times;</span>
+      <h1>Waarschuwing</h1>
+      <p *ngIf="selectedChild && alreadyHasHutError">{{ selectedChild.firstName }} heeft al een
+        hutje! Weet je zeker dat je hem/haar wilt overplaatsen van hutje {{selectedChild.hutNr}} naar hutje
+        {{hutNr}}?</p>
+      <p *ngIf="selectedChild&&noWristbandError">{{ selectedChild.firstName }} heeft nog geen
+        polsbandje! Hij/zij kan nog niet toegevoegd worden aan een hutje.</p>
+    </div>
+    <button ion-button full (click)="closeWarningModal()" *ngIf='noWristbandError'>Terug</button>
+    <button ion-button full (click)="reallyAddChildNow()" *ngIf='alreadyHasHutError'>Ja</button>
+    <button ion-button full (click)="closeWarningModal()" *ngIf='alreadyHasHutError'>Nee</button>
+  </div>
 </div>

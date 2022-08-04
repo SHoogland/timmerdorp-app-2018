@@ -5,6 +5,7 @@ import { ScanTicketPage } from '../scan-ticket/scan-ticket';
 import { GlobalFunctions } from '../../providers/global';
 import { PresencePage } from '../presence/presence';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { ConnectChildToCabinPage } from '../connect-child-to-cabin/connect-child-to-cabin';
 
 declare let cordova: any;
 
@@ -50,7 +51,7 @@ export class SearchPage {
 
   ngAfterViewInit() {
     this.searched = false;
-    this.title = 'Kinderen Zoeken'
+    this.title = 'Zoeken'
     if (this.platform.is('cordova')) {
       if (cordova.platformId === 'android') {
         this.platform.registerBackButtonAction(() => {
@@ -70,14 +71,14 @@ export class SearchPage {
 
     this.timeOut = setTimeout;
 
-    if(this.navParams.get('searchTerm')) {
+    if (this.navParams.get('searchTerm')) {
       this.searchTerm = this.navParams.get('searchTerm')
       this.searchThis()
     }
 
     this.loading = false;
 
-    if(this.navParams.get('searchId')) {
+    if (this.navParams.get('searchId')) {
       this.loading = true
       this.isSearchingById = true
       this.searchThis(this.navParams.get('searchId'))
@@ -122,7 +123,7 @@ export class SearchPage {
   }
 
   search() {
-    if(this.isSearchingById) return
+    if (this.isSearchingById) return
     this.searched = false
     try {
       if (this.searchTerm.length < 3) {
@@ -158,27 +159,31 @@ export class SearchPage {
 
     this.g.apiCall('search', { searchTerm: this.isSearchingById ? searchId : this.searchTerm }).then((result) => {
       self.loading = false
-      if(!result || result.response !== 'success') {
+      if (!result || result.response !== 'success') {
         self.error = (result || {}).error || (result || {}).response
         self.errorHelp = (result || {}).errorMessage || (result || {}).response
         return;
       }
 
-      if(!self.isSearchingById && self.searchTerm.length < 3) return
+      if (!self.isSearchingById && self.searchTerm.length < 3) return
 
       self.searched = true
-      self.tickets = result.tickets.sort(function (a) {
-        if (a.wristband == self.searchTerm) {
+      let rankResult = function (item) {
+        if (item.wristband == self.searchTerm) {
           return -1;
         }
-        return 1;
-      }); //give priority to wristbands over hut numbers
-
+        if(item.firstName.toLowerCase().startsWith(self.searchTerm.toLowerCase())) return 1
+        if(item.lastName.toLowerCase().startsWith(self.searchTerm.toLowerCase())) return 2
+        if(item.firstName.toLowerCase().split(self.searchTerm.toLowerCase()).length > 1) return 3
+        if(item.lastName.toLowerCase().split(self.searchTerm.toLowerCase()).length > 1) return 4
+        return 5;
+      }
+      self.tickets = result.tickets.sort((a,b) => rankResult(a) > rankResult(b) ? 1 : -1)
 
       self.canEditTickets = result.canEditTickets
       self.ticketPropertiesMap = result.ticketPropertiesMap
 
-      if(self.isSearchingById) {
+      if (self.isSearchingById) {
         self.showModal(result.tickets[0])
         self.searchTerm = (result.tickets[0].firstName) + ' ' + result.tickets[0].lastName
         self.isSearchingById = false
@@ -204,22 +209,26 @@ export class SearchPage {
     });
     this.history = this.g.filterHistory(this.history);
     this.storage.set("searchChildHistory", this.history);
-    this.modal.high = true
+    this.modal.high = true;
   }
 
   closeModal() {
+    this.isEditingTicket = false;
     this.modal.showModal = false;
-    this.g.setStatusBar('blue')
-    this.modal.high = false
+    this.g.setStatusBar(this.g.wijk);
+    let self = this;
+    setTimeout(function () {
+      self.modal.high = false
+    }, 400)
   }
 
   scanChild(barcode) {
-    this.g.setStatusBar('blue')
+    this.g.setStatusBar(this.g.wijk)
     this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   goHome() {
-    this.g.setStatusBar('blue')
+    this.g.setStatusBar(this.g.wijk)
     if (this.modal.showModal) {
       let self = this;
       this.closeModal();
@@ -232,8 +241,13 @@ export class SearchPage {
   }
 
   markPresent(wristband) {
-    this.g.setStatusBar('blue')
+    this.g.setStatusBar(this.g.wijk)
     this.navCtrl.setRoot(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
+  }
+
+  toHut(hutNr) {
+    this.g.setStatusBar('blue')
+    this.navCtrl.setRoot(ConnectChildToCabinPage, { 'hutNr': hutNr }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   shareChild(child) {
@@ -242,8 +256,11 @@ export class SearchPage {
   }
 
   async saveTicketEdit() {
-    let result = await this.g.apiCall('saveTicketEdit', { ticket: this.modal.child })
-    if(!result || result.message != 'success') alert('hmmmm (geen response)')
+    let ticketObj = {}
+    Object.keys(this.modal.child).forEach((key) => ticketObj[key] = this.modal.child[key])
+    delete ticketObj['history']
+    let result = await this.g.apiCall('saveTicketEdit', { ticket: ticketObj })
+    if (!result || result.message != 'success') alert('hmmmm (geen response)')
     this.isEditingTicket = false
   }
 }

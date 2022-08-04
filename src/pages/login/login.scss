@@ -2,8 +2,8 @@ loginpage {
   h1:not(#errorHeader) {
     text-align: center;
     font-weight: bold;
-    font-family: Montserrat!important;
-    font-size: 4rem!important;
+    font-family: Montserrat !important;
+    font-size: 4rem !important;
   }
 
   .line-input:nth-of-type(2n + 1) {
@@ -74,7 +74,7 @@ loginpage {
     background: #0c7cd5;
     color: white;
     > .content {
-      padding-top: 50px!important;
+      padding-top: 50px !important;
       min-height: calc(100% - 120px);
       > div {
         min-height: 320px;
@@ -124,18 +124,53 @@ loginpage {
 
   #warning {
     ion-icon {
-      font-size: 10rem;
-      top: 40px;
-      left: 18px;
+      font-size: 7rem;
+      position: unset !important;
+      left: unset !important;
+      height: unset !important;
+      top: unset !important;
     }
-    max-width: unset!important;
+    #errorHelp,
+    #errorHeader {
+      position: unset !important;
+      width: unset !important;
+      margin-top: unset !important;
+    }
     #errorHeader {
       font-size: 32px;
       font-weight: bold;
+      padding-top: 8px;
+      padding-bottom: 0px;
     }
-    #errorHeader, #errorHelp {
-      left: 100px!important;
-      width: calc(100% - 100px)!important;
+    td:nth-of-type(2n) {
+      padding-left: 12px;
+    }
+
+    max-width: unset !important;
+  }
+
+  ion-item.item {
+    &,
+    &.item-input-has-focus {
+      border: none !important;
+      background: #78bff8;
+      &.item-input-has-focus {
+        background: lighten(#78bff8, 10%);
+      }
+      color: white;
+      border-radius: 6px;
+      height: 58px;
+      margin-bottom: 18px;
+      font-size: 1.8rem;
+      & input::placeholder {
+        color: #333;
+      }
+    }
+  }
+
+  .errorCard {
+    td {
+      vertical-align: middle;
     }
   }
 }
