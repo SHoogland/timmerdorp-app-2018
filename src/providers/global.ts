@@ -50,21 +50,7 @@ export class GlobalFunctions {
       this.wijk = val || "blue";
     })
 
-    document.addEventListener('gesturestart', function(e) {
-      e.preventDefault();
-  });
-
-  document.addEventListener('gesturechange', function(e) {
-      e.preventDefault();
-      // special hack to prevent zoom-to-tabs gesture in safari
-  });
-
-  document.addEventListener('gestureend', function(e) {
-      e.preventDefault();
-  });
-
     this.prevent = function (e) {
-      console.log('hmm')
       e.preventDefault();
     };
     this.disableZooming()
@@ -257,9 +243,14 @@ export class GlobalFunctions {
   }
 
   disableZooming() {
-    console.log('hallo')
     document.addEventListener('gesturestart', this.prevent);
     document.addEventListener('gesturechange', this.prevent);
     document.addEventListener('gestureend', this.prevent);
+  }
+
+  enableZooming() {
+    document.removeEventListener('gesturestart', this.g.prevent)
+    document.removeEventListener('gesturechange', this.g.prevent)
+    document.removeEventListener('gestureend', this.g.prevent)
   }
 }

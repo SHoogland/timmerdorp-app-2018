@@ -46,10 +46,7 @@ export class HutjesMapPage {
   init() {
     let self = this;
 
-    document.removeEventListener('gesturestart', this.g.prevent)
-    document.removeEventListener('gesturechange', this.g.prevent)
-    document.removeEventListener('gestureend', this.g.prevent)
-
+    this.g.enableZooming()
 
     this.g.apiCall('getHutjesMap').then(async function (result) {
       self.loading = false;
@@ -157,6 +154,7 @@ export class HutjesMapPage {
   }
 
   ngOnDestroy() {
-    this.locationSubscription.unsubscribe()
+    this.g.disableZooming();
+    this.locationSubscription.unsubscribe();
   }
 }
