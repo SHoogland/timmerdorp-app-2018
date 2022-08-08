@@ -38,9 +38,7 @@ export class BirthdaysPage {
     this.g.apiCall('wijkStats').then(async function(result) {
       self.loading = false;
       if (!result || result.response !== 'success') {
-        if (!result || result.response !== 'success') {
-          return;
-        }
+        return;
       }
       self.data = result.birthdays
       setTimeout(function () {

@@ -102,7 +102,7 @@ export class MyApp {
 
   touchStart(event) {
     let page = this.nav.getActive().pageRef().nativeElement.tagName.toLowerCase()
-    if (page === 'page-home' || page === 'page-login' || 'email-confirmation' || 'page-forgot-password') return;
+    if (page === 'page-home' || page === 'page-login' || page == 'email-confirmation' || page == 'page-forgot-password') return;
 
     let x = this.computeScrollX(event)
     let y = this.computeScrollY(event)
@@ -130,7 +130,7 @@ export class MyApp {
       this.swipeTimeout = setTimeout(function () {
         backBtnHint.style.background = '#ffffff'
         backBtnHint.style.opacity = '0'
-        self.swipeTimeout2 = setTimeout(function() {
+        self.swipeTimeout2 = setTimeout(function () {
           backBtnHint.style.top = '-100px'
         }, 400);
       }, 300)

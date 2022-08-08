@@ -21,6 +21,7 @@ export class GlobalFunctions {
   serverPasswords: any;
   serverURLs: any;
   loginPage: any;
+  prevent: any;
 
   constructor(
     public platform: Platform,
@@ -48,6 +49,25 @@ export class GlobalFunctions {
     this.storage.get('wijk').then(async (val) => {
       this.wijk = val || "blue";
     })
+
+    document.addEventListener('gesturestart', function(e) {
+      e.preventDefault();
+  });
+
+  document.addEventListener('gesturechange', function(e) {
+      e.preventDefault();
+      // special hack to prevent zoom-to-tabs gesture in safari
+  });
+
+  document.addEventListener('gestureend', function(e) {
+      e.preventDefault();
+  });
+
+    this.prevent = function (e) {
+      console.log('hmm')
+      e.preventDefault();
+    };
+    this.disableZooming()
   }
 
   setStatusBar(c) {
@@ -234,5 +254,12 @@ export class GlobalFunctions {
     } else {
       return '<b>' + dateString + ':</b> ' + result
     }
+  }
+
+  disableZooming() {
+    console.log('hallo')
+    document.addEventListener('gesturestart', this.prevent);
+    document.addEventListener('gesturechange', this.prevent);
+    document.addEventListener('gestureend', this.prevent);
   }
 }

@@ -2,6 +2,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { GlobalFunctions } from '../../providers/global';
+import { HutjesMapPage } from '../hutjes-map/hutjes-map';
 
 declare let cordova: any;
 
@@ -371,5 +372,9 @@ export class ConnectChildToCabinPage {
 
   ngOnDestroy() {
     clearInterval(this.interval);
+  }
+
+  openHutMap() {
+    this.navCtrl.setRoot(HutjesMapPage, { }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 }

@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
@@ -25,6 +26,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { GlobalFunctions } from '../providers/global';
 import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirmation';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
+import { HutjesMapPage } from '../pages/hutjes-map/hutjes-map';
 
 @NgModule({
   declarations: [
@@ -41,12 +43,13 @@ import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
     BirthdaysPage,
     FilesPage,
     ForgotPasswordPage,
+    HutjesMapPage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp, { mode: "md", swipeBackEnabled: true }),
     IonicStorageModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -63,6 +66,7 @@ import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
     BirthdaysPage,
     FilesPage,
     ForgotPasswordPage,
+    HutjesMapPage,
   ],
   providers: [
     StatusBar,
@@ -73,7 +77,8 @@ import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
     InAppBrowser,
     BarcodeScanner,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    GlobalFunctions
+    GlobalFunctions,
+    Geolocation,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

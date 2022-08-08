@@ -19,6 +19,7 @@ import { BirthdaysPage } from '../birthdays/birthdays';
 import { FilesPage } from '../files/files';
 import { GlobalFunctions } from '../../providers/global';
 import { EmailConfirmationPage } from '../email-confirmation/email-confirmation';
+import { HutjesMapPage } from '../hutjes-map/hutjes-map';
 
 @Component({
   selector: 'page-home',
@@ -80,7 +81,8 @@ export class HomePage {
       "settings": SettingsPage,
       "login": LoginPage,
       "birthdays": BirthdaysPage,
-      "files": FilesPage
+      "files": FilesPage,
+      "map": HutjesMapPage,
     }
 
     this.childrenCount = 0;
@@ -181,6 +183,13 @@ export class HomePage {
           component: "birthdays",
           class: 'small',
           icon: "cake",
+          small: true
+        },
+        {
+          title: 'Hutjeskaart',
+          component: "map",
+          class: 'small',
+          icon: "map",
           small: true
         },
         {
@@ -328,7 +337,7 @@ export class HomePage {
         this.error = error.message;
       });
     } else {
-      this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 'E1rxELGqIa' });
+      this.navCtrl.setRoot(ScanTicketPage, { barcode: 'E1rxELGqIa' });
     }
   }
 
