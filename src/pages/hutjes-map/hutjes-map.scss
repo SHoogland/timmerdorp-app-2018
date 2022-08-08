@@ -1,0 +1,45 @@
+page-hutjes-map {
+  div.content.main-content {
+    padding: 0px !important;
+    padding-top: 80px !important;
+  }
+
+  div#locationIndicator,
+  div#hutHighlight {
+    display: inline-block;
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    border: white 3px solid;
+    z-index: 100;
+  }
+
+  div#locationIndicator {
+    background: #4285f4;
+  }
+
+  div#hutHighlight {
+    background: rgba(0, 0, 0, 0);
+    border-color: rgba(0, 0, 0, 0);
+    transition-duration: 400ms;
+    animation: indicatorPulse 1s infinite;
+    transform: scale(1.4);
+
+    &.shown {
+      border-color: white;
+    }
+  }
+
+  @keyframes indicatorPulse {
+    0% {
+      transform: scale(1.8);
+    }
+    50% {
+      transform: scale(1.4);
+    }
+    100% {
+      transform: scale(1.8);
+    }
+  }
+}

@@ -1,0 +1,38 @@
+<ion-content padding>
+  <ion-header (click)="g.goHome()" class='wijk-header'>
+		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons homeIcon">arrow_back</i>
+    <h1 [ngClass]="g.wijk" id="ptitle">
+      {{ title }}
+    </h1>
+    <ion-navbar [ngClass]="g.wijk">
+      <ion-title>
+        <img src="assets/imgs/logo.png" class="nav-logo">
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  <div class='content main-content'>
+    <div class="user-info" *ngIf="loading">
+      <div id='spinner' [ngClass]="{'hidden': !loading}">
+        <div>
+          <ion-spinner color='primary'></ion-spinner>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!loading">
+      <div class="user-info">
+        <ion-list class="line-input">
+          <h3>Hutnummer:</h3>
+          <ion-item>
+            <ion-input #nrInput type='tel' class="ion-text-right" [(ngModel)]="hutNr" maxlength='3'
+              (ngModelChange)="searchHut($event)">
+            </ion-input>
+          </ion-item>
+          <p *ngIf="hutNotFound">Hutje niet gevonden...</p>
+        </ion-list>
+      </div>
+      <div id="locationIndicator"></div><!--- hier mag geen spatie tussen de divs komen
+      --><div id="hutHighlight" [ngClass]="{ shown: showHighlight }"></div>
+      <canvas width="2000" style="width: 100%;"></canvas>
+    </div>
+  </div>
+</ion-content>

@@ -13,6 +13,9 @@
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
     </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+        <string>We gebruiken je locatie om op de kaart aan te geven waar op het Timmerdorpterrein je je bevindt.</string>
+    </edit-config>
     <config-file parent="com.apple.developer.associated-domains" target="*-Debug.plist">
         <array>
             <string>applinks:shop.timmerdorp.com</string>

@@ -1,20 +1,17 @@
 # App feedback en aandachtspunten uit 2021 (door Stan)
-
+- swipe to go back werkt toch niet (zou Apple de linkerkant van het beeldscherm on-swipeable maken?)
 ## Webshop verbeterpunten voor 2022
+
+
+## Twijfel voor 2022
+- Hutjes plattegrond toevoegen met gps
+
+## Gefixt voor 2022
 - Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
 - Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
 - Corona-maatregelen (leeftijd t/m 12, ID-kaart mee, roepnaam vs volledige voornaam, etc.) weghalen? hopelijk?
 - Even kijken of de checkboxes wat netter kunnen in het ticketformulier
-- Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller
-
-
-## Twijfel voor 2022
 - ~Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller~ Toch maar niet doen, e-mail support voor inline base64 afbeeldingen is slecht en de qr code's onbeveiligd gewoon op de server opslaan als afbeelding zie ik niet zo zitten.
-- ~Wachtwoord vergeten pagina in app~. te veel werk, te weinig resultaat
-- Hutjes plattegrond toevoegen met gps
-- Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller (geen support mail clients)
-
-## Gefixt voor 2022
 - Registreer/inlog formuliertje mag ff wat netter, statusbalk kleuren daar ook
 - De hele app in wijk thema? Meteen vragen bij startup
 - Deeplinks werken nog niet op Android
