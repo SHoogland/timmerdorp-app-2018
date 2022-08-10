@@ -20,6 +20,7 @@ export class HutjesMapPage {
   stanOfStephan: boolean;
   showHighlight: boolean;
   showModalHigh: boolean;
+  isRefreshing: boolean;
   preventHome: boolean;
   hutNotFound: boolean;
   showModal: boolean;
@@ -34,6 +35,7 @@ export class HutjesMapPage {
   locIndicatorTop: string;
   zoomBottom: string;
   zoomRight: string;
+  mapImgSrc: string;
   zoomLeft: string;
   zoomTop: string;
   title: string;
@@ -45,6 +47,7 @@ export class HutjesMapPage {
   currentZoomY: number;
   pageOpenTime: number;
   defaultSize: number;
+  canvasWidth: number
   topLeftLat: number;
   topLeftLng: number;
   zoomFactor: number;
@@ -52,9 +55,11 @@ export class HutjesMapPage {
   mapWidth: number; // same but from left to right
 
   locationSubscription: any;
+  locUpdateInterval: any;
   selectedLocation: any;
   highlightedHut: any;
   mapSize: any;
+  mapImg: any;
   hutjes: any;
   canvas: any;
 
@@ -91,63 +96,43 @@ export class HutjesMapPage {
 
   init() {
     this.pageOpenTime = +new Date()
-    let self = this;
+    this.updateData()
+  }
 
+  updateData(callback?) {
+    let self = this;
     this.g.apiCall('getHutjesMap').then(async function (result) {
-      self.loading = false;
       if (!result || result.response !== 'success') {
         return;
       }
       self.hutjes = result.hutjes
       self.stanOfStephan = result.stanOfStephan
-      setTimeout(self.drawCanvas, 250, self)
+      self.defaultSize = result.mapData.defaultSize
+      self.mapImgSrc = result.mapData.mapImgSrc
+      self.canvasWidth = result.mapData.canvasWidth
+      self.loadImage(self)
+      self.isRefreshing = false
     })
   }
 
-  drawCanvas(ctx) {
+  loadImage(self) {
+    if(self.mapImg) {
+      self.drawCanvas()
+      return
+    }
+
     let c = (document.getElementsByTagName('canvas') || [])[0]
     if (!c) return
-    let self = ctx
-    self.canvas = c.getContext('2d');
-    var img = new window.Image();
-    img.addEventListener('load', function () {
-      let proportion = img.width / img.height
-      let w = self.canvas.canvas.width
-      let h = w / proportion
-      self.canvas.canvas.height = h
-      self.mapSize = { w, h }
-      self.canvas.drawImage(img, 0, 0, w, h)
+    this.canvas = c.getContext('2d');
+    this.mapImg = new window.Image();
+    self.mapImg.addEventListener('load', function () {
+      self.loading = false;
+      self.drawCanvas()
 
-      self.topLeftLat = 52.611791
-      self.topLeftLng = 4.693581
-      self.bottomRightLat = 52.610468
-      self.bottomRightLng = 4.695963
-      let coords = self.coordinatesInMetersFromTopLeft(self.bottomRightLat, self.bottomRightLng)
-      self.mapWidth = coords.x
-      self.mapHeight = coords.y
+      self.getLocationOnce(self)
+      self.getLocationOnce(self) // doing it twice improves accuracy according to https://stackoverflow.com/a/31916631
+      self.locUpdateInterval = setInterval(self.getLocationOnce, 10000, self)
 
-      self.canvas.textAlign = "center";
-      self.defaultSize = 36
-      for (let i = 0; i < self.hutjes.length; i++) {
-        self.canvas.beginPath()
-        let hutje = self.hutjes[i]
-        let loc = hutje.location
-        coords = self.coordinatesInMetersFromTopLeft(loc.latitude, loc.longitude)
-        let x = coords.x / self.mapWidth * self.canvas.canvas.width
-        let y = coords.y / self.mapHeight * self.canvas.canvas.height
-        let size = hutje.size || self.defaultSize
-        let fontSize = Math.round(size / 2)
-        self.canvas.font = fontSize + "px Arial";
-        self.canvas.rect(x, y, size, size);
-        self.canvas.fillStyle = hutje.color || self.g.getColor(hutje.hutNr);
-        self.canvas.fill();
-        self.canvas.fillStyle = "black"
-        self.canvas.fillText(hutje.hutNr || '', x + size / 2, y + size / 2 + fontSize / 2)
-      }
-
-      self.geolocation.getCurrentPosition().then((data) => {
-        self.updateLocIndicator(data, self)
-      })
       self.locationSubscription = self.geolocation.watchPosition({ enableHighAccuracy: true }).subscribe((data) => {
         self.updateLocIndicator(data, self)
       })
@@ -157,7 +142,48 @@ export class HutjesMapPage {
         self.searchHut(self.hutNr)
       }
     })
-    img.src = '/assets/imgs/tdorp-map.png'
+    this.mapImg.src = self.mapImgSrc
+  }
+
+  getLocationOnce(self) {
+    self.geolocation.getCurrentPosition({ timeout: 10000 }).then((data) => {
+      self.updateLocIndicator(data, self)
+    })
+  }
+
+  drawCanvas() {
+    let proportion = this.mapImg.width / this.mapImg.height
+    let w = this.canvas.canvas.width
+    let h = w / proportion
+    this.canvas.canvas.height = h
+    this.mapSize = { w, h }
+    this.canvas.drawImage(this.mapImg, 0, 0, w, h)
+
+    this.topLeftLat = 52.611791
+    this.topLeftLng = 4.693581
+    this.bottomRightLat = 52.610468
+    this.bottomRightLng = 4.695963
+    let coords = this.coordinatesInMetersFromTopLeft(this.bottomRightLat, this.bottomRightLng)
+    this.mapWidth = coords.x
+    this.mapHeight = coords.y
+
+    this.canvas.textAlign = "center";
+    for (let i = 0; i < this.hutjes.length; i++) {
+      this.canvas.beginPath()
+      let hutje = this.hutjes[i]
+      let loc = hutje.location
+      coords = this.coordinatesInMetersFromTopLeft(loc.latitude, loc.longitude)
+      let x = coords.x / this.mapWidth * this.canvas.canvas.width
+      let y = coords.y / this.mapHeight * this.canvas.canvas.height
+      let size = hutje.size || this.defaultSize
+      let fontSize = Math.round(size / 2)
+      this.canvas.font = fontSize + "px Arial";
+      this.canvas.rect(x, y, size, size);
+      this.canvas.fillStyle = hutje.color || this.g.getColor(hutje.hutNr);
+      this.canvas.fill();
+      this.canvas.fillStyle = "black"
+      this.canvas.fillText(hutje.hutNr || '', x + size / 2, y + size / 2 + fontSize / 2)
+    }
   }
 
   coordinatesInMetersFromTopLeft(lat, lng) {
@@ -204,6 +230,11 @@ export class HutjesMapPage {
   updateLocIndicator(data, self) {
     this.foundLocation = true
     let coords = self.coordinatesInMetersFromTopLeft(data['coords'].latitude, data['coords'].longitude)
+    if(coords.x < 0 || coords.x > self.mapWidth || coords.y < 0 || coords.y > self.mapWidth) {
+      self.foundLocation = false
+      return
+    }
+    self.foundLocation = true
     self.locIndicatorLeft = 'calc(' + (100 * coords.x / self.mapWidth).toFixed(2) + '% - 14px)'
     self.locIndicatorTop = 'calc(' + (100 * coords.y / self.mapHeight).toFixed(2) + '% - 14px)'
     if (self.isSavingLocation && !self.hasZoomedInToLocation && !self.zoomedIn && +new Date() < self.pageOpenTime + 1000) {
@@ -272,10 +303,6 @@ export class HutjesMapPage {
     this.closeModal()
   }
 
-  ngOnDestroy() {
-    this.locationSubscription.unsubscribe();
-  }
-
   async saveLocation() {
     let result = await this.g.apiCall('saveHutLocation', {
       hutNr: this.hutNr,
@@ -302,10 +329,20 @@ export class HutjesMapPage {
       alert(result.response)
     }
   }
-
   startEditing() {
     if (!this.hutNr || this.hutNr.length < 3) return
     this.isSavingLocation = true
     this.savingFromButton = true
+  }
+
+  refreshData() {
+    this.isRefreshing = true;
+    this.updateData();
+  }
+
+  ngOnDestroy() {
+    if (this.g.hutLocationChangeStatus == 'loading') this.g.hutLocationChangeStatus = ''
+    if (this.locationSubscription) this.locationSubscription.unsubscribe();
+    if(this.locUpdateInterval) clearInterval(this.locUpdateInterval)
   }
 }
