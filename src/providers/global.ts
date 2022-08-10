@@ -9,6 +9,7 @@ declare let cordova: any;
 
 @Injectable()
 export class GlobalFunctions {
+  hutLocationChangeStatus: string;
   stagingEndpoint: string;
   normalEndpoint: string;
   wijk: string;
@@ -21,7 +22,6 @@ export class GlobalFunctions {
   serverPasswords: any;
   serverURLs: any;
   loginPage: any;
-  prevent: any;
 
   constructor(
     public platform: Platform,
@@ -49,11 +49,6 @@ export class GlobalFunctions {
     this.storage.get('wijk').then(async (val) => {
       this.wijk = val || "blue";
     })
-
-    this.prevent = function (e) {
-      e.preventDefault();
-    };
-    this.disableZooming()
   }
 
   setStatusBar(c) {
@@ -88,12 +83,12 @@ export class GlobalFunctions {
 
   goHome() {
     let nav = this.app.getActiveNavs()[0];
-    nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+    nav.push(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
   }
 
   toLogin() {
     let nav = this.app.getActiveNavs()[0];
-    nav.setRoot(this.loginPage, { login: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    nav.push(this.loginPage, { login: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   getWijkName(kleur) {
@@ -242,15 +237,8 @@ export class GlobalFunctions {
     }
   }
 
-  disableZooming() {
-    document.addEventListener('gesturestart', this.prevent);
-    document.addEventListener('gesturechange', this.prevent);
-    document.addEventListener('gestureend', this.prevent);
-  }
-
-  enableZooming() {
-    document.removeEventListener('gesturestart', this.g.prevent)
-    document.removeEventListener('gesturechange', this.g.prevent)
-    document.removeEventListener('gestureend', this.g.prevent)
+  goBack() {
+    let nav = this.app.getActiveNavs()[0];
+    nav.pop({ animate: true, animation: "ios-transition", direction: "back" });
   }
 }

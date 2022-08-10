@@ -75,6 +75,6 @@ export class BirthdaysPage {
 	}
 
   zoekKind(kind) {
-    this.navCtrl.setRoot(SearchPage, { searchTerm: kind.name }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(SearchPage, { searchTerm: kind.name }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 }

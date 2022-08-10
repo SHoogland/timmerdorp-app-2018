@@ -155,7 +155,7 @@ export class SettingsPage {
   }
 
   changeWijk() {
-    this.navCtrl.setRoot(HomePage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(HomePage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   moreHistory() {

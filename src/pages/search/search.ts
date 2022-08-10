@@ -224,7 +224,7 @@ export class SearchPage {
 
   scanChild(barcode) {
     this.g.setStatusBar(this.g.wijk)
-    this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcode }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(ScanTicketPage, { 'barcode': barcode }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   goHome() {
@@ -242,12 +242,12 @@ export class SearchPage {
 
   markPresent(wristband) {
     this.g.setStatusBar(this.g.wijk)
-    this.navCtrl.setRoot(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   toHut(hutNr) {
     this.g.setStatusBar('blue')
-    this.navCtrl.setRoot(ConnectChildToCabinPage, { 'hutNr': hutNr }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(ConnectChildToCabinPage, { 'hutNr': hutNr }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 
   shareChild(child) {

@@ -1,6 +1,7 @@
 <ion-content padding>
-  <ion-header (click)="g.goHome()" class='wijk-header'>
-		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons homeIcon">arrow_back</i>
+  <ion-header (click)="g.goBack()" class='wijk-header'>
+    <i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''"
+      class="material-icons homeIcon">arrow_back</i>
     <h1 [ngClass]="g.wijk" id="ptitle">
       {{ title }}
     </h1>
@@ -19,7 +20,7 @@
       </div>
     </div>
     <div *ngIf="!loading">
-      <div class="user-info">
+      <div *ngIf="!isSavingLocation" class="user-info">
         <ion-list class="line-input">
           <h3>Hutnummer:</h3>
           <ion-item>
@@ -30,9 +31,56 @@
           <p *ngIf="hutNotFound">Hutje niet gevonden...</p>
         </ion-list>
       </div>
-      <div id="locationIndicator"></div><!--- hier mag geen spatie tussen de divs komen
-      --><div id="hutHighlight" [ngClass]="{ shown: showHighlight }"></div>
-      <canvas width="2000" style="width: 100%;"></canvas>
+      <div *ngIf="isSavingLocation">
+        <h2 style="text-align: center; padding-top: 16px;">Locatie van hutje {{ hutNr }}</h2>
+        <button *ngIf="hasSelectedLocation" ion-button full (click)="saveLocation()"
+          class="bg-green correction modern" style="margin-bottom: 8px;">Opslaan</button>
+      </div>
+      <div *ngIf="stanOfStephan && !isSavingLocation">
+        <button ion-button full (click)="startEditing()"
+          class="bg-blue correction modern" style="margin-bottom: 8px;">Bewerk locatie</button>
+      </div>
+      <div id="zoomable">
+        <div id="zoomable-content"
+          [ngStyle]="{ top: zoomTop, left: zoomLeft, transform: 'scale(' + (zoomedIn ? zoomFactor : 1) + ')' }"
+          (click)="zoomClick($event)">
+          <div id="locationIndicator" [ngStyle]="{ top: locIndicatorTop, left: locIndicatorLeft }"
+            [ngClass]="{ small: zoomedIn }"></div>
+          <div id="hutHighlight" [ngClass]="{ shown: showHighlight, small: zoomedIn }"
+            [ngStyle]="{ top: hutIndicatorTop, left: hutIndicatorLeft }"></div>
+          <i class="material-icons" id="selectionHighlight" [ngClass]="{ shown: hasSelectedLocation, small: zoomedIn }"
+            [ngStyle]="{ top: selectionHighlightTop, left: selectionHighlightLeft }">location_on</i>
+          <canvas width="2000" style="width: 100%; vertical-align: bottom;"></canvas>
+        </div>
+      </div>
+      <div *ngIf="isSavingLocation">
+        <button ion-button full (click)="zoomOut()" *ngIf="zoomedIn" class="bg-blue correction modern">Zoom uit</button>
+      </div>
+    </div>
+    <div [ngClass]="{ shown: showModal, high: showModalHigh }" id="myModal" class="modal conditional">
+      <div class="modal-content">
+        <div id='modalTop' [ngClass]='g.getWijk(hutNr)'>
+        </div>
+        <table id="titleLayout">
+          <tr>
+            <td>
+              Instructie
+            </td>
+            <td>
+              <span (click)="closeAddModal();">&times;</span>
+            </td>
+          </tr>
+        </table>
+        <div id='modalBottom'>
+          Om de locatie op te slaan, moet je straks op een plek op de kaart tikken en daarna op opslaan klikken.
+          <br>
+          <b>Let op:</b> je aangegeven gps-locatie is niet altijd perfect, kijk dus vooral of de plek van het hutje
+          klopt ten
+          opzichte van de andere hutjes.
+        </div>
+        <button ion-button full (click)="dontShowAgain();" class="correction">Niet meer tonen</button>
+        <button ion-button full (click)="closeModal()" class="correction">Sluiten</button>
+      </div>
     </div>
   </div>
 </ion-content>
