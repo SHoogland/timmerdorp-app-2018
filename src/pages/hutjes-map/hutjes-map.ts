@@ -17,6 +17,7 @@ export class HutjesMapPage {
   hasSelectedLocation: boolean;
   isSavingLocation: boolean;
   savingFromButton: boolean;
+  foundLocation: boolean;
   stanOfStephan: boolean;
   showHighlight: boolean;
   showModalHigh: boolean;
@@ -202,10 +203,11 @@ export class HutjesMapPage {
   }
 
   updateLocIndicator(data, self) {
+    this.foundLocation = true
     let coords = self.coordinatesInMetersFromTopLeft(data['coords'].latitude, data['coords'].longitude)
     self.locIndicatorLeft = 'calc(' + (100 * coords.x / self.mapWidth).toFixed(2) + '% - 14px)'
     self.locIndicatorTop = 'calc(' + (100 * coords.y / self.mapHeight).toFixed(2) + '% - 14px)'
-    if(self.isSavingLocation && !self.hasZoomedInToLocation && !self.zoomedIn && +new Date() < self.pageOpenTime + 1000) {
+    if (self.isSavingLocation && !self.hasZoomedInToLocation && !self.zoomedIn && +new Date() < self.pageOpenTime + 1000) {
       let rect = self.canvas.canvas.getBoundingClientRect()
       self.zoomIn(coords.x / this.mapWidth * rect.width, coords.y / this.mapHeight * rect.height)
       self.hasZoomedInToLocation = true
@@ -217,23 +219,23 @@ export class HutjesMapPage {
     let rect = document.getElementById("zoomable").getBoundingClientRect()
     let x = event.pageX - rect.left
     let y = event.pageY - rect.top
-    if(this.zoomedIn) {
+    if (this.zoomedIn) {
       let cvw = this.canvas.canvas.getBoundingClientRect().width / (this.zoomFactor ** 2)
       let cvh = this.canvas.canvas.getBoundingClientRect().height / (this.zoomFactor ** 2)
       x /= this.zoomFactor
-      x += this.currentZoomX - cvw/2
+      x += this.currentZoomX - cvw / 2
       y /= this.zoomFactor
-      y += this.currentZoomY - cvh/2
+      y += this.currentZoomY - cvh / 2
     }
     if (this.zoomedIn && !this.isSavingLocation) this.zoomOut()
     else {
-      if(this.isSavingLocation) {
+      if (this.isSavingLocation) {
         this.hasSelectedLocation = true
-        let lat = this.topLeftLat - y/rect.height * (this.topLeftLat - this.bottomRightLat)
-        let lng = this.topLeftLng + x/rect.width * (this.bottomRightLng - this.topLeftLng)
+        let lat = this.topLeftLat - y / rect.height * (this.topLeftLat - this.bottomRightLat)
+        let lng = this.topLeftLng + x / rect.width * (this.bottomRightLng - this.topLeftLng)
         this.selectedLocation = new Parse.GeoPoint(lat, lng)
-        this.selectionHighlightLeft = 'calc(' + (100 * x/rect.width) + '% - 8px)'
-        this.selectionHighlightTop = 'calc(' + (100 * y/rect.height) + '% - 16px)'
+        this.selectionHighlightLeft = 'calc(' + (100 * x / rect.width) + '% - 8px)'
+        this.selectionHighlightTop = 'calc(' + (100 * y / rect.height) + '% - 16px)'
       }
       this.zoomIn(x, y)
     }
@@ -249,7 +251,7 @@ export class HutjesMapPage {
   zoomIn(zoomX, zoomY) {
     let canvasWidth = this.canvas.canvas.getBoundingClientRect().width / (this.zoomedIn ? this.zoomFactor : 1)
     let canvasHeight = this.canvas.canvas.getBoundingClientRect().height / (this.zoomedIn ? this.zoomFactor : 1)
-    if(zoomX > canvasWidth || zoomY > canvasHeight) return
+    if (zoomX > canvasWidth || zoomY > canvasHeight || zoomX < 0 || zoomY < 0) return
     this.zoomLeft = this.zoomFactor * (canvasWidth / 2 - zoomX) + 'px'
     this.zoomTop = this.zoomFactor * (canvasHeight / 2 - zoomY) + 'px'
     this.zoomedIn = true
@@ -282,8 +284,8 @@ export class HutjesMapPage {
       lng: this.selectedLocation.longitude
     })
 
-    if(result.response == 'success') {
-      if(this.savingFromButton) {
+    if (result.response == 'success') {
+      if (this.savingFromButton) {
         this.hutNr = ''
         this.isSavingLocation = false
         this.savingFromButton = false
@@ -293,7 +295,7 @@ export class HutjesMapPage {
         this.g.hutLocationChangeStatus = 'success'
         this.navCtrl.pop({ animate: true, animation: "ios-transition", direction: 'back' })
         let self = this;
-        setTimeout(function() {
+        setTimeout(function () {
           self.g.hutLocationChangeStatus = 'done'
         }, 2000)
       }
@@ -303,7 +305,7 @@ export class HutjesMapPage {
   }
 
   startEditing() {
-    if(!this.hutNr || this.hutNr.length < 3) return
+    if (!this.hutNr || this.hutNr.length < 3) return
     this.isSavingLocation = true
     this.savingFromButton = true
   }

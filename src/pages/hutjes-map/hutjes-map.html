@@ -45,7 +45,7 @@
           [ngStyle]="{ top: zoomTop, left: zoomLeft, transform: 'scale(' + (zoomedIn ? zoomFactor : 1) + ')' }"
           (click)="zoomClick($event)">
           <div id="locationIndicator" [ngStyle]="{ top: locIndicatorTop, left: locIndicatorLeft }"
-            [ngClass]="{ small: zoomedIn }"></div>
+            [ngClass]="{ shown: foundLocation, small: zoomedIn }"></div>
           <div id="hutHighlight" [ngClass]="{ shown: showHighlight, small: zoomedIn }"
             [ngStyle]="{ top: hutIndicatorTop, left: hutIndicatorLeft }"></div>
           <i class="material-icons" id="selectionHighlight" [ngClass]="{ shown: hasSelectedLocation, small: zoomedIn }"
