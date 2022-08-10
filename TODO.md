@@ -1,23 +1,21 @@
 # App feedback en aandachtspunten uit 2021 (door Stan)
-- Registreer/inlog formuliertje mag ff wat netter, statusbalk kleuren daar ook
-- Wachtwoord vergeten pagina in app
-- zooltjes in ticket bandje ophalen flow en afvinken uitgedeeld
-- Deeplinks werken nog niet op Android 
-- faceid auth bij het openen van de app?
+- swipe to go back werkt toch niet (zou Apple de linkerkant van het beeldscherm on-swipeable maken?)
+## Webshop verbeterpunten voor 2022
 
-## Webshop verbeterpunten voor 2023
-- eenmalige leidingcodes ipv zelfde link voor iedereen
-- Sommige kids hebben een spatie achter hun firstName gekregen, hoe kan dat? als we geen oorzaak vinden: zorg dan dat ie bij save-ticket er iig uit gefilterd wordt.
 
 ## Twijfel voor 2022
 - Hutjes plattegrond toevoegen met gps
-- Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller (geen support mail clients)
 
 ## Gefixt voor 2022
-- De hele app in wijk thema? Meteen vragen bij startup
-- bestanden werken niet meer, niet handig
-- Even kijken of de checkboxes wat netter kunnen in het ticketformulier
 - Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
+- Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
+- Corona-maatregelen (leeftijd t/m 12, ID-kaart mee, roepnaam vs volledige voornaam, etc.) weghalen? hopelijk?
+- Even kijken of de checkboxes wat netter kunnen in het ticketformulier
+- ~Webshop ticket qr code misschien niet per pdf sturen maar per base64 img gewoon in de e-mail body? maakt emails verzenden waarschijnlijk een stuk sneller~ Toch maar niet doen, e-mail support voor inline base64 afbeeldingen is slecht en de qr code's onbeveiligd gewoon op de server opslaan als afbeelding zie ik niet zo zitten.
+- Registreer/inlog formuliertje mag ff wat netter, statusbalk kleuren daar ook
+- De hele app in wijk thema? Meteen vragen bij startup
+- Deeplinks werken nog niet op Android
+- Wachtwoord vergeten pagina in app
 - Bij het confirmen van je e-mail vanuit de app kom je nog niet in de admin tabel? erg raar
 - Als je al een account hebt gemaakt in de webshop, en vervolgens inlogt via de app, dan kom je alsnog niet helemaal lekker in de Admin table
 - De webshop moet standaard landen bij de registreer pagina (na welkom), alleen als er een cookie bestaat van "heeftGeregistreerd" niet

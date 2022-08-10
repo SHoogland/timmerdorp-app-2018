@@ -34,6 +34,7 @@ export class EmailConfirmationPage {
   }
 
   async init() {
+    this.g.setStatusBar('blue');
     this.loading = false;
     this.waitingForAdmin = this.navParams.get('waitingForAdmin') || false;
     this.waitingForEmailConfirmation = this.navParams.get('waitingForEmailConfirmation') || false;
@@ -59,7 +60,7 @@ export class EmailConfirmationPage {
     this.isConfirmingEmail = false
     let logInStatus = await this.g.checkIfStillLoggedIn(true);
     if (!logInStatus || !logInStatus.result) {
-      if(!this.wentToLogin) {
+      if (!this.wentToLogin) {
         this.g.toLogin();
         this.wentToLogin = true;
       }
@@ -75,7 +76,7 @@ export class EmailConfirmationPage {
         this.waitingForAdmin = true;
         this.waitingForEmailConfirmation = false;
       } else {
-        if(!this.wentHome) {
+        if (!this.wentHome) {
           this.g.goHome();
           this.wentHome = true
         }
@@ -85,7 +86,7 @@ export class EmailConfirmationPage {
 
   async logOut() {
     await Parse.User.logOut()
-    if(!this.wentToLogin) this.g.toLogin();
+    if (!this.wentToLogin) this.g.toLogin();
     this.wentToLogin = true
   }
 
@@ -95,17 +96,17 @@ export class EmailConfirmationPage {
     let realEmail;
     try {
       realEmail = atob(email)
-    } catch(e) {
+    } catch (e) {
       alert('Ongeldige e-mail verificatie link!')
     }
     let realCode;
     try {
       realCode = atob(code)
-    } catch(e) {
+    } catch (e) {
       alert('Ongeldige e-mail verificatie link!')
     }
 
-    if(!realCode || !realEmail) {
+    if (!realCode || !realEmail) {
       this.g.goHome()
       return
     }
@@ -115,12 +116,12 @@ export class EmailConfirmationPage {
       code: realCode
     }, true)
 
-    if(result === 'not_signed_in') {
+    if (result === 'not_signed_in') {
       this.g.toLogin()
     }
 
     this.loading = false
-    if(result) {
+    if (result) {
       this.emailVerificationResult = result
     }
   }

@@ -1,6 +1,6 @@
 <ion-content padding>
-  <ion-header (click)="g.goHome()" class='wijk-header'>
-		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons-outlined homeIcon">home</i>
+  <ion-header (click)='g.goBack()' class='wijk-header'>
+		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons homeIcon">arrow_back</i>
     <h1 [ngClass]="g.wijk" id="ptitle">
       {{ title }}
     </h1>
@@ -22,6 +22,7 @@
       <ion-list *ngFor="let d of days; let i = index" id="{{d}}" class='peopleList'>
         <ion-list-header style="padding-left: 0px!important;">
           {{ dates[i] + ' (' + data[d].count + ')'}}
+          <i class="material-icons" *ngIf="data[d].kids.length" (click)="shareDate(d)" style="position: absolute; right: 8px; top: 12px;">share</i>
         </ion-list-header>
         <div *ngIf="!data[d].kids.length"><b>Geen kinderen jarig</b></div>
         <div *ngFor="let bday of data[d].kids" class='{{ "childItem " + g.getWijk(bday.hutNr) }}' (click)='zoekKind(bday)'>

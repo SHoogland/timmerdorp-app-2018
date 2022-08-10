@@ -1,88 +1,94 @@
 <ion-content padding>
-	<ion-header (click)="g.goHome()">
-		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons-outlined homeIcon">home</i>
-		<h1 [ngClass]="g.wijk" id="ptitle">{{title}}</h1>
-    <ion-navbar [ngClass]="g.wijk">			<ion-title>
-				<img src="assets/imgs/logo.png" class="nav-logo">
-			</ion-title>
-		</ion-navbar>
-	</ion-header>
-	<div class='content main-content'>
-		<div class="container">
-			<div class="bracelet-number">
-				<h3>Aanwezigheid registreren voor <u id='dayName'
-						(click)='alert()'>{{getDayName(day).toLowerCase()}}</u></h3>
-				<ion-list class="line-input">
-					<ion-item id='numberInput'>
-						<ion-input #nrInput type='tel' maxlength='3' class="ion-text-right" [(ngModel)]="number"
-							(ngModelChange)="getChild($event)" (keydown)="childNumberInput($event)">
-						</ion-input>
-					</ion-item>
-				</ion-list>
-				<button (click)='togglePresence()' id='sendButton' ion-button type="submit"
-					[ngClass]='greenBtn ? "bg-green" : "bg-blue"' block>
-					<span id='btnLabel'>
-						{{ loading ? 'Laden...' : (greenBtn ? 'Opgeslagen!' : ((ticket || {})["aanwezig_" + day] ? 'Afwezig melden' : 'Aanwezig melden')) }}
-					</span>
-				</button>
-			</div>
-		</div>
-		<div [ngClass]="'user-info errorCard' + (error?' hasError':'')" style="margin-bottom: 24px;">
-			<div class="content" *ngIf='error'>
-				<ion-icon name='warning'></ion-icon>
-				<h1 id='errorHeader' [innerHTML]='error'></h1>
-				<h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
-			</div>
-		</div>
-		<div class="user-info">
-			<div>
-				<div *ngIf="loading">
-					<ion-spinner color='primary'></ion-spinner>
-				</div>
-			</div>
-		</div>
-		<div class='infoCard fadeIn {{ foundTicket ? "shown" : "" }}' id='childInfo'>
-			<div *ngIf='foundTicket' class='{{"inhoud " + g.getWijk( (ticket || {}).hutNr)}}'>
-				<h1>Kind #{{number}}</h1>
-				<table>
-					<tr>
-						<td>Naam: </td>
-						<td>{{ ticket.firstName }} {{ ticket.lastName }}</td>
-					</tr>
-					<tr>
-						<td>Polsbandnummer: </td>
-						<td>{{ ticket.wristband }}</td>
-					</tr>
-					<tr>
-						<td>Hutnummer: </td>
-						<td>{{ ticket.hutNr }}</td>
-					</tr>
-					<tr>
-						<td>Aanwezig op {{getDayName(day).toLowerCase()}}: </td>
-						<td>{{ ticket["aanwezig_" + day] ? "Ja" : "Nee" }}
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-
-    <div *ngIf="searched && !foundTicket">
-      <b>Geen kinderen gevonden! Probeer anders het polsbandje te achterhalen door het kind met zijn/haar naam op te zoeken via de zoekpagina.</b>
+  <ion-header (click)='g.goBack()'>
+    <i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''"
+      class="material-icons homeIcon">arrow_back</i>
+    <h1 [ngClass]="g.wijk" id="ptitle">{{title}}</h1>
+    <ion-navbar [ngClass]="g.wijk">
+      <ion-title>
+        <img src="assets/imgs/logo.png" class="nav-logo">
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  <div class='content main-content'>
+    <div class="container">
+      <div class="bracelet-number">
+        <h3>Aanwezigheid registreren voor <u id='dayName'>{{getDayName(day).toLowerCase()}}</u></h3>
+        <ion-list class="line-input">
+          <ion-item id='numberInput'>
+            <ion-input #nrInput type='tel' maxlength='3' class="ion-text-right" [(ngModel)]="number"
+              (ngModelChange)="getChild($event)" (keydown)="childNumberInput($event)">
+            </ion-input>
+          </ion-item>
+        </ion-list>
+        <button (click)='togglePresence()' id='sendButton' ion-button type="submit"
+          [ngClass]='greenBtn ? "bg-green" : "bg-blue"' block>
+          <span id='btnLabel'>
+            {{ loading ? 'Laden...' : (greenBtn ? 'Opgeslagen!' : ((ticket || {})["aanwezig_" + day] ? 'Afwezig melden'
+            : 'Aanwezig melden')) }}
+          </span>
+        </button>
+      </div>
+    </div>
+    <div [ngClass]="'user-info errorCard' + (error?' hasError':'')" style="margin-bottom: 24px;">
+      <div class="content" *ngIf='error'>
+        <ion-icon name='warning'></ion-icon>
+        <h1 id='errorHeader' [innerHTML]='error'></h1>
+        <h4 id='errorHelp' [innerHTML]='errorHelp'></h4>
+      </div>
+    </div>
+    <div class="user-info">
+      <div>
+        <div *ngIf="loading">
+          <ion-spinner color='primary'></ion-spinner>
+        </div>
+      </div>
+    </div>
+    <div class='infoCard fadeIn {{ foundTicket ? "shown" : "" }}' id='childInfo'>
+      <div *ngIf='foundTicket' class='{{"inhoud " + g.getWijk( (ticket || {}).hutNr)}}'>
+        <h1>Kind #{{number}}</h1>
+        <table>
+          <tr>
+            <td>Naam: </td>
+            <td>{{ ticket.firstName }} {{ ticket.lastName }}</td>
+          </tr>
+          <tr>
+            <td>Polsbandnummer: </td>
+            <td>{{ ticket.wristband }}</td>
+          </tr>
+          <tr>
+            <td>Hutnummer: </td>
+            <td>{{ ticket.hutNr }}</td>
+          </tr>
+          <tr>
+            <td>Aanwezig vandaag: </td>
+            <td>{{ ticket["aanwezig_" + day] ? "Ja" : "Nee" }}
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
 
-    <ion-list class='peopleList fadeIn {{ !searched && (history || []).length && !loading && !foundTicket ? "shown" : "" }}'>
-		  <div>
-				<ion-list-header>
-					Zoekgeschiedenis ({{ (history || []).length }})
-				</ion-list-header>
-				<div *ngFor="let h of (history || [])"
-					class='{{ "childItem " + g.getWijk(h.hutNr) }}'
-					(click)='number = "" + h.wristband; getChild({})'>
+    <div *ngIf="searched && !foundTicket">
+      <b>Geen kinderen gevonden! Probeer anders het polsbandje te achterhalen door het kind met zijn/haar naam op te
+        zoeken via de zoekpagina.</b>
+    </div>
+
+    <ion-list
+      class='peopleList fadeIn {{ !searched && (history || []).length && !loading && !foundTicket ? "shown" : "" }}'>
+      <div>
+        <ion-list-header>
+          Zoekgeschiedenis ({{ (history || []).length }})
+        </ion-list-header>
+        <div *ngFor="let h of (history || [])" class='{{ "childItem " + g.getWijk(h.hutNr) }}'
+          (click)='number = "" + h.wristband; getChild({})'>
           <table>
             <tr>
               <td>
-                <h3>B<span class="largeScreenSpan" style="padding-right: 28px;">andje</span> <span>{{h.wristband}}</span></h3>
-                <h3>H<span class="largeScreenSpan" style="padding-right: 28px;">utje</span> <span>{{h.hutNr}}</span></h3>
+                <h3>B<span class="largeScreenSpan" style="padding-right: 28px;">andje</span>
+                  <span>{{h.wristband}}</span>
+                </h3>
+                <h3>H<span class="largeScreenSpan" style="padding-right: 28px;">utje</span> <span>{{h.hutNr}}</span>
+                </h3>
               </td>
               <td>
                 <h2>
@@ -98,38 +104,47 @@
               </td>
             </tr>
           </table>
-				</div>
+        </div>
       </div>
     </ion-list>
-	</div>
+  </div>
 </ion-content>
 
 <div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='myModal' ? closeModal() : ''" id="myModal"
-	class="modal conditional">
-	<div class="modal-content">
-		<div id='modalTop' class='warnModal'>
-		</div>
-		<div id='modalBottom'>
-			<span class="close" (click)="closeModal();">&times;</span>
-			<h1>Waarschuwing</h1>
-			<p style="margin-bottom: 0px;">Dit kind is al aanwezig gemeld voor {{getDayName(day).toLowerCase()}}! Je hebt twee opties:</p>
-		</div>
-		<button ion-button full (click)="closeModal()" class="bg-red correction">Terug</button>
-		<button ion-button full (click)="makeAbsent()" class="bg-blue correction">Afwezig
-			melden</button>
-	</div>
+  class="modal conditional">
+  <div class="modal-content">
+    <div id='modalTop' class='warnModal'>
+    </div>
+    <div id='modalBottom'>
+      <span class="close" (click)="closeModal();">&times;</span>
+      <h1>Waarschuwing</h1>
+      <p style="margin-bottom: 0px;">
+        Dit kind is al aanwezig gemeld voor {{getDayName(day).toLowerCase()}}! Als je het kind afwezig wil melden, vul
+        dan hieronder een duidelijke reden in (wie pikt het kind op, waarom gaat het kind weg, etc.)
+      </p>
+      <textarea id="absenceReason" [(ngModel)]="absenceReason"></textarea>
+    </div>
+    <button ion-button full (click)="closeModal()" class="bg-red correction">
+      Terug
+    </button>
+    <button ion-button full (click)="makeAbsent()" class="bg-blue correction">
+      Afwezig melden
+    </button>
+  </div>
 </div>
 
 <div [ngClass]="{'shown': hutNrModalShown}" (click)="$event.target.id === 'myModal' ? closeModal() : ''" id="hutNrModal"
-	class="modal conditional">
-	<div class="modal-content">
-		<div id='modalTop' class='warnModal'>
-		</div>
-		<div id='modalBottom'>
-			<span class="close" (click)="closeModal();">&times;</span>
-			<h1>Waarschuwing</h1>
-			<p style="margin-bottom: 0px;">Dit kind heeft nog geen hutnummer, terwijl Timmerdorp wel al is gestart! Zorg ervoor dat dit opgelost wordt, of vraag het even na bij Stan of Stephan.</p>
-		</div>
-		<button ion-button full (click)="closeHutNrModal()" class="bg-red correction">Sluiten & {{ ((ticket || {})["aanwezig_" + day] ? 'afwezig' : 'aanwezig') }} melden</button>
-	</div>
+  class="modal conditional">
+  <div class="modal-content">
+    <div id='modalTop' class='warnModal'>
+    </div>
+    <div id='modalBottom'>
+      <span class="close" (click)="closeModal();">&times;</span>
+      <h1>Waarschuwing</h1>
+      <p style="margin-bottom: 0px;">Dit kind heeft nog geen hutnummer, terwijl Timmerdorp wel al is gestart! Zorg
+        ervoor dat dit opgelost wordt, of vraag het even na bij Stan of Stephan.</p>
+    </div>
+    <button ion-button full (click)="closeHutNrModal()" class="bg-red correction">Sluiten & {{ ((ticket ||
+      {})["aanwezig_" + day] ? 'afwezig' : 'aanwezig') }} melden</button>
+  </div>
 </div>

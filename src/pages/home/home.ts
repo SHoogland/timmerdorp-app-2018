@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, NavParams } from 'ionic-angular';
+import { Platform, NavController, NavParams, Haptic } from 'ionic-angular';
 
 import Parse from 'parse';
 
@@ -19,6 +19,7 @@ import { BirthdaysPage } from '../birthdays/birthdays';
 import { FilesPage } from '../files/files';
 import { GlobalFunctions } from '../../providers/global';
 import { EmailConfirmationPage } from '../email-confirmation/email-confirmation';
+import { HutjesMapPage } from '../hutjes-map/hutjes-map';
 
 @Component({
   selector: 'page-home',
@@ -54,19 +55,19 @@ export class HomePage {
 
   constructor(
     private barcodeScanner: BarcodeScanner,
-		public navParams: NavParams,
+    public navParams: NavParams,
     public navCtrl: NavController,
     public platform: Platform,
     public storage: Storage,
     public httpClient: HttpClient,
     private iab: InAppBrowser,
-    private g: GlobalFunctions
+    private g: GlobalFunctions,
+    private haptic: Haptic
   ) {
     this.y = new Date().getFullYear();
   }
 
   async init() {
-    this.g.setStatusBar("#2196f3");
     this.showPhoto = false;
     this.updates = [];
     this.readablePageList = {
@@ -80,9 +81,9 @@ export class HomePage {
       "settings": SettingsPage,
       "login": LoginPage,
       "birthdays": BirthdaysPage,
-      "files": FilesPage
+      "files": FilesPage,
+      "map": HutjesMapPage,
     }
-    this.g.setStatusBar("#2196f3");
 
     this.childrenCount = 0;
     this.birthdays = 0;
@@ -90,18 +91,18 @@ export class HomePage {
 
     if (this.platform.is("android")) this.android = true;
 
-    if(this.navParams.get('changeWijk')) {
+    if (this.navParams.get('changeWijk')) {
       this.currentWijkChoice = this.g.wijk
       this.showWijkChoice = true
       this.onlyChangeWijk = true
     }
 
     this.storage.get('wijk').then(async (val) => {
-      if(!val) {
-        this.showWijkChoice = true
-      }
-
       this.g.wijk = val || "blue";
+      this.g.setStatusBar(this.g.wijk);
+
+
+
       this.wijken = {
         blue: "blauw",
         red: "rood",
@@ -115,14 +116,14 @@ export class HomePage {
       this.birthdays = (wijkStatsCache || {}).birthdays || 0;
 
       let self = this;
-      this.g.apiCall('wijkStats').then(async function(result) {
+      this.g.apiCall('wijkStats').then(async function (result) {
         if (!result || result.response !== 'success') {
           if (!result || result.response !== 'success') {
             return;
           }
         }
         let dag = ['di', 'wo', 'do', 'vr'][new Date().getDay() - 2];
-        self.wijkCount = result.quarters[self.g.wijk == 'white' ? 'blue' : self.g.wijk]['aanwezig_' + dag] || 0;
+        self.wijkCount = result.quarters[self.g.wijk == 'white' ? 'blue' : (self.g.wijk || 'blue')]['aanwezig_' + dag] || 0;
         self.childrenCount = result['aanwezig_' + dag] || 0;
         self.birthdays = (result.birthdays[dag] || {}).count;
 
@@ -185,6 +186,13 @@ export class HomePage {
           small: true
         },
         {
+          title: 'Hutjeskaart',
+          component: "map",
+          class: 'small',
+          icon: "map",
+          small: true
+        },
+        {
           title: 'Foto\'s en Bijlagen',
           component: "files",
           class: 'small',
@@ -210,10 +218,10 @@ export class HomePage {
 
     let weatherCacheDate = await this.storage.get('weatherCacheDate').catch(console.log)
     let self = this;
-    if(+new Date() - weatherCacheDate < 15*60*1000) { // weer moet elk kwartier vervangen worden
+    if (+new Date() - weatherCacheDate < 15 * 60 * 1000) { // weer moet elk kwartier vervangen worden
       this.processWeatherData(await this.storage.get('weatherCache'))
     } else {
-      this.httpClient.get("https://api.openweathermap.org/data/2.5/forecast?q=Heiloo,NL&APPID=e98a229cdc17ffdc226168c33aefa0c1").subscribe(async function(data: any) {
+      this.httpClient.get("https://api.openweathermap.org/data/2.5/forecast?q=Heiloo,NL&APPID=e98a229cdc17ffdc226168c33aefa0c1").subscribe(async function (data: any) {
         await self.storage.set('weatherCache', data)
         await self.storage.set('weatherCacheDate', +new Date())
         self.processWeatherData(data)
@@ -225,13 +233,14 @@ export class HomePage {
       if (!!val) {
         let logInStatus = await self.g.checkIfStillLoggedIn()
         if (!logInStatus.result) {
-          if(!self.g.navigatedToDeeplink) self.g.toLogin()
+          if (!self.g.navigatedToDeeplink) self.g.toLogin()
         } else {
           if (!logInStatus.admin || !logInStatus.emailConfirmed) {
-            if(!self.g.navigatedToDeeplink) self.navCtrl.setRoot(EmailConfirmationPage, { waitingForEmailConfirmation: !logInStatus.emailConfirmed, waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin, email: logInStatus.email}, { animate: true, animation: "ios-transition", direction: 'forward' })
+            if (!self.g.navigatedToDeeplink) self.navCtrl.push(EmailConfirmationPage, { waitingForEmailConfirmation: !logInStatus.emailConfirmed, waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin, email: logInStatus.email }, { animate: true, animation: "ios-transition", direction: 'forward' })
           }
           self.waitingPotentialAdmins = logInStatus.waitingPotentialAdmins
-          if(self.g.wijk != logInStatus.wijk) {
+          if(!logInStatus.wijk) self.showWijkChoice = true
+          if (self.g.wijk != logInStatus.wijk) {
             self.g.wijk = logInStatus.wijk
             self.storage.set('wijk', self.g.wijk)
           }
@@ -287,7 +296,7 @@ export class HomePage {
     if (this.openedPage.component === 'ticketscanner') {
       this.scanCode();
     } else if (this.openedPage.component === 'weather') {
-      if(this.showPhoto) {
+      if (this.showPhoto) {
         this.showPhoto = false;
         return;
       }
@@ -296,19 +305,20 @@ export class HomePage {
       if (new Date().getDay() < 2 || new Date().getDay() > 5) {
         alert("Nog even wachten tot Timmerdorp!");
       } else {
-        this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+        this.navCtrl.push(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
       }
     } else if (ogPage === 'login') {
+      this.g.wijk = ''
       await Parse.User.logOut();
       this.g.toLogin();
     } else {
-      if(this.openedPage.component.name == 'StatsPage') {
-        if(this.showPhoto) {
+      if (this.openedPage.component.name == 'StatsPage' && page.class.startsWith('half')) {
+        if (this.showPhoto) {
           this.showPhoto = false;
           return;
         }
       }
-      this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+      this.navCtrl.push(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
     }
   }
 
@@ -319,17 +329,21 @@ export class HomePage {
         showTorchButton: true,
         prompt: "Scan barcode vanaf een papieren of digitaal ticket."
       }).then((barcodeData) => {
-        this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });
+        this.navCtrl.push(ScanTicketPage, { 'barcode': barcodeData.text });
+        if (this.haptic.available()) {
+          this.haptic.notification({ type: 'success' });
+        }
       }, (error) => {
         this.error = error.message;
       });
     } else {
-      this.navCtrl.setRoot(ScanTicketPage, { 'barcode': 'xO0ioOoL4P' });
+      this.navCtrl.push(ScanTicketPage, { barcode: 'E1rxELGqIa' });
     }
   }
 
   wijkChoiceChange(e) {
     this.currentWijkChoice = e
+    this.g.setStatusBar(this.currentWijkChoice);
   }
 
   saveWijkChoice() {
@@ -338,11 +352,11 @@ export class HomePage {
     this.g.apiCall('setAdminWijk', { wijk: this.g.wijk })
     this.storage.set('wijk', this.g.wijk)
 
-    if(this.onlyChangeWijk) {
-      this.navCtrl.setRoot(SettingsPage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'backward' });
+    if (this.onlyChangeWijk) {
+      this.navCtrl.push(SettingsPage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'back' });
     } else {
       let self = this;
-      setTimeout(function(){
+      setTimeout(function () {
         self.showWijkChoice = false;
       }, 500)
     }

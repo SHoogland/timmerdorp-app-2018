@@ -19,7 +19,7 @@ page-home {
   }
 
   button.small {
-    width: 20%;
+    width: calc(100% / 6);
     margin-right: 0px;
     display: inline-block;
     padding: 0 !important;
@@ -269,6 +269,18 @@ page-home {
 
   ion-content.content-md {
     background: $blue;
+    &.green {
+      background: $green;
+    }
+    &.yellow {
+      background: $yellow;
+    }
+    &.red {
+      background: $red;
+    }
+    &.white {
+      background: white;
+    }
   }
 
   #potentialAdminsNotification {
@@ -326,5 +338,13 @@ page-home {
     &.fadedOut {
       opacity: 0;
     }
+  }
+
+  * {
+    font-family: Roboto, Arial, Arial, Helvetica, sans-serif;
+  }
+
+  #ptitle, #ptitle * {
+    font-family: Roboto, Arial, Arial, Helvetica, sans-serif;
   }
 }

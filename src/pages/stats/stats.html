@@ -1,6 +1,6 @@
 <ion-content padding>
-  <ion-header (click)="g.goHome()" class='blue wijk-header'>
-		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons-outlined homeIcon">home</i>
+  <ion-header (click)='g.goBack()' class='blue wijk-header'>
+		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons homeIcon">arrow_back</i>
     <h1 [ngClass]="g.wijk" id="ptitle">
       {{ title }}
     </h1>
@@ -76,13 +76,12 @@
       <div *ngIf="admins && admins.length" style="margin-top: 16px; padding-bottom: 64px;">
         <h1>Timmerdorp Battle</h1>
         <p style="padding: 12px;">
-          Hieronder zie je welke Timmerdorp-topper de meeste kinderen aanwezig heeft gemeld. Doe je best, en
-          <u>zorg dat je meer kinderen helpt dan Twan!</u>
+          Hieronder zie je welke Timmerdorp-topper de meeste kinderen aanwezig heeft gemeld.
         </p>
         <div style="overflow-x: scroll;">
           <table class='cleanTable withHeader topFixed'>
             <tr>
-              <td>
+              <td style="min-width: 150px;">
                 Naam
               </td>
               <td>
@@ -102,7 +101,7 @@
               </td>
             </tr>
             <tr *ngFor="let admin of admins; let i = index" class="{{ admin.isYou ? 'isYou' : ''}}">
-              <td>{{ admin.naam }} </td>
+              <td class="{{ admin.wijk }}">{{ admin.naam }} </td>
               <td>{{ admin.di || 0 }} </td>
               <td>{{ admin.wo || 0 }} </td>
               <td>{{ admin.do || 0 }} </td>

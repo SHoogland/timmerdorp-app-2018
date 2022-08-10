@@ -5,44 +5,46 @@ import { GlobalFunctions } from '../../providers/global';
 
 import Parse from 'parse';
 import { EmailConfirmationPage } from '../email-confirmation/email-confirmation';
+import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 
 @Component({
-	selector: 'loginpage',
-	templateUrl: 'login.html'
+  selector: 'loginpage',
+  templateUrl: 'login.html'
 })
 
 export class LoginPage {
-	errorHelp: string;
-	number: string;
-	error: string;
+  errorHelp: string;
+  number: string;
+  error: string;
 
-	login: {
-		username: string,
-		password: string
-	};
+  login: {
+    username: string,
+    password: string
+  };
 
-	register: {
-		username: string,
-		password: string,
+  register: {
+    username: string,
+    password: string,
     voornaam: string,
     achternaam: string,
     wijk: string
-	};
+  };
 
-	hideLogin: boolean;
-	loading: boolean;
+  hideLogin: boolean;
+  loading: boolean;
   loginPart: boolean;
 
-	constructor(
-		public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
-		public storage: Storage,
-		public g: GlobalFunctions,
-	) {
-		this.init();
-	}
+    public storage: Storage,
+    public g: GlobalFunctions,
+  ) {
+    this.init();
+  }
 
-	init() {
+  init() {
+    this.g.setStatusBar('blue');
     this.login = {
       username: '',
       password: '',
@@ -57,22 +59,21 @@ export class LoginPage {
     }
 
     this.loginPart = !!this.navParams.get('login')
-		this.hideLogin = true;
+    this.hideLogin = true;
 
-		this.loading = false;
-		this.error = '';
+    this.error = '';
 
-		this.number = '';
+    this.number = '';
 
-		this.storage.get('notFirstUse').then((val) => {
-			this.hideLogin = !val;
-		}, () => {
-			this.hideLogin = true;
-		});
-	}
+    this.storage.get('notFirstUse').then((val) => {
+      this.hideLogin = !val;
+    }, () => {
+      this.hideLogin = true;
+    });
+  }
 
-	async loginNow(surpressWarnings) {
-    if(this.login.username === 'test123' && this.login.password === 'test123') {
+  async loginNow(surpressWarnings) {
+    if (this.login.username === 'test123' && this.login.password === 'test123') {
       this.g.staging = !this.g.staging;
       this.storage.set('staging', this.g.staging)
 
@@ -82,7 +83,7 @@ export class LoginPage {
 
     let self = this;
     if (!self.login.username || !self.login.password) {
-      if(!surpressWarnings) {
+      if (!surpressWarnings) {
         self.error = 'Inloggen mislukt!'
         self.errorHelp = 'Een e-mailadres en wachtwoord zijn vereist'
       }
@@ -110,23 +111,27 @@ export class LoginPage {
       }
       self.loading = false
     })
-	}
+  }
 
   registerNow(surpressWarnings) {
-    if(this.register.username === 'test123' && this.register.password === 'test123') {
-      this.g.staging = !this.g.staging;
-      alert('Gelukt! Testversie is nu ' + (this.g.staging ? 'ingeschakeld' : 'uitgeschakeld'))
-      return;
-    }
-
     let self = this;
-    if (!self.register.username || !self.register.password) {
-      if(!surpressWarnings) {
+    self.register.username = self.register.username.replace(" ", "")
+    let emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (!self.register.username || !self.register.password || !emailRegex.test(self.register.username)) {
+      if (!surpressWarnings) {
         self.error = 'Registreren mislukt!'
-        self.errorHelp = 'Een e-mailadres en wachtwoord zijn vereist'
+        self.errorHelp = 'Een geldig e-mailadres en wachtwoord zijn vereist'
       }
       return
     }
+    if(!self.register.voornaam || !self.register.achternaam) {
+      if (!surpressWarnings) {
+        self.error = 'Registreren mislukt!'
+        self.errorHelp = 'Vul alsjeblieft je hele naam in'
+      }
+      return
+    }
+
     self.loading = true
     this.g.apiCall('registreren', {
       username: this.register.username,
@@ -138,31 +143,35 @@ export class LoginPage {
       domain: this.g.staging ? 'http://localhost:3000' : 'https://shop.timmerdorp.com'
     }, true).catch((e) => {
       self.error = 'Registreren mislukt!'
-      if(e.message === 'Account already exists for this username.') {
+      if (e.message === 'Account already exists for this username.') {
         self.errorHelp = 'Er bestaat al een account met dit e-mailadres! Accounts van vorig jaar, en accounts uit de webshop, zijn nog steeds geldig. Probeer in te loggen.'
       } else {
         self.errorHelp = e.message
       }
       self.loading = false
-    }).then(async function(result) {
-      if(result === 'success') {
+    }).then(async function (result) {
+      if (result === 'success') {
         await Parse.User.logIn(self.register.username.toLowerCase().replace(' ', ''), self.register.password)
-        self.navCtrl.setRoot(EmailConfirmationPage, { waitingForEmailConfirmation: true, email: self.register.username.toLowerCase().replace(' ', '') }, { animate: true, animation: "ios-transition", direction: 'forward' })
+        self.navCtrl.push(EmailConfirmationPage, { waitingForEmailConfirmation: true, email: self.register.username.toLowerCase().replace(' ', '') }, { animate: true, animation: "ios-transition", direction: 'forward' })
       }
       self.loading = false
     })
   }
 
   logInInput(event) {
-    if(event.code === 'Enter') this.loginNow(true)
+    if (event.code === 'Enter') this.loginNow(true)
   }
 
   regInput(event) {
-    if(event.code === 'Enter') this.registerNow(true)
+    if (event.code === 'Enter') this.registerNow(true)
   }
 
-	showLogin() {
-		this.hideLogin = false;
-		this.storage.set('notFirstUse', true);
-	}
+  showLogin() {
+    this.hideLogin = false;
+    this.storage.set('notFirstUse', true);
+  }
+
+  forgotPassword() {
+    this.navCtrl.push(ForgotPasswordPage, { email: this.login.username.toLowerCase().replace(' ', '') }, { animate: true, animation: "ios-transition", direction: 'forward' })
+  }
 }

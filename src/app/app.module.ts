@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
@@ -24,54 +25,61 @@ import { FilesPage } from '../pages/files/files';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { GlobalFunctions } from '../providers/global';
 import { EmailConfirmationPage } from '../pages/email-confirmation/email-confirmation';
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
+import { HutjesMapPage } from '../pages/hutjes-map/hutjes-map';
 
 @NgModule({
-	declarations: [
-		MyApp,
-		HomePage,
-		ScanTicketPage,
-		SearchPage,
-		ConnectChildToCabinPage,
-		PresencePage,
-		LoginPage,
+  declarations: [
+    MyApp,
+    HomePage,
+    ScanTicketPage,
+    SearchPage,
+    ConnectChildToCabinPage,
+    PresencePage,
+    LoginPage,
     EmailConfirmationPage,
-		StatsPage,
-		SettingsPage,
+    StatsPage,
+    SettingsPage,
     BirthdaysPage,
-		FilesPage
-	],
-	imports: [
-		BrowserModule,
-		IonicModule.forRoot(MyApp, { mode: "md", swipeBackEnabled: true }),
-		IonicStorageModule.forRoot(),
-		HttpClientModule
-	],
-	bootstrap: [IonicApp],
-	entryComponents: [
-		MyApp,
-		HomePage,
-		ScanTicketPage,
-		SearchPage,
-		ConnectChildToCabinPage,
-		PresencePage,
-		LoginPage,
+    FilesPage,
+    ForgotPasswordPage,
+    HutjesMapPage,
+  ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp, { mode: "md", swipeBackEnabled: true }),
+    IonicStorageModule.forRoot(),
+    HttpClientModule,
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    HomePage,
+    ScanTicketPage,
+    SearchPage,
+    ConnectChildToCabinPage,
+    PresencePage,
+    LoginPage,
     EmailConfirmationPage,
-		StatsPage,
-		SettingsPage,
+    StatsPage,
+    SettingsPage,
     BirthdaysPage,
-		FilesPage
-	],
-	providers: [
-		StatusBar,
-		SplashScreen,
+    FilesPage,
+    ForgotPasswordPage,
+    HutjesMapPage,
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
     Deeplinks,
     SocialSharing,
-		HttpClient,
-		InAppBrowser,
-		BarcodeScanner,
-		{ provide: ErrorHandler, useClass: IonicErrorHandler },
-		GlobalFunctions
-	],
-	schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    HttpClient,
+    InAppBrowser,
+    BarcodeScanner,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    GlobalFunctions,
+    Geolocation,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
