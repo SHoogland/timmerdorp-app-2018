@@ -13,9 +13,6 @@
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
     </edit-config>
-    <config-file overwrite="true" file="*-Info.plist" mode="merge" parent="NSLocationWhenInUseUsageDescription">
-        <string>We gebruiken je locatie om op de kaart aan te geven waar op het Timmerdorpterrein je je bevindt.</string>
-    </config-file>
     <config-file parent="com.apple.developer.associated-domains" target="*-Debug.plist">
         <array>
             <string>applinks:shop.timmerdorp.com</string>
@@ -111,6 +108,9 @@
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
         <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
             <string>Het scannen van de QR-codes op de ticket</string>
+        </config-file>
+        <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
+            <string>We gebruiken je locatie om op de kaart aan te geven waar op het Timmerdorpterrein je je bevindt.</string>
         </config-file>
         <icon height="20" src="resources/ios/icon/icon-20.png" width="20" />
         <icon height="40" src="resources/ios/icon/icon-20@2x.png" width="40" />

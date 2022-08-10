@@ -101,8 +101,6 @@ export class HomePage {
       this.g.wijk = val || "blue";
       this.g.setStatusBar(this.g.wijk);
 
-
-
       this.wijken = {
         blue: "blauw",
         red: "rood",
@@ -239,8 +237,9 @@ export class HomePage {
             if (!self.g.navigatedToDeeplink) self.navCtrl.push(EmailConfirmationPage, { waitingForEmailConfirmation: !logInStatus.emailConfirmed, waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin, email: logInStatus.email }, { animate: true, animation: "ios-transition", direction: 'forward' })
           }
           self.waitingPotentialAdmins = logInStatus.waitingPotentialAdmins
-          if(!logInStatus.wijk) self.showWijkChoice = true
-          if (self.g.wijk != logInStatus.wijk) {
+          if(!logInStatus.wijk) {
+            self.showWijkChoice = true
+          } else if (self.g.wijk != logInStatus.wijk) {
             self.g.wijk = logInStatus.wijk
             self.storage.set('wijk', self.g.wijk)
           }
@@ -348,13 +347,13 @@ export class HomePage {
 
   saveWijkChoice() {
     this.g.wijk = this.currentWijkChoice;
-    this.finishedWijkChoice = true;
     this.g.apiCall('setAdminWijk', { wijk: this.g.wijk })
     this.storage.set('wijk', this.g.wijk)
 
     if (this.onlyChangeWijk) {
       this.navCtrl.push(SettingsPage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'back' });
     } else {
+      this.finishedWijkChoice = true;
       let self = this;
       setTimeout(function () {
         self.showWijkChoice = false;

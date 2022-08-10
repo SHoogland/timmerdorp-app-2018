@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GlobalFunctions } from '../../providers/global';
 import { Storage } from '@ionic/storage';
-import { ConnectChildToCabinPage } from '../connect-child-to-cabin/connect-child-to-cabin';
 import Parse from 'parse';
 
 @Component({
