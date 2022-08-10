@@ -1,5 +1,5 @@
 <ion-content padding>
-  <ion-header (click)='g.goHome()'>
+  <ion-header (click)='g.goBack()'>
     <i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''"
       class="material-icons homeIcon">arrow_back</i>
     <h1 [ngClass]="g.wijk" id="ptitle">{{title}}</h1>
@@ -73,6 +73,14 @@
       <button ion-button full (click)="showAddModal()" [ngClass]="'bg-blue correction ' + g.getWijk(hutNr)">
         <ion-icon slot='start' name='add' style="left: 0px;" id='addIcon'></ion-icon>
         Kind toevoegen
+      </button>
+      <button *ngIf="hutHasLocation || g.hutLocationChangeStatus == 'done'" ion-button full (click)="openHutMap()" [ngClass]="'bg-blue correction ' + g.getWijk(hutNr)">
+        <ion-icon slot='start' name='map' style="left: 0px;" id='addIcon'></ion-icon>
+        Bekijk op plattegrond
+      </button>
+      <button *ngIf="(!hutHasLocation || isStanOfStephan) && g.hutLocationChangeStatus != 'done'" ion-button full (click)="saveHutLocation()" [ngClass]="'correction bg-' + (g.hutLocationChangeStatus == 'success' ? 'green ' : 'blue ' + g.getWijk(hutNr))">
+        <ion-icon slot='start' name='pin' style="left: 0px;" id='addIcon'></ion-icon>
+        {{ g.hutLocationChangeStatus == 'loading' ? 'Laden...' : (g.hutLocationChangeStatus == 'success' ? 'Gelukt!' : 'Sla locatie op') }}
       </button>
     </div>
   </div>

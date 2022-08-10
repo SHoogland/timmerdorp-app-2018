@@ -30,6 +30,8 @@ export class ConnectChildToCabinPage {
 
   alreadyHasHutError: boolean;
   noWristbandError: boolean;
+  isStanOfStephan: boolean;
+  hutHasLocation: boolean;
   searchedChild: boolean;
   searched: boolean;
   loading: boolean;
@@ -143,6 +145,7 @@ export class ConnectChildToCabinPage {
   }
 
   search() {
+    this.g.hutLocationChangeStatus = '';
     this.searched = false;
     this.hutTickets = [];
     if (this.hutNr && this.hutNr.length === 3) {
@@ -180,6 +183,8 @@ export class ConnectChildToCabinPage {
       self.loading = false;
       self.cd.detectChanges();
       self.searched = true;
+      self.hutHasLocation = result.hutHasLocation
+      self.isStanOfStephan = result.stanOfStephan
     }, (error) => {
       self.error = error
     })
@@ -371,10 +376,19 @@ export class ConnectChildToCabinPage {
   }
 
   ngOnDestroy() {
+    this.g.hutLocationChangeStatus = '';
     clearInterval(this.interval);
   }
 
   openHutMap() {
-    this.navCtrl.setRoot(HutjesMapPage, { }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(HutjesMapPage, { hutNr: this.hutNr }, { animate: true, animation: "ios-transition", direction: 'forward' });
+  }
+
+  saveHutLocation() {
+    this.g.hutLocationChangeStatus = 'loading';
+    let self = this;
+    setTimeout(function(){
+      self.navCtrl.push(HutjesMapPage, { saveLocation: true, hutNr: self.hutNr }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    }, 250)
   }
 }

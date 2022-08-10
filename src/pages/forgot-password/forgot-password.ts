@@ -64,7 +64,7 @@ export class ForgotPasswordPage {
   }
 
   goBack() {
-    this.navCtrl.setRoot(LoginPage, { login: true }, { animate: true, animation: "ios-transition", direction: 'back' })
+    this.navCtrl.push(LoginPage, { login: true }, { animate: true, animation: "ios-transition", direction: 'back' })
   }
 
   async saveNewPassword() {

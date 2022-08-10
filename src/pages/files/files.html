@@ -1,5 +1,5 @@
 <ion-content padding>
-	<ion-header (click)="g.goHome()">
+	<ion-header (click)='g.goBack()'>
 		<i [ngClass]="g.wijk == 'yellow' || g.wijk == 'white' ? ' dark-icon' : ''" class="material-icons homeIcon">arrow_back</i>
     <h1 [ngClass]="g.wijk" id="ptitle">
       {{ title }}

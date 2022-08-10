@@ -236,7 +236,7 @@ export class HomePage {
           if (!self.g.navigatedToDeeplink) self.g.toLogin()
         } else {
           if (!logInStatus.admin || !logInStatus.emailConfirmed) {
-            if (!self.g.navigatedToDeeplink) self.navCtrl.setRoot(EmailConfirmationPage, { waitingForEmailConfirmation: !logInStatus.emailConfirmed, waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin, email: logInStatus.email }, { animate: true, animation: "ios-transition", direction: 'forward' })
+            if (!self.g.navigatedToDeeplink) self.navCtrl.push(EmailConfirmationPage, { waitingForEmailConfirmation: !logInStatus.emailConfirmed, waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin, email: logInStatus.email }, { animate: true, animation: "ios-transition", direction: 'forward' })
           }
           self.waitingPotentialAdmins = logInStatus.waitingPotentialAdmins
           if(!logInStatus.wijk) self.showWijkChoice = true
@@ -305,7 +305,7 @@ export class HomePage {
       if (new Date().getDay() < 2 || new Date().getDay() > 5) {
         alert("Nog even wachten tot Timmerdorp!");
       } else {
-        this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+        this.navCtrl.push(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
       }
     } else if (ogPage === 'login') {
       this.g.wijk = ''
@@ -318,7 +318,7 @@ export class HomePage {
           return;
         }
       }
-      this.navCtrl.setRoot(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+      this.navCtrl.push(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
     }
   }
 
@@ -329,7 +329,7 @@ export class HomePage {
         showTorchButton: true,
         prompt: "Scan barcode vanaf een papieren of digitaal ticket."
       }).then((barcodeData) => {
-        this.navCtrl.setRoot(ScanTicketPage, { 'barcode': barcodeData.text });
+        this.navCtrl.push(ScanTicketPage, { 'barcode': barcodeData.text });
         if (this.haptic.available()) {
           this.haptic.notification({ type: 'success' });
         }
@@ -337,7 +337,7 @@ export class HomePage {
         this.error = error.message;
       });
     } else {
-      this.navCtrl.setRoot(ScanTicketPage, { barcode: 'E1rxELGqIa' });
+      this.navCtrl.push(ScanTicketPage, { barcode: 'E1rxELGqIa' });
     }
   }
 
@@ -353,7 +353,7 @@ export class HomePage {
     this.storage.set('wijk', this.g.wijk)
 
     if (this.onlyChangeWijk) {
-      this.navCtrl.setRoot(SettingsPage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'back' });
+      this.navCtrl.push(SettingsPage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'back' });
     } else {
       let self = this;
       setTimeout(function () {
