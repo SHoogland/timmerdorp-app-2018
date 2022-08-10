@@ -13,7 +13,7 @@
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
     </edit-config>
-    <config-file file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+    <config-file overwrite="true" file="*-Info.plist" mode="merge" parent="NSLocationWhenInUseUsageDescription">
         <string>We gebruiken je locatie om op de kaart aan te geven waar op het Timmerdorpterrein je je bevindt.</string>
     </config-file>
     <config-file parent="com.apple.developer.associated-domains" target="*-Debug.plist">

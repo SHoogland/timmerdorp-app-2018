@@ -18,6 +18,12 @@ page-hutjes-map {
 
   div#locationIndicator {
     background: #4285f4;
+    opacity: 0;
+    transition-duration: 400ms;
+
+    &.shown {
+      opacity: 1;
+    }
 
     &.small {
       width: 8px;
@@ -57,7 +63,6 @@ page-hutjes-map {
     }
   }
 
-
   @keyframes indicatorPulse {
     0% {
       transform: scale(1.8);
@@ -83,8 +88,8 @@ page-hutjes-map {
   }
 
   #modalBottom p {
-		margin-bottom: -8px;
-	}
+    margin-bottom: -8px;
+  }
 
   #myModal {
     &.high {
