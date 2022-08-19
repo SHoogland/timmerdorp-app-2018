@@ -233,7 +233,7 @@ export class HomePage {
         if (!logInStatus.result) {
           if (!self.g.navigatedToDeeplink) self.g.toLogin()
         } else {
-          if (!logInStatus.admin || !logInStatus.emailConfirmed) {
+          if ((!logInStatus.admin || !logInStatus.emailConfirmed) && !logInStatus.demoAccount) {
             if (!self.g.navigatedToDeeplink) self.navCtrl.push(EmailConfirmationPage, { waitingForEmailConfirmation: !logInStatus.emailConfirmed, waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin, email: logInStatus.email }, { animate: true, animation: "ios-transition", direction: 'forward' })
           }
           self.waitingPotentialAdmins = logInStatus.waitingPotentialAdmins

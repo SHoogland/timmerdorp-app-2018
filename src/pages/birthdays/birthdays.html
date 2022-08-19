@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!loading">
+    <div *ngIf="!loading && !error">
       <ion-list *ngFor="let d of days; let i = index" id="{{d}}" class='peopleList'>
         <ion-list-header style="padding-left: 0px!important;">
           {{ dates[i] + ' (' + data[d].count + ')'}}
@@ -48,6 +48,9 @@
           </table>
         </div>
       </ion-list>
+    </div>
+    <div *ngIf="error">
+      Er is iets fout gegaan...
     </div>
   </div>
 </ion-content>
