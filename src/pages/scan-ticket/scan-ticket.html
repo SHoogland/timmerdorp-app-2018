@@ -45,7 +45,7 @@
             <td>Zooltjes besteld:</td>
             <td>{{ ticket.hasSole ? "Ja" : "Nee" }}</td>
           </tr>
-          <tr>
+          <tr *ngIf="ticket.hasSole">
             <td>Zooltjes opgehaald:</td>
             <td><input type="checkbox" [checked]="ticket.collectedSole"
                 (click)="!ticket.collectedSole ? collectSole() : ''" [disabled]="ticket.collectedSole" /> {{

@@ -28,7 +28,7 @@
               (ngModelChange)="searchHut($event)">
             </ion-input>
           </ion-item>
-          <p *ngIf="hutNotFound">Hutje niet gevonden...</p>
+          <p *ngIf="hutNotFound && hutNr.length === 3">Hutje niet gevonden...</p>
         </ion-list>
       </div>
       <div *ngIf="isSavingLocation">

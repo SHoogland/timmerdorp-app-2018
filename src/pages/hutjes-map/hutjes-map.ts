@@ -110,6 +110,10 @@ export class HutjesMapPage {
       self.defaultSize = result.mapData.defaultSize
       self.mapImgSrc = result.mapData.mapImgSrc
       self.canvasWidth = result.mapData.canvasWidth
+      self.topLeftLat = result.mapData.topLeftLat
+      self.topLeftLng = result.mapData.topLeftLng
+      self.bottomRightLat = result.mapData.bottomRightLat
+      self.bottomRightLng = result.mapData.bottomRightLng
       self.loadImage(self)
       self.isRefreshing = false
     })
@@ -159,10 +163,6 @@ export class HutjesMapPage {
     this.mapSize = { w, h }
     this.canvas.drawImage(this.mapImg, 0, 0, w, h)
 
-    this.topLeftLat = 52.611791
-    this.topLeftLng = 4.693581
-    this.bottomRightLat = 52.610468
-    this.bottomRightLng = 4.695963
     let coords = this.coordinatesInMetersFromTopLeft(this.bottomRightLat, this.bottomRightLng)
     this.mapWidth = coords.x
     this.mapHeight = coords.y

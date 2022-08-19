@@ -156,8 +156,9 @@
       </div>
     </div>
     <br>
-    <div>
-      <p>Als je je account wilt verwijderen, kan dat via de website: <a href="https://shop.timmerdorp.com">shop.timmerdorp.com</a></p>
-    </div>
+    <button ion-button full (click)="deleteAccount()" class="bg-red correction">
+      <ion-icon slot='start' name='trash' id='deleteIcon'></ion-icon>
+      Account verwijderen
+    </button>
   </div>
 </ion-content>

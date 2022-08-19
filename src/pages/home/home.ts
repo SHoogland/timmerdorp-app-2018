@@ -351,7 +351,7 @@ export class HomePage {
     this.storage.set('wijk', this.g.wijk)
 
     if (this.onlyChangeWijk) {
-      this.navCtrl.push(SettingsPage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'back' });
+      this.navCtrl.pop({ animate: true, animation: "ios-transition", direction: 'back' })
     } else {
       this.finishedWijkChoice = true;
       let self = this;
