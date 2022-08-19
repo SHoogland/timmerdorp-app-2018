@@ -1,12 +1,17 @@
-# App feedback en aandachtspunten uit 2021 (door Stan)
-- swipe to go back werkt toch niet (zou Apple de linkerkant van het beeldscherm on-swipeable maken?)
-## Webshop verbeterpunten voor 2022
+# App verbeterpunten voor 2023
+- Map image cachen
+- Confirm dialog toevoegen als je vanaf e-mail een admin bevestigt
+- Zoekknop vanaf hut overzicht?
+- Birthdays cachen?
+- Swipe to go back op iPhone werkt, maar animatie is raar
+- Waarom slaan we firstname en lastname op bij de admin table en plukken we die niet gewoon uit de user table?
+- mega logs van stan en stephan kunnen filteren op categorie
 
+## Webshop verbeterpunten voor 2023
 
-## Twijfel voor 2022
-- Hutjes plattegrond toevoegen met gps
 
 ## Gefixt voor 2022
+- Hutjes plattegrond toevoegen met gps
 - Ticket niet meer kunnen aanpassen in webshop nadat ie een wristband heeft
 - Er gebeurt iets heel geks als je een order van één kaartje laat expireren, dan kan je alsnog een tweede toevoegen ofzo
 - Corona-maatregelen (leeftijd t/m 12, ID-kaart mee, roepnaam vs volledige voornaam, etc.) weghalen? hopelijk?

@@ -230,7 +230,15 @@ export class GlobalFunctions {
       }
     }
 
-    if (withChildName) {
+    if(h.get('eventType') == 'save-hut-location') {
+      if(h.get('old') == '0') {
+        result = `Hut-locatie van hutje ${h.get('new')} ingesteld door ${admin}`
+      } else {
+        result = `Hut-locatie van hutje ${h.get('new')} <u>gewijzigd</u> door ${admin}`
+      }
+    }
+
+    if (withChildName && h.get('ticket')) {
       return '<b>' + dateString + ':</b> ' + h.get('ticket').get('firstName') + ' ' + h.get('ticket').get('lastName') + ' (bandje ' + h.get('ticket').get('wristband') + ') ' + result.substring(0, 1).toLowerCase() + result.substring(1).replace('Afwezig', 'afwezig')
     } else {
       return '<b>' + dateString + ':</b> ' + result

@@ -14,6 +14,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 export class BirthdaysPage {
 	@ViewChild(Content) content: Content;
 	loading: boolean;
+  error: boolean;
 	title: string;
   data: any;
   days: any;
@@ -38,6 +39,7 @@ export class BirthdaysPage {
     this.g.apiCall('wijkStats').then(async function(result) {
       self.loading = false;
       if (!result || result.response !== 'success') {
+        self.error = true
         return;
       }
       self.data = result.birthdays

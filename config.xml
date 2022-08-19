@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="20010" id="com.shoogland.timmerdorp" ios-CFBundleVersion="BUILDNR" version="1.0.20" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="20020" id="com.shoogland.timmerdorp" ios-CFBundleVersion="BUILDNR" version="1.0.21" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Timmerdorp</name>
     <description>Scan tickets with your phone.</description>
     <author email="stanvanbaarsen@hotmail.com" href="https://timmerdorp.com/">Stephan Hoogland en Stan van Baarsen</author>
@@ -12,9 +12,6 @@
     <allow-navigation href="http://localhost:8080/*" />
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
-    </edit-config>
-    <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
-        <string>We gebruiken je locatie om op de kaart aan te geven waar op het Timmerdorpterrein je je bevindt.</string>
     </edit-config>
     <config-file parent="com.apple.developer.associated-domains" target="*-Debug.plist">
         <array>
@@ -111,6 +108,9 @@
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
         <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
             <string>Het scannen van de QR-codes op de ticket</string>
+        </config-file>
+        <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
+            <string>We gebruiken je locatie om op de kaart aan te geven waar op het Timmerdorpterrein je je bevindt.</string>
         </config-file>
         <icon height="20" src="resources/ios/icon/icon-20.png" width="20" />
         <icon height="40" src="resources/ios/icon/icon-20@2x.png" width="40" />
