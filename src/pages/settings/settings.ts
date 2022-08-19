@@ -167,4 +167,15 @@ export class SettingsPage {
       self.history = self.history.concat(result.result)
     })
   }
+
+  deleteAccount() {
+    if(confirm("Wil je echt je account verwijderen?")) {
+      let self = this
+      this.g.apiCall('deleteAccount').then(function(result) {
+        if(result.result === 'success') {
+          self.g.toLogin()
+        }
+      })
+    }
+  }
 }

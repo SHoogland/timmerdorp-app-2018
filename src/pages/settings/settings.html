@@ -155,5 +155,10 @@
         <i [ngClass]="isRefreshing ? 'isRefreshing material-icons' : 'material-icons'">refresh</i>
       </div>
     </div>
+    <br>
+    <button ion-button full (click)="deleteAccount()" class="bg-red correction">
+      <ion-icon slot='start' name='trash' id='deleteIcon'></ion-icon>
+      Account verwijderen
+    </button>
   </div>
 </ion-content>
