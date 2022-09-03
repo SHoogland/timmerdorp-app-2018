@@ -81,8 +81,8 @@
     class="bg-green correction modern">Opslaan</button>
 </ion-content>
 
-<div [ngClass]="{'shown': modal.showModal, 'high': modal.high}" (click)="$event.target.id==='myModal'?closeModal():''"
-  id="myModal" class="modal conditional">
+<div [ngClass]="{'shown': modal.showModal, 'high': modal.high}" (click)="$event.target.id==='alreadyHasWristbandModal'?closeModal():''"
+  id="alreadyHasWristbandModal" class="modal conditional">
   <div class="modal-content">
     <div id='modalTop' class='warnModal'>
     </div>

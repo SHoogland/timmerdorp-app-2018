@@ -19,6 +19,7 @@ export class EmailConfirmationPage {
   waitingForEmailConfirmation: boolean;
   isConfirmingEmail: boolean;
   waitingForAdmin: boolean;
+  moreOptions: boolean;
   wentToLogin: boolean;
   wentHome: boolean;
   loading: boolean;

@@ -108,14 +108,14 @@
         </table>
       </div>
     </ion-list>
-    <div *ngIf="(tickets || []).length === 0 && searched">
+    <div *ngIf="(tickets || []).length === 0 && searched && !loading">
       <b>Geen zoekresultaten! Je kunt zoeken op polsbandje-nummer, hutnummer of op voor- of achternaam.</b>
     </div>
   </div>
 </ion-content>
 
 <div [ngClass]="{'shown': (modal || {}).showModal, 'high': (modal || {}).high}"
-  (click)="$event.target.id==='myModal' ? closeModal() : ''" id="myModal" class="modal conditional">
+  (click)="$event.target.id==='searchModal' ? closeModal() : ''" id="searchModal" class="modal conditional">
   <div *ngIf="(modal || {}).child" class="{{'modal-content ' + g.getWijk((modal.child.hutNr||'')[0])}}">
     <div id="modalTop">
     </div>
@@ -247,9 +247,6 @@
     </button>
     <button ion-button full *ngIf="modal.child.hutNr" (click)="toHut(modal.child.hutNr)">
       Naar hutje
-    </button>
-    <button ion-button full (click)="goHome()">
-      Terug naar homepagina
     </button>
   </div>
 </div>

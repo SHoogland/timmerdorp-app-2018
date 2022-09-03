@@ -21,6 +21,8 @@ export class SearchPage {
   tickets: any;
   history: any;
 
+  searchCount: number;
+
   isEditingTicket: boolean;
   isSearchingById: boolean;
   canEditTickets: boolean;
@@ -50,6 +52,7 @@ export class SearchPage {
   }
 
   ngAfterViewInit() {
+    this.searchCount = 0;
     this.searched = false;
     this.title = 'Zoeken'
     if (this.platform.is('cordova')) {
@@ -124,7 +127,6 @@ export class SearchPage {
 
   search() {
     if (this.isSearchingById) return
-    this.searched = false
     try {
       if (this.searchTerm.length < 3) {
         this.tickets = [];
@@ -157,7 +159,12 @@ export class SearchPage {
     }
     self.loading = true;
 
+    this.searchCount++
+    let searchCount = this.searchCount
     this.g.apiCall('search', { searchTerm: this.isSearchingById ? searchId : this.searchTerm }).then((result) => {
+      if(searchCount < self.searchCount) {
+        return // there has been a more recent search, so do not do anything with this one
+      }
       self.loading = false
       if (!result || result.response !== 'success') {
         self.error = (result || {}).error || (result || {}).response
@@ -246,7 +253,7 @@ export class SearchPage {
   }
 
   toHut(hutNr) {
-    this.g.setStatusBar('blue')
+    this.g.setStatusBar(this.g.wijk)
     this.navCtrl.push(ConnectChildToCabinPage, { 'hutNr': hutNr }, { animate: true, animation: "ios-transition", direction: 'forward' });
   }
 

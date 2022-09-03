@@ -71,7 +71,7 @@ export class PresencePage {
 			default:
 				this.day = 'di'
 				alert("Nog even wachten tot Timmerdorp!");
-				this.g.goHome();
+				this.g.goBack();
 		}
 
 		this.modalShown = false;
@@ -215,27 +215,27 @@ export class PresencePage {
 
 	showModal() {
 		this.modalShown = true;
-		document.querySelector('#myModal').classList.add('high');
+		document.querySelector('#absenceWarningModal').classList.add('high');
 	}
 
 	closeModal() {
 		this.loading = false;
 		this.modalShown = false;
 		setTimeout(function () {
-			document.querySelector('#myModal').classList.remove('high');
+			document.querySelector('#absenceWarningModal').classList.remove('high');
 		}, 400);
 	}
 
 	showHutNrModal() {
 		this.hutNrModalShown = true;
-		document.querySelector('#hutNrModal').classList.add('high');
+		document.querySelector('#noHutWarningModal').classList.add('high');
 	}
 
 	closeHutNrModal() {
 		this.loading = false;
 		this.hutNrModalShown = false;
 		setTimeout(function () {
-			document.querySelector('#hutNrModal').classList.remove('high');
+			document.querySelector('#noHutWarningModal').classList.remove('high');
 		}, 400);
 		this.togglePresence(true)
 	}

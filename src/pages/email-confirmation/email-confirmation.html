@@ -10,7 +10,7 @@
         </h1>
         <p>
           Om gebruik te maken van de app, moet je eerst aangewezen worden als beheerder. We
-          hebben je registratie ontvangen en zullen je zo spoedig mogelijk toegang geven (indien terecht). Heeft het
+          hebben je registratie ontvangen en zullen je zo snel mogelijk toegang geven (indien terecht). Heeft het
           haast? Ga dan naar Stephan (wijk geel) of Stan (wijk blauw) zodat zij je snel kunnen toevoegen.
         </p>
         <p>
@@ -70,7 +70,10 @@
           </p>
         </div>
       </div>
-      <button ion-button full (click)="logOut()" style="background: #07497e;">
+      <div (click)="moreOptions=true" *ngIf="!moreOptions">
+        <u>Meer opties</u>
+      </div>
+      <button *ngIf="moreOptions" ion-button full (click)="logOut()" style="background: #07497e;">
         <ion-icon slot='start' style="margin-right: 16px;" name='md-log-out'></ion-icon>
         <span>
           Uitloggen

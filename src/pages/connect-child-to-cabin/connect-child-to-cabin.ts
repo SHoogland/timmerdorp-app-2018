@@ -328,7 +328,7 @@ export class ConnectChildToCabinPage {
     this.loading = false;
     this.addModal.show = true;
     this.searchTerm = '';
-    document.querySelector('#myModal').classList.add('high');
+    document.querySelector('#connectChildToHutModal').classList.add('high');
 
     setTimeout(function () {
       if (document && document.getElementById("addModalInput")) {
@@ -343,7 +343,7 @@ export class ConnectChildToCabinPage {
     this.addModal.show = false;
     self.searchedChild = false;
     setTimeout(function () {
-      document.querySelector('#myModal').classList.remove('high');
+      document.querySelector('#connectChildToHutModal').classList.remove('high');
       self.searchError = '';
       self.error = '';
     }, 400);

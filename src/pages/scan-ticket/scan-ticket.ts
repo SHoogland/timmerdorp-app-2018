@@ -198,6 +198,8 @@ export class ScanTicketPage {
   }
 
   prependZeroes(num) {
-    return (num + '').length === 1 ? '00' + num : num;
+    if((num + '').length == 1) return '00' + num
+    if((num + '').length == 2) return '0' + num
+    return num
   }
 }

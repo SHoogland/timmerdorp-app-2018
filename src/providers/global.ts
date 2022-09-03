@@ -83,12 +83,12 @@ export class GlobalFunctions {
 
   goHome() {
     let nav = this.app.getActiveNavs()[0];
-    nav.push(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+    nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
   }
 
-  toLogin() {
+  toLogin(dir?) {
     let nav = this.app.getActiveNavs()[0];
-    nav.push(this.loginPage, { login: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    nav.push(this.loginPage, { login: true }, { animate: true, animation: "ios-transition", direction: dir || 'forward' });
   }
 
   getWijkName(kleur) {
@@ -198,48 +198,55 @@ export class GlobalFunctions {
   }
 
   generateGebeurtenisDescription(h, withChildName) {
-    let d = h.get('datetime');
+    let d = new Date(h.get('datetime') - 1000 * 60 * 60 * 2); // 2 hour time difference between GMT and Amsterdam
     let dateString = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'][d.getDay()] + ' om ' + this.prependZero(d.getHours()) + ':' + this.prependZero(d.getMinutes())
 
     let result = ''
     let admin = h.get('adminName')
+    let old = h.get('old')
+    let newV = h.get('new')
+    let type = h.get('eventType')
+    let reason = h.get('reason')
+    let ticket = h.get('ticket')
 
-    if (h.get('eventType') == 'marked-absent') {
-      result = `<u>Afwezig</u> gemeld door ${admin} met als reden: <i>${h.get('reason')}</i>.`
+    if (type == 'marked-absent') {
+      result = `<u>Afwezig</u> gemeld door ${admin} met als reden: <i>${reason}</i>.`
     }
-    if (h.get('eventType') == 'marked-present') {
+    if (type == 'marked-present') {
       result = `Aanwezig gemeld door ${admin}.`
     }
-    if (h.get('eventType') == 'collected-sole') {
+    if (type == 'collected-sole') {
       result = `Veiligheidszooltjes gemarkeerd als opgehaald door ${admin}.`
     }
-    if (h.get('eventType') == 'set-hutnr') {
-      if (!h.get('old')) {
-        result = `Toegevoegd aan hutje met nummer <u>${h.get('new')}</u> door ${admin}.`
-      } else if (!h.get('new')) {
-        result = `Verwijderd uit hutje <u>${h.get('old')}</u> door ${admin}.`
+    if (type == 'set-hutnr') {
+      if (!old) {
+        result = `Toegevoegd aan hutje met nummer <u>${newV}</u> door ${admin}.`
+      } else if (!newV) {
+        result = `Verwijderd uit hutje <u>${old}</u> door ${admin}.`
       } else {
-        result = `Overgeplaatst van hutje <u>${h.get('old')}</u> naar hutje <u>${h.get('new')}</u> door ${admin}.`
+        result = `Overgeplaatst van hutje <u>${old}</u> naar hutje <u>${newV}</u> door ${admin}.`
       }
     }
-    if (h.get('eventType') == 'gave-wristband') {
-      if (!h.get('old')) {
-        result = `Polsbandje gegeven met nummer <u>${h.get('new')}</u> door ${admin}.`
+    if (type == 'gave-wristband') {
+      if (!old) {
+        result = `Polsbandje gegeven met nummer <u>${newV}</u> door ${admin}.`
       } else {
-        result = `Nieuw polsbandje gegeven met nummer <u>${h.get('new')}</u> (eerst: ${h.get('old')}) door ${admin}.`
+        result = `Nieuw polsbandje gegeven met nummer <u>${newV}</u> (eerst: ${old}) door ${admin}.`
       }
+    }
+    if (type == 'save-hut-location') {
+      if (old == '0') {
+        result = `Hut-locatie van hutje ${newV} ingesteld door ${admin}`
+      } else {
+        result = `Hut-locatie van hutje ${newV} <u>gewijzigd</u> door ${admin}`
+      }
+    }
+    if (type == 'changed-admin') {
+      result = `Beheerder ${newV == 'added' ? 'toevoegd' : 'verwijderd'} door ${admin}.`
     }
 
-    if(h.get('eventType') == 'save-hut-location') {
-      if(h.get('old') == '0') {
-        result = `Hut-locatie van hutje ${h.get('new')} ingesteld door ${admin}`
-      } else {
-        result = `Hut-locatie van hutje ${h.get('new')} <u>gewijzigd</u> door ${admin}`
-      }
-    }
-
-    if (withChildName && h.get('ticket')) {
-      return '<b>' + dateString + ':</b> ' + h.get('ticket').get('firstName') + ' ' + h.get('ticket').get('lastName') + ' (bandje ' + h.get('ticket').get('wristband') + ') ' + result.substring(0, 1).toLowerCase() + result.substring(1).replace('Afwezig', 'afwezig')
+    if (withChildName && ticket) {
+      return '<b>' + dateString + ':</b> ' + ticket.get('firstName') + ' ' + ticket.get('lastName') + ' (bandje ' + ticket.get('wristband') + ') ' + result.substring(0, 1).toLowerCase() + result.substring(1).replace('Afwezig', 'afwezig')
     } else {
       return '<b>' + dateString + ':</b> ' + result
     }

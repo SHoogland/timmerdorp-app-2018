@@ -307,9 +307,11 @@ export class HomePage {
         this.navCtrl.push(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
       }
     } else if (ogPage === 'login') {
-      this.g.wijk = ''
-      await Parse.User.logOut();
-      this.g.toLogin();
+      if(confirm("Weet je zeker dat je wil uitloggen?")) {
+        this.g.wijk = ''
+        await Parse.User.logOut();
+        this.g.toLogin();
+      }
     } else {
       if (this.openedPage.component.name == 'StatsPage' && page.class.startsWith('half')) {
         if (this.showPhoto) {

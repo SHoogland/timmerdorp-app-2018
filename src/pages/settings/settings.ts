@@ -99,20 +99,6 @@ export class SettingsPage {
     return result.success
   }
 
-  async removePotentialAdmin(email) {
-    this.addStatus = 'Laden...'
-    let result = await this.g.apiCall('removeAdmin', { email: email, force: true })
-    this.addStatus = result.success ? 'Gelukt!' : 'Niet gelukt... (bestaat de gebruiker wel? en heeft hij/zij zijn/haar emailadres bevestigd?'
-
-    let self = this
-    setTimeout(function () {
-      self.addStatus = ''
-      self.cd.detectChanges()
-    }, 2000)
-
-    await this.getAdmins()
-  }
-
   async removeAdmin(email) {
     this.removeStatus = 'Laden...'
     let result = await this.g.apiCall('removeAdmin', { email: email })

@@ -110,7 +110,7 @@
   </div>
 </ion-content>
 
-<div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='myModal' ? closeModal() : ''" id="myModal"
+<div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='absenceWarningModal' ? closeModal() : ''" id="absenceWarningModal"
   class="modal conditional">
   <div class="modal-content">
     <div id='modalTop' class='warnModal'>
@@ -133,7 +133,7 @@
   </div>
 </div>
 
-<div [ngClass]="{'shown': hutNrModalShown}" (click)="$event.target.id === 'myModal' ? closeModal() : ''" id="hutNrModal"
+<div [ngClass]="{'shown': hutNrModalShown}" (click)="$event.target.id === 'noHutWarningModal' ? closeModal() : ''" id="noHutWarningModal"
   class="modal conditional">
   <div class="modal-content">
     <div id='modalTop' class='warnModal'>

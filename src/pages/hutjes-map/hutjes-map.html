@@ -58,7 +58,7 @@
       <button ion-button full (click)="zoomOut()" *ngIf="zoomedIn" class="bg-blue correction modern">Zoom uit</button>
     </div>
   </div>
-  <div [ngClass]="{ shown: showModal, high: showModalHigh }" id="myModal" class="modal conditional">
+  <div [ngClass]="{ shown: showModal, high: showModalHigh }" id="hutjesMapModal" class="modal conditional">
     <div class="modal-content">
       <div id='modalTop' [ngClass]='g.getWijk(hutNr)'>
       </div>

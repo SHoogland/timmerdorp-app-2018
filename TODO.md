@@ -1,11 +1,51 @@
 # App verbeterpunten voor 2023
-- Map image cachen
-- Confirm dialog toevoegen als je vanaf e-mail een admin bevestigt
-- Zoekknop vanaf hut overzicht?
-- Birthdays cachen?
-- Swipe to go back op iPhone werkt, maar animatie is raar
-- Waarom slaan we firstname en lastname op bij de admin table en plukken we die niet gewoon uit de user table?
-- mega logs van stan en stephan kunnen filteren op categorie
+- die check status (wachten op admin) stuurt je niet door op Android (op iPhone wel!) EN plaatst je niet in admin tabel?? Heeft Android nog een oude versie ofzo?
+- Presence by time klopt niet qua tijd, tijdzones.
+- Gemiddelde leeftijd per wijk in statistieken
+- connect child to cabin moet gebruiksvriendelijker kunnen
+- “Wordt 11”, als verjaardag geweest is “werd 11”
+- Bij aanwezigheid: indien afwezig, toon reden
+- Presence by time grafiek moet hoger, het past niet
+- Afwezig melden heeft een laad indicator nodig
+- Presence by time ging stuk toen er meerdere presencebytime entries waren op dezelfde minuut, het ging ook wel heeel hard
+- De hele database heeft veel overbodige keys
+- Nieuwsbrief per mail sturen? (eenmalig, weekje van tevoren?) laatste spelregels, “kaartje over?”, bandje ophalen, informatieboekje
+- Scan ticket werkt ook bij tickets die niet paid zijn
+- Meer print marge in ticket qr 
+- Collect sole checkbox is verwarrend, misschien ook een confirm dialog erbij als je bandje opslaat zonder collectsole? “Weet je zeker dat je de zooltjes niet als opgehaald wil markeren?”
+- Verwijderen en info knop vanuit hutnummer zoeken, niet alleen verwijderen
+- Er is iets te veel inconsequentheid op mobile met lettertypes (zie bijv ook foto hieronder)
+- Miss toch even kijken of het op kleine schermen iets compacter kan, vooral de zoekpagina met dat B H gedoe. Minder padding
+- Na afloop timmerdorp, geen berichtjes over nieuwe admins meer aub (miss iets met een config doen, dat we daar sowieso even de data van tdorp in zette?)
+
+## Nog te bespreken
+**- Sanne sprenkel: optionele pasfoto toevoegen, makkelijker kinderen vinden**
+**- Arjen: Wijk wit en wijkhoofden moeten waarschuwingen kunnen bijhouden over conflicten in de wijk per kind om meer context te geven bij besluiten (over evt wegsturen)**
+- Misschien: stan een nieuw wachtwoord kunnen laten instellen voor mensen, scheelt tijd
+- **Dinsdag mag er wel wat meer rekenkracht op (dit jaar hebben we dev 2x, maar prod 1x of prod 2x zou wel lekker zijn. Kost €3.30 resp. €9.90 extra per dag), misschien sowieso de hele week prod 1x en dan dinsdag 2x. nadat de gegevens verwijderd waren, werd ie wel echt meeega veel sneller. kunnen de functions efficiënter misschien?**
+- **Moet e-mail echt bevestigd zijn voor admin?** Ik heb het nu uitgezet, maar miss verstandig om nog even te overleggen
+- Log werkt toch niet helemaal lekker (“laatste -12 resultaten ophalen”, en hij haalt sommige resultaten dubbel op, lijkt wel). Moet bestuur dit ook kunnen zien? Filteren ook?
+- MISSCHIEN: alleen EHBO/bestuur toegang geven tot huisarts, emailadres ouder en geboortedatum (en opmerkingen). En history van een ticket? die miss wel aan iedereen geven, aangezien poortwacht
+- Privacybeleid: meer/alle vrijwilligers hebben toegang, en er staat niks over de accounts vd ouders in. Er staat ook dat alle persoonsgegevens op het polsbandje staan
+
+
+## Nog te onderzoeken
+- Als je de Flickr app hebt, werken de foto’s niet. *Dat was op de Android van Tim Opdam, ik kon het op mijn iPhone niet reproduceren, ook niet toen ik de app wel had. Toen opende ie namelijk Flickr-links gewoon in de browser, of ik ze nou vanuit de Tdorp app of elder aanklikte.*
+- Voor users die nog van vorig jaar ingelogd zijn: invalid session token = uitloggen ofzo *was al gefixt? Voor de zekerheid: bijhouden wanneer voor het laatst is ingelogd, indien unset of vorig jaar, logOut (met evt een alert erbij voor de duidelijkheid)*
+- log tijdstippen kloppen niet
+
+
+## Gefixt voor 2023
+- Confirm dialog voor uitloggen
+- Uitloggen knoppen op email confirm page ijn verwarrend
+- Collect sole werkt niet, schema mismatch in history
+- Terug naar home pagina knop weghalen uit zoekpagina
+- vanaf e-mail verzonden pagina kan je niet terug
+- Navigeren van search page naar aanwezigheid zorgt ervoor dat de modal voor afwezig melden niet meer verschijnt. Sowieso alle modals van alle pagina’s vanaf search.
+- Accenten op letters filteren in zoekfunctie (dus Zoe en Zoë moet goed gaan)
+- De zoek timer werkt toch niet zo goed op zoekpagina, test ff met trage verbinding
+- webshop: opmerkingen filteren (nvt, Geen/geen, -, etc)
+- Add en remove admin loggen in history
 
 ## Webshop verbeterpunten voor 2023
 
@@ -87,9 +127,6 @@
 
 ### Gefixt in Webshop
 - Ticket pdf moet alleen een QR code zijn, no more user data
-
-
-
 
 
 # App feedback en aandachtspunten 2019 (door Stan)

@@ -86,7 +86,7 @@
   </div>
 </ion-content>
 
-<div [ngClass]="{'shown': addModal.show}" (click)="$event.target.id==='myModal'?closeAddModal():''" id="myModal"
+<div [ngClass]="{'shown': addModal.show}" (click)="$event.target.id==='connectChildToHutModal'?closeAddModal():''" id="connectChildToHutModal"
   class="modal conditional">
   <div class="modal-content">
     <div id='modalTop' [ngClass]='g.getWijk(hutNr)'>
