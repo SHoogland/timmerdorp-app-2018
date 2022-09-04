@@ -175,8 +175,8 @@
           </div>
           <tr *ngFor="let prop of cat.props">
             <div *ngIf="modal.child[prop] || prop === 'opmerkingen' || prop === 'wristband'">
-              <td *ngIf="prop != 'parent_email'"><b>{{ (ticketPropertiesMap[prop]||{}).appLabel ||
-                  (ticketPropertiesMap[prop]||{}).label }}:</b></td>
+              <td *ngIf="prop != 'parent_email'"><b>{{ (ticketPropertiesMap[prop] || {}).appLabel ||
+                  (ticketPropertiesMap[prop] || {}).label }}:</b></td>
               <td
                 *ngIf="prop != 'tel1' && prop != 'tel2' && prop != 'tel_huisarts' && prop != 'parent_email' && cat.name != 'Aanwezigheid'">
                 <input [(ngModel)]="modal.child[prop]" *ngIf="isEditingTicket">

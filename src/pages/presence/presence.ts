@@ -18,9 +18,10 @@ export class PresencePage {
 	name: string;
 	day: string;
 
+  isLoadingAbsence: boolean;
+	hutNrModalShown: boolean;
 	foundTicket: boolean;
 	modalShown: boolean;
-	hutNrModalShown: boolean;
 	greenBtn: boolean;
 	searched: boolean;
 	loading: boolean;
@@ -165,6 +166,8 @@ export class PresencePage {
       return
     }
 
+    this.isLoadingAbsence = true
+
 		let self = this;
 
 		this.g.apiCall('togglePresence', { ticket: this.ticket, day: this.day, forcePresence: true, presence: false, reason: this.absenceReason }).then((result) => {
@@ -173,8 +176,10 @@ export class PresencePage {
 			} else {
 				self.ticket['aanwezig_' + self.day] = result.newPresence
 				self.markDone()
+        self.isLoadingAbsence = false
 			}
-			self.closeModal()
+			self.closeAbsenceModal()
+      self.absenceReason = ''
 		});
 	}
 
@@ -188,14 +193,14 @@ export class PresencePage {
 			return;
 		}
 
-		if (new Date().getDay() > 2 && !this.ticket.hutNr && !force) {
+		if (new Date().getDay() > 2 && !this.ticket.hutNr && !force && !this.ticket['aanwezig_' + this.day]) {
 			this.showHutNrModal()
 			return
 		}
 		this.loading = true;
 
 		if (this.ticket['aanwezig_' + this.day]) {
-			this.showModal();
+			this.showAbsenceModal();
 			return;
 		}
 
@@ -213,12 +218,12 @@ export class PresencePage {
 		});
 	}
 
-	showModal() {
+	showAbsenceModal() {
 		this.modalShown = true;
 		document.querySelector('#absenceWarningModal').classList.add('high');
 	}
 
-	closeModal() {
+	closeAbsenceModal() {
 		this.loading = false;
 		this.modalShown = false;
 		setTimeout(function () {
@@ -231,12 +236,13 @@ export class PresencePage {
 		document.querySelector('#noHutWarningModal').classList.add('high');
 	}
 
-	closeHutNrModal() {
-		this.loading = false;
+	closeHutNrModal(canceled?) {
+    this.loading = false;
 		this.hutNrModalShown = false;
 		setTimeout(function () {
-			document.querySelector('#noHutWarningModal').classList.remove('high');
+      document.querySelector('#noHutWarningModal').classList.remove('high');
 		}, 400);
+    if(canceled) return
 		this.togglePresence(true)
 	}
 

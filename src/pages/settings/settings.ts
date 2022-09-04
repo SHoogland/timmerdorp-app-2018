@@ -24,9 +24,11 @@ export class SettingsPage {
   isRefreshing: boolean;
   loading: boolean;
 
-  potentialAdmins: Array<any>;
-  history: Array<any>;
-  admins: Array<any>;
+  selectedHistoryCategories: any;
+  historyCategories: any;
+  potentialAdmins: any;
+  history: any;
+  admins: any;
 
   historyLength: number;
 
@@ -48,10 +50,12 @@ export class SettingsPage {
     this.potentialAdmins = []
     this.admins = []
     this.isStanOfStephan = false;
+    this.historyCategories = []
 
+  this.selectedHistoryCategories = []
 
-    this.storage.get('wijk').then((val) => {
-      this.wijk = val;
+  this.storage.get('wijk').then((val) => {
+    this.wijk = val;
     });
 
     await this.getAdmins()
@@ -73,11 +77,13 @@ export class SettingsPage {
       if (result.denied) {
         return;
       }
-      self.isStanOfStephan = true;
-      self.admins = result.admins;
-      self.potentialAdmins = result.potentialAdmins;
+      self.isStanOfStephan = true
+      self.admins = result.admins
+      self.potentialAdmins = result.potentialAdmins
       self.history = result.history
       self.historyLength = result.historyLength
+      self.historyCategories = result.historyCategories
+      self.selectedHistoryCategories = result.historyCategories.map((c) => c.prop)
       self.loading = false
       self.isRefreshing = false
     })
@@ -141,27 +147,38 @@ export class SettingsPage {
   }
 
   changeWijk() {
-    this.navCtrl.push(HomePage, { changeWijk: true }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(HomePage, { changeWijk: true }, this.g.forwardNavConfig);
   }
 
   moreHistory() {
     let self = this
-    this.g.apiCall('getAdmins', { justMoreHistory: true, skip: this.history.length }).then(function (result) {
+    this.g.apiCall('getAdmins', { justMoreHistory: true, skip: this.history.length, historyCategories: this.selectedHistoryCategories }).then(function (result) {
       if (result.denied) {
         return;
       }
       self.history = self.history.concat(result.result)
+      self.historyLength = result.count
     })
   }
 
   deleteAccount() {
-    if(confirm("Wil je echt je account verwijderen?")) {
+    if (confirm("Wil je echt je account verwijderen?")) {
       let self = this
-      this.g.apiCall('deleteAccount').then(function(result) {
-        if(result.result === 'success') {
+      this.g.apiCall('deleteAccount').then(function (result) {
+        if (result.result === 'success') {
           self.g.toLogin()
         }
       })
     }
+  }
+
+  selectCategory(cat) {
+    if(this.selectedHistoryCategories.indexOf(cat.prop) == -1) {
+      this.selectedHistoryCategories.push(cat.prop)
+    } else {
+      this.selectedHistoryCategories.splice(this.selectedHistoryCategories.indexOf(cat.prop), 1)
+    }
+    this.history = []
+    this.moreHistory()
   }
 }

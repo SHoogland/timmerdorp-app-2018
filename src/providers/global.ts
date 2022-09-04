@@ -18,6 +18,8 @@ export class GlobalFunctions {
   parseInitialized: boolean;
   staging: boolean;
 
+  backwardNavConfig: any;
+  forwardNavConfig: any;
   serverUsernames: any;
   serverPasswords: any;
   serverURLs: any;
@@ -49,6 +51,9 @@ export class GlobalFunctions {
     this.storage.get('wijk').then(async (val) => {
       this.wijk = val || "blue";
     })
+
+    this.forwardNavConfig = { animate: true, animation: "ios-transition", direction: 'forward' }
+    this.backwardNavConfig = { animate: true, animation: "ios-transition", direction: 'back' }
   }
 
   setStatusBar(c) {
@@ -83,7 +88,7 @@ export class GlobalFunctions {
 
   goHome() {
     let nav = this.app.getActiveNavs()[0];
-    nav.setRoot(HomePage, {}, { animate: true, animation: "ios-transition", direction: "back" });
+    nav.setRoot(HomePage, {}, this.backwardNavConfig);
   }
 
   toLogin(dir?) {
@@ -179,10 +184,17 @@ export class GlobalFunctions {
     await this.fixParseURL();
     let result;
     try {
-      result = await this.apiCall('checkIfLoggedIn', { wantsToBecomeAdmin: wantsAdmin })
+      result = await this.apiCall('checkIfLoggedIn', { currentBreakingAppVersion: 202301, wantsToBecomeAdmin: wantsAdmin })
+      // ^Also send a coded version of this app's version, in case any breaking changes are released that the user should be notified of.
+      // The latest breaking app version is stored in the Parse Config
     }
     catch (e) {
       if (e.message == 'Invalid session token') {
+        result = {
+          result: false
+        }
+      }
+      if (e.message == "Session token is expired.") {
         result = {
           result: false
         }
@@ -242,7 +254,7 @@ export class GlobalFunctions {
       }
     }
     if (type == 'changed-admin') {
-      result = `Beheerder ${newV == 'added' ? 'toevoegd' : 'verwijderd'} door ${admin}.`
+      result = `Beheerder ${old} ${newV == 'added' ? 'toevoegd' : 'verwijderd'} door ${admin}.`
     }
 
     if (withChildName && ticket) {
@@ -254,6 +266,6 @@ export class GlobalFunctions {
 
   goBack() {
     let nav = this.app.getActiveNavs()[0];
-    nav.pop({ animate: true, animation: "ios-transition", direction: "back" });
+    nav.pop(this.backwardNavConfig);
   }
 }

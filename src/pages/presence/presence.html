@@ -110,13 +110,13 @@
   </div>
 </ion-content>
 
-<div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='absenceWarningModal' ? closeModal() : ''" id="absenceWarningModal"
+<div [ngClass]="{'shown': modalShown}" (click)="$event.target.id==='absenceWarningModal' ? closeAbsenceModal() : ''" id="absenceWarningModal"
   class="modal conditional">
   <div class="modal-content">
     <div id='modalTop' class='warnModal'>
     </div>
     <div id='modalBottom'>
-      <span class="close" (click)="closeModal();">&times;</span>
+      <span class="close" (click)="closeAbsenceModal();">&times;</span>
       <h1>Waarschuwing</h1>
       <p style="margin-bottom: 0px;">
         Dit kind is al aanwezig gemeld voor {{getDayName(day).toLowerCase()}}! Als je het kind afwezig wil melden, vul
@@ -124,22 +124,22 @@
       </p>
       <textarea id="absenceReason" [(ngModel)]="absenceReason"></textarea>
     </div>
-    <button ion-button full (click)="closeModal()" class="bg-red correction">
+    <button ion-button full (click)="closeAbsenceModal()" class="bg-red correction">
       Terug
     </button>
-    <button ion-button full (click)="makeAbsent()" class="bg-blue correction">
-      Afwezig melden
+    <button ion-button full (click)="makeAbsent()" [ngClass]="'bg-blue correction ' + (isLoadingAbsence  ? 'grey' : '')">
+      {{ isLoadingAbsence ? 'Laden...' : 'Afwezig melden' }}
     </button>
   </div>
 </div>
 
-<div [ngClass]="{'shown': hutNrModalShown}" (click)="$event.target.id === 'noHutWarningModal' ? closeModal() : ''" id="noHutWarningModal"
+<div [ngClass]="{'shown': hutNrModalShown}" (click)="$event.target.id === 'noHutWarningModal' ? closeHutNrModal() : ''" id="noHutWarningModal"
   class="modal conditional">
   <div class="modal-content">
     <div id='modalTop' class='warnModal'>
     </div>
     <div id='modalBottom'>
-      <span class="close" (click)="closeModal();">&times;</span>
+      <span class="close" (click)="closeHutNrModal(true);">&times;</span>
       <h1>Waarschuwing</h1>
       <p style="margin-bottom: 0px;">Dit kind heeft nog geen hutnummer, terwijl Timmerdorp wel al is gestart! Zorg
         ervoor dat dit opgelost wordt, of vraag het even na bij Stan of Stephan.</p>

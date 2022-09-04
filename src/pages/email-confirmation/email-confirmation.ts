@@ -18,6 +18,7 @@ export class EmailConfirmationPage {
 
   waitingForEmailConfirmation: boolean;
   isConfirmingEmail: boolean;
+  timmerdorpEnded: boolean;
   waitingForAdmin: boolean;
   moreOptions: boolean;
   wentToLogin: boolean;
@@ -37,6 +38,7 @@ export class EmailConfirmationPage {
   async init() {
     this.g.setStatusBar('blue');
     this.loading = false;
+    this.timmerdorpEnded = this.navParams.get('timmerdorpEnded') || false;
     this.waitingForAdmin = this.navParams.get('waitingForAdmin') || false;
     this.waitingForEmailConfirmation = this.navParams.get('waitingForEmailConfirmation') || false;
     this.error = '';
@@ -46,7 +48,7 @@ export class EmailConfirmationPage {
 
     if (this.navParams.get('confirmationEmail') && this.navParams.get('confirmationCode')) {
       this.confirmEmail(this.navParams.get('confirmationEmail'), this.navParams.get('confirmationCode'))
-    } else {
+    } else if(!this.timmerdorpEnded) {
       this.startStatusCheckInterval()
     }
   }
@@ -124,6 +126,7 @@ export class EmailConfirmationPage {
     this.loading = false
     if (result) {
       this.emailVerificationResult = result
+      this.startStatusCheckInterval()
     }
   }
 
@@ -137,5 +140,9 @@ export class EmailConfirmationPage {
     this.statusInterval = setInterval(function () {
       self.checkStatus()
     }, 2000)
+  }
+
+  showMoreOptions() {
+    this.moreOptions = true
   }
 }

@@ -53,7 +53,7 @@ export class FilesPage {
       });
 
     this.httpClient
-      .get("https://timmerdorp.stanvanbaarsen.nl/api/files")
+      .get("https://stanvbaarsen.github.io/timmerdorp-files/api/files")
       .subscribe((data: any) => {
         self.files = data.files || [];
       });

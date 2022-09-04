@@ -124,7 +124,7 @@ export class LoginPage {
       }
       return
     }
-    if(!self.register.voornaam || !self.register.achternaam) {
+    if (!self.register.voornaam || !self.register.achternaam) {
       if (!surpressWarnings) {
         self.error = 'Registreren mislukt!'
         self.errorHelp = 'Vul alsjeblieft je hele naam in'
@@ -152,7 +152,10 @@ export class LoginPage {
     }).then(async function (result) {
       if (result === 'success') {
         await Parse.User.logIn(self.register.username.toLowerCase().replace(' ', ''), self.register.password)
-        self.navCtrl.push(EmailConfirmationPage, { waitingForEmailConfirmation: true, email: self.register.username.toLowerCase().replace(' ', '') }, { animate: true, animation: "ios-transition", direction: 'forward' })
+        self.navCtrl.push(EmailConfirmationPage, {
+          waitingForEmailConfirmation: true,
+          email: self.register.username.toLowerCase().replace(' ', '')
+        }, self.g.forwardNavConfig)
       }
       self.loading = false
     })
@@ -172,6 +175,8 @@ export class LoginPage {
   }
 
   forgotPassword() {
-    this.navCtrl.push(ForgotPasswordPage, { email: this.login.username.toLowerCase().replace(' ', '') }, { animate: true, animation: "ios-transition", direction: 'forward' })
+    this.navCtrl.push(ForgotPasswordPage, {
+      email: this.login.username.toLowerCase().replace(' ', '')
+    }, this.g.forwardNavConfig)
   }
 }

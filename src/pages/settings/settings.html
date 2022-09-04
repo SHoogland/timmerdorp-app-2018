@@ -139,15 +139,22 @@
 
       <div id="historyList">
         <h1 style="padding: 0 16px; margin: 24px 0 0 0;">
-          Gebeurtenis-log (0-{{history.length}} van de {{historyLength}})
+          Gebeurtenis-log (0-{{(history||[]).length}} van de {{historyLength}})
         </h1>
+        <div id="historyFilter">
+          <ion-chip *ngFor="let c of historyCategories"
+            [ngClass]="selectedHistoryCategories.indexOf(c.prop) > -1 ? 'selected' : ''"
+            [color]="selectedHistoryCategories.indexOf(c.prop) > -1 ? 'primary' : 'white'" (click)="selectCategory(c)">
+            {{ c.name }}</ion-chip>
+        </div>
         <ul style="padding-left: 28px;">
           <li *ngFor="let h of history" [innerHTML]='g.generateGebeurtenisDescription(h, true)'
             style="list-style: disc; text-align: left; margin-bottom: 6px; line-height: 2rem;"></li>
         </ul>
-        <p *ngIf="history.length != historyLength" (click)="moreHistory()" style="padding-left: 8px; text-decoration: underline;">
+        <p *ngIf="(history||[]).length != historyLength" (click)="moreHistory()"
+          style="padding-left: 8px; text-decoration: underline;">
           <a>
-            Nog 100 resultaten ophalen (van de overgebleven {{ historyLength - history.length }})
+            Nog {{ historyLength - (history || []).length > 50 ? 50 : historyLength - (history || []).length }} resultaten ophalen (van de overgebleven {{ historyLength - history.length }})
           </a>
         </p>
       </div>

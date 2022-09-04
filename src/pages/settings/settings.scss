@@ -24,4 +24,20 @@ page-settings {
     text-decoration: underline;
     cursor: pointer;
   }
+
+  #historyFilter ion-chip {
+    padding: 0 16px;
+    margin: 0 6px;
+    cursor: pointer;
+    &:not(.selected) {
+      border: 1px solid #bbb;
+    }
+  }
+
+  #historyFilter {
+    white-space: nowrap;
+    overflow-x: auto;
+    min-height: 60px;
+    margin-top: 8px;
+  }
 }

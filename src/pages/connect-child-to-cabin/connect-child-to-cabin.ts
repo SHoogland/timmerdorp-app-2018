@@ -3,6 +3,7 @@ import { NavController, NavParams, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { GlobalFunctions } from '../../providers/global';
 import { HutjesMapPage } from '../hutjes-map/hutjes-map';
+import { SearchPage } from '../search/search';
 
 declare let cordova: any;
 
@@ -18,6 +19,7 @@ export class ConnectChildToCabinPage {
   hutNr: string;
   error: string;
 
+  ticketPropertiesMap: any;
   selectedChild: any;
   removedChild: any;
   typingTimer: any;
@@ -185,6 +187,7 @@ export class ConnectChildToCabinPage {
       self.searched = true;
       self.hutHasLocation = result.hutHasLocation
       self.isStanOfStephan = result.stanOfStephan
+      self.ticketPropertiesMap = result.ticketPropertiesMap
     }, (error) => {
       self.error = error
     })
@@ -381,14 +384,18 @@ export class ConnectChildToCabinPage {
   }
 
   openHutMap() {
-    this.navCtrl.push(HutjesMapPage, { hutNr: this.hutNr }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(HutjesMapPage, { hutNr: this.hutNr }, this.g.forwardNavConfig);
   }
 
   saveHutLocation() {
     this.g.hutLocationChangeStatus = 'loading';
     let self = this;
     setTimeout(function(){
-      self.navCtrl.push(HutjesMapPage, { saveLocation: true, hutNr: self.hutNr }, { animate: true, animation: "ios-transition", direction: 'forward' });
+      self.navCtrl.push(HutjesMapPage, { saveLocation: true, hutNr: self.hutNr }, self.g.forwardNavConfig);
     }, 250)
+  }
+
+  openSearch(child) {
+    this.navCtrl.push(SearchPage, { ticket: child, ticketPropertiesMap: this.ticketPropertiesMap }, this.g.forwardNavConfig);
   }
 }

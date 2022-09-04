@@ -10,6 +10,7 @@ declare let cordova: any;
   templateUrl: 'scan-ticket.html',
 })
 export class ScanTicketPage {
+  hasWarnedAboutNotCollectingSole: boolean;
   disableSoleCheckbox: boolean;
   wristBandError: boolean;
   showSuggestion: boolean;
@@ -122,6 +123,11 @@ export class ScanTicketPage {
     if (!this.ticket.id || !this.ticket.wristband || this.ticket.wristband.length != 3) {
       return;
     }
+    if(this.ticket.hasSole && !this.ticket.collectedSole && !this.hasWarnedAboutNotCollectingSole) {
+      this.hasWarnedAboutNotCollectingSole = true
+      alert("Let op: Er zitten wel zooltjes bij dit kaartje, maar ze zijn nog niet afgevinkt in het formulier! Als dat klopt, druk dan straks nog een keer op opslaan.")
+      return
+    }
     this.loading = true;
     let self = this;
     this.g.apiCall('assignWristband', {
@@ -152,7 +158,7 @@ export class ScanTicketPage {
         });
         self.storage.set("editHistory", editHis);
 
-        self.g.goHome();
+        self.g.goBack()
       }, (error) => {
         let editHis = [];
         editHis.unshift({

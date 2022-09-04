@@ -120,10 +120,15 @@ export class StatsPage {
   }
 
   parseGraphData(result) {
-    if (result.response !== 'success') return
+    if (result.response !== 'success') {
+      this.showChildCountGraph = false
+      this.loadingGraphData = false
+      return
+    }
     let entries = result.entries
     if (!entries.length || entries[0] == null) {
       this.showChildCountGraph = false
+      this.loadingGraphData = false
       return
     }
 
@@ -135,7 +140,7 @@ export class StatsPage {
 
     // if i.e. there is only an entry for 11:22 and 11:24, also fill them up to have 11:23 (with the same amount as 11:22)
     for (let i = 0; i < entries.length - 1; i++) {
-      if (!isConsecutive(entries[i], entries[i + 1])) {
+      if (!isConsecutive(entries[i], entries[i + 1]) && !(entries[i].hour == entries[i + 1].hour && entries[i].minute == entries[i + 1].minute)) {
         let newEntry = {
           hour: entries[i].hour,
           minute: entries[i].minute + 1,

@@ -230,7 +230,7 @@ export class HutjesMapPage {
   updateLocIndicator(data, self) {
     this.foundLocation = true
     let coords = self.coordinatesInMetersFromTopLeft(data['coords'].latitude, data['coords'].longitude)
-    if(coords.x < 0 || coords.x > self.mapWidth || coords.y < 0 || coords.y > self.mapWidth) {
+    if (coords.x < 0 || coords.x > self.mapWidth || coords.y < 0 || coords.y > self.mapWidth) {
       self.foundLocation = false
       return
     }
@@ -319,7 +319,7 @@ export class HutjesMapPage {
         this.zoomOut()
       } else {
         this.g.hutLocationChangeStatus = 'success'
-        this.navCtrl.pop({ animate: true, animation: "ios-transition", direction: 'back' })
+        this.navCtrl.pop(this.g.backwardNavConfig)
         let self = this;
         setTimeout(function () {
           self.g.hutLocationChangeStatus = 'done'
@@ -343,6 +343,6 @@ export class HutjesMapPage {
   ngOnDestroy() {
     if (this.g.hutLocationChangeStatus == 'loading') this.g.hutLocationChangeStatus = ''
     if (this.locationSubscription) this.locationSubscription.unsubscribe();
-    if(this.locUpdateInterval) clearInterval(this.locUpdateInterval)
+    if (this.locUpdateInterval) clearInterval(this.locUpdateInterval)
   }
 }

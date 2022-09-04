@@ -87,4 +87,10 @@ page-presence {
     margin-top: 12px;
     margin-bottom: 8px;
   }
+
+  .grey {
+    &, &:hover, &:active {
+      background: #333!important;
+    }
+  }
 }

@@ -16,6 +16,7 @@ export class BirthdaysPage {
 	loading: boolean;
   error: boolean;
 	title: string;
+  today: any;
   data: any;
   days: any;
   dates: any;
@@ -33,7 +34,8 @@ export class BirthdaysPage {
 		this.title = 'Verjaardagen';
 		this.loading = true;
     this.days = ['di', 'wo', 'do', 'vr']
-    this.dates = ['Dinsdag 23 augustus', 'Woensdag 24 augustus', 'Donderdag 25 augustus', 'Vrijdag 26 augustus']
+    this.dates = []
+    this.today = new Date()
 
     let self = this;
     this.g.apiCall('wijkStats').then(async function(result) {
@@ -43,6 +45,8 @@ export class BirthdaysPage {
         return;
       }
       self.data = result.birthdays
+      self.today = result.todayDate
+      self.dates = result.tdDates.map(self.parseDate)
       setTimeout(function () {
         let dag = ['di', 'wo', 'do', 'vr'][new Date().getDay() - 2];
         let el = document.getElementById(dag);
@@ -57,7 +61,6 @@ export class BirthdaysPage {
     let bdays = this.data[d].kids
     let getBdayMsg = (bday) => bday.name + ' uit hutje ' + bday.hutNr + ' (wijk ' + this.g.getWijk(bday.hutNr) + ') wordt ' + bday.newAge + '!'
     let msg = `Vandaag ${bdays.length > 1 ? 'zijn' : 'is'} er op Timmerdorp ${bdays.length} verjaardag${bdays.length > 1 ? 'en!\n -' : '!'} ${bdays.map(getBdayMsg).join('\n - ')}`
-
     msg += '\n\nVergeten jullie niet te feliciteren?'
     this.socialSharing.share(msg)
   }
@@ -77,6 +80,26 @@ export class BirthdaysPage {
 	}
 
   zoekKind(kind) {
-    this.navCtrl.push(SearchPage, { searchTerm: kind.name }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(SearchPage, { searchTerm: kind.name }, this.g.forwardNavConfig);
+  }
+
+  parseDate(d) {
+    let weekDays = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag']
+    let months = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december']
+    // ^het lijkt me onwaarschijnlijk dat er ooit een verjaardag tijdens Timmerdorp gaat zijn in december, maar je weet maar nooit of er ooit nog een Winterdorp komt
+    return weekDays[d.getDay()] + ' ' + d.getDate() + ' ' + months[d.getMonth()]
+  }
+
+  beforeToday(d) {
+    if(!d || !this.today) return false
+    d = new Date(d)
+    let testD = new Date()
+    testD.setDate(d.getDate())
+    testD.setMonth(d.getMonth())
+    let comparedD = +testD
+    testD.setDate(this.today.getDate())
+    testD.setMonth(this.today.getMonth())
+    let todayD = +testD
+    return comparedD <= todayD
   }
 }

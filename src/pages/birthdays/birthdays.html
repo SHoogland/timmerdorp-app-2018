@@ -35,7 +35,7 @@
                 <h2>
                   <b>{{ bday.name }}</b>
                   <br>
-                  <p style="font-size: 14px; margin-bottom: 4px; margin-top: 0px;">Wordt {{ bday.newAge }}!</p>
+                  <p style="font-size: 14px; margin-bottom: 4px; margin-top: 0px;">{{ beforeToday(data[d].date) ? 'Is ' + bday.newAge + ' geworden!' : 'Wordt ' + bday.newAge + '!' }}</p>
                   <p style="font-size: 14px; margin-bottom: 0px; margin-top: 0px;">Hutje: {{ bday.hutNr }}</p>
                 </h2>
               </td>

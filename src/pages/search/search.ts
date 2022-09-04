@@ -23,6 +23,7 @@ export class SearchPage {
 
   searchCount: number;
 
+  onlyShowOneChild: boolean;
   isEditingTicket: boolean;
   isSearchingById: boolean;
   canEditTickets: boolean;
@@ -74,18 +75,7 @@ export class SearchPage {
 
     this.timeOut = setTimeout;
 
-    if (this.navParams.get('searchTerm')) {
-      this.searchTerm = this.navParams.get('searchTerm')
-      this.searchThis()
-    }
-
     this.loading = false;
-
-    if (this.navParams.get('searchId')) {
-      this.loading = true
-      this.isSearchingById = true
-      this.searchThis(this.navParams.get('searchId'))
-    }
 
     this.error = '';
     this.errorHelp = '';
@@ -107,6 +97,12 @@ export class SearchPage {
       },
     ]
     this.tickets = [];
+
+    if (this.navParams.get('searchId')) {
+      this.loading = true
+      this.isSearchingById = true
+      this.searchThis(this.navParams.get('searchId'))
+    }
   }
 
   ionViewDidLoad() {
@@ -122,6 +118,12 @@ export class SearchPage {
       setInterval(function () {
         self.error;
       }, 100);
+
+      if (this.navParams.get('ticket')) {
+        this.onlyShowOneChild = true
+        this.ticketPropertiesMap = this.navParams.get('ticketPropertiesMap')
+        this.showModal(this.navParams.get('ticket'))
+      }
     });
   }
 
@@ -162,7 +164,7 @@ export class SearchPage {
     this.searchCount++
     let searchCount = this.searchCount
     this.g.apiCall('search', { searchTerm: this.isSearchingById ? searchId : this.searchTerm }).then((result) => {
-      if(searchCount < self.searchCount) {
+      if (searchCount < self.searchCount) {
         return // there has been a more recent search, so do not do anything with this one
       }
       self.loading = false
@@ -179,18 +181,18 @@ export class SearchPage {
         if (item.wristband == self.searchTerm) {
           return -1;
         }
-        if(item.firstName.toLowerCase().startsWith(self.searchTerm.toLowerCase())) return 1
-        if(item.lastName.toLowerCase().startsWith(self.searchTerm.toLowerCase())) return 2
-        if(item.firstName.toLowerCase().split(self.searchTerm.toLowerCase()).length > 1) return 3
-        if(item.lastName.toLowerCase().split(self.searchTerm.toLowerCase()).length > 1) return 4
+        if (item.firstName.toLowerCase().startsWith(self.searchTerm.toLowerCase())) return 1
+        if (item.lastName.toLowerCase().startsWith(self.searchTerm.toLowerCase())) return 2
+        if (item.firstName.toLowerCase().split(self.searchTerm.toLowerCase()).length > 1) return 3
+        if (item.lastName.toLowerCase().split(self.searchTerm.toLowerCase()).length > 1) return 4
         return 5;
       }
-      self.tickets = result.tickets.sort((a,b) => rankResult(a) > rankResult(b) ? 1 : -1)
+      self.tickets = result.tickets.sort((a, b) => rankResult(a) > rankResult(b) ? 1 : -1)
 
       self.canEditTickets = result.canEditTickets
       self.ticketPropertiesMap = result.ticketPropertiesMap
 
-      if (self.isSearchingById) {
+      if (self.isSearchingById || self.onlyShowOneChild) {
         self.showModal(result.tickets[0])
         self.searchTerm = (result.tickets[0].firstName) + ' ' + result.tickets[0].lastName
         self.isSearchingById = false
@@ -206,16 +208,18 @@ export class SearchPage {
     this.modal.child = child;
     this.g.setStatusBar(['yellow', 'red', 'blue', 'green'][(child.hutNr || "2")[0]])
     this.modal.showModal = true;
-    this.history.unshift({
-      firstName: child.firstName,
-      lastName: child.lastName,
-      wristband: child.wristband,
-      hutNr: child.hutNr,
-      wijk: this.g.getColor(child.hutNr),
-      id: child.id,
-    });
-    this.history = this.g.filterHistory(this.history);
-    this.storage.set("searchChildHistory", this.history);
+    if (this.history) {
+      this.history.unshift({
+        firstName: child.firstName,
+        lastName: child.lastName,
+        wristband: child.wristband,
+        hutNr: child.hutNr,
+        wijk: this.g.getColor(child.hutNr),
+        id: child.id,
+      });
+      this.history = this.g.filterHistory(this.history);
+      this.storage.set("searchChildHistory", this.history);
+    }
     this.modal.high = true;
   }
 
@@ -227,11 +231,14 @@ export class SearchPage {
     setTimeout(function () {
       self.modal.high = false
     }, 400)
+    if (self.onlyShowOneChild) {
+      self.g.goBack()
+    }
   }
 
   scanChild(barcode) {
     this.g.setStatusBar(this.g.wijk)
-    this.navCtrl.push(ScanTicketPage, { 'barcode': barcode }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(ScanTicketPage, { 'barcode': barcode, 'fromSearch': true }, this.g.forwardNavConfig);
   }
 
   goHome() {
@@ -249,12 +256,12 @@ export class SearchPage {
 
   markPresent(wristband) {
     this.g.setStatusBar(this.g.wijk)
-    this.navCtrl.push(PresencePage, { 'wristband': wristband }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(PresencePage, { 'wristband': wristband }, this.g.forwardNavConfig);
   }
 
   toHut(hutNr) {
     this.g.setStatusBar(this.g.wijk)
-    this.navCtrl.push(ConnectChildToCabinPage, { 'hutNr': hutNr }, { animate: true, animation: "ios-transition", direction: 'forward' });
+    this.navCtrl.push(ConnectChildToCabinPage, { 'hutNr': hutNr }, this.g.forwardNavConfig);
   }
 
   shareChild(child) {

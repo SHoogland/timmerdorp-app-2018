@@ -44,6 +44,17 @@
           </tr>
           <tr>
             <td>
+              Gemiddelde leeftijd
+            </td>
+            <td style="text-align: center; padding: 16px 8px !important;">
+              {{ statistieken.count ? (statistieken.totalAge / statistieken.count).toFixed(1) : "&mdash;" }}
+            </td>
+            <td *ngFor="let wijk of wijken" style="text-align: center; padding: 16px 8px !important;">
+              {{ statistieken.quarters[wijk].count ? (statistieken.ages[wijk] / (statistieken.quarters[wijk].count || 1)).toFixed(1) : "&mdash;" }}
+            </td>
+          </tr>
+          <tr>
+            <td>
               Aantal met hutnummer
             </td>
             <td style="text-align: center; padding: 16px 8px !important;">

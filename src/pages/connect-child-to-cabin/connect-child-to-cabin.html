@@ -66,28 +66,39 @@
       <h1 id='hutHeader' [ngClass]='g.getWijk(hutNr)'>Kinderen in hut {{hutNr}}</h1>
       <p *ngIf="searched && hutTickets && !hutTickets.length && hutNr && hutNr.length === 3">
         Nog geen kinderen in dit hutje</p>
-      <button *ngFor="let child of hutTickets" ion-button full [ngClass]="'modern alternate ' + g.getWijk(hutNr)"
-        (click)="removeChild = child; showRemoveModal();" style="margin-top: 0px!important;">
-        {{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
-      </button>
+      <div *ngFor="let child of hutTickets" [ngClass]="'alternate hutListItem disableHover ' + g.getWijk(hutNr)">
+        <button ion-button full class="modern hutListBtn" style="margin-top: 0px!important;">
+          {{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
+        </button><!-- deze comment zorgt ervoor dat de twee buttons naast elkaar blijven staan
+        --><button ion-button full (click)="removeChild = child; showRemoveModal();" class="modern smallBtn">
+          <i class="material-icons">delete</i>
+        </button><!-- deze comment zorgt ervoor dat de twee buttons naast elkaar blijven staan
+        --><button ion-button full (click)="openSearch(child)" class="modern smallBtn">
+          <i class="material-icons">info</i>
+        </button>
+      </div>
       <button ion-button full (click)="showAddModal()" [ngClass]="'bg-blue correction ' + g.getWijk(hutNr)">
         <ion-icon slot='start' name='add' style="left: 0px;" id='addIcon'></ion-icon>
         Kind toevoegen
       </button>
-      <button *ngIf="hutHasLocation || g.hutLocationChangeStatus == 'done'" ion-button full (click)="openHutMap()" [ngClass]="'bg-blue correction ' + g.getWijk(hutNr)">
+      <button *ngIf="hutHasLocation || g.hutLocationChangeStatus == 'done'" ion-button full (click)="openHutMap()"
+        [ngClass]="'bg-blue correction ' + g.getWijk(hutNr)">
         <ion-icon slot='start' name='map' style="left: 0px;" id='addIcon'></ion-icon>
         Bekijk op plattegrond
       </button>
-      <button *ngIf="(!hutHasLocation || isStanOfStephan) && g.hutLocationChangeStatus != 'done'" ion-button full (click)="saveHutLocation()" [ngClass]="'correction bg-' + (g.hutLocationChangeStatus == 'success' ? 'green ' : 'blue ' + g.getWijk(hutNr))">
+      <button *ngIf="(!hutHasLocation || isStanOfStephan) && g.hutLocationChangeStatus != 'done'" ion-button full
+        (click)="saveHutLocation()"
+        [ngClass]="'correction bg-' + (g.hutLocationChangeStatus == 'success' ? 'green ' : 'blue ' + g.getWijk(hutNr))">
         <ion-icon slot='start' name='pin' style="left: 0px;" id='addIcon'></ion-icon>
-        {{ g.hutLocationChangeStatus == 'loading' ? 'Laden...' : (g.hutLocationChangeStatus == 'success' ? 'Gelukt!' : 'Sla locatie op') }}
+        {{ g.hutLocationChangeStatus == 'loading' ? 'Laden...' : (g.hutLocationChangeStatus == 'success' ? 'Gelukt!' :
+        'Sla locatie op') }}
       </button>
     </div>
   </div>
 </ion-content>
 
-<div [ngClass]="{'shown': addModal.show}" (click)="$event.target.id==='connectChildToHutModal'?closeAddModal():''" id="connectChildToHutModal"
-  class="modal conditional">
+<div [ngClass]="{'shown': addModal.show}" (click)="$event.target.id==='connectChildToHutModal'?closeAddModal():''"
+  id="connectChildToHutModal" class="modal conditional">
   <div class="modal-content">
     <div id='modalTop' [ngClass]='g.getWijk(hutNr)'>
     </div>
@@ -124,7 +135,8 @@
       </p>
     </div>
 
-    <div *ngFor="let child of tickets" [ngClass]='"alternate " + (child.hutNr ? g.getWijk(child.hutNr) : g.getWijk(hutNr))'>
+    <div *ngFor="let child of tickets"
+      [ngClass]='"alternate " + (child.hutNr ? g.getWijk(child.hutNr) : g.getWijk(hutNr))'>
       <button ion-button full (click)="addChildToHut(child);" class="modern childAddBtn">
         {{ child.firstName }} {{ child.lastName }} ({{ child.wristband || '-' }})
         <span *ngIf="child.hutNr" class="largeScreenSpan">&nbsp;&mdash;&nbsp;hutje: {{child.hutNr }}</span>

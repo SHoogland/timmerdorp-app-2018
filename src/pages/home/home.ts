@@ -215,9 +215,11 @@ export class HomePage {
     });
 
     let weatherCacheDate = await this.storage.get('weatherCacheDate').catch(console.log)
+    let weatherCache = await this.storage.get('weatherCache').catch(console.log)
     let self = this;
-    if (+new Date() - weatherCacheDate < 15 * 60 * 1000) { // weer moet elk kwartier vervangen worden
-      this.processWeatherData(await this.storage.get('weatherCache'))
+    let refreshInterval = 20
+    if (weatherCache && ((+new Date() - weatherCacheDate) < refreshInterval * 60 * 1000)) { // weer moet elk kwartier vervangen worden
+      this.processWeatherData(weatherCache)
     } else {
       this.httpClient.get("https://api.openweathermap.org/data/2.5/forecast?q=Heiloo,NL&APPID=e98a229cdc17ffdc226168c33aefa0c1").subscribe(async function (data: any) {
         await self.storage.set('weatherCache', data)
@@ -230,14 +232,28 @@ export class HomePage {
     this.storage.get("notFirstUse").then(async function (val) {
       if (!!val) {
         let logInStatus = await self.g.checkIfStillLoggedIn()
+        if(logInStatus.outdatedAppVersion) confirm('Je hebt een verouderde versie van de app geïnstalleerd! Update de app, anders werkt ie misschien niet zoals het hoort.')
         if (!logInStatus.result) {
-          if (!self.g.navigatedToDeeplink) self.g.toLogin()
+          if (!self.g.navigatedToDeeplink) {
+            if (logInStatus.timmerdorpEnded) {
+              self.navCtrl.push(EmailConfirmationPage, {
+                timmerdorpEnded: logInStatus.timmerdorpEnded,
+              }, self.g.forwardNavConfig)
+            } else {
+              self.g.toLogin()
+            }
+          }
         } else {
           if ((!logInStatus.admin || !logInStatus.emailConfirmed) && !logInStatus.demoAccount) {
-            if (!self.g.navigatedToDeeplink) self.navCtrl.push(EmailConfirmationPage, { waitingForEmailConfirmation: !logInStatus.emailConfirmed, waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin, email: logInStatus.email }, { animate: true, animation: "ios-transition", direction: 'forward' })
+            if (!self.g.navigatedToDeeplink) self.navCtrl.push(EmailConfirmationPage, {
+              timmerdorpEnded: logInStatus.timmerdorpEnded,
+              waitingForEmailConfirmation: !logInStatus.emailConfirmed,
+              waitingForAdmin: logInStatus.emailConfirmed && !logInStatus.admin,
+              email: logInStatus.email
+            }, self.g.forwardNavConfig)
           }
           self.waitingPotentialAdmins = logInStatus.waitingPotentialAdmins
-          if(!logInStatus.wijk) {
+          if (!logInStatus.wijk) {
             self.showWijkChoice = true
           } else if (self.g.wijk != logInStatus.wijk) {
             self.g.wijk = logInStatus.wijk
@@ -255,6 +271,7 @@ export class HomePage {
     let weatherIcon = "wb_sunny";
     for (let i = 0; i < 2 + skipped; i++) {
       let w = data.list[i]; //weather data for a three-hour period
+      if(!w) continue
       let td = 1000 * w.dt - +new Date(); //time diff between now and w
       if (td < 30 * 60 * 1000) {
         skipped++;
@@ -304,10 +321,10 @@ export class HomePage {
       if (new Date().getDay() < 2 || new Date().getDay() > 5) {
         alert("Nog even wachten tot Timmerdorp!");
       } else {
-        this.navCtrl.push(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+        this.navCtrl.push(this.openedPage.component, {}, this.g.forwardNavConfig);
       }
     } else if (ogPage === 'login') {
-      if(confirm("Weet je zeker dat je wil uitloggen?")) {
+      if (confirm("Weet je zeker dat je wil uitloggen?")) {
         this.g.wijk = ''
         await Parse.User.logOut();
         this.g.toLogin();
@@ -319,7 +336,7 @@ export class HomePage {
           return;
         }
       }
-      this.navCtrl.push(this.openedPage.component, {}, { animate: true, animation: "ios-transition", direction: 'forward' });
+      this.navCtrl.push(this.openedPage.component, {}, this.g.forwardNavConfig);
     }
   }
 
@@ -353,7 +370,7 @@ export class HomePage {
     this.storage.set('wijk', this.g.wijk)
 
     if (this.onlyChangeWijk) {
-      this.navCtrl.pop({ animate: true, animation: "ios-transition", direction: 'back' })
+      this.navCtrl.pop(this.g.backwardNavConfig)
     } else {
       this.finishedWijkChoice = true;
       let self = this;

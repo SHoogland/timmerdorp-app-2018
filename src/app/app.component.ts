@@ -90,7 +90,7 @@ export class MyApp {
               let code = link.queryString.split('code=')[1].split('&')[0]
               let email = link.queryString.split('email=')[1].split('&')[0]
               this.g.navigatedToDeeplink = true
-              nav.push(EmailConfirmationPage, { confirmationEmail: email, confirmationCode: code }, { animate: true, animation: "ios-transition", direction: 'forward' });
+              nav.push(EmailConfirmationPage, { confirmationEmail: email, confirmationCode: code }, this.g.forwardNavConfig);
               this.g.setStatusBar('blue')
             }
           }
@@ -99,7 +99,7 @@ export class MyApp {
             if (link.queryString.split('id=').length > 0) {
               let id = link.queryString.split('id=')[1].split('&')[0]
               this.g.navigatedToDeeplink = true
-              nav.push(SettingsPage, { confirmationId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
+              nav.push(SettingsPage, { confirmationId: id }, this.g.forwardNavConfig);
               this.g.setStatusBar('blue')
             }
           }
@@ -108,7 +108,7 @@ export class MyApp {
             if (link.queryString.split('id=').length > 0) {
               let id = link.queryString.split('id=')[1].split('&')[0]
               this.g.navigatedToDeeplink = true
-              nav.push(SearchPage, { searchId: id }, { animate: true, animation: "ios-transition", direction: 'forward' });
+              nav.push(SearchPage, { searchId: id }, this.g.forwardNavConfig);
               this.g.setStatusBar('blue')
             }
           }
@@ -118,7 +118,7 @@ export class MyApp {
               let code = link.queryString.split('code=')[1].split('&')[0]
               let email = link.queryString.split('email=')[1].split('&')[0]
               this.g.navigatedToDeeplink = true
-              nav.push(ForgotPasswordPage, { forgotEmail: email, forgotEmailCode: code }, { animate: true, animation: "ios-transition", direction: 'forward' });
+              nav.push(ForgotPasswordPage, { forgotEmail: email, forgotEmailCode: code }, this.g.forwardNavConfig);
               this.g.setStatusBar('blue')
             }
           }

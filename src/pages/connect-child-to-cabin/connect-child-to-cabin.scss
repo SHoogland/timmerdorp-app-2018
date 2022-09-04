@@ -1,124 +1,124 @@
 page-connect-child-to-cabin {
-	.peopleList {
-		ion-item {
-			h2 {
-				overflow-x: hidden;
-			}
-		}
-	}
-	.content.main-content {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
-	}
-	#hutHeader {
-		margin-bottom: 0px;
-		padding-top: 32px;
-		padding-bottom: 32px;
-		margin-top: 0px;
-		background: darken($blue, 14%);
-		&.Rood {
-			background: darken($red, 14%);
-		}
-		&.Groen {
-			background: darken($green, 14%);
-		}
-		&.Geel {
-			background: darken($yellow, 10%);
-		}
-		color: white;
-	}
+  .peopleList {
+    ion-item {
+      h2 {
+        overflow-x: hidden;
+      }
+    }
+  }
+  .content.main-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  #hutHeader {
+    margin-bottom: 0px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    margin-top: 0px;
+    background: darken($blue, 14%);
+    &.Rood {
+      background: darken($red, 14%);
+    }
+    &.Groen {
+      background: darken($green, 14%);
+    }
+    &.Geel {
+      background: darken($yellow, 10%);
+    }
+    color: white;
+  }
 
-	#addIcon {
-		margin-right: 12px;
-		position: relative;
-		font-size: 1.8em;
-	}
+  #addIcon {
+    margin-right: 12px;
+    position: relative;
+    font-size: 1.8em;
+  }
 
-	#spinner {
-		height: 40px;
-	}
+  #spinner {
+    height: 40px;
+  }
 
-	.bracelet-number {
-		padding-top: 0px;
-	}
+  .bracelet-number {
+    padding-top: 0px;
+  }
 
-	.errorCard ion-icon {
-		height: 100% !important;
-	}
+  .errorCard ion-icon {
+    height: 100% !important;
+  }
 
-	.user-info > div:not(.content) {
-		height: 20px;
-	}
+  .user-info > div:not(.content) {
+    height: 20px;
+  }
 
-	ion-item.accent {
-		background: #e5e5e5;
-	}
+  ion-item.accent {
+    background: #e5e5e5;
+  }
 
-	.peopleList {
-		ion-item {
-			.input-wrapper ion-label {
-				@media screen and (min-width: 440px) {
-					div:first-of-type {
-						width: 172px;
-						margin-right: 16px;
-					}
-				}
-				@media screen and (max-width: 440px) {
-					div:first-of-type {
-						width: 152px;
-						margin-right: 16px;
-					}
-				}
-				div:nth-of-type(2n) {
-					padding-top: 8px;
-				}
-				div:first-of-type {
-					height: 100px;
-					float: left;
-				}
-				column-count: 2;
-			}
-		}
+  .peopleList {
+    ion-item {
+      .input-wrapper ion-label {
+        @media screen and (min-width: 440px) {
+          div:first-of-type {
+            width: 172px;
+            margin-right: 16px;
+          }
+        }
+        @media screen and (max-width: 440px) {
+          div:first-of-type {
+            width: 152px;
+            margin-right: 16px;
+          }
+        }
+        div:nth-of-type(2n) {
+          padding-top: 8px;
+        }
+        div:first-of-type {
+          height: 100px;
+          float: left;
+        }
+        column-count: 2;
+      }
+    }
 
-		p {
-			position: relative;
-			@media screen and (max-width: 400px) {
-				.largeScreenSpan {
-					display: none !important;
-				}
-			}
+    p {
+      position: relative;
+      @media screen and (max-width: 400px) {
+        .largeScreenSpan {
+          display: none !important;
+        }
+      }
 
-			@media screen and (min-width: 400px) {
-				span:not(.largeScreenSpan) {
-					position: absolute;
-					right: 0px;
-				}
-			}
-		}
-	}
+      @media screen and (min-width: 400px) {
+        span:not(.largeScreenSpan) {
+          position: absolute;
+          right: 0px;
+        }
+      }
+    }
+  }
 
-	.hutNr {
-		&.Geel {
-			background: darken($yellow, 5%);
-		}
-		&.Groen {
-			background: darken($green, 8%);
-		}
-		&.Blauw {
-			background: $blue;
-		}
-		&.Rood {
-			background: $red;
-		}
-		color: white;
-		padding: 0px 6px;
-	}
+  .hutNr {
+    &.Geel {
+      background: darken($yellow, 5%);
+    }
+    &.Groen {
+      background: darken($green, 8%);
+    }
+    &.Blauw {
+      background: $blue;
+    }
+    &.Rood {
+      background: $red;
+    }
+    color: white;
+    padding: 0px 6px;
+  }
 
-	ion-list.line-input {
-		max-width: 80%;
-		margin-left: auto;
-		margin-right: auto;
-	}
+  ion-list.line-input {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   .bracelet-number .correction {
     top: 0 !important;
@@ -150,5 +150,26 @@ page-connect-child-to-cabin {
   }
   .childAddBtn span {
     font-size: 14px;
+  }
+
+  .hutListBtn {
+    width: calc(100% - 160px);
+    display: inline-block;
+    cursor: default;
+  }
+
+  button.modern.smallBtn {
+    width: 40px;
+    display: inline-block;
+    margin-top: 0!important;
+    &:hover,
+    &:active {
+      background: rgba(0, 0, 0, 0.15)!important;
+    }
+  }
+
+  .hutListBtn,
+  .smallBtn {
+    margin: 0;
   }
 }

@@ -4,7 +4,7 @@
       <div class="user-info" *ngIf="loading">
         <ion-spinner color='white'></ion-spinner>
       </div>
-      <div *ngIf="waitingForAdmin">
+      <div *ngIf="waitingForAdmin && !timmerdorpEnded">
         <h1>
           Nog geen beheerder!
         </h1>
@@ -25,7 +25,15 @@
           </span>
         </button>
       </div>
-      <div *ngIf="waitingForEmailConfirmation">
+      <div *ngIf="timmerdorpEnded">
+        <h1>
+          Timmerdorp is afgelopen!
+        </h1>
+        <p>
+          Dus je mag helaas de app niet meer in. Tot volgend jaar!
+        </p>
+      </div>
+      <div *ngIf="waitingForEmailConfirmation && !timmerdorpEnded">
         <h1>
           E-mail nog niet bevestigd!
         </h1>
@@ -70,7 +78,7 @@
           </p>
         </div>
       </div>
-      <div (click)="moreOptions=true" *ngIf="!moreOptions">
+      <div *ngIf="!moreOptions && !timmerdorpEnded" (click)="showMoreOptions()">
         <u>Meer opties</u>
       </div>
       <button *ngIf="moreOptions" ion-button full (click)="logOut()" style="background: #07497e;">

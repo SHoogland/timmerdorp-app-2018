@@ -48,4 +48,9 @@ files {
       height: 0;
     }
   }
+
+  #files, #columns {
+    max-width: 550px;
+    margin: auto;
+  }
 }
