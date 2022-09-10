@@ -2,17 +2,9 @@
 Geen!
 
 ## Nog te bespreken
-- Nieuwsbrief per mail sturen? (eenmalig, weekje van tevoren?) laatste spelregels, “kaartje over?”, bandje ophalen, informatieboekje
-**- Sanne sprenkel: optionele pasfoto toevoegen, makkelijker kinderen vinden**
-**- Arjen: Wijk wit en wijkhoofden moeten waarschuwingen kunnen bijhouden over conflicten in de wijk per kind om meer context te geven bij besluiten (over evt wegsturen)**
+- Ja: Nieuwsbrief per mail sturen? (eenmalig, weekje van tevoren?) laatste spelregels, “kaartje over?”, bandje ophalen, informatieboekje
 - Misschien: stan een nieuw wachtwoord kunnen laten instellen voor mensen, scheelt tijd
-- **Dinsdag mag er wel wat meer rekenkracht op (dit jaar hebben we dev 2x, maar prod 1x of prod 2x zou wel lekker zijn. Kost €3.30 resp. €9.90 extra per dag), misschien sowieso de hele week prod 1x en dan dinsdag 2x. nadat de gegevens verwijderd waren, werd ie wel echt meeega veel sneller. kunnen de functions efficiënter misschien?**
-- **Moet e-mail echt bevestigd zijn voor admin?** Ik heb het nu uitgezet, maar miss verstandig om nog even te overleggen
-- MISSCHIEN: alleen EHBO/bestuur toegang geven tot huisarts, emailadres ouder en geboortedatum (en opmerkingen). En history van een ticket? die miss wel aan iedereen geven, aangezien poortwacht
-- Privacybeleid: meer/alle vrijwilligers hebben toegang, en er staat niks over de accounts vd ouders in. Er staat ook dat alle persoonsgegevens op het polsbandje staan
-- plattegrond erin houden?
-- connect child to cabin moet gebruiksvriendelijker kunnen
-- Presence by time ging stuk toen er meerdere presencebytime entries waren op dezelfde minuut, het ging ook wel heeel hard. ik heb het nu opgelost, maar moet ik die functie miss verplaatsen van get-graph-data.js naar een queue?
+- Oplossing: presence by time alleen opslaan in queue per minuut. Presence by time ging stuk toen er meerdere presencebytime entries waren op dezelfde minuut, het ging ook wel heeel hard. ik heb het nu opgelost, maar moet ik die functie miss verplaatsen van get-graph-data.js naar een queue?
 
 ## Nog te onderzoeken
 - Als je de Flickr app hebt, werken de foto’s niet. *Dat was op de Android van Tim Opdam, ik kon het op mijn iPhone niet reproduceren, ook niet toen ik de app wel had. Toen opende ie namelijk Flickr-links gewoon in de browser, of ik ze nou vanuit de Tdorp app of vanuit elders aanklikte.*
