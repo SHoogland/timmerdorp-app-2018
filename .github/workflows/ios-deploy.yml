@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Xcode version
         run: /usr/bin/xcodebuild -version
       - name: Use Node.js 12.x
