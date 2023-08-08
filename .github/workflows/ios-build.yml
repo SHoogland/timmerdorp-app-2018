@@ -25,8 +25,10 @@ jobs:
         run: npm i -g @ionic/cli@6 cordova@10
       - name: turn on cordova telemetry
         run: cordova telemetry on
-      - name: bundle install
-        run: bundle install
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+          bundler-cache: true
       - name: Get and set build nr
         run: node --experimental-modules scripts/get-set-buildnr.mjs
         env:
