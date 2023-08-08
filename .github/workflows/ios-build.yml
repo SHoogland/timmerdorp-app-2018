@@ -15,10 +15,10 @@ jobs:
         uses: actions/checkout@v1
       - name: Xcode version
         run: /usr/bin/xcodebuild -version
-      - name: Use Node.js 12.x
-        uses: MatiseAms/setup-node@master
+      - name: Setup Node.js (.nvmrc)
+        uses: actions/setup-node@v3.7.0
         with:
-          node-version: 12.x
+          node-version-file: '.nvmrc'
       - name: npm ci
         run: npm ci
       - name: npm install ionic and cordova cli
