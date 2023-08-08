@@ -1,5 +1,5 @@
 # Timmerdorp-app-2018
-The ionic app used in 2018 and 2019
+The ionic app used since 2018
 
 A partially working version for the web: https://timmerdorp-app.netlify.com
 
