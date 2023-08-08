@@ -22,7 +22,7 @@ jobs:
       - name: npm ci
         run: npm ci
       - name: npm install ionic and cordova cli
-        run: npm i -g @ionic/cli cordova
+        run: npm i -g @ionic/cli@5 cordova@10
       - name: turn on cordova telemetry
         run: cordova telemetry on
       - name: bundle install
