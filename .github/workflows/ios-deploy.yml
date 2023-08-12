@@ -46,9 +46,11 @@ jobs:
           code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
           team-id: ${{ secrets.TEAM_ID }}
           workspace-path: platforms/ios/Timmerdorp.xcworkspace
+      - name: install appcenter-cli
+        run: npm i -g appcenter-cli
       - name: Deploy to App Center
         run: |
-          npx appcenter distribute stores publish \
+          appcenter distribute stores publish \
           --token "${{secrets.APP_CENTER_TOKEN}}" \
           --store "App Store Connect Users" \
           --app "shoogland/TimmerdorpHeilooIos" \
