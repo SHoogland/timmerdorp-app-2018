@@ -8,24 +8,26 @@ on:
 jobs:
   deploy-ios:
     name: Deploy IOS
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: checkout
         uses: actions/checkout@v3
       - name: Xcode version
         run: /usr/bin/xcodebuild -version
-      - name: Use Node.js 12.x
-        uses: MatiseAms/setup-node@master
+      - name: Setup Node.js (.nvmrc)
+        uses: actions/setup-node@v3.7.0
         with:
-          node-version: 12.x
+          node-version-file: '.nvmrc'
       - name: npm ci
         run: npm ci
       - name: npm install ionic and cordova cli
-        run: npm i -g @ionic/cli cordova
+        run: npm i -g @ionic/cli@6 cordova@10
       - name: turn on cordova telemetry
         run: cordova telemetry on
-      - name: bundle install
-        run: bundle install
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+          bundler-cache: true
       - name: Get and set build nr
         run: node --experimental-modules scripts/get-set-buildnr.mjs
         env:
