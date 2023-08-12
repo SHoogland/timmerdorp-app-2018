@@ -50,9 +50,10 @@ jobs:
         run: npm i -g appcenter-cli
       - name: Deploy to App Center
         run: |
-          appcenter distribute stores publish \
+          appcenter distribute release \
           --token "${{secrets.APP_CENTER_TOKEN}}" \
           --store "App Store Connect Users" \
           --app "shoogland/TimmerdorpHeilooIos" \
           --file "output.ipa" \
-          --release-notes "$(git log -1 --pretty=format:%s)"
+          --release-notes "$(git log -1 --pretty=format:%s)" \
+          --debug
