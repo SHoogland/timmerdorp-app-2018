@@ -9,12 +9,10 @@ on:
 jobs:
   build-ios:
     name: Build IOS
-    runs-on: macos-12
+    runs-on: macos-13
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: select xcode
-        run: sudo xcode-select -s /Applications/Xcode_13.4.1.app
       - name: Xcode version
         run: /usr/bin/xcodebuild -version
       - name: Setup Node.js (.nvmrc)
@@ -41,7 +39,7 @@ jobs:
           cordova prepare ios
       - name: Fastlane disable codesigning
         run: bundle exec fastlane ios signing
-      - uses: yukiarrr/ios-build-action@v1.4.0
+      - uses: yukiarrr/ios-build-action@v1.11.0
         with:
           project-path: platforms/ios/Timmerdorp.xcodeproj
           p12-base64: ${{ secrets.P12_BASE64 }}
