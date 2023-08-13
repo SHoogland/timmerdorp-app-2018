@@ -46,13 +46,18 @@ jobs:
           code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
           team-id: ${{ secrets.TEAM_ID }}
           workspace-path: platforms/ios/Timmerdorp.xcworkspace
+      - name: Setup Node.js for appcenter cli
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: 'lts'
       - name: install appcenter-cli
         run: npm i -g appcenter-cli
-      - name: Distribute ipa to App Center
-        uses: akiojin/appcenter-distribute-github-action@v1
-        with:
-          token: ${{ secrets.APP_CENTER_TOKEN }}
-          path: output.ipa
-          app: shoogland/TimmerdorpHeilooIos
-          store: 'App Store Connect Users'
-          release_notes: "$(git log -1 --pretty=format:%s)"
+      - name: Deploy to App Center
+        run: |
+          appcenter distribute stores publish \
+          --token "${{secrets.APP_CENTER_TOKEN}}" \
+          --store "App Store Connect Users" \
+          --app "shoogland/TimmerdorpHeilooIos" \
+          --file "output.ipa" \
+          --release-notes "$(git log -1 --pretty=format:%s)" \
+          --debug
