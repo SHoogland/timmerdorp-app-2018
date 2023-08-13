@@ -49,7 +49,7 @@ jobs:
       - name: Setup Node.js for appcenter cli
         uses: actions/setup-node@v3.7.0
         with:
-          node-version: 'lts'
+          node-version: 18
       - name: install appcenter-cli
         run: npm i -g appcenter-cli
       - name: Deploy to App Center
