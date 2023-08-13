@@ -112,6 +112,9 @@
         <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
             <string>We gebruiken je locatie om op de kaart aan te geven waar op het Timmerdorpterrein je je bevindt.</string>
         </config-file>
+        <config-file parent="NSLocationAlwaysAndWhenInUseUsageDescription" target="*-Info.plist">
+            <string>We gebruiken je locatie om op de kaart aan te geven waar op het Timmerdorpterrein je je bevindt.</string>
+        </config-file>
         <icon height="20" src="resources/ios/icon/icon-20.png" width="20" />
         <icon height="40" src="resources/ios/icon/icon-20@2x.png" width="40" />
         <icon height="60" src="resources/ios/icon/icon-20@3x.png" width="60" />
