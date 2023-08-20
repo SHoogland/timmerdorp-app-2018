@@ -31,11 +31,9 @@ jobs:
         run: |
           npm run androiddist
           cordova prepare android
-          ionic cordova build android --release --aot false --environment prod --output-hashing all --sourcemaps false --extract-css true --named-chunks false --build-optimizer true --minifyjs=true --minifycss=true --optimizejs=true
-      - name: Upload apk
-        uses: actions/upload-artifact@v2
-        with:
-          name: debug apk
-          path: app/build/outputs/apk/debug/app-debug.apk
-
-
+      #     ionic cordova build android --release --aot false --environment prod --output-hashing all --sourcemaps false --extract-css true --named-chunks false --build-optimizer true --minifyjs=true --minifycss=true --optimizejs=true
+      # - name: Upload apk
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: debug apk
+      #     path: app/build/outputs/apk/debug/app-debug.apk
