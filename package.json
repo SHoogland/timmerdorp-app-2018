@@ -22,7 +22,7 @@
 		"@angular/common": "^5",
 		"@angular/compiler": "^5",
 		"@angular/compiler-cli": "^5",
-		"@angular/core": "^5",
+		"@angular/core": "^10",
 		"@angular/forms": "^5",
 		"@angular/http": "^5",
 		"@angular/platform-browser": "^5",
