@@ -38,7 +38,7 @@ jobs:
           cordova prepare ios
       - name: Fastlane disable codesigning
         run: bundle exec fastlane ios signing
-      - uses: yukiarrr/ios-build-action@v1.11.0
+      - uses: yukiarrr/ios-build-action@v1.11.1
         with:
           project-path: platforms/ios/Timmerdorp.xcodeproj
           p12-base64: ${{ secrets.P12_BASE64 }}
